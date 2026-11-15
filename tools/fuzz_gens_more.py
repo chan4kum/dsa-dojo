@@ -981,3 +981,53 @@ def _recolor():
 
 
 GX.update(GX15)
+
+
+def _jobs():
+    n = R(1, 5)
+    return ([R(1, 9) for _ in range(n)], [R(1, 9) for _ in range(n)], ints(5, 1, 10, 1))
+
+
+def _trains():
+    return (ints(5, 1, 9, 1), R(1, 40) / 4)  # quarter hours are exact in binary floating point
+
+
+def _spells():
+    return (ints(5, 1, 6, 1), ints(5, 1, 6, 1), R(1, 30))
+
+
+def _balls():
+    pos = random.sample(range(1, 25), R(2, 7))
+    return (pos, R(2, len(pos)))
+
+
+def _pair_distance():
+    nums = ints(7, 0, 15, 2)
+    return (nums, R(1, len(nums) * (len(nums) - 1) // 2))
+
+
+def _mult_table():
+    m, n = R(1, 7), R(1, 7)
+    return (m, n, R(1, m * n))
+
+
+GX16 = {
+    ("binary_search", "Arranging Coins"): lambda: (R(1, 200),),
+    ("binary_search", "Most Profit Assigning Work"): _jobs,
+    ("binary_search", "Find the Distance Value Between Two Arrays"): lambda: (
+        ints(6, -10, 10, 1),
+        ints(6, -10, 10, 1),
+        R(0, 4),
+    ),
+    ("binary_search", "Minimum Limit of Balls in a Bag"): lambda: (ints(5, 1, 12, 1), R(0, 5)),
+    ("binary_search", "Minimum Speed to Arrive on Time"): _trains,
+    ("binary_search", "Minimum Time to Complete Trips"): lambda: (ints(4, 1, 8, 1), R(1, 15)),
+    ("binary_search", "Maximum Candies Allocated to K Children"): lambda: (ints(5, 1, 12, 1), R(1, 10)),
+    ("binary_search", "Successful Pairs of Spells and Potions"): _spells,
+    ("binary_search", "Magnetic Force Between Two Balls"): _balls,
+    ("binary_search", "Find K-th Smallest Pair Distance"): _pair_distance,
+    ("binary_search", "Kth Smallest Number in Multiplication Table"): _mult_table,
+    ("binary_search", "Minimum Time to Repair Cars"): lambda: (ints(4, 1, 6, 1), R(1, 12)),
+}
+
+GX.update(GX16)
