@@ -779,3 +779,62 @@ GX11 = {
 }
 
 GX.update(GX11)
+
+
+def _weak_rows():
+    m, n = R(1, 6), R(1, 6)
+    mat = [[1] * c + [0] * (n - c) for c in (R(0, n) for _ in range(m))]
+    return (mat, R(1, m))
+
+
+def _build_args():
+    return (ints(8, 1, 20, 1), R(0, 15), R(0, 3))
+
+
+def _events_args():
+    out = []
+    for _ in range(R(1, 7)):
+        start = R(1, 6)
+        out.append([start, start + R(0, 4)])
+    return (out,)
+
+
+def _refuel_args():
+    target = R(1, 60)
+    positions = sorted(random.sample(range(1, target), min(R(0, 5), target - 1))) if target > 1 else []
+    return (target, R(1, 30), [[p, R(1, 30)] for p in positions])
+
+
+def _cpu_args():
+    return ([[R(1, 8), R(1, 4)] for _ in range(R(1, 6))],)
+
+
+def _prime_fraction():
+    arr = [1] + sorted(random.sample([2, 3, 5, 7, 11, 13], R(1, 5)))
+    return (arr, R(1, len(arr) * (len(arr) - 1) // 2))
+
+
+def _intervals_args():
+    out = []
+    for _ in range(R(1, 7)):
+        start = R(1, 10)
+        out.append([start, start + R(0, 5)])
+    return (out,)
+
+
+GX12 = {
+    ("heap", "The K Weakest Rows in a Matrix"): _weak_rows,
+    ("heap", "Furthest Building You Can Reach"): _build_args,
+    ("heap", "Minimum Operations to Halve Array Sum"): lambda: (ints(8, 1, 30, 1),),
+    ("heap", "Maximal Score After Applying K Operations"): lambda: (ints(7, 1, 30, 1), R(1, 8)),
+    ("heap", "Remove Stones to Minimize the Total"): lambda: (ints(7, 1, 30, 1), R(1, 8)),
+    ("heap", "Relative Ranks"): lambda: (random.sample(range(30), R(1, 8)),),
+    ("heap", "Maximum Product of Two Elements in an Array"): lambda: (ints(8, 1, 20, 2),),
+    ("heap", "Maximum Number of Events That Can Be Attended"): _events_args,
+    ("heap", "Minimum Number of Refueling Stops"): _refuel_args,
+    ("heap", "Single-Threaded CPU"): _cpu_args,
+    ("heap", "Divide Intervals Into Minimum Number of Groups"): _intervals_args,
+    ("heap", "K-th Smallest Prime Fraction"): _prime_fraction,
+}
+
+GX.update(GX12)
