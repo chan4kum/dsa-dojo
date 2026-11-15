@@ -731,3 +731,51 @@ GX10 = {
 }
 
 GX.update(GX10)
+
+
+def _split_args():
+    return (ints(10, 0, 9), R(1, 6))
+
+
+def _swap_k():
+    lst = ints(8, 0, 9, 1)
+    return (lst, R(1, len(lst)))
+
+
+def _zero_segments():
+    out = [0]
+    for _ in range(R(1, 4)):
+        out += [R(1, 3) for _ in range(R(1, 3))] + [0]
+    return (out,)
+
+
+def _components():
+    n = R(1, 8)
+    values = random.sample(range(12), n)
+    return (values, random.sample(values, R(1, n)))
+
+
+def _merge_between():
+    n = R(4, 8)
+    a = R(1, n - 2)
+    return (list(range(n)), a, R(a, n - 2), ints(4, 0, 9, 1))
+
+
+GX11 = {
+    ("linked_list", "Convert Binary Number in a Linked List to Integer"): lambda: (ints(10, 0, 1, 1),),
+    ("linked_list", "Delete the Middle Node of a Linked List"): lambda: (ints(8, 0, 9, 1),),
+    ("linked_list", "Maximum Twin Sum of a Linked List"): lambda: ([R(1, 9) for _ in range(R(1, 4) * 2)],),
+    ("linked_list", "Split Linked List in Parts"): _split_args,
+    ("linked_list", "Next Greater Node In Linked List"): lambda: (ints(8, 1, 9, 1),),
+    ("linked_list", "Swapping Nodes in a Linked List"): _swap_k,
+    ("linked_list", "Merge Nodes in Between Zeros"): _zero_segments,
+    ("linked_list", "Linked List Components"): _components,
+    ("linked_list", "Merge In Between Linked Lists"): _merge_between,
+    (
+        "linked_list",
+        "Find the Minimum and Maximum Number of Nodes Between Critical Points",
+    ): lambda: (ints(10, 1, 5, 1),),
+    ("linked_list", "Remove Nodes From Linked List"): lambda: (ints(8, 1, 9, 1),),
+}
+
+GX.update(GX11)
