@@ -85,6 +85,18 @@ def str_str(haystack, needle):
 | `strings/20` | Easy | Reverse String II | [#541](https://leetcode.com/problems/reverse-string-ii/) | Stride through blocks and slice |
 | `strings/21` | Easy | Reverse Words in a String III | [#557](https://leetcode.com/problems/reverse-words-in-a-string-iii/) | Per-word two-pointer reversal |
 | `strings/22` | Easy | Merge Strings Alternately | [#1768](https://leetcode.com/problems/merge-strings-alternately/) | Parallel iteration with bounds checks |
+| `strings/24` | Easy | Add Binary | [#67](https://leetcode.com/problems/add-binary/) | Schoolbook addition with a carry |
+| `strings/25` | Easy | License Key Formatting | [#482](https://leetcode.com/problems/license-key-formatting/) | Build from the right so the short group lands in front |
+| `strings/26` | Easy | Detect Capital | [#520](https://leetcode.com/problems/detect-capital/) | Count and compare against the allowed patterns |
+| `strings/27` | Easy | Student Attendance Record I | [#551](https://leetcode.com/problems/student-attendance-record-i/) | Single pass with counters |
+| `strings/28` | Easy | Greatest Common Divisor of Strings | [#1071](https://leetcode.com/problems/greatest-common-divisor-of-strings/) | Number theory on string lengths (gcd) + commutativity check |
+| `strings/30` | Easy | Increasing Decreasing String | [#1370](https://leetcode.com/problems/increasing-decreasing-string/) | Counting sort with alternating sweeps |
+| `strings/31` | Easy | Consecutive Characters | [#1446](https://leetcode.com/problems/consecutive-characters/) | Run-length scan |
+| `strings/32` | Easy | Largest Substring Between Two Equal Characters | [#1624](https://leetcode.com/problems/largest-substring-between-two-equal-characters/) | First-occurrence hash map |
+| `strings/33` | Easy | Determine if String Halves Are Alike | [#1704](https://leetcode.com/problems/determine-if-string-halves-are-alike/) | Single pass with a running balance |
+| `strings/35` | Easy | Find the Difference | [#389](https://leetcode.com/problems/find-the-difference/) | XOR / sum cancellation |
+| `strings/36` | Easy | Longest Uncommon Subsequence I | [#521](https://leetcode.com/problems/longest-uncommon-subsequence-i/) | Reasoning shortcut (think before coding) |
+| `strings/37` | Easy | Find Common Characters | [#1002](https://leetcode.com/problems/find-common-characters/) | Multiset intersection (min of counts) |
 | `strings/4` | Medium | Reverse Words in a String | [#151](https://leetcode.com/problems/reverse-words-in-a-string/) | Split, reverse, join (in-place version: reverse all then each word) |
 | `strings/5` | Medium | String to Integer (atoi) | [#8](https://leetcode.com/problems/string-to-integer-atoi/) | Careful state-by-state parsing (finite automaton) |
 | `strings/8` | Medium | Multiply Strings | [#43](https://leetcode.com/problems/multiply-strings/) | Schoolbook multiplication with a position array |
@@ -93,12 +105,14 @@ def str_str(haystack, needle):
 | `strings/14` | Medium | Zigzag Conversion | [#6](https://leetcode.com/problems/zigzag-conversion/) | Simulate a bouncing row index |
 | `strings/16` | Medium | Repeated DNA Sequences | [#187](https://leetcode.com/problems/repeated-dna-sequences/) | Sliding window of fixed length + hash set of seen windows |
 | `strings/18` | Medium | Compare Version Numbers | [#165](https://leetcode.com/problems/compare-version-numbers/) | Parse and compare component by component |
+| `strings/29` | Medium | Minimum Number of Steps to Make Two Strings Anagram | [#1347](https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/) | Frequency counting |
+| `strings/34` | Medium | Count Number of Homogenous Substrings | [#1759](https://leetcode.com/problems/count-number-of-homogenous-substrings/) | Run-length counting (substrings ending here) |
 | `strings/2` | Hard | Longest Happy Prefix | [#1392](https://leetcode.com/problems/longest-happy-prefix/) | Prefix function (border of a string) |
 | `strings/23` | Hard | Shortest Palindrome | [#214](https://leetcode.com/problems/shortest-palindrome/) | KMP failure function to find the longest palindromic prefix |
 
 Start one with `python dsa.py start strings/1`.
 
-**More:** 459 Repeated Substring Pattern (E), 214 Shortest Palindrome (H), 187 Repeated DNA Sequences (M), 1044 Longest Duplicate Substring (H), 5 Longest Palindromic Substring (M), 647 Palindromic Substrings (M), 6 Zigzag Conversion (M), 8 String to Integer (M), 38 Count and Say (M), 68 Text Justification (H).
+**More:** 459 Repeated Substring Pattern (E), 214 Shortest Palindrome (H), 187 Repeated DNA Sequences (M), 1044 Longest Duplicate Substring (H), 5 Longest Palindromic Substring (M), 647 Palindromic Substrings (M), 6 Zigzag Conversion (M), 8 String to Integer (atoi) (M), 38 Count and Say (M), 68 Text Justification (H).
 
 ## 9. Make it stay - the teacher's anchors
 

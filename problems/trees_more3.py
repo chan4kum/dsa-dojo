@@ -268,7 +268,7 @@ def binary_tree_paths(root):
     # ---- Count Complete Tree Nodes (LeetCode 222) ----
     dict(
         title="Count Complete Tree Nodes",
-        diff="M",
+        diff="E",
         lc=222,
         slug="count-complete-tree-nodes",
         prompt=(

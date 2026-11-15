@@ -80,6 +80,9 @@ def find_kth_largest(nums, k):
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
 | `heap/4` | Easy | Last Stone Weight | [#1046](https://leetcode.com/problems/last-stone-weight/) | Max-heap via negated values (repeated 'take the largest') |
+| `heap/12` | Easy | The K Weakest Rows in a Matrix | [#1337](https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/) | Top-k selection with a heap |
+| `heap/17` | Easy | Relative Ranks | [#506](https://leetcode.com/problems/relative-ranks/) | Sort (or heap-pop) indices by score |
+| `heap/18` | Easy | Maximum Product of Two Elements in an Array | [#1464](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/) | Top-2 selection |
 | `heap/1` | Medium | Kth Largest Element in an Array | [#215](https://leetcode.com/problems/kth-largest-element-in-an-array/) | Top-K with a size-k min-heap |
 | `heap/2` | Medium | Top K Frequent Elements | [#347](https://leetcode.com/problems/top-k-frequent-elements/) | Frequency map + heap (O(n log k)) or bucket sort (O(n)) |
 | `heap/3` | Medium | Task Scheduler | [#621](https://leetcode.com/problems/task-scheduler/) | Greedy / counting argument on the most frequent task (a heap simulation also works) |
@@ -89,7 +92,16 @@ def find_kth_largest(nums, k):
 | `heap/8` | Medium | Find K Pairs with Smallest Sums | [#373](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/) | Best-first search with a heap over a sorted 2D implicit grid |
 | `heap/9` | Medium | Ugly Number II | [#264](https://leetcode.com/problems/ugly-number-ii/) | k-way merge of implicit sorted sequences (multiples of earlier results) |
 | `heap/10` | Medium | Kth Smallest Element in a Sorted Matrix | [#378](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | k-way merge with a heap (or binary search on value) |
+| `heap/13` | Medium | Furthest Building You Can Reach | [#1642](https://leetcode.com/problems/furthest-building-you-can-reach/) | Greedy with a min-heap (regret / undo the cheapest ladder) |
+| `heap/14` | Medium | Minimum Operations to Halve Array Sum | [#2208](https://leetcode.com/problems/minimum-operations-to-halve-array-sum/) | Greedy with a max-heap |
+| `heap/15` | Medium | Maximal Score After Applying K Operations | [#2530](https://leetcode.com/problems/maximal-score-after-applying-k-operations/) | Greedy with a max-heap |
+| `heap/16` | Medium | Remove Stones to Minimize the Total | [#1962](https://leetcode.com/problems/remove-stones-to-minimize-the-total/) | Greedy with a max-heap |
+| `heap/19` | Medium | Maximum Number of Events That Can Be Attended | [#1353](https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/) | Greedy by earliest deadline with a min-heap |
+| `heap/21` | Medium | Single-Threaded CPU | [#1834](https://leetcode.com/problems/single-threaded-cpu/) | Event simulation with a priority queue |
+| `heap/22` | Medium | Divide Intervals Into Minimum Number of Groups | [#2406](https://leetcode.com/problems/divide-intervals-into-minimum-number-of-groups/) | Sort + min-heap of group end times (meeting-rooms pattern) |
+| `heap/23` | Medium | K-th Smallest Prime Fraction | [#786](https://leetcode.com/problems/k-th-smallest-prime-fraction/) | K-way merge of implicitly sorted lists |
 | `heap/11` | Hard | IPO | [#502](https://leetcode.com/problems/ipo/) | Two structures: sorted list for 'unlocking', max-heap for 'best now' |
+| `heap/20` | Hard | Minimum Number of Refueling Stops | [#871](https://leetcode.com/problems/minimum-number-of-refueling-stops/) | Greedy with a max-heap of passed options |
 
 Start one with `python dsa.py start heap/1`.
 

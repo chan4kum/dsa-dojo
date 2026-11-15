@@ -86,18 +86,30 @@ def three_sum(nums):
 | `two_pointers/11` | Easy | Reverse String | [#344](https://leetcode.com/problems/reverse-string/) | Two pointers from both ends (swap inward) |
 | `two_pointers/14` | Easy | Backspace String Compare | [#844](https://leetcode.com/problems/backspace-string-compare/) | Two pointers from the end (O(1) space) |
 | `two_pointers/15` | Easy | Long Pressed Name | [#925](https://leetcode.com/problems/long-pressed-name/) | Two pointers with run-length reasoning |
-| `two_pointers/16` | Easy | Valid Palindrome II | [#680](https://leetcode.com/problems/valid-palindrome-ii/) | Two pointers with one allowed skip |
+| `two_pointers/25` | Easy | Find First Palindromic String in the Array | [#2108](https://leetcode.com/problems/find-first-palindromic-string-in-the-array/) | Two pointers palindrome check |
+| `two_pointers/26` | Easy | Count Pairs Whose Sum is Less than Target | [#2824](https://leetcode.com/problems/count-pairs-whose-sum-is-less-than-target/) | Sort + two pointers counting in bulk |
 | `two_pointers/2` | Medium | 3Sum | [#15](https://leetcode.com/problems/3sum/) | Sort + fix one element + two pointers on the rest |
 | `two_pointers/3` | Medium | Container With Most Water | [#11](https://leetcode.com/problems/container-with-most-water/) | Two pointers converging, with a greedy discard argument |
 | `two_pointers/5` | Medium | Two Sum II - Input Array Is Sorted | [#167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two pointers on a sorted array (converge from both ends) |
 | `two_pointers/8` | Medium | Sort Colors | [#75](https://leetcode.com/problems/sort-colors/) | Three-way partition (Dutch national flag) with an invariant |
 | `two_pointers/12` | Medium | 3Sum Closest | [#16](https://leetcode.com/problems/3sum-closest/) | Sort + fix one + two pointers (optimise distance) |
 | `two_pointers/13` | Medium | 4Sum | [#18](https://leetcode.com/problems/4sum/) | k-Sum reduction: sort, fix k-2 values, two pointers for the last pair |
+| `two_pointers/16` | Medium | Longest Word in Dictionary through Deleting | [#524](https://leetcode.com/problems/longest-word-in-dictionary-through-deleting/) | Subsequence check with two pointers + smart ordering |
+| `two_pointers/17` | Medium | Sum of Square Numbers | [#633](https://leetcode.com/problems/sum-of-square-numbers/) | Two pointers on a sorted sequence of squares |
+| `two_pointers/18` | Medium | Valid Triangle Number | [#611](https://leetcode.com/problems/valid-triangle-number/) | Sort + fix the largest + two pointers (counting pairs in bulk) |
+| `two_pointers/19` | Medium | Heaters | [#475](https://leetcode.com/problems/heaters/) | Nearest neighbour via sort + binary search / two pointers |
+| `two_pointers/20` | Medium | K-diff Pairs in an Array | [#532](https://leetcode.com/problems/k-diff-pairs-in-an-array/) | Frequency map (or sort + two pointers) |
+| `two_pointers/21` | Medium | Longest Mountain in Array | [#845](https://leetcode.com/problems/longest-mountain-in-array/) | Expand from peaks; skip what is already processed |
+| `two_pointers/22` | Medium | Bag of Tokens | [#948](https://leetcode.com/problems/bag-of-tokens/) | Greedy + two pointers on sorted values |
+| `two_pointers/23` | Medium | Shortest Subarray to be Removed to Make Array Sorted | [#1574](https://leetcode.com/problems/shortest-subarray-to-be-removed-to-make-array-sorted/) | Sorted prefix + sorted suffix merged with two pointers |
+| `two_pointers/24` | Medium | Minimum Length of String After Deleting Similar Ends | [#1750](https://leetcode.com/problems/minimum-length-of-string-after-deleting-similar-ends/) | Two pointers closing in from both ends (greedy maximal strips) |
+| `two_pointers/27` | Medium | Maximum Distance Between a Pair of Values | [#1855](https://leetcode.com/problems/maximum-distance-between-a-pair-of-values/) | Two pointers on two sorted arrays |
+| `two_pointers/28` | Medium | Number of Subsequences That Satisfy the Given Sum Condition | [#1498](https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/) | Sort + two pointers + counting subsets by min/max |
 | `two_pointers/4` | Hard | Trapping Rain Water | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two pointers with running maxima (the smaller side decides) |
 
 Start one with `python dsa.py start two_pointers/1`.
 
-**More:** 26 Remove Duplicates from Sorted Array (E), 283 Move Zeroes (E), 167 Two Sum II (M), 75 Sort Colors (M, Dutch flag), 16 3Sum Closest (M), 18 4Sum (M), 977 Squares of a Sorted Array (E), 345 Reverse Vowels (E), 680 Valid Palindrome II (E).
+**More:** 26 Remove Duplicates from Sorted Array (E), 283 Move Zeroes (E), 167 Two Sum II - Input Array Is Sorted (M), 75 Sort Colors (M, Dutch flag), 16 3Sum Closest (M), 18 4Sum (M), 977 Squares of a Sorted Array (E), 345 Reverse Vowels of a String (E), 680 Valid Palindrome II (E).
 
 ## 9. Make it stay - the teacher's anchors
 

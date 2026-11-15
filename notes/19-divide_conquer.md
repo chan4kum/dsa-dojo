@@ -85,7 +85,7 @@ def reverse_pairs(nums):
 
 Start one with `python dsa.py start divide_conquer/1`.
 
-**More:** 169 Majority Element (E), 148 Sort List (M), 215 Kth Largest via Quickselect (M), 315 Count of Smaller Numbers After Self (H), 327 Count of Range Sum (H), 241 Different Ways to Add Parentheses (M), 95 Unique Binary Search Trees II (M), 53 Maximum Subarray (divide-and-conquer version), 23 Merge k Sorted Lists (merge in pairs).
+**More:** 169 Majority Element (E), 148 Sort List (M), 215 Kth Largest Element in an Array (M), 315 Count of Smaller Numbers After Self (H), 327 Count of Range Sum (H), 241 Different Ways to Add Parentheses (M), 95 Unique Binary Search Trees II (M), 53 Maximum Subarray (M, divide-and-conquer version), 23 Merge k Sorted Lists (H, merge in pairs).
 
 ## 9. Make it stay - the teacher's anchors
 

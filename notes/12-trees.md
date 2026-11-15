@@ -90,6 +90,7 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/25` | Easy | Binary Tree Inorder Traversal | [#94](https://leetcode.com/problems/binary-tree-inorder-traversal/) | Tree traversal with an explicit stack (simulate recursion) |
 | `trees/26` | Easy | Binary Tree Postorder Traversal | [#145](https://leetcode.com/problems/binary-tree-postorder-traversal/) | Postorder = reverse of (node, right, left) preorder |
 | `trees/28` | Easy | Binary Tree Paths | [#257](https://leetcode.com/problems/binary-tree-paths/) | DFS with a path list that is extended and then undone (backtracking) |
+| `trees/29` | Easy | Count Complete Tree Nodes | [#222](https://leetcode.com/problems/count-complete-tree-nodes/) | Use the tree's structure: one half is always a perfect tree |
 | `trees/31` | Easy | Search in a Binary Search Tree | [#700](https://leetcode.com/problems/search-in-a-binary-search-tree/) | BST descent: discard half the tree at every step |
 | `trees/34` | Easy | Sum of Left Leaves | [#404](https://leetcode.com/problems/sum-of-left-leaves/) | Look at the child from the parent (or pass an is_left flag down) |
 | `trees/35` | Easy | Merge Two Binary Trees | [#617](https://leetcode.com/problems/merge-two-binary-trees/) | Parallel DFS over two trees |
@@ -116,7 +117,6 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/22` | Medium | Sum Root to Leaf Numbers | [#129](https://leetcode.com/problems/sum-root-to-leaf-numbers/) | DFS carrying an accumulated value (top-down) |
 | `trees/23` | Medium | Find Largest Value in Each Tree Row | [#515](https://leetcode.com/problems/find-largest-value-in-each-tree-row/) | BFS by levels (aggregate per level) |
 | `trees/27` | Medium | Binary Tree Zigzag Level Order Traversal | [#103](https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/) | BFS level by level + reverse alternate levels |
-| `trees/29` | Medium | Count Complete Tree Nodes | [#222](https://leetcode.com/problems/count-complete-tree-nodes/) | Use the tree's structure: one half is always a perfect tree |
 | `trees/30` | Medium | Construct Binary Tree from Inorder and Postorder Traversal | [#106](https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/) | Divide & conquer on traversals: root from one order, split point from the other |
 | `trees/32` | Medium | Convert BST to Greater Tree | [#538](https://leetcode.com/problems/convert-bst-to-greater-tree/) | Reverse inorder (right, node, left) with a running sum |
 | `trees/33` | Medium | Path Sum II | [#113](https://leetcode.com/problems/path-sum-ii/) | DFS + backtracking with a remaining-sum parameter |
@@ -137,7 +137,7 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 
 Start one with `python dsa.py start trees/1`.
 
-**More:** 226 Invert Binary Tree (E), 100 Same Tree (E), 101 Symmetric Tree (E), 543 Diameter of Binary Tree (E), 110 Balanced Binary Tree (E), 112 Path Sum (E), 199 Right Side View (M), 230 Kth Smallest in a BST (M), 235 LCA of a BST (M), 105 Construct from Preorder and Inorder (M), 114 Flatten to Linked List (M), 437 Path Sum III (M), 337 House Robber III (M), 297 Serialize and Deserialize (H), 450 Delete Node in a BST (M).
+**More:** 226 Invert Binary Tree (E), 100 Same Tree (E), 101 Symmetric Tree (E), 543 Diameter of Binary Tree (E), 110 Balanced Binary Tree (E), 112 Path Sum (E), 199 Binary Tree Right Side View (M), 230 Kth Smallest Element in a BST (M), 235 Lowest Common Ancestor of a Binary Search Tree (M), 105 Construct Binary Tree from Preorder and Inorder Traversal (M), 114 Flatten Binary Tree to Linked List (M), 437 Path Sum III (M), 337 House Robber III (M), 297 Serialize and Deserialize Binary Tree (H), 450 Delete Node in a BST (M).
 
 ## 9. Make it stay - the teacher's anchors
 

@@ -86,6 +86,8 @@ def min_eating_speed(piles, h):
 | `binary_search/12` | Easy | Valid Perfect Square | [#367](https://leetcode.com/problems/valid-perfect-square/) | Binary search on the answer (monotone predicate r*r vs num) |
 | `binary_search/16` | Easy | Find Smallest Letter Greater Than Target | [#744](https://leetcode.com/problems/find-smallest-letter-greater-than-target/) | Upper-bound binary search (first element strictly greater) |
 | `binary_search/22` | Easy | Kth Missing Positive Number | [#1539](https://leetcode.com/problems/kth-missing-positive-number/) | Binary search on 'how many are missing so far' |
+| `binary_search/23` | Easy | Arranging Coins | [#441](https://leetcode.com/problems/arranging-coins/) | Binary search on the answer |
+| `binary_search/25` | Easy | Find the Distance Value Between Two Arrays | [#1385](https://leetcode.com/problems/find-the-distance-value-between-two-arrays/) | Range-emptiness test with binary search |
 | `binary_search/2` | Medium | Search in Rotated Sorted Array | [#33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary search with 'which half is sorted?' reasoning |
 | `binary_search/3` | Medium | Koko Eating Bananas | [#875](https://leetcode.com/problems/koko-eating-bananas/) | Binary search on the ANSWER (monotonic feasibility predicate) |
 | `binary_search/7` | Medium | Find First and Last Position of Element in Sorted Array | [#34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Two lower-bound searches (left edge, right edge) |
@@ -99,13 +101,23 @@ def min_eating_speed(piles, h):
 | `binary_search/19` | Medium | Minimum Number of Days to Make m Bouquets | [#1482](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/) | Binary search on the answer + a greedy feasibility check |
 | `binary_search/20` | Medium | Peak Index in a Mountain Array | [#852](https://leetcode.com/problems/peak-index-in-a-mountain-array/) | Binary search on a slope (rising vs falling) |
 | `binary_search/21` | Medium | Find the Smallest Divisor Given a Threshold | [#1283](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/) | Binary search on the answer (monotone predicate) |
+| `binary_search/24` | Medium | Most Profit Assigning Work | [#826](https://leetcode.com/problems/most-profit-assigning-work/) | Sort + prefix maximum + binary search |
+| `binary_search/26` | Medium | Minimum Limit of Balls in a Bag | [#1760](https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/) | Binary search on the answer with a feasibility check |
+| `binary_search/27` | Medium | Minimum Speed to Arrive on Time | [#1870](https://leetcode.com/problems/minimum-speed-to-arrive-on-time/) | Binary search on the answer (rounding up per leg) |
+| `binary_search/28` | Medium | Minimum Time to Complete Trips | [#2187](https://leetcode.com/problems/minimum-time-to-complete-trips/) | Binary search on the answer (time) |
+| `binary_search/29` | Medium | Maximum Candies Allocated to K Children | [#2226](https://leetcode.com/problems/maximum-candies-allocated-to-k-children/) | Binary search on the answer (maximise a feasible value) |
+| `binary_search/30` | Medium | Successful Pairs of Spells and Potions | [#2300](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Sort once + binary search per query |
+| `binary_search/31` | Medium | Magnetic Force Between Two Balls | [#1552](https://leetcode.com/problems/magnetic-force-between-two-balls/) | Binary search on the answer + greedy placement check |
+| `binary_search/34` | Medium | Minimum Time to Repair Cars | [#2594](https://leetcode.com/problems/minimum-time-to-repair-cars/) | Binary search on the answer (time) |
 | `binary_search/4` | Hard | Split Array Largest Sum | [#410](https://leetcode.com/problems/split-array-largest-sum/) | Binary search on the answer + greedy feasibility check |
 | `binary_search/5` | Hard | Median of Two Sorted Arrays | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary search on a partition point (not on values) |
 | `binary_search/18` | Hard | Find Minimum in Rotated Sorted Array II | [#154](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) | Binary search against the right end, with a safe shrink on ties |
+| `binary_search/32` | Hard | Find K-th Smallest Pair Distance | [#719](https://leetcode.com/problems/find-k-th-smallest-pair-distance/) | Binary search on the answer + two-pointer counting |
+| `binary_search/33` | Hard | Kth Smallest Number in Multiplication Table | [#668](https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/) | Binary search on the value with a counting function |
 
 Start one with `python dsa.py start binary_search/1`.
 
-**More:** 35 Search Insert Position (E), 34 First and Last Position (M), 153 Find Minimum in Rotated Sorted Array (M), 74 Search a 2D Matrix (M), 162 Find Peak Element (M), 69 Sqrt(x) (E), 1011 Capacity to Ship Packages (M), 981 Time Based Key-Value Store (M), 378 Kth Smallest in Sorted Matrix (M), 719 Find K-th Smallest Pair Distance (H).
+**More:** 35 Search Insert Position (E), 34 Find First and Last Position of Element in Sorted Array (M), 153 Find Minimum in Rotated Sorted Array (M), 74 Search a 2D Matrix (M), 162 Find Peak Element (M), 69 Sqrt(x) (E), 1011 Capacity To Ship Packages Within D Days (M), 981 Time Based Key-Value Store (M), 378 Kth Smallest Element in a Sorted Matrix (M), 719 Find K-th Smallest Pair Distance (H).
 
 ## 9. Make it stay - the teacher's anchors
 

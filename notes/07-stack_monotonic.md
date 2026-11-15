@@ -77,6 +77,8 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/12` | Easy | Remove All Adjacent Duplicates In String | [#1047](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/) | Stack as a self-cancelling accumulator |
 | `stack_monotonic/18` | Easy | Remove Outermost Parentheses | [#1021](https://leetcode.com/problems/remove-outermost-parentheses/) | Depth counter instead of a stack |
 | `stack_monotonic/23` | Easy | Make The String Great | [#1544](https://leetcode.com/problems/make-the-string-great/) | Stack cancellation of adjacent pairs |
+| `stack_monotonic/33` | Easy | Final Prices With a Special Discount in a Shop | [#1475](https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/) | Next smaller element (monotonic stack) |
+| `stack_monotonic/34` | Easy | Minimum String Length After Removing Substrings | [#2696](https://leetcode.com/problems/minimum-string-length-after-removing-substrings/) | Stack for cascading adjacent deletions |
 | `stack_monotonic/2` | Medium | Daily Temperatures | [#739](https://leetcode.com/problems/daily-temperatures/) | Monotonic (decreasing) stack: 'next greater element' |
 | `stack_monotonic/5` | Medium | Evaluate Reverse Polish Notation | [#150](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack evaluation (operands wait for their operator) |
 | `stack_monotonic/6` | Medium | Decode String | [#394](https://leetcode.com/problems/decode-string/) | Stack of contexts for nested structures |
@@ -91,10 +93,19 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/17` | Medium | Remove Duplicate Letters | [#316](https://leetcode.com/problems/remove-duplicate-letters/) | Monotonic stack with 'can I drop it' (last-occurrence) guard |
 | `stack_monotonic/19` | Medium | Minimum Add to Make Parentheses Valid | [#921](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/) | Balance counter (stack reduced to two integers) |
 | `stack_monotonic/20` | Medium | Sum of Subarray Minimums | [#907](https://leetcode.com/problems/sum-of-subarray-minimums/) | Monotonic stack: contribution technique (each element's reach) |
+| `stack_monotonic/24` | Medium | Remove All Adjacent Duplicates in String II | [#1209](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/) | Stack of (value, count) |
+| `stack_monotonic/25` | Medium | Score of Parentheses | [#856](https://leetcode.com/problems/score-of-parentheses/) | Depth counting instead of explicit recursion |
+| `stack_monotonic/26` | Medium | Reverse Substrings Between Each Pair of Parentheses | [#1190](https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/) | Pair matching + 'teleport and reverse direction' walk |
+| `stack_monotonic/27` | Medium | Removing Stars From a String | [#2390](https://leetcode.com/problems/removing-stars-from-a-string/) | Stack as an undo buffer |
+| `stack_monotonic/28` | Medium | Exclusive Time of Functions | [#636](https://leetcode.com/problems/exclusive-time-of-functions/) | Call-stack simulation with timestamps |
+| `stack_monotonic/29` | Medium | Longest Well-Performing Interval | [#1124](https://leetcode.com/problems/longest-well-performing-interval/) | Prefix sums + first-occurrence map (+1/-1 walk) |
+| `stack_monotonic/30` | Medium | Maximum Width Ramp | [#962](https://leetcode.com/problems/maximum-width-ramp/) | Monotonic stack of candidates + right-to-left scan |
+| `stack_monotonic/31` | Medium | Find the Most Competitive Subsequence | [#1673](https://leetcode.com/problems/find-the-most-competitive-subsequence/) | Monotonic stack with a length budget |
 | `stack_monotonic/3` | Hard | Largest Rectangle in Histogram | [#84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic (increasing) stack: nearest smaller element on both sides |
 | `stack_monotonic/4` | Hard | Sliding Window Maximum | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Monotonic deque (decreasing) over a sliding window |
 | `stack_monotonic/21` | Hard | Maximal Rectangle | [#85](https://leetcode.com/problems/maximal-rectangle/) | Reduce to Largest Rectangle in Histogram per row |
 | `stack_monotonic/22` | Hard | Basic Calculator | [#224](https://leetcode.com/problems/basic-calculator/) | Stack of (result, sign) saved at each '(' |
+| `stack_monotonic/32` | Hard | Number of Visible People in a Queue | [#1944](https://leetcode.com/problems/number-of-visible-people-in-a-queue/) | Monotonic stack processed right to left |
 
 Start one with `python dsa.py start stack_monotonic/1`.
 

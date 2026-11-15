@@ -86,6 +86,18 @@ def my_pow(x, n):
 | `bits_math/19` | Easy | Excel Sheet Column Number | [#171](https://leetcode.com/problems/excel-sheet-column-number/) | Positional number system (Horner's rule in base 26) |
 | `bits_math/20` | Easy | Power of Three | [#326](https://leetcode.com/problems/power-of-three/) | Divisibility of the largest power (3 is prime) |
 | `bits_math/21` | Easy | Ugly Number | [#263](https://leetcode.com/problems/ugly-number/) | Strip the allowed prime factors, check what is left |
+| `bits_math/23` | Easy | Power of Four | [#342](https://leetcode.com/problems/power-of-four/) | Bit tricks: single set bit + position mask |
+| `bits_math/24` | Easy | Convert a Number to Hexadecimal | [#405](https://leetcode.com/problems/convert-a-number-to-hexadecimal/) | Bit masking and shifting, 4 bits per hex digit |
+| `bits_math/25` | Easy | Number Complement | [#476](https://leetcode.com/problems/number-complement/) | XOR with an all-ones mask |
+| `bits_math/26` | Easy | Binary Number with Alternating Bits | [#693](https://leetcode.com/problems/binary-number-with-alternating-bits/) | Shift-and-XOR to compare neighbouring bits |
+| `bits_math/27` | Easy | Prime Number of Set Bits in Binary Representation | [#762](https://leetcode.com/problems/prime-number-of-set-bits-in-binary-representation/) | Popcount + tiny precomputed prime set |
+| `bits_math/28` | Easy | Binary Gap | [#868](https://leetcode.com/problems/binary-gap/) | Single bit scan remembering the previous set bit |
+| `bits_math/29` | Easy | Number of Steps to Reduce a Number to Zero | [#1342](https://leetcode.com/problems/number-of-steps-to-reduce-a-number-to-zero/) | Count bit operations instead of simulating |
+| `bits_math/30` | Easy | Add to Array-Form of Integer | [#989](https://leetcode.com/problems/add-to-array-form-of-integer/) | Schoolbook addition with k doubling as the carry |
+| `bits_math/31` | Easy | Base 7 | [#504](https://leetcode.com/problems/base-7/) | Repeated division to change base |
+| `bits_math/32` | Easy | Add Digits | [#258](https://leetcode.com/problems/add-digits/) | Digital root via modulo 9 |
+| `bits_math/33` | Easy | Minimum Bit Flips to Convert Number | [#2220](https://leetcode.com/problems/minimum-bit-flips-to-convert-number/) | XOR + popcount (Hamming distance) |
+| `bits_math/35` | Easy | XOR Operation in an Array | [#1486](https://leetcode.com/problems/xor-operation-in-an-array/) | XOR prefix patterns (period 4) |
 | `bits_math/3` | Medium | Sum of Two Integers | [#371](https://leetcode.com/problems/sum-of-two-integers/) | Bit manipulation: XOR = sum without carry, (AND << 1) = carry |
 | `bits_math/4` | Medium | Pow(x, n) | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by squaring (binary decomposition of the exponent) |
 | `bits_math/8` | Medium | Reverse Integer | [#7](https://leetcode.com/problems/reverse-integer/) | Digit extraction with divmod |
@@ -95,10 +107,11 @@ def my_pow(x, n):
 | `bits_math/15` | Medium | Bitwise AND of Numbers Range | [#201](https://leetcode.com/problems/bitwise-and-of-numbers-range/) | Common binary prefix of the two endpoints |
 | `bits_math/16` | Medium | Factorial Trailing Zeroes | [#172](https://leetcode.com/problems/factorial-trailing-zeroes/) | Count prime factors (the scarcer prime, 5, decides) |
 | `bits_math/22` | Medium | Integer to Roman | [#12](https://leetcode.com/problems/integer-to-roman/) | Greedy over a descending value table |
+| `bits_math/34` | Medium | Divide Two Integers | [#29](https://leetcode.com/problems/divide-two-integers/) | Binary long division with shifts |
 
 Start one with `python dsa.py start bits_math/1`.
 
-**More:** 191 Number of 1 Bits (E), 231 Power of Two (E), 268 Missing Number (E), 190 Reverse Bits (E), 137 Single Number II (M), 260 Single Number III (M), 201 Bitwise AND of Numbers Range (M), 421 Maximum XOR of Two Numbers (M), 1239 Maximum Length of a Concatenated String with Unique Characters (M), 204 Count Primes (M), 172 Factorial Trailing Zeroes (M), 1071 GCD of Strings (E), 149 Max Points on a Line (H).
+**More:** 191 Number of 1 Bits (E), 231 Power of Two (E), 268 Missing Number (E), 190 Reverse Bits (E), 137 Single Number II (M), 260 Single Number III (M), 201 Bitwise AND of Numbers Range (M), 421 Maximum XOR of Two Numbers in an Array (M), 1239 Maximum Length of a Concatenated String with Unique Characters (M), 204 Count Primes (M), 172 Factorial Trailing Zeroes (M), 1071 Greatest Common Divisor of Strings (E), 149 Max Points on a Line (H).
 
 ## 9. Make it stay - the teacher's anchors
 

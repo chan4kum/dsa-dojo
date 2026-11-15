@@ -67,14 +67,26 @@ Static range query: `P = [0]; for x in a: P.append(P[-1] + x)` then `P[r+1] - P[
 | `prefix_sums/1` | Easy | Find Pivot Index | [#724](https://leetcode.com/problems/find-pivot-index/) | Prefix sum (running total) with total-minus-left trick |
 | `prefix_sums/6` | Easy | Running Sum of 1d Array | [#1480](https://leetcode.com/problems/running-sum-of-1d-array/) | Prefix sum (the base of every range-sum trick) |
 | `prefix_sums/7` | Easy | Sum of All Odd Length Subarrays | [#1588](https://leetcode.com/problems/sum-of-all-odd-length-subarrays/) | Contribution counting: how many subarrays contain each element |
+| `prefix_sums/15` | Easy | Longest Subsequence With Limited Sum | [#2389](https://leetcode.com/problems/longest-subsequence-with-limited-sum/) | Sort + prefix sums + binary search |
+| `prefix_sums/18` | Easy | Check if All the Integers in a Range Are Covered | [#1893](https://leetcode.com/problems/check-if-all-the-integers-in-a-range-are-covered/) | Difference array coverage count |
 | `prefix_sums/2` | Medium | Product of Array Except Self | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / suffix accumulation (prefix idea works for any associative operation) |
 | `prefix_sums/3` | Medium | Subarray Sum Equals K | [#560](https://leetcode.com/problems/subarray-sum-equals-k/) | Prefix sum + hash map of counts ('how many earlier prefixes equal current - k?') |
 | `prefix_sums/4` | Medium | Contiguous Array | [#525](https://leetcode.com/problems/contiguous-array/) | Prefix sum + first-occurrence map (transform 0 -> -1) |
 | `prefix_sums/5` | Medium | Subarray Sums Divisible by K | [#974](https://leetcode.com/problems/subarray-sums-divisible-by-k/) | Prefix sums modulo k (same remainder = divisible difference) |
+| `prefix_sums/8` | Medium | Maximum Sum of Two Non-Overlapping Subarrays | [#1031](https://leetcode.com/problems/maximum-sum-of-two-non-overlapping-subarrays/) | Prefix sums + best-so-far on one side |
+| `prefix_sums/9` | Medium | Can Make Palindrome from Substring | [#1177](https://leetcode.com/problems/can-make-palindrome-from-substring/) | Prefix parity bitmask (XOR) |
+| `prefix_sums/10` | Medium | Matrix Block Sum | [#1314](https://leetcode.com/problems/matrix-block-sum/) | 2D prefix sums |
+| `prefix_sums/11` | Medium | Find the Longest Substring Containing Vowels in Even Counts | [#1371](https://leetcode.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/) | Prefix parity mask + first-occurrence map |
+| `prefix_sums/12` | Medium | Maximum Number of Non-Overlapping Subarrays With Sum Equals Target | [#1546](https://leetcode.com/problems/maximum-number-of-non-overlapping-subarrays-with-sum-equals-target/) | Greedy + prefix-sum set with reset |
+| `prefix_sums/13` | Medium | Plates Between Candles | [#2055](https://leetcode.com/problems/plates-between-candles/) | Prefix sums + nearest-candle lookup tables |
+| `prefix_sums/14` | Medium | Number of Ways to Split Array | [#2270](https://leetcode.com/problems/number-of-ways-to-split-array/) | Running prefix sum against the total |
+| `prefix_sums/16` | Medium | Count Vowel Strings in Ranges | [#2559](https://leetcode.com/problems/count-vowel-strings-in-ranges/) | Prefix sums over a 0/1 indicator |
+| `prefix_sums/17` | Medium | Find the Score of All Prefixes of an Array | [#2640](https://leetcode.com/problems/find-the-score-of-all-prefixes-of-an-array/) | Running max + running prefix sum |
+| `prefix_sums/19` | Hard | Number of Submatrices That Sum to Target | [#1074](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/) | Reduce 2D to 1D (row pairs) + prefix-sum hashmap |
 
 Start one with `python dsa.py start prefix_sums/1`.
 
-**More:** 303 Range Sum Query Immutable (E), 304 Range Sum Query 2D (M), 525 Contiguous Array (M), 974 Subarray Sums Divisible by K (M), 1109 Corporate Flight Bookings (M), 1094 Car Pooling (M), 523 Continuous Subarray Sum (M).
+**More:** 303 Range Sum Query - Immutable (E), 304 Range Sum Query 2D - Immutable (M), 525 Contiguous Array (M), 974 Subarray Sums Divisible by K (M), 1109 Corporate Flight Bookings (M), 1094 Car Pooling (M), 523 Continuous Subarray Sum (M).
 
 ## 9. Make it stay - the teacher's anchors
 

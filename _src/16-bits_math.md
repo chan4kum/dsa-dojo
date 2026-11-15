@@ -43,4 +43,4 @@
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 191 Number of 1 Bits (E), 231 Power of Two (E), 268 Missing Number (E), 190 Reverse Bits (E), 137 Single Number II (M), 260 Single Number III (M), 201 Bitwise AND of Numbers Range (M), 421 Maximum XOR of Two Numbers (M), 1239 Maximum Length of a Concatenated String with Unique Characters (M), 204 Count Primes (M), 172 Factorial Trailing Zeroes (M), 1071 GCD of Strings (E), 149 Max Points on a Line (H).
+**More:** 191 Number of 1 Bits (E), 231 Power of Two (E), 268 Missing Number (E), 190 Reverse Bits (E), 137 Single Number II (M), 260 Single Number III (M), 201 Bitwise AND of Numbers Range (M), 421 Maximum XOR of Two Numbers in an Array (M), 1239 Maximum Length of a Concatenated String with Unique Characters (M), 204 Count Primes (M), 172 Factorial Trailing Zeroes (M), 1071 Greatest Common Divisor of Strings (E), 149 Max Points on a Line (H).

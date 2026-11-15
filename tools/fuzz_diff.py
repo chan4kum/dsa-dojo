@@ -315,7 +315,7 @@ def _words_chain():
 
 
 G3 = {
-    ("dynamic_programming", "Min Falling Path Sum"): lambda: (_square_grid(-9, 9),),
+    ("dynamic_programming", "Minimum Falling Path Sum"): lambda: (_square_grid(-9, 9),),
     ("dynamic_programming", "Maximal Square"): lambda: (
         (lambda r, c: ([[random.choice("01") for _ in range(c)] for _ in range(r)],))(R(1, 5), R(1, 5)),
     )[0],

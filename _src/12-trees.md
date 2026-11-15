@@ -48,4 +48,4 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 226 Invert Binary Tree (E), 100 Same Tree (E), 101 Symmetric Tree (E), 543 Diameter of Binary Tree (E), 110 Balanced Binary Tree (E), 112 Path Sum (E), 199 Right Side View (M), 230 Kth Smallest in a BST (M), 235 LCA of a BST (M), 105 Construct from Preorder and Inorder (M), 114 Flatten to Linked List (M), 437 Path Sum III (M), 337 House Robber III (M), 297 Serialize and Deserialize (H), 450 Delete Node in a BST (M).
+**More:** 226 Invert Binary Tree (E), 100 Same Tree (E), 101 Symmetric Tree (E), 543 Diameter of Binary Tree (E), 110 Balanced Binary Tree (E), 112 Path Sum (E), 199 Binary Tree Right Side View (M), 230 Kth Smallest Element in a BST (M), 235 Lowest Common Ancestor of a Binary Search Tree (M), 105 Construct Binary Tree from Preorder and Inorder Traversal (M), 114 Flatten Binary Tree to Linked List (M), 437 Path Sum III (M), 337 House Robber III (M), 297 Serialize and Deserialize Binary Tree (H), 450 Delete Node in a BST (M).

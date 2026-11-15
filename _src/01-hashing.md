@@ -42,4 +42,4 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 ## 8. Practice ladder
 {{ladder}}
 
-**More of this pattern (LeetCode):** 217 Contains Duplicate (E), 242 Valid Anagram (E), 387 First Unique Character (E), 202 Happy Number (E), 205 Isomorphic Strings (E), 347 Top K Frequent (M), 454 4Sum II (M), 138 Copy List with Random Pointer (M), 36 Valid Sudoku (M), 560 Subarray Sum Equals K (M).
+**More of this pattern (LeetCode):** 217 Contains Duplicate (E), 242 Valid Anagram (E), 387 First Unique Character in a String (E), 202 Happy Number (E), 205 Isomorphic Strings (E), 347 Top K Frequent Elements (M), 454 4Sum II (M), 138 Copy List with Random Pointer (M), 36 Valid Sudoku (M), 560 Subarray Sum Equals K (M).

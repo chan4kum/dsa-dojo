@@ -85,6 +85,7 @@ def reverse_list(head):
 | `linked_list/8` | Easy | Palindrome Linked List | [#234](https://leetcode.com/problems/palindrome-linked-list/) | Fast/slow to find the middle + in-place reverse + two-pointer compare |
 | `linked_list/12` | Easy | Remove Duplicates from Sorted List | [#83](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | Single pointer, skip equal neighbours |
 | `linked_list/20` | Easy | Remove Linked List Elements | [#203](https://leetcode.com/problems/remove-linked-list-elements/) | Dummy head + delete-after-prev |
+| `linked_list/23` | Easy | Convert Binary Number in a Linked List to Integer | [#1290](https://leetcode.com/problems/convert-binary-number-in-a-linked-list-to-integer/) | Horner's rule while walking the list |
 | `linked_list/3` | Medium | Remove Nth Node From End of List | [#19](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Two pointers with a fixed gap + dummy head node |
 | `linked_list/4` | Medium | Find the Duplicate Number | [#287](https://leetcode.com/problems/find-the-duplicate-number/) | Fast & slow pointers on an implicit linked list (Floyd cycle detection) |
 | `linked_list/9` | Medium | Add Two Numbers | [#2](https://leetcode.com/problems/add-two-numbers/) | Simulate grade-school addition with a carry |
@@ -98,6 +99,16 @@ def reverse_list(head):
 | `linked_list/19` | Medium | Odd Even Linked List | [#328](https://leetcode.com/problems/odd-even-linked-list/) | Two interleaved chains built in one pass, then joined |
 | `linked_list/21` | Medium | Add Two Numbers II | [#445](https://leetcode.com/problems/add-two-numbers-ii/) | Stacks to read a list backwards; build the answer by prepending |
 | `linked_list/22` | Medium | Sort List | [#148](https://leetcode.com/problems/sort-list/) | Merge sort on a linked list (split with slow/fast, merge with dummy) |
+| `linked_list/24` | Medium | Delete the Middle Node of a Linked List | [#2095](https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/) | Fast and slow pointers with a dummy head |
+| `linked_list/25` | Medium | Maximum Twin Sum of a Linked List | [#2130](https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/) | Find middle + reverse second half |
+| `linked_list/26` | Medium | Split Linked List in Parts | [#725](https://leetcode.com/problems/split-linked-list-in-parts/) | Measure first, then cut the list in place |
+| `linked_list/27` | Medium | Next Greater Node In Linked List | [#1019](https://leetcode.com/problems/next-greater-node-in-linked-list/) | Monotonic stack |
+| `linked_list/28` | Medium | Swapping Nodes in a Linked List | [#1721](https://leetcode.com/problems/swapping-nodes-in-a-linked-list/) | Two pointers with a fixed gap (one pass) |
+| `linked_list/29` | Medium | Merge Nodes in Between Zeros | [#2181](https://leetcode.com/problems/merge-nodes-in-between-zeros/) | Single pass with a running sum (reusing nodes) |
+| `linked_list/30` | Medium | Linked List Components | [#817](https://leetcode.com/problems/linked-list-components/) | Hash set + count run starts |
+| `linked_list/31` | Medium | Merge In Between Linked Lists | [#1669](https://leetcode.com/problems/merge-in-between-linked-lists/) | Splice a list between two anchor nodes |
+| `linked_list/32` | Medium | Find the Minimum and Maximum Number of Nodes Between Critical Points | [#2058](https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/) | Single pass remembering first and previous special positions |
+| `linked_list/33` | Medium | Remove Nodes From Linked List | [#2487](https://leetcode.com/problems/remove-nodes-from-linked-list/) | Monotonic (non-increasing) stack |
 | `linked_list/5` | Hard | Reverse Nodes in k-Group | [#25](https://leetcode.com/problems/reverse-nodes-in-k-group/) | Sub-list reversal with a dummy head and boundary reconnection |
 | `linked_list/11` | Hard | Merge k Sorted Lists | [#23](https://leetcode.com/problems/merge-k-sorted-lists/) | Heap of k candidates (k-way merge) |
 

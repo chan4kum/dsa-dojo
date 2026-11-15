@@ -80,7 +80,6 @@ def can_jump(nums):
 | `greedy/16` | Easy | Array Partition | [#561](https://leetcode.com/problems/array-partition/) | Sort, then pair neighbours |
 | `greedy/17` | Easy | Can Place Flowers | [#605](https://leetcode.com/problems/can-place-flowers/) | Greedy left-to-right placement |
 | `greedy/19` | Easy | Split a String in Balanced Strings | [#1221](https://leetcode.com/problems/split-a-string-in-balanced-strings/) | Running balance / greedy cut at every zero |
-| `greedy/20` | Easy | Assign Cookies | [#455](https://leetcode.com/problems/assign-cookies/) | Sort both sides and match greedily |
 | `greedy/1` | Medium | Jump Game | [#55](https://leetcode.com/problems/jump-game/) | Greedy: maintain the farthest reachable frontier |
 | `greedy/2` | Medium | Gas Station | [#134](https://leetcode.com/problems/gas-station/) | Greedy with a 'discard the failed prefix' argument |
 | `greedy/3` | Medium | Partition Labels | [#763](https://leetcode.com/problems/partition-labels/) | Greedy interval extension using last occurrences |

@@ -73,10 +73,18 @@ Sweep-line skeleton (max overlap): `events = sorted([(s, 1), (e, -1) for each]);
 | `intervals/7` | Medium | Interval List Intersections | [#986](https://leetcode.com/problems/interval-list-intersections/) | Two pointers over two sorted interval lists |
 | `intervals/9` | Medium | Remove Covered Intervals | [#1288](https://leetcode.com/problems/remove-covered-intervals/) | Sort (start asc, end desc) + running max end |
 | `intervals/11` | Medium | Minimum Time Difference | [#539](https://leetcode.com/problems/minimum-time-difference/) | Sort, then compare neighbours (plus the circular wrap-around) |
+| `intervals/12` | Medium | Find Right Interval | [#436](https://leetcode.com/problems/find-right-interval/) | Sort once + binary search per query |
+| `intervals/13` | Medium | Maximum Length of Pair Chain | [#646](https://leetcode.com/problems/maximum-length-of-pair-chain/) | Greedy: sort by end, take the earliest finisher |
+| `intervals/14` | Medium | Car Pooling | [#1094](https://leetcode.com/problems/car-pooling/) | Difference array / sweep line |
+| `intervals/15` | Medium | Corporate Flight Bookings | [#1109](https://leetcode.com/problems/corporate-flight-bookings/) | Difference array |
+| `intervals/16` | Medium | Meeting Scheduler | [#1229](https://leetcode.com/problems/meeting-scheduler/) | Two pointers over two sorted interval lists |
+| `intervals/17` | Medium | Remove Interval | [#1272](https://leetcode.com/problems/remove-interval/) | Per-interval case analysis |
+| `intervals/19` | Medium | Maximum Distance in Arrays | [#624](https://leetcode.com/problems/maximum-distance-in-arrays/) | Running min/max across a scan |
+| `intervals/18` | Hard | Meeting Rooms III | [#2402](https://leetcode.com/problems/meeting-rooms-iii/) | Simulation with two heaps |
 
 Start one with `python dsa.py start intervals/1`.
 
-**More:** 252 Meeting Rooms (E), 253 Meeting Rooms II (M), 452 Minimum Arrows to Burst Balloons (M), 986 Interval List Intersections (M), 1094 Car Pooling (M), 218 The Skyline Problem (H), 759 Employee Free Time (H).
+**More:** 252 Meeting Rooms (E), 253 Meeting Rooms II (M), 452 Minimum Number of Arrows to Burst Balloons (M), 986 Interval List Intersections (M), 1094 Car Pooling (M), 218 The Skyline Problem (H), 759 Employee Free Time (H).
 
 ## 9. Make it stay - the teacher's anchors
 

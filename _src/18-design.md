@@ -50,4 +50,4 @@ Interview note: be ready to write the doubly linked list **by hand** (head/tail 
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 232 Implement Queue using Stacks (E), 705 Design HashSet (E), 706 Design HashMap (E), 380 Insert Delete GetRandom O(1) (M), 211 Design Add and Search Words (M), 355 Design Twitter (M), 981 Time Based Key-Value Store (M), 1146 Snapshot Array (M), 307 Range Sum Query - Mutable (M), 460 LFU Cache (H), 432 All O`one Data Structure (H), 297 Serialize and Deserialize Binary Tree (H).
+**More:** 232 Implement Queue using Stacks (E), 705 Design HashSet (E), 706 Design HashMap (E), 380 Insert Delete GetRandom O(1) (M), 211 Design Add and Search Words Data Structure (M), 355 Design Twitter (M), 981 Time Based Key-Value Store (M), 1146 Snapshot Array (M), 307 Range Sum Query - Mutable (M), 460 LFU Cache (H), 432 All O`one Data Structure (H), 297 Serialize and Deserialize Binary Tree (H).

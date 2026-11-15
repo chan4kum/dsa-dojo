@@ -70,6 +70,8 @@ def length_of_longest_substring(s):
 |---|---|---|---|---|
 | `sliding_window/1` | Easy | Maximum Average Subarray I | [#643](https://leetcode.com/problems/maximum-average-subarray-i/) | Fixed-size sliding window (add the entering element, remove the leaving one) |
 | `sliding_window/5` | Easy | Best Time to Buy and Sell Stock | [#121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Running minimum (one-pass 'best so far' scan) |
+| `sliding_window/25` | Easy | Minimum Recolors to Get K Consecutive Black Blocks | [#2379](https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/) | Fixed-size sliding window |
+| `sliding_window/29` | Easy | Minimum Difference Between Highest and Lowest of K Scores | [#1984](https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/) | Sort + fixed-size window |
 | `sliding_window/2` | Medium | Longest Substring Without Repeating Characters | [#3](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Variable-size sliding window with a 'last seen' map (expand right, shrink left to restore validity) |
 | `sliding_window/3` | Medium | Minimum Size Subarray Sum | [#209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Variable window that SHRINKS while the condition holds (needs non-negative values) |
 | `sliding_window/6` | Medium | Longest Repeating Character Replacement | [#424](https://leetcode.com/problems/longest-repeating-character-replacement/) | Sliding window with a validity condition (length - max_freq <= k) |
@@ -82,12 +84,23 @@ def length_of_longest_substring(s):
 | `sliding_window/13` | Medium | Maximum Number of Vowels in a Substring of Given Length | [#1456](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) | Fixed-size sliding window with a running count |
 | `sliding_window/14` | Medium | Grumpy Bookstore Owner | [#1052](https://leetcode.com/problems/grumpy-bookstore-owner/) | Fixed-size sliding window maximising the extra gain |
 | `sliding_window/15` | Medium | Binary Subarrays With Sum | [#930](https://leetcode.com/problems/binary-subarrays-with-sum/) | Prefix sum + hash map of counts |
+| `sliding_window/17` | Medium | Get Equal Substrings Within Budget | [#1208](https://leetcode.com/problems/get-equal-substrings-within-budget/) | Variable-size sliding window (non-negative values) |
+| `sliding_window/18` | Medium | Count Number of Nice Subarrays | [#1248](https://leetcode.com/problems/count-number-of-nice-subarrays/) | Exactly k = atMost(k) - atMost(k - 1) |
+| `sliding_window/19` | Medium | Number of Substrings Containing All Three Characters | [#1358](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/) | Count by right endpoint using last-seen positions |
+| `sliding_window/20` | Medium | Maximum Points You Can Obtain from Cards | [#1423](https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards/) | Fixed-size window over a circular view of the ends |
+| `sliding_window/21` | Medium | Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit | [#1438](https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/) | Sliding window + monotonic deques for min and max |
+| `sliding_window/22` | Medium | Maximum Erasure Value | [#1695](https://leetcode.com/problems/maximum-erasure-value/) | Sliding window with a set (unique elements) |
+| `sliding_window/23` | Medium | Minimum Operations to Reduce X to Zero | [#1658](https://leetcode.com/problems/minimum-operations-to-reduce-x-to-zero/) | Complement trick: longest middle subarray with a target sum |
+| `sliding_window/24` | Medium | Maximize the Confusion of an Exam | [#2024](https://leetcode.com/problems/maximize-the-confusion-of-an-exam/) | Longest window with at most k 'bad' elements (run for both targets) |
+| `sliding_window/26` | Medium | Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold | [#1343](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/) | Fixed-size sliding window sum |
+| `sliding_window/27` | Medium | Maximum Sum of Distinct Subarrays With Length K | [#2461](https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/) | Fixed window + frequency map |
+| `sliding_window/28` | Medium | Length of Longest Subarray With at Most K Frequency | [#2958](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/) | Variable window with a frequency cap |
 | `sliding_window/4` | Hard | Minimum Window Substring | [#76](https://leetcode.com/problems/minimum-window-substring/) | Variable window: expand until valid, then shrink to the minimum while still valid |
 | `sliding_window/16` | Hard | Subarrays with K Different Integers | [#992](https://leetcode.com/problems/subarrays-with-k-different-integers/) | Exactly K = atMost(K) - atMost(K - 1) |
 
 Start one with `python dsa.py start sliding_window/1`.
 
-**More:** 121 Best Time to Buy and Sell Stock (E), 424 Longest Repeating Character Replacement (M), 567 Permutation in String (M), 438 Find All Anagrams (M), 904 Fruit Into Baskets (M), 1004 Max Consecutive Ones III (M), 713 Subarray Product Less Than K (M), 992 Subarrays with K Different Integers (H), 239 Sliding Window Maximum (H, see stack_monotonic).
+**More:** 121 Best Time to Buy and Sell Stock (E), 424 Longest Repeating Character Replacement (M), 567 Permutation in String (M), 438 Find All Anagrams in a String (M), 904 Fruit Into Baskets (M), 1004 Max Consecutive Ones III (M), 713 Subarray Product Less Than K (M), 992 Subarrays with K Different Integers (H), 239 Sliding Window Maximum (H, see stack_monotonic).
 
 ## 9. Make it stay - the teacher's anchors
 

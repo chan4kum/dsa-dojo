@@ -42,4 +42,4 @@ Sweep-line skeleton (max overlap): `events = sorted([(s, 1), (e, -1) for each]);
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 252 Meeting Rooms (E), 253 Meeting Rooms II (M), 452 Minimum Arrows to Burst Balloons (M), 986 Interval List Intersections (M), 1094 Car Pooling (M), 218 The Skyline Problem (H), 759 Employee Free Time (H).
+**More:** 252 Meeting Rooms (E), 253 Meeting Rooms II (M), 452 Minimum Number of Arrows to Burst Balloons (M), 986 Interval List Intersections (M), 1094 Car Pooling (M), 218 The Skyline Problem (H), 759 Employee Free Time (H).

@@ -63,6 +63,9 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 | `matrix/11` | Easy | Flipping an Image | [#832](https://leetcode.com/problems/flipping-an-image/) | Fuse two passes into one with two pointers |
 | `matrix/12` | Easy | Cells with Odd Values in a Matrix | [#1252](https://leetcode.com/problems/cells-with-odd-values-in-a-matrix/) | Track parities instead of simulating |
 | `matrix/13` | Easy | Special Positions in a Binary Matrix | [#1582](https://leetcode.com/problems/special-positions-in-a-binary-matrix/) | Precompute row and column aggregates |
+| `matrix/16` | Easy | Shift 2D Grid | [#1260](https://leetcode.com/problems/shift-2d-grid/) | Flatten the grid, use index arithmetic |
+| `matrix/18` | Easy | Count Negative Numbers in a Sorted Matrix | [#1351](https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/) | Staircase walk on a doubly-sorted matrix |
+| `matrix/19` | Easy | Lucky Numbers in a Matrix | [#1380](https://leetcode.com/problems/lucky-numbers-in-a-matrix/) | Precompute row minima and column maxima |
 | `matrix/1` | Medium | Rotate Image | [#48](https://leetcode.com/problems/rotate-image/) | Matrix transform = composition of simple transforms (transpose + reverse) |
 | `matrix/2` | Medium | Spiral Matrix | [#54](https://leetcode.com/problems/spiral-matrix/) | Boundary shrinking simulation |
 | `matrix/3` | Medium | Set Matrix Zeroes | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Two-pass marking (use the input as its own bookkeeping) |
@@ -70,6 +73,14 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 | `matrix/5` | Medium | Valid Sudoku | [#36](https://leetcode.com/problems/valid-sudoku/) | Hash sets keyed by row / column / box (index arithmetic) |
 | `matrix/6` | Medium | Search a 2D Matrix II | [#240](https://leetcode.com/problems/search-a-2d-matrix-ii/) | Staircase search from the top-right corner |
 | `matrix/7` | Medium | Spiral Matrix II | [#59](https://leetcode.com/problems/spiral-matrix-ii/) | Shrinking boundaries (layer by layer) |
+| `matrix/14` | Medium | Diagonal Traverse | [#498](https://leetcode.com/problems/diagonal-traverse/) | Simulation with direction flips (or group by i + j) |
+| `matrix/15` | Medium | Score After Flipping Matrix | [#861](https://leetcode.com/problems/score-after-flipping-matrix/) | Greedy by bit significance |
+| `matrix/17` | Medium | Count Square Submatrices with All Ones | [#1277](https://leetcode.com/problems/count-square-submatrices-with-all-ones/) | 2D DP: largest square ending at each cell |
+| `matrix/20` | Medium | Count Submatrices With All Ones | [#1504](https://leetcode.com/problems/count-submatrices-with-all-ones/) | Histogram heights + expand left with a running minimum |
+| `matrix/21` | Medium | Largest 1-Bordered Square | [#1139](https://leetcode.com/problems/largest-1-bordered-square/) | Precomputed run lengths, check borders in O(1) |
+| `matrix/22` | Medium | Minimum Swaps to Arrange a Binary Grid | [#1536](https://leetcode.com/problems/minimum-swaps-to-arrange-a-binary-grid/) | Greedy bubble-up using trailing-zero counts |
+| `matrix/23` | Medium | First Completely Painted Row or Column | [#2661](https://leetcode.com/problems/first-completely-painted-row-or-column/) | Position map + per-row/column counters |
+| `matrix/24` | Medium | Difference Between Ones and Zeros in Row and Column | [#2482](https://leetcode.com/problems/difference-between-ones-and-zeros-in-row-and-column/) | Precompute row and column counts |
 
 Start one with `python dsa.py start matrix/1`.
 

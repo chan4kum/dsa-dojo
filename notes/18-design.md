@@ -87,6 +87,7 @@ Interview note: be ready to write the doubly linked list **by hand** (head/tail 
 | `design/14` | Easy | Implement Stack using Queues | [#225](https://leetcode.com/problems/implement-stack-using-queues/) | Queue rotation to reverse order |
 | `design/16` | Easy | Number of Recent Calls | [#933](https://leetcode.com/problems/number-of-recent-calls/) | Sliding window over a time-ordered queue |
 | `design/19` | Easy | Range Sum Query - Immutable | [#303](https://leetcode.com/problems/range-sum-query-immutable/) | Prefix sums |
+| `design/28` | Easy | Logger Rate Limiter | [#359](https://leetcode.com/problems/logger-rate-limiter/) | Hash map of last-seen time |
 | `design/1` | Medium | Min Stack | [#155](https://leetcode.com/problems/min-stack/) | Augmented stack: keep running aggregates next to each element |
 | `design/2` | Medium | LRU Cache | [#146](https://leetcode.com/problems/lru-cache/) | Hash map + doubly linked list (or OrderedDict): O(1) ordered cache |
 | `design/3` | Medium | Implement Trie (Prefix Tree) | [#208](https://leetcode.com/problems/implement-trie-prefix-tree/) | Trie (prefix tree): O(L) insert/search per word, shared prefixes |
@@ -99,11 +100,19 @@ Interview note: be ready to write the doubly linked list **by hand** (head/tail 
 | `design/17` | Medium | Product of the Last K Numbers | [#1352](https://leetcode.com/problems/product-of-the-last-k-numbers/) | Prefix products with a reset on zero |
 | `design/18` | Medium | Peeking Iterator | [#284](https://leetcode.com/problems/peeking-iterator/) | One-element look-ahead buffer |
 | `design/20` | Medium | Range Sum Query 2D - Immutable | [#304](https://leetcode.com/problems/range-sum-query-2d-immutable/) | 2-D prefix sums (inclusion-exclusion) |
+| `design/21` | Medium | Insert Delete GetRandom O(1) | [#380](https://leetcode.com/problems/insert-delete-getrandom-o1/) | Array + hash map with swap-with-last deletion |
+| `design/22` | Medium | Design Circular Deque | [#641](https://leetcode.com/problems/design-circular-deque/) | Circular buffer with modular indexing |
+| `design/23` | Medium | Snapshot Array | [#1146](https://leetcode.com/problems/snapshot-array/) | Versioned storage: per-key change log + binary search |
+| `design/24` | Medium | Design Linked List | [#707](https://leetcode.com/problems/design-linked-list/) | Singly linked list with a sentinel (dummy) node |
+| `design/25` | Medium | Design Front Middle Back Queue | [#1670](https://leetcode.com/problems/design-front-middle-back-queue/) | Two deques meeting in the middle |
+| `design/27` | Medium | Design Authentication Manager | [#1797](https://leetcode.com/problems/design-authentication-manager/) | Hash map ordered by expiry + lazy eviction |
+| `design/29` | Medium | Design A Leaderboard | [#1244](https://leetcode.com/problems/design-a-leaderboard/) | Hash map + heap selection for top-K |
 | `design/4` | Hard | Find Median from Data Stream | [#295](https://leetcode.com/problems/find-median-from-data-stream/) | Two heaps (max-heap of the lower half + min-heap of the upper half) |
+| `design/26` | Hard | LFU Cache | [#460](https://leetcode.com/problems/lfu-cache/) | Frequency buckets of LRU-ordered keys + min-frequency pointer |
 
 Start one with `python dsa.py start design/1`.
 
-**More:** 232 Implement Queue using Stacks (E), 705 Design HashSet (E), 706 Design HashMap (E), 380 Insert Delete GetRandom O(1) (M), 211 Design Add and Search Words (M), 355 Design Twitter (M), 981 Time Based Key-Value Store (M), 1146 Snapshot Array (M), 307 Range Sum Query - Mutable (M), 460 LFU Cache (H), 432 All O`one Data Structure (H), 297 Serialize and Deserialize Binary Tree (H).
+**More:** 232 Implement Queue using Stacks (E), 705 Design HashSet (E), 706 Design HashMap (E), 380 Insert Delete GetRandom O(1) (M), 211 Design Add and Search Words Data Structure (M), 355 Design Twitter (M), 981 Time Based Key-Value Store (M), 1146 Snapshot Array (M), 307 Range Sum Query - Mutable (M), 460 LFU Cache (H), 432 All O`one Data Structure (H), 297 Serialize and Deserialize Binary Tree (H).
 
 ## 9. Make it stay - the teacher's anchors
 

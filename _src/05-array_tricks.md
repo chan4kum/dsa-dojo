@@ -42,4 +42,4 @@ Cyclic placement (First Missing Positive):
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 121 Best Time to Buy and Sell Stock (E), 152 Maximum Product Subarray (M), 918 Maximum Sum Circular Subarray (M), 442 Find All Duplicates (M), 448 Find All Numbers Disappeared (E), 287 Find the Duplicate Number (M), 645 Set Mismatch (E), 169 Majority Element (E, Boyer-Moore), 189 Rotate Array (M).
+**More:** 121 Best Time to Buy and Sell Stock (E), 152 Maximum Product Subarray (M), 918 Maximum Sum Circular Subarray (M), 442 Find All Duplicates in an Array (M), 448 Find All Numbers Disappeared in an Array (E), 287 Find the Duplicate Number (M), 645 Set Mismatch (E), 169 Majority Element (E, Boyer-Moore), 189 Rotate Array (M).

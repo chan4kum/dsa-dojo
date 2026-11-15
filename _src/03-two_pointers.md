@@ -41,4 +41,4 @@
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 26 Remove Duplicates from Sorted Array (E), 283 Move Zeroes (E), 167 Two Sum II (M), 75 Sort Colors (M, Dutch flag), 16 3Sum Closest (M), 18 4Sum (M), 977 Squares of a Sorted Array (E), 345 Reverse Vowels (E), 680 Valid Palindrome II (E).
+**More:** 26 Remove Duplicates from Sorted Array (E), 283 Move Zeroes (E), 167 Two Sum II - Input Array Is Sorted (M), 75 Sort Colors (M, Dutch flag), 16 3Sum Closest (M), 18 4Sum (M), 977 Squares of a Sorted Array (E), 345 Reverse Vowels of a String (E), 680 Valid Palindrome II (E).

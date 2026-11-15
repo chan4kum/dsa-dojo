@@ -42,4 +42,4 @@ Static range query: `P = [0]; for x in a: P.append(P[-1] + x)` then `P[r+1] - P[
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 303 Range Sum Query Immutable (E), 304 Range Sum Query 2D (M), 525 Contiguous Array (M), 974 Subarray Sums Divisible by K (M), 1109 Corporate Flight Bookings (M), 1094 Car Pooling (M), 523 Continuous Subarray Sum (M).
+**More:** 303 Range Sum Query - Immutable (E), 304 Range Sum Query 2D - Immutable (M), 525 Contiguous Array (M), 974 Subarray Sums Divisible by K (M), 1109 Corporate Flight Bookings (M), 1094 Car Pooling (M), 523 Continuous Subarray Sum (M).

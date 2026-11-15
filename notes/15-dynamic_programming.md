@@ -127,7 +127,7 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/21` | Medium | Triangle | [#120](https://leetcode.com/problems/triangle/) | Bottom-up DP with a rolling 1-D array |
 | `dynamic_programming/22` | Medium | Longest Palindromic Subsequence | [#516](https://leetcode.com/problems/longest-palindromic-subsequence/) | Interval DP / reduce to LCS with the reversed string |
 | `dynamic_programming/24` | Medium | Coin Change II | [#518](https://leetcode.com/problems/coin-change-ii/) | Unbounded knapsack - counting combinations (coin loop outside) |
-| `dynamic_programming/25` | Medium | Min Falling Path Sum | [#931](https://leetcode.com/problems/minimum-falling-path-sum/) | Grid DP: best(r, c) = cell + min of the 3 cells above |
+| `dynamic_programming/25` | Medium | Minimum Falling Path Sum | [#931](https://leetcode.com/problems/minimum-falling-path-sum/) | Grid DP: best(r, c) = cell + min of the 3 cells above |
 | `dynamic_programming/26` | Medium | Maximal Square | [#221](https://leetcode.com/problems/maximal-square/) | Grid DP: biggest square ending at a cell = 1 + min of 3 neighbours |
 | `dynamic_programming/27` | Medium | Delete and Earn | [#740](https://leetcode.com/problems/delete-and-earn/) | Reduce to House Robber (adjacent values are 'adjacent houses') |
 | `dynamic_programming/28` | Medium | Interleaving String | [#97](https://leetcode.com/problems/interleaving-string/) | 2-D DP over (chars used of s1, chars used of s2) |
@@ -150,9 +150,8 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/56` | Medium | Longest Arithmetic Subsequence of Given Difference | [#1218](https://leetcode.com/problems/longest-arithmetic-subsequence-of-given-difference/) | DP keyed by value (hash map instead of an inner loop) |
 | `dynamic_programming/57` | Medium | Longest Arithmetic Subsequence | [#1027](https://leetcode.com/problems/longest-arithmetic-subsequence/) | DP over (index, common difference) |
 | `dynamic_programming/58` | Medium | Greatest Sum Divisible by Three | [#1262](https://leetcode.com/problems/greatest-sum-divisible-by-three/) | DP over remainders (a tiny state space) |
-| `dynamic_programming/59` | Medium | Ugly Number II | [#264](https://leetcode.com/problems/ugly-number-ii/) | Merge three sorted streams with pointers (DP) |
-| `dynamic_programming/60` | Medium | Count Numbers with Unique Digits | [#357](https://leetcode.com/problems/count-numbers-with-unique-digits/) | Counting with decreasing choices (permutation counting) |
-| `dynamic_programming/61` | Medium | Out of Boundary Paths | [#576](https://leetcode.com/problems/out-of-boundary-paths/) | Grid DP over (cell, remaining moves) |
+| `dynamic_programming/59` | Medium | Count Numbers with Unique Digits | [#357](https://leetcode.com/problems/count-numbers-with-unique-digits/) | Counting with decreasing choices (permutation counting) |
+| `dynamic_programming/60` | Medium | Out of Boundary Paths | [#576](https://leetcode.com/problems/out-of-boundary-paths/) | Grid DP over (cell, remaining moves) |
 | `dynamic_programming/9` | Hard | Burst Balloons | [#312](https://leetcode.com/problems/burst-balloons/) | Interval DP: split an interval on the LAST action |
 | `dynamic_programming/23` | Hard | Regular Expression Matching | [#10](https://leetcode.com/problems/regular-expression-matching/) | 2-D DP on two string positions (with branching for '*') |
 | `dynamic_programming/32` | Hard | Russian Doll Envelopes | [#354](https://leetcode.com/problems/russian-doll-envelopes/) | Sort one dimension, then LIS on the other (patience sorting) |
@@ -166,7 +165,7 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 
 Start one with `python dsa.py start dynamic_programming/1`.
 
-**More:** 509 Fibonacci (E), 746 Min Cost Climbing Stairs (E), 213 House Robber II (M), 53 Maximum Subarray (M), 152 Maximum Product Subarray (M), 518 Coin Change II (M), 494 Target Sum (M), 62 Unique Paths (M), 64 Minimum Path Sum (M), 221 Maximal Square (M), 91 Decode Ways (M), 5 Longest Palindromic Substring (M), 516 Longest Palindromic Subsequence (M), 309 Best Time to Buy and Sell Stock with Cooldown (M), 188 Best Time to Buy and Sell Stock IV (H), 97 Interleaving String (M), 115 Distinct Subsequences (H), 10 Regular Expression Matching (H), 44 Wildcard Matching (H), 354 Russian Doll Envelopes (H), 1235 Maximum Profit in Job Scheduling (H), 943 Find the Shortest Superstring (H), 968 Binary Tree Cameras (H).
+**More:** 509 Fibonacci Number (E), 746 Min Cost Climbing Stairs (E), 213 House Robber II (M), 53 Maximum Subarray (M), 152 Maximum Product Subarray (M), 518 Coin Change II (M), 494 Target Sum (M), 62 Unique Paths (M), 64 Minimum Path Sum (M), 221 Maximal Square (M), 91 Decode Ways (M), 5 Longest Palindromic Substring (M), 516 Longest Palindromic Subsequence (M), 309 Best Time to Buy and Sell Stock with Cooldown (M), 188 Best Time to Buy and Sell Stock IV (H), 97 Interleaving String (M), 115 Distinct Subsequences (H), 10 Regular Expression Matching (H), 44 Wildcard Matching (H), 354 Russian Doll Envelopes (H), 1235 Maximum Profit in Job Scheduling (H), 943 Find the Shortest Superstring (H), 968 Binary Tree Cameras (H).
 
 ## 9. Make it stay - the teacher's anchors
 

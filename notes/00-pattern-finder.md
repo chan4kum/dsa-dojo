@@ -153,23 +153,23 @@ flowchart TD
 ## H. Pattern index (where to learn each)
 | # | Topic | Practice ids |
 |---|---|---|
-| 01 | [hashing](01-hashing.md) | `hashing/1` ... `hashing/16` |
-| 02 | [prefix_sums](02-prefix_sums.md) | `prefix_sums/1` ... `prefix_sums/7` |
-| 03 | [two_pointers](03-two_pointers.md) | `two_pointers/1` ... `two_pointers/16` |
-| 04 | [sliding_window](04-sliding_window.md) | `sliding_window/1` ... `sliding_window/16` |
+| 01 | [hashing](01-hashing.md) | `hashing/1` ... `hashing/25` |
+| 02 | [prefix_sums](02-prefix_sums.md) | `prefix_sums/1` ... `prefix_sums/19` |
+| 03 | [two_pointers](03-two_pointers.md) | `two_pointers/1` ... `two_pointers/28` |
+| 04 | [sliding_window](04-sliding_window.md) | `sliding_window/1` ... `sliding_window/29` |
 | 05 | [array_tricks](05-array_tricks.md) | `array_tricks/1` ... `array_tricks/16` |
-| 06 | [binary_search](06-binary_search.md) | `binary_search/1` ... `binary_search/22` |
-| 07 | [stack_monotonic](07-stack_monotonic.md) | `stack_monotonic/1` ... `stack_monotonic/23` |
-| 08 | [linked_list](08-linked_list.md) | `linked_list/1` ... `linked_list/22` |
-| 09 | [intervals](09-intervals.md) | `intervals/1` ... `intervals/11` |
-| 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/20` |
-| 11 | [heap](11-heap.md) | `heap/1` ... `heap/11` |
+| 06 | [binary_search](06-binary_search.md) | `binary_search/1` ... `binary_search/34` |
+| 07 | [stack_monotonic](07-stack_monotonic.md) | `stack_monotonic/1` ... `stack_monotonic/34` |
+| 08 | [linked_list](08-linked_list.md) | `linked_list/1` ... `linked_list/33` |
+| 09 | [intervals](09-intervals.md) | `intervals/1` ... `intervals/19` |
+| 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/19` |
+| 11 | [heap](11-heap.md) | `heap/1` ... `heap/23` |
 | 12 | [trees](12-trees.md) | `trees/1` ... `trees/57` |
 | 13 | [backtracking](13-backtracking.md) | `backtracking/1` ... `backtracking/20` |
 | 14 | [graphs](14-graphs.md) | `graphs/1` ... `graphs/43` |
-| 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/61` |
-| 16 | [bits_math](16-bits_math.md) | `bits_math/1` ... `bits_math/22` |
-| 17 | [strings](17-strings.md) | `strings/1` ... `strings/23` |
-| 18 | [design](18-design.md) | `design/1` ... `design/20` |
+| 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/60` |
+| 16 | [bits_math](16-bits_math.md) | `bits_math/1` ... `bits_math/35` |
+| 17 | [strings](17-strings.md) | `strings/1` ... `strings/37` |
+| 18 | [design](18-design.md) | `design/1` ... `design/29` |
 | 19 | [divide_conquer](19-divide_conquer.md) | `divide_conquer/1` ... `divide_conquer/3` |
-| 20 | [matrix](20-matrix.md) | `matrix/1` ... `matrix/13` |
+| 20 | [matrix](20-matrix.md) | `matrix/1` ... `matrix/24` |

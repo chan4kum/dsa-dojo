@@ -10,9 +10,9 @@ Each entry in PROBLEMS is ONE problem, written so you can read it top to bottom:
 """
 
 PROBLEMS = [
-    # ---- Min Falling Path Sum (LeetCode 931) ----
+    # ---- Minimum Falling Path Sum (LeetCode 931) ----
     dict(
-        title="Min Falling Path Sum",
+        title="Minimum Falling Path Sum",
         diff="M",
         lc=931,
         slug="minimum-falling-path-sum",

@@ -49,4 +49,4 @@ Search on the answer (Koko Eating Bananas):
 ## 8. Practice ladder
 {{ladder}}
 
-**More:** 35 Search Insert Position (E), 34 First and Last Position (M), 153 Find Minimum in Rotated Sorted Array (M), 74 Search a 2D Matrix (M), 162 Find Peak Element (M), 69 Sqrt(x) (E), 1011 Capacity to Ship Packages (M), 981 Time Based Key-Value Store (M), 378 Kth Smallest in Sorted Matrix (M), 719 Find K-th Smallest Pair Distance (H).
+**More:** 35 Search Insert Position (E), 34 Find First and Last Position of Element in Sorted Array (M), 153 Find Minimum in Rotated Sorted Array (M), 74 Search a 2D Matrix (M), 162 Find Peak Element (M), 69 Sqrt(x) (E), 1011 Capacity To Ship Packages Within D Days (M), 981 Time Based Key-Value Store (M), 378 Kth Smallest Element in a Sorted Matrix (M), 719 Find K-th Smallest Pair Distance (H).

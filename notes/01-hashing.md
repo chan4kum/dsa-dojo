@@ -70,16 +70,25 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/11` | Easy | Word Pattern | [#290](https://leetcode.com/problems/word-pattern/) | Bijection check with two maps |
 | `hashing/12` | Easy | Intersection of Two Arrays | [#349](https://leetcode.com/problems/intersection-of-two-arrays/) | Hash set membership |
 | `hashing/13` | Easy | Intersection of Two Arrays II | [#350](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | Frequency counter consumed as you match |
-| `hashing/14` | Easy | First Unique Character in a String | [#387](https://leetcode.com/problems/first-unique-character-in-a-string/) | Two passes: count, then find |
-| `hashing/15` | Easy | Isomorphic Strings | [#205](https://leetcode.com/problems/isomorphic-strings/) | Bijection check with two hash maps |
-| `hashing/16` | Easy | Word Pattern | [#290](https://leetcode.com/problems/word-pattern/) | Bijection check with two hash maps |
+| `hashing/14` | Easy | X of a Kind in a Deck of Cards | [#914](https://leetcode.com/problems/x-of-a-kind-in-a-deck-of-cards/) | Frequency count + gcd |
+| `hashing/15` | Easy | N-Repeated Element in Size 2N Array | [#961](https://leetcode.com/problems/n-repeated-element-in-size-2n-array/) | First duplicate with a set |
+| `hashing/17` | Easy | Number of Equivalent Domino Pairs | [#1128](https://leetcode.com/problems/number-of-equivalent-domino-pairs/) | Canonical form + counting pairs |
+| `hashing/18` | Easy | Maximum Number of Balloons | [#1189](https://leetcode.com/problems/maximum-number-of-balloons/) | Frequency count, bottleneck letter |
+| `hashing/19` | Easy | Check If N and Its Double Exist | [#1346](https://leetcode.com/problems/check-if-n-and-its-double-exist/) | Set of seen values (two-sum style) |
+| `hashing/25` | Easy | Uncommon Words from Two Sentences | [#884](https://leetcode.com/problems/uncommon-words-from-two-sentences/) | Count words over the combined text |
 | `hashing/2` | Medium | Group Anagrams | [#49](https://leetcode.com/problems/group-anagrams/) | Hash map with a canonical-form key (group by signature) |
 | `hashing/3` | Medium | Longest Consecutive Sequence | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash set + 'only expand from the start of a sequence' (amortised O(n)) |
 | `hashing/10` | Medium | 4Sum II | [#454](https://leetcode.com/problems/4sum-ii/) | Meet in the middle with a hash map of pair sums |
+| `hashing/16` | Medium | Pairs of Songs With Total Durations Divisible by 60 | [#1010](https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-by-60/) | Remainder counting (two-sum modulo) |
+| `hashing/20` | Medium | Determine if Two Strings Are Close | [#1657](https://leetcode.com/problems/determine-if-two-strings-are-close/) | Compare letter sets and sorted frequency lists |
+| `hashing/21` | Medium | Max Number of K-Sum Pairs | [#1679](https://leetcode.com/problems/max-number-of-k-sum-pairs/) | Frequency count + complement matching |
+| `hashing/22` | Medium | Find Players With Zero or One Losses | [#2225](https://leetcode.com/problems/find-players-with-zero-or-one-losses/) | Counting with a hash map |
+| `hashing/23` | Medium | Max Sum of a Pair With Equal Sum of Digits | [#2342](https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/) | Group by key, keep the running maximum |
+| `hashing/24` | Medium | Equal Row and Column Pairs | [#2352](https://leetcode.com/problems/equal-row-and-column-pairs/) | Hash whole rows (tuples) and match against columns |
 
 Start one with `python dsa.py start hashing/1`.
 
-**More of this pattern (LeetCode):** 217 Contains Duplicate (E), 242 Valid Anagram (E), 387 First Unique Character (E), 202 Happy Number (E), 205 Isomorphic Strings (E), 347 Top K Frequent (M), 454 4Sum II (M), 138 Copy List with Random Pointer (M), 36 Valid Sudoku (M), 560 Subarray Sum Equals K (M).
+**More of this pattern (LeetCode):** 217 Contains Duplicate (E), 242 Valid Anagram (E), 387 First Unique Character in a String (E), 202 Happy Number (E), 205 Isomorphic Strings (E), 347 Top K Frequent Elements (M), 454 4Sum II (M), 138 Copy List with Random Pointer (M), 36 Valid Sudoku (M), 560 Subarray Sum Equals K (M).
 
 ## 9. Make it stay - the teacher's anchors
 

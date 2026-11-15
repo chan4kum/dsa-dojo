@@ -174,7 +174,7 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 
 Start one with `python dsa.py start graphs/1`.
 
-**More:** 733 Flood Fill (E), 695 Max Area of Island (M), 133 Clone Graph (M), 417 Pacific Atlantic Water Flow (M), 130 Surrounded Regions (M), 542 01 Matrix (M), 785 Is Graph Bipartite (M), 210 Course Schedule II (M), 547 Number of Provinces (M), 721 Accounts Merge (M), 787 Cheapest Flights Within K Stops (M), 1631 Path With Minimum Effort (M), 1584 Min Cost to Connect All Points (M), 310 Minimum Height Trees (M), 269 Alien Dictionary (H), 332 Reconstruct Itinerary (H), 1192 Critical Connections (H).
+**More:** 733 Flood Fill (E), 695 Max Area of Island (M), 133 Clone Graph (M), 417 Pacific Atlantic Water Flow (M), 130 Surrounded Regions (M), 542 01 Matrix (M), 785 Is Graph Bipartite? (M), 210 Course Schedule II (M), 547 Number of Provinces (M), 721 Accounts Merge (M), 787 Cheapest Flights Within K Stops (M), 1631 Path With Minimum Effort (M), 1584 Min Cost to Connect All Points (M), 310 Minimum Height Trees (M), 269 Alien Dictionary (H), 332 Reconstruct Itinerary (H), 1192 Critical Connections in a Network (H).
 
 ## 9. Make it stay - the teacher's anchors
 
