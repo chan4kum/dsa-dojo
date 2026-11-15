@@ -1933,3 +1933,53 @@ GX29 = {
 }
 
 GX.update(GX29)
+
+
+def _max_freq():
+    low = R(1, 4)
+    return (st("abc", 1, 9), R(1, 3), low, low + R(0, 2))
+
+
+def _beautiful():
+    return ("".join("".join(sorted(st("aeiou", 1, 6))) for _ in range(R(1, 3))),)
+
+
+def _semi_win():
+    nums = ints(9, 1, 5, 1)
+    k = R(1, len(nums))
+    return (nums, R(1, k), k)
+
+
+def _power_array():
+    nums = [R(1, 4)]
+    for _ in range(R(1, 8)):
+        nums.append(nums[-1] + random.choice([1, 1, 1, -1, 0, 2]))
+    return (nums, R(1, len(nums)))
+
+
+GX30 = {
+    ("sliding_window", "Longest Turbulent Subarray"): lambda: (ints(9, 0, 5, 1),),
+    ("sliding_window", "Swap For Longest Repeated Character Substring"): lambda: (st("abc", 1, 8),),
+    ("sliding_window", "Replace the Substring for Balanced String"): lambda: (
+        st("QWER", *(2 * [random.choice([4, 8])])),
+    ),
+    ("sliding_window", "Maximum Number of Occurrences of a Substring"): _max_freq,
+    ("sliding_window", "Frequency of the Most Frequent Element"): lambda: (ints(7, 1, 8, 1), R(0, 8)),
+    ("sliding_window", "Longest Substring Of All Vowels in Order"): _beautiful,
+    ("sliding_window", "Substrings of Size Three with Distinct Characters"): lambda: (st("abc", 1, 9),),
+    ("sliding_window", "Minimum Swaps to Group All 1's Together II"): lambda: (ints(10, 0, 1, 1),),
+    ("sliding_window", "Longest Nice Subarray"): lambda: (ints(7, 1, 15, 1),),
+    ("sliding_window", "Take K of Each Character From Left and Right"): lambda: (st("abc", 1, 9), R(0, 3)),
+    ("sliding_window", "Find the Longest Semi-Repetitive Substring"): lambda: (st("123", 1, 9),),
+    ("sliding_window", "Continuous Subarrays"): lambda: (ints(8, 1, 6, 1),),
+    ("sliding_window", "Count Complete Subarrays in an Array"): lambda: (ints(8, 1, 4, 1),),
+    ("sliding_window", "Maximum Sum of Almost Unique Subarrays"): _semi_win,
+    ("sliding_window", "Count Subarrays Where Max Element Appears at Least K Times"): lambda: (
+        ints(8, 1, 4, 1),
+        R(1, 4),
+    ),
+    ("sliding_window", "Maximum Length Substring With Two Occurrences"): lambda: (st("abc", 1, 9),),
+    ("sliding_window", "Find the Power of K-Size Subarrays I"): _power_array,
+}
+
+GX.update(GX30)
