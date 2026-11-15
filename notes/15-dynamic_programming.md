@@ -105,6 +105,8 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/1` | Easy | Climbing Stairs | [#70](https://leetcode.com/problems/climbing-stairs/) | 1-D DP: state = position, transition from the previous 1-2 states (Fibonacci shape) |
 | `dynamic_programming/10` | Easy | Min Cost Climbing Stairs | [#746](https://leetcode.com/problems/min-cost-climbing-stairs/) | 1-D DP: state = position, transition = last 1 or 2 steps |
 | `dynamic_programming/44` | Easy | Is Subsequence | [#392](https://leetcode.com/problems/is-subsequence/) | Two pointers (greedy matching) |
+| `dynamic_programming/52` | Easy | Fibonacci Number | [#509](https://leetcode.com/problems/fibonacci-number/) | Bottom-up DP with O(1) space (the 'hello world' of DP) |
+| `dynamic_programming/53` | Easy | N-th Tribonacci Number | [#1137](https://leetcode.com/problems/n-th-tribonacci-number/) | Rolling-window DP (keep only the last k states) |
 | `dynamic_programming/2` | Medium | House Robber | [#198](https://leetcode.com/problems/house-robber/) | 1-D DP with a take/skip decision at each element |
 | `dynamic_programming/3` | Medium | Coin Change | [#322](https://leetcode.com/problems/coin-change/) | Unbounded knapsack / DP over amount (min coins) |
 | `dynamic_programming/4` | Medium | Longest Increasing Subsequence | [#300](https://leetcode.com/problems/longest-increasing-subsequence/) | DP -> patience sorting with binary search (tails array) |
@@ -143,6 +145,14 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/43` | Medium | Stone Game | [#877](https://leetcode.com/problems/stone-game/) | Interval DP, then a parity / strategy-stealing insight |
 | `dynamic_programming/45` | Medium | Uncrossed Lines | [#1035](https://leetcode.com/problems/uncrossed-lines/) | Disguised Longest Common Subsequence |
 | `dynamic_programming/47` | Medium | Number of Dice Rolls With Target Sum | [#1155](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/) | Counting DP over (items used, sum reached) |
+| `dynamic_programming/54` | Medium | Domino and Tromino Tiling | [#790](https://leetcode.com/problems/domino-and-tromino-tiling/) | Derive a linear recurrence from the boundary structure |
+| `dynamic_programming/55` | Medium | Partition Array for Maximum Sum | [#1043](https://leetcode.com/problems/partition-array-for-maximum-sum/) | Partition DP: choose the length of the last block |
+| `dynamic_programming/56` | Medium | Longest Arithmetic Subsequence of Given Difference | [#1218](https://leetcode.com/problems/longest-arithmetic-subsequence-of-given-difference/) | DP keyed by value (hash map instead of an inner loop) |
+| `dynamic_programming/57` | Medium | Longest Arithmetic Subsequence | [#1027](https://leetcode.com/problems/longest-arithmetic-subsequence/) | DP over (index, common difference) |
+| `dynamic_programming/58` | Medium | Greatest Sum Divisible by Three | [#1262](https://leetcode.com/problems/greatest-sum-divisible-by-three/) | DP over remainders (a tiny state space) |
+| `dynamic_programming/59` | Medium | Ugly Number II | [#264](https://leetcode.com/problems/ugly-number-ii/) | Merge three sorted streams with pointers (DP) |
+| `dynamic_programming/60` | Medium | Count Numbers with Unique Digits | [#357](https://leetcode.com/problems/count-numbers-with-unique-digits/) | Counting with decreasing choices (permutation counting) |
+| `dynamic_programming/61` | Medium | Out of Boundary Paths | [#576](https://leetcode.com/problems/out-of-boundary-paths/) | Grid DP over (cell, remaining moves) |
 | `dynamic_programming/9` | Hard | Burst Balloons | [#312](https://leetcode.com/problems/burst-balloons/) | Interval DP: split an interval on the LAST action |
 | `dynamic_programming/23` | Hard | Regular Expression Matching | [#10](https://leetcode.com/problems/regular-expression-matching/) | 2-D DP on two string positions (with branching for '*') |
 | `dynamic_programming/32` | Hard | Russian Doll Envelopes | [#354](https://leetcode.com/problems/russian-doll-envelopes/) | Sort one dimension, then LIS on the other (patience sorting) |

@@ -164,10 +164,10 @@ flowchart TD
 | 09 | [intervals](09-intervals.md) | `intervals/1` ... `intervals/11` |
 | 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/20` |
 | 11 | [heap](11-heap.md) | `heap/1` ... `heap/11` |
-| 12 | [trees](12-trees.md) | `trees/1` ... `trees/41` |
+| 12 | [trees](12-trees.md) | `trees/1` ... `trees/57` |
 | 13 | [backtracking](13-backtracking.md) | `backtracking/1` ... `backtracking/20` |
-| 14 | [graphs](14-graphs.md) | `graphs/1` ... `graphs/35` |
-| 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/51` |
+| 14 | [graphs](14-graphs.md) | `graphs/1` ... `graphs/43` |
+| 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/61` |
 | 16 | [bits_math](16-bits_math.md) | `bits_math/1` ... `bits_math/22` |
 | 17 | [strings](17-strings.md) | `strings/1` ... `strings/23` |
 | 18 | [design](18-design.md) | `design/1` ... `design/20` |

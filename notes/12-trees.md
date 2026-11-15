@@ -94,6 +94,15 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/34` | Easy | Sum of Left Leaves | [#404](https://leetcode.com/problems/sum-of-left-leaves/) | Look at the child from the parent (or pass an is_left flag down) |
 | `trees/35` | Easy | Merge Two Binary Trees | [#617](https://leetcode.com/problems/merge-two-binary-trees/) | Parallel DFS over two trees |
 | `trees/36` | Easy | Average of Levels in Binary Tree | [#637](https://leetcode.com/problems/average-of-levels-in-binary-tree/) | BFS level by level |
+| `trees/42` | Easy | Binary Tree Preorder Traversal | [#144](https://leetcode.com/problems/binary-tree-preorder-traversal/) | Iterative DFS with an explicit stack |
+| `trees/43` | Easy | Minimum Absolute Difference in BST | [#530](https://leetcode.com/problems/minimum-absolute-difference-in-bst/) | Inorder traversal = sorted order; compare neighbours |
+| `trees/44` | Easy | Binary Tree Tilt | [#563](https://leetcode.com/problems/binary-tree-tilt/) | Post-order DFS returning an aggregate while updating a global |
+| `trees/45` | Easy | Two Sum IV - Input is a BST | [#653](https://leetcode.com/problems/two-sum-iv-input-is-a-bst/) | Two Sum with a hash set while traversing |
+| `trees/47` | Easy | Leaf-Similar Trees | [#872](https://leetcode.com/problems/leaf-similar-trees/) | DFS leaf collection; generators for early exit |
+| `trees/48` | Easy | Range Sum of BST | [#938](https://leetcode.com/problems/range-sum-of-bst/) | DFS with BST pruning |
+| `trees/49` | Easy | Univalued Binary Tree | [#965](https://leetcode.com/problems/univalued-binary-tree/) | DFS with early exit |
+| `trees/50` | Easy | Cousins in Binary Tree | [#993](https://leetcode.com/problems/cousins-in-binary-tree/) | BFS level scan with a sibling check |
+| `trees/57` | Easy | Increasing Order Search Tree | [#897](https://leetcode.com/problems/increasing-order-search-tree/) | Inorder traversal with relinking |
 | `trees/2` | Medium | Binary Tree Level Order Traversal | [#102](https://leetcode.com/problems/binary-tree-level-order-traversal/) | BFS with a queue, one level per round (snapshot len(queue)) |
 | `trees/3` | Medium | Validate Binary Search Tree | [#98](https://leetcode.com/problems/validate-binary-search-tree/) | Tree recursion passing constraints DOWN (top-down), or in-order traversal must be increasing |
 | `trees/4` | Medium | Lowest Common Ancestor of a Binary Tree | [#236](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | Post-order tree recursion returning 'what I found below me' |
@@ -115,6 +124,13 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/38` | Medium | Longest Univalue Path | [#687](https://leetcode.com/problems/longest-univalue-path/) | DFS returning the best 'arm', global answer combines two arms (diameter pattern) |
 | `trees/40` | Medium | Delete Nodes And Return Forest | [#1110](https://leetcode.com/problems/delete-nodes-and-return-forest/) | DFS that returns the node (or None) so the parent can re-link |
 | `trees/41` | Medium | Lowest Common Ancestor of Deepest Leaves | [#1123](https://leetcode.com/problems/lowest-common-ancestor-of-deepest-leaves/) | DFS returning (depth, candidate node) |
+| `trees/46` | Medium | Trim a Binary Search Tree | [#669](https://leetcode.com/problems/trim-a-binary-search-tree/) | Recursion that returns the replacement subtree |
+| `trees/51` | Medium | Maximum Difference Between Node and Ancestor | [#1026](https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/) | Carry path statistics downward |
+| `trees/52` | Medium | Deepest Leaves Sum | [#1302](https://leetcode.com/problems/deepest-leaves-sum/) | BFS, keep the last level |
+| `trees/53` | Medium | Sum of Nodes with Even-Valued Grandparent | [#1315](https://leetcode.com/problems/sum-of-nodes-with-even-valued-grandparent/) | DFS carrying parent and grandparent |
+| `trees/54` | Medium | Maximum Level Sum of a Binary Tree | [#1161](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/) | BFS with per-level aggregation |
+| `trees/55` | Medium | Construct Binary Search Tree from Preorder Traversal | [#1008](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/) | Recursive build with upper bounds (one pass) |
+| `trees/56` | Medium | Add One Row to Tree | [#623](https://leetcode.com/problems/add-one-row-to-tree/) | Level-targeted tree surgery (BFS or DFS with a depth counter) |
 | `trees/5` | Hard | Binary Tree Maximum Path Sum | [#124](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | Tree DP: return one value upward, record a different value (the bend) in a global |
 | `trees/19` | Hard | Serialize and Deserialize Binary Tree | [#297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Preorder with null markers (a traversal that is uniquely decodable) |
 | `trees/39` | Hard | Binary Tree Cameras | [#968](https://leetcode.com/problems/binary-tree-cameras/) | Tree DP / greedy bottom-up with 3 states |

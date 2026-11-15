@@ -160,6 +160,14 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 | `graphs/33` | Medium | Find the City With the Smallest Number of Neighbors at a Threshold Distance | [#1334](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | All-pairs shortest paths (Floyd-Warshall) |
 | `graphs/34` | Medium | Path with Maximum Probability | [#1514](https://leetcode.com/problems/path-with-maximum-probability/) | Dijkstra with a max-heap on products |
 | `graphs/35` | Medium | Minimum Height Trees | [#310](https://leetcode.com/problems/minimum-height-trees/) | Topological-style leaf trimming to find the tree centre |
+| `graphs/36` | Medium | Shortest Bridge | [#934](https://leetcode.com/problems/shortest-bridge/) | Flood fill one island, then multi-source BFS to the other |
+| `graphs/37` | Medium | Smallest String With Swaps | [#1202](https://leetcode.com/problems/smallest-string-with-swaps/) | Union-Find groups + sort within each group |
+| `graphs/38` | Medium | Number of Operations to Make Network Connected | [#1319](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) | Count components; cable count is the feasibility test |
+| `graphs/39` | Medium | Possible Bipartition | [#886](https://leetcode.com/problems/possible-bipartition/) | Graph 2-colouring (bipartite check) |
+| `graphs/40` | Medium | Course Schedule IV | [#1462](https://leetcode.com/problems/course-schedule-iv/) | Transitive closure (Floyd-Warshall on booleans) |
+| `graphs/41` | Medium | Time Needed to Inform All Employees | [#1376](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | Longest root-to-node path sum in a tree |
+| `graphs/42` | Medium | Reorder Routes to Make All Paths Lead to the City Zero | [#1466](https://leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/) | Traverse an undirected tree, remembering the original direction |
+| `graphs/43` | Medium | Number of Enclaves | [#1020](https://leetcode.com/problems/number-of-enclaves/) | Flood fill from the boundary inwards |
 | `graphs/6` | Hard | Word Ladder | [#127](https://leetcode.com/problems/word-ladder/) | BFS on an implicit graph (shortest path, unweighted) |
 | `graphs/18` | Hard | Alien Dictionary | [#269](https://leetcode.com/problems/alien-dictionary/) | Derive a graph from the data, then topological sort |
 | `graphs/19` | Hard | Word Search II | [#212](https://leetcode.com/problems/word-search-ii/) | Trie + grid DFS (search many words in one pass) |

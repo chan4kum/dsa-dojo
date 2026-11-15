@@ -475,3 +475,170 @@ def _long_pressed():
 
 
 GX.update(GX6)
+
+
+def _bst_min2():
+    while True:
+        lst = bst_list(9)
+        if len([v for v in lst if v is not None]) >= 2:
+            return lst
+
+
+def _nonempty_tree(n_max=9, lo=0, hi=9, unique=False):
+    while True:
+        lst = tree_list(n_max, lo, hi, unique)
+        if lst:
+            return lst
+
+
+def _bst_nonempty():
+    while True:
+        lst = bst_list(9)
+        if lst:
+            return lst
+
+
+def _cousin_args():
+    while True:
+        lst = tree_list(9, 0, 30, unique=True)
+        vals = [v for v in lst if v is not None]
+        if len(vals) >= 2:
+            x, y = random.sample(vals, 2)
+            return (lst, x, y)
+
+
+def _row_args():
+    return (_nonempty_tree(8), R(0, 9), R(1, 4))
+
+
+GX7 = {
+    ("trees", "Binary Tree Preorder Traversal"): lambda: (tree_list(10),),
+    ("trees", "Minimum Absolute Difference in BST"): lambda: (_bst_min2(),),
+    ("trees", "Binary Tree Tilt"): lambda: (tree_list(10),),
+    ("trees", "Two Sum IV - Input is a BST"): lambda: (bst_list(9), R(0, 70)),
+    ("trees", "Trim a Binary Search Tree"): lambda: _trim_args(),
+    ("trees", "Leaf-Similar Trees"): lambda: (tree_list(7, 0, 2), tree_list(7, 0, 2)),
+    ("trees", "Range Sum of BST"): lambda: _range_args(),
+    ("trees", "Univalued Binary Tree"): lambda: (_nonempty_tree(8, 0, 1),),
+    ("trees", "Cousins in Binary Tree"): _cousin_args,
+    ("trees", "Maximum Difference Between Node and Ancestor"): lambda: (_nonempty_tree(10),),
+    ("trees", "Deepest Leaves Sum"): lambda: (_nonempty_tree(10),),
+    ("trees", "Sum of Nodes with Even-Valued Grandparent"): lambda: (tree_list(10, 1, 9),),
+    ("trees", "Maximum Level Sum of a Binary Tree"): lambda: (_nonempty_tree(10, -5, 5),),
+    ("trees", "Construct Binary Search Tree from Preorder Traversal"): lambda: (_preorder_of_bst(),),
+    ("trees", "Add One Row to Tree"): lambda: _row_args(),
+    ("trees", "Increasing Order Search Tree"): lambda: (bst_list(9),),
+}
+
+
+def _trim_args():
+    low = R(0, 30)
+    return (bst_list(9), low, low + R(0, 25))
+
+
+def _range_args():
+    low = R(0, 30)
+    return (bst_list(9), low, low + R(0, 25))
+
+
+GX.update(GX7)
+
+
+def _preorder_of_bst():
+    from core import list_to_tree
+
+    def walk(n):
+        return [n.val] + walk(n.left) + walk(n.right) if n else []
+
+    return walk(list_to_tree(_bst_nonempty()))
+
+
+def _two_islands():
+    while True:
+        rows, cols = R(2, 4), R(2, 4)
+        grid = [[R(0, 1) for _ in range(cols)] for _ in range(rows)]
+        seen, count = set(), 0
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] and (r, c) not in seen:
+                    count += 1
+                    stack = [(r, c)]
+                    seen.add((r, c))
+                    while stack:
+                        a, b = stack.pop()
+                        for x, y in ((a + 1, b), (a - 1, b), (a, b + 1), (a, b - 1)):
+                            if 0 <= x < rows and 0 <= y < cols and grid[x][y] and (x, y) not in seen:
+                                seen.add((x, y))
+                                stack.append((x, y))
+        if count == 2:
+            return (grid,)
+
+
+def _pairs_1(n, k, base=0):
+    edges = set()
+    for _ in range(R(0, k)):
+        if n > 1:
+            a, b = random.sample(range(base, base + n), 2)
+            edges.add((min(a, b), max(a, b)))
+    return [list(e) for e in sorted(edges)]
+
+
+def _swap_args():
+    s = st("abcd", 1, 7)
+    n = len(s)
+    return (s, [[R(0, n - 1), R(0, n - 1)] for _ in range(R(0, 5))])
+
+
+def _prereq_args():
+    n = R(1, 6)
+    pre = [[a, b] for a in range(n) for b in range(a + 1, n) if R(0, 3) == 0]
+    return (n, pre, [[R(0, n - 1), R(0, n - 1)] for _ in range(R(1, 5))])
+
+
+def _inform_args():
+    n = R(1, 7)
+    order = list(range(n))
+    random.shuffle(order)
+    manager = [-1] * n
+    for i in range(1, n):
+        manager[order[i]] = order[R(0, i - 1)]
+    return (n, order[0], manager, [R(0, 5) for _ in range(n)])
+
+
+def _reorder_args():
+    n = R(2, 7)
+    edges = []
+    for i in range(1, n):
+        j = R(0, i - 1)
+        edges.append([i, j] if R(0, 1) else [j, i])
+    return (n, edges)
+
+
+GX8 = {
+    ("graphs", "Shortest Bridge"): _two_islands,
+    ("graphs", "Smallest String With Swaps"): _swap_args,
+    ("graphs", "Number of Operations to Make Network Connected"): lambda: (lambda n: (n, _pairs_1(n, 8)))(R(1, 7)),
+    ("graphs", "Possible Bipartition"): lambda: (lambda n: (n, _pairs_1(n, 8, 1)))(R(1, 7)),
+    ("graphs", "Course Schedule IV"): _prereq_args,
+    ("graphs", "Time Needed to Inform All Employees"): _inform_args,
+    ("graphs", "Reorder Routes to Make All Paths Lead to the City Zero"): _reorder_args,
+    ("graphs", "Number of Enclaves"): lambda: (_enclave_grid(),),
+    ("dynamic_programming", "Fibonacci Number"): lambda: (R(0, 14),),
+    ("dynamic_programming", "N-th Tribonacci Number"): lambda: (R(0, 14),),
+    ("dynamic_programming", "Domino and Tromino Tiling"): lambda: (R(1, 7),),
+    ("dynamic_programming", "Partition Array for Maximum Sum"): lambda: (ints(8, 0, 9, 1), R(1, 4)),
+    ("dynamic_programming", "Longest Arithmetic Subsequence of Given Difference"): lambda: (ints(8, 0, 5, 1), R(-2, 2)),
+    ("dynamic_programming", "Longest Arithmetic Subsequence"): lambda: (ints(8, 0, 9, 1),),
+    ("dynamic_programming", "Greatest Sum Divisible by Three"): lambda: (ints(9, 1, 9, 1),),
+    ("dynamic_programming", "Ugly Number II"): lambda: (R(1, 40),),
+    ("dynamic_programming", "Count Numbers with Unique Digits"): lambda: (R(0, 4),),
+    ("dynamic_programming", "Out of Boundary Paths"): lambda: (R(1, 3), R(1, 3), R(0, 4), 0, 0),
+}
+
+
+def _enclave_grid():
+    rows, cols = R(1, 5), R(1, 5)
+    return [[R(0, 1) for _ in range(cols)] for _ in range(rows)]
+
+
+GX.update(GX8)
