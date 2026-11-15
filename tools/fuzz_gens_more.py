@@ -937,3 +937,47 @@ GX14 = {
 }
 
 GX.update(GX14)
+
+
+def _equal_sub():
+    n = R(1, 8)
+    return (st("abcd", n, n), st("abcd", n, n), R(0, 6))
+
+
+def _k_of(lo, hi, extra):
+    def gen():
+        nums = ints(9, lo, hi, 1)
+        return (nums, R(1, len(nums))) + extra()
+
+    return gen
+
+
+GX15 = {
+    ("sliding_window", "Get Equal Substrings Within Budget"): _equal_sub,
+    ("sliding_window", "Count Number of Nice Subarrays"): lambda: (ints(9, 1, 6, 1), R(1, 3)),
+    ("sliding_window", "Number of Substrings Containing All Three Characters"): lambda: (st("abc", 1, 10),),
+    ("sliding_window", "Maximum Points You Can Obtain from Cards"): _k_of(1, 9, lambda: ()),
+    (
+        "sliding_window",
+        "Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit",
+    ): lambda: (ints(9, 1, 9, 1), R(0, 5)),
+    ("sliding_window", "Maximum Erasure Value"): lambda: (ints(9, 1, 6, 1),),
+    ("sliding_window", "Minimum Operations to Reduce X to Zero"): lambda: (ints(8, 1, 6, 1), R(1, 15)),
+    ("sliding_window", "Maximize the Confusion of an Exam"): lambda: (st("TF", 1, 10), R(0, 3)),
+    ("sliding_window", "Minimum Recolors to Get K Consecutive Black Blocks"): lambda: _recolor(),
+    (
+        "sliding_window",
+        "Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold",
+    ): _k_of(1, 9, lambda: (R(1, 9),)),
+    ("sliding_window", "Maximum Sum of Distinct Subarrays With Length K"): _k_of(1, 5, lambda: ()),
+    ("sliding_window", "Length of Longest Subarray With at Most K Frequency"): lambda: (ints(9, 1, 4, 1), R(1, 3)),
+    ("sliding_window", "Minimum Difference Between Highest and Lowest of K Scores"): _k_of(0, 20, lambda: ()),
+}
+
+
+def _recolor():
+    blocks = st("WB", 1, 10)
+    return (blocks, R(1, len(blocks)))
+
+
+GX.update(GX15)
