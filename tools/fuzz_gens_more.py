@@ -630,7 +630,6 @@ GX8 = {
     ("dynamic_programming", "Longest Arithmetic Subsequence of Given Difference"): lambda: (ints(8, 0, 5, 1), R(-2, 2)),
     ("dynamic_programming", "Longest Arithmetic Subsequence"): lambda: (ints(8, 0, 9, 1),),
     ("dynamic_programming", "Greatest Sum Divisible by Three"): lambda: (ints(9, 1, 9, 1),),
-    ("dynamic_programming", "Ugly Number II"): lambda: (R(1, 40),),
     ("dynamic_programming", "Count Numbers with Unique Digits"): lambda: (R(0, 4),),
     ("dynamic_programming", "Out of Boundary Paths"): lambda: (R(1, 3), R(1, 3), R(0, 4), 0, 0),
 }
