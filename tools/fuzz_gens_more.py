@@ -2231,3 +2231,82 @@ GX32 = {
 }
 
 GX.update(GX32)
+
+
+def _st_baseball():
+    ops, size = [], 0
+    for _ in range(R(1, 9)):
+        choices = ["num"] + (["C", "D"] if size >= 1 else []) + (["+"] if size >= 2 else [])
+        pick = random.choice(choices)
+        if pick == "num":
+            ops.append(str(R(-9, 9)))
+            size += 1
+        elif pick == "C":
+            ops.append("C")
+            size -= 1
+        else:
+            ops.append(pick)
+            size += 1
+    return (ops,)
+
+
+def _st_parens_ok(s, got):
+    """Valid brackets, a subsequence of s, and the minimum number of removals."""
+    it = iter(s)
+    if not all(c in it for c in got):
+        return False
+    bal = opens = bad = 0
+    for c in got:
+        bal += (c == "(") - (c == ")")
+        if bal < 0:
+            return False
+    for c in s:
+        if c == "(":
+            opens += 1
+        elif c == ")":
+            if opens:
+                opens -= 1
+            else:
+                bad += 1
+    return bal == 0 and len(got) == len(s) - opens - bad
+
+
+def _st_parens_norm(args, result):
+    return _st_parens_ok(args[0], result)
+
+
+def _st_threshold_norm(args, result):
+    return result == -1
+
+
+def _st_robots():
+    n = R(1, 6)
+    return (random.sample(range(1, 30), n), ints(n, 1, 9, n), "".join(random.choice("LR") for _ in range(n)))
+
+
+GX33 = {
+    ("stack_monotonic", "Baseball Game"): _st_baseball,
+    ("stack_monotonic", "Shortest Subarray with Sum at Least K"): lambda: (ints(8, -5, 9, 1), R(1, 15)),
+    ("stack_monotonic", "Minimum Cost Tree From Leaf Values"): lambda: (ints(7, 1, 9, 2),),
+    ("stack_monotonic", "Minimum Remove to Make Valid Parentheses"): (
+        lambda: (st("ab()", 0, 10),),
+        _st_parens_norm,
+    ),
+    ("stack_monotonic", "Sum of Subarray Ranges"): lambda: (ints(8, -5, 5, 1),),
+    ("stack_monotonic", "Replace Non-Coprime Numbers in Array"): lambda: (ints(8, 1, 12, 1),),
+    ("stack_monotonic", "Steps to Make Array Non-decreasing"): lambda: (ints(10, 1, 9, 1),),
+    ("stack_monotonic", "Subarray With Elements Greater Than Varying Threshold"): (
+        lambda: (ints(7, 1, 10, 1), R(1, 30)),
+        _st_threshold_norm,
+    ),
+    ("stack_monotonic", "Construct Smallest Number From DI String"): lambda: (st("ID", 1, 8),),
+    ("stack_monotonic", "Next Greater Element IV"): lambda: (ints(9, 0, 8, 1),),
+    ("stack_monotonic", "Robot Collisions"): _st_robots,
+    ("stack_monotonic", "Beautiful Towers I"): lambda: (ints(8, 1, 9, 1),),
+    (
+        "stack_monotonic",
+        "Find the Number of Subarrays Where Boundary Elements Are Maximum",
+    ): lambda: (ints(10, 1, 4, 1),),
+}
+
+GX.update(GX33)
