@@ -57,7 +57,7 @@ DIFF = {"E": "Easy", "M": "Medium", "H": "Hard"}
 def load(topic):
     """Load a topic: the base file plus its `_more*` batches. Every problem carries its own brute force and cost."""
     probs = list(importlib.import_module(f"problems.{topic}").PROBLEMS)
-    for suffix in ("_more", "_more2", "_more3", "_more4"):
+    for suffix in ("_more", *(f"_more{i}" for i in range(2, 13))):
         name = f"problems.{topic}{suffix}"
         try:
             probs += importlib.import_module(name).PROBLEMS

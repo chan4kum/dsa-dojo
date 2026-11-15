@@ -1440,3 +1440,66 @@ GX23 = {
 }
 
 GX.update(GX23)
+
+
+def _iv(lo, hi, span, k=1, n_max=5, min_len=0):
+    out = []
+    for _ in range(R(k, n_max)):
+        left = R(lo, hi)
+        out.append([left, left + R(min_len, span)])
+    return out
+
+
+def _rects():
+    out = []
+    for _ in range(R(1, 4)):
+        x, y = R(0, 6), R(0, 6)
+        out.append([x, y, x + R(1, 4), y + R(1, 4)])
+    return (out,)
+
+
+def _jobs():
+    n = R(1, 7)
+    start = [R(1, 8) for _ in range(n)]
+    return (start, [s + R(1, 5) for s in start], [R(1, 9) for _ in range(n)])
+
+
+def _taps():
+    n = R(1, 6)
+    return (n, [R(0, 3) for _ in range(n + 1)])
+
+
+def _events():
+    out = []
+    for _ in range(R(1, 6)):
+        s = R(1, 8)
+        out.append([s, s + R(0, 4), R(1, 9)])
+    return (out,)
+
+
+def _shifts():
+    s = st("abcxyz", 1, 8)
+    out = []
+    for _ in range(R(0, 5)):
+        a = R(0, len(s) - 1)
+        out.append([a, R(a, len(s) - 1), R(0, 1)])
+    return (s, out)
+
+
+GX24 = {
+    ("intervals", "Set Intersection Size At Least Two"): lambda: (
+        [[a, a + R(1, 4)] for a in [R(1, 5) for _ in range(R(1, 4))]],
+    ),
+    ("intervals", "Rectangle Area II"): _rects,
+    ("intervals", "Minimum Interval to Include Each Query"): lambda: (_iv(1, 8, 4), ints(6, 1, 12, 1)),
+    ("intervals", "Count Ways to Group Overlapping Ranges"): lambda: (_iv(1, 10, 4, 1, 7),),
+    ("intervals", "Points That Intersect With Cars"): lambda: (_iv(1, 15, 6),),
+    ("intervals", "Number of Flowers in Full Bloom"): lambda: (_iv(1, 10, 5), [R(1, 14) for _ in range(R(1, 6))]),
+    ("intervals", "Maximum Profit in Job Scheduling"): _jobs,
+    ("intervals", "Video Stitching"): lambda: (_iv(0, 8, 4, 1, 6), R(1, 10)),
+    ("intervals", "Minimum Number of Taps to Open to Water a Garden"): _taps,
+    ("intervals", "Two Best Non-Overlapping Events"): _events,
+    ("intervals", "Shifting Letters II"): _shifts,
+}
+
+GX.update(GX24)
