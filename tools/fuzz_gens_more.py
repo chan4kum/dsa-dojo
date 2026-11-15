@@ -2079,3 +2079,155 @@ GX31 = {
 }
 
 GX.update(GX31)
+
+
+def _s_justify():
+    words = [st("ab", 1, 4) for _ in range(R(1, 7))]
+    return (words, R(max(map(len, words)), 10))
+
+
+def _s_digits_words():
+    names = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    letters = list("".join(random.choice(names) for _ in range(R(1, 5))))
+    random.shuffle(letters)
+    return ("".join(letters),)
+
+
+def _s_fraction_sum():
+    out = ""
+    for k in range(R(1, 4)):
+        sign = random.choice(["-", ""]) if k == 0 else random.choice(["+", "-"])
+        out += f"{sign}{R(1, 9)}/{R(1, 9)}"
+    return (out,)
+
+
+def _s_comments():
+    pieces = ["a", "b", "//", "/*", "*/", " ", "x"]
+    lines = ["".join(random.choice(pieces) for _ in range(R(0, 5))) for _ in range(R(1, 5))]
+    text, i, in_block = "\n".join(lines), 0, False
+    while i < len(text):
+        if in_block:
+            in_block = text[i : i + 2] != "*/"
+            i += 1 if in_block else 2
+        elif text.startswith("//", i):
+            i = text.find("\n", i) if "\n" in text[i:] else len(text)
+        elif text.startswith("/*", i):
+            in_block, i = True, i + 2
+        else:
+            i += 1
+    if in_block:
+        lines[-1] += "*/"
+    return (lines,)
+
+
+def _s_custom():
+    return ("".join(random.sample("abcd", R(0, 4))), st("abcde", 0, 8))
+
+
+def _s_replace():
+    s = st("ab", 1, 8)
+    ops, i = [], 0
+    while i < len(s) and len(ops) < 3:
+        length = R(1, min(3, len(s) - i))
+        source = s[i : i + length] if R(0, 1) else st("ab", length, length)
+        ops.append((i, source, st("xy", 0, 3)))
+        i += length + R(0, 1)
+    random.shuffle(ops)
+    return (s, [o[0] for o in ops], [o[1] for o in ops], [o[2] for o in ops])
+
+
+def _s_buddy():
+    s = st("ab", 0, 6)
+    goal = list(s)
+    if len(goal) > 1 and R(0, 3):
+        i, j = random.sample(range(len(goal)), 2)
+        goal[i], goal[j] = goal[j], goal[i]
+    elif R(0, 2) == 0:
+        goal = list(st("ab", len(s), len(s)))
+    return (s, "".join(goal))
+
+
+def _s_decode():
+    s = random.choice("abc") + "".join(random.choice(["a", "b", "2", "3", "4"]) for _ in range(R(0, 6)))
+    size = 0
+    for ch in s:
+        size = size * int(ch) if ch.isdigit() else size + 1
+    return (s, R(1, min(size, 60)))
+
+
+def _s_logs():
+    logs = []
+    for _ in range(R(1, 6)):
+        ident = random.choice("abc") + str(R(1, 3))
+        body = " ".join(random.choice("xyz") for _ in range(R(1, 3))) if R(0, 1) else f"{R(1, 9)} {R(1, 9)}"
+        logs.append(f"{ident} {body}")
+    return (logs,)
+
+
+def _s_lus():
+    return ([st("ab", 1, 5) for _ in range(R(2, 4))],)
+
+
+def _s_replacement():
+    pairs = [[random.choice("abc"), random.choice("abc")] for _ in range(R(0, 4))]
+    return (st("abc", 1, 8), st("abc", 1, 4), pairs)
+
+
+def _s_parts():
+    if R(0, 1):
+        pattern = [1] + [R(0, 1) for _ in range(R(0, 2))]
+        arr = []
+        for _ in range(3):
+            arr += [0] * R(0, 2) + pattern
+        return (arr,)
+    return ([R(0, 1) for _ in range(R(3, 9))],)
+
+
+def _s_three_norm(args, res):
+    arr = args[0]
+    if list(res) == [-1, -1]:
+        return "none"
+    i, j = res
+    parts = (arr[: i + 1], arr[i + 1 : j], arr[j:])
+    if not all(parts):
+        return "bad"
+    values = {int("".join(map(str, p)), 2) for p in parts}
+    return "ok" if len(values) == 1 else "bad"
+
+
+def _s_custom_norm(args, res):
+    order, s = args
+    if sorted(res) != sorted(s):
+        return False
+    rank = {c: i for i, c in enumerate(order)}
+    ranks = [rank[c] for c in res if c in rank]
+    return ranks == sorted(ranks)
+
+
+GX32 = {
+    ("strings", "Text Justification"): _s_justify,
+    ("strings", "Fraction to Recurring Decimal"): lambda: (R(-30, 30), random.choice([-1, 1]) * R(1, 30)),
+    ("strings", "Largest Number"): lambda: (ints(6, 0, 100, 1),),
+    ("strings", "Integer to English Words"): lambda: (R(0, 10 ** R(1, 9)),),
+    ("strings", "Reconstruct Original Digits from English"): _s_digits_words,
+    ("strings", "Longest Uncommon Subsequence II"): _s_lus,
+    ("strings", "Optimal Division"): lambda: (ints(6, 2, 9, 1),),
+    ("strings", "Fraction Addition and Subtraction"): _s_fraction_sum,
+    ("strings", "Remove Comments"): _s_comments,
+    ("strings", "Rotated Digits"): lambda: (R(1, 2000),),
+    ("strings", "Custom Sort String"): (_s_custom, _s_custom_norm),
+    ("strings", "Find And Replace in String"): _s_replace,
+    ("strings", "Buddy Strings"): _s_buddy,
+    ("strings", "Decoded String at Index"): _s_decode,
+    ("strings", "Reorder Data in Log Files"): _s_logs,
+    ("strings", "Remove Letter To Equalize Frequency"): lambda: (st("abc", 2, 8),),
+    ("strings", "Using a Robot to Print the Lexicographically Smallest String"): lambda: (st("abc", 1, 7),),
+    ("strings", "Match Substring After Replacement"): _s_replacement,
+    ("strings", "Three Equal Parts"): (_s_parts, _s_three_norm),
+    ("strings", "Compare Strings by Frequency of the Smallest Character"): lambda: (
+        [st("abc", 1, 5) for _ in range(R(0, 3))],
+        [st("abc", 1, 5) for _ in range(R(1, 4))],
+    ),
+}
+
+GX.update(GX32)
