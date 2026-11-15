@@ -838,3 +838,73 @@ GX12 = {
 }
 
 GX.update(GX12)
+
+
+def _balanced(max_pairs):
+    n = R(1, max_pairs)
+    opens_left, depth, out = n, 0, []
+    while opens_left or depth:
+        if opens_left and (depth == 0 or R(0, 1)):
+            out.append("(")
+            opens_left -= 1
+            depth += 1
+        else:
+            out.append(")")
+            depth -= 1
+    return out
+
+
+def _paren_letters():
+    chars = _balanced(4)
+    for _ in range(R(0, 5)):
+        chars.insert(R(0, len(chars)), random.choice("abc"))
+    return ("".join(chars),)
+
+
+def _stars_args():
+    out, kept = [], 0
+    for _ in range(R(1, 10)):
+        if kept and R(0, 2) == 0:
+            out.append("*")
+            kept -= 1
+        else:
+            out.append(random.choice("abc"))
+            kept += 1
+    return ("".join(out),)
+
+
+def _exclusive_args():
+    n, logs, stack, t, calls_left = R(1, 3), [], [], 0, R(1, 5)
+    while calls_left or stack:
+        if calls_left and (not stack or R(0, 1)):
+            f = R(0, n - 1)
+            logs.append(f"{f}:start:{t}")
+            stack.append(f)
+            calls_left -= 1
+            t += R(0, 2)  # the next event may happen in the same unit
+        else:
+            logs.append(f"{stack.pop()}:end:{t}")
+            t += R(1, 2)  # an end occupies unit t, so the next event is later
+    return (n, logs)
+
+
+def _competitive_args():
+    nums = ints(8, 0, 9, 1)
+    return (nums, R(1, len(nums)))
+
+
+GX13 = {
+    ("stack_monotonic", "Remove All Adjacent Duplicates in String II"): lambda: (st("ab", 1, 12), R(2, 4)),
+    ("stack_monotonic", "Score of Parentheses"): lambda: ("".join(_balanced(5)),),
+    ("stack_monotonic", "Reverse Substrings Between Each Pair of Parentheses"): _paren_letters,
+    ("stack_monotonic", "Removing Stars From a String"): _stars_args,
+    ("stack_monotonic", "Exclusive Time of Functions"): _exclusive_args,
+    ("stack_monotonic", "Longest Well-Performing Interval"): lambda: (ints(10, 0, 12, 1),),
+    ("stack_monotonic", "Maximum Width Ramp"): lambda: (ints(9, 0, 9, 2),),
+    ("stack_monotonic", "Find the Most Competitive Subsequence"): _competitive_args,
+    ("stack_monotonic", "Number of Visible People in a Queue"): lambda: (random.sample(range(1, 30), R(1, 8)),),
+    ("stack_monotonic", "Final Prices With a Special Discount in a Shop"): lambda: (ints(8, 1, 10, 1),),
+    ("stack_monotonic", "Minimum String Length After Removing Substrings"): lambda: (st("ABCD", 1, 10),),
+}
+
+GX.update(GX13)
