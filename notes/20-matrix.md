@@ -66,6 +66,15 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 | `matrix/16` | Easy | Shift 2D Grid | [#1260](https://leetcode.com/problems/shift-2d-grid/) | Flatten the grid, use index arithmetic |
 | `matrix/18` | Easy | Count Negative Numbers in a Sorted Matrix | [#1351](https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/) | Staircase walk on a doubly-sorted matrix |
 | `matrix/19` | Easy | Lucky Numbers in a Matrix | [#1380](https://leetcode.com/problems/lucky-numbers-in-a-matrix/) | Precompute row minima and column maxima |
+| `matrix/25` | Easy | Reshape the Matrix | [#566](https://leetcode.com/problems/reshape-the-matrix/) | Flat index <-> (row, column) conversion with // and % |
+| `matrix/27` | Easy | Projection Area of 3D Shapes | [#883](https://leetcode.com/problems/projection-area-of-3d-shapes/) | Three independent projections: count, row max, column max |
+| `matrix/28` | Easy | Surface Area of 3D Shapes | [#892](https://leetcode.com/problems/surface-area-of-3d-shapes/) | Sum of independent towers minus hidden shared faces |
+| `matrix/30` | Easy | Find Winner on a Tic Tac Toe Game | [#1275](https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/) | Per-line counters instead of rescanning the grid |
+| `matrix/34` | Easy | Determine Whether Matrix Can Be Obtained By Rotation | [#1886](https://leetcode.com/problems/determine-whether-matrix-can-be-obtained-by-rotation/) | Try all 4 rotations |
+| `matrix/36` | Easy | Check if Every Row and Column Contains All Numbers | [#2133](https://leetcode.com/problems/check-if-every-row-and-column-contains-all-numbers/) | Distinct-count check per row and column |
+| `matrix/38` | Easy | Largest Local Values in a Matrix | [#2373](https://leetcode.com/problems/largest-local-values-in-a-matrix/) | Separable sliding-window maximum (rows, then columns) |
+| `matrix/39` | Easy | Matrix Similarity After Cyclic Shifts | [#2946](https://leetcode.com/problems/matrix-similarity-after-cyclic-shifts/) | Cyclic shift equals identity iff the row is periodic with that shift |
+| `matrix/40` | Easy | Find Missing and Repeated Values | [#2965](https://leetcode.com/problems/find-missing-and-repeated-values/) | Sum arithmetic with a set (no sorting, no counting dictionary) |
 | `matrix/1` | Medium | Rotate Image | [#48](https://leetcode.com/problems/rotate-image/) | Matrix transform = composition of simple transforms (transpose + reverse) |
 | `matrix/2` | Medium | Spiral Matrix | [#54](https://leetcode.com/problems/spiral-matrix/) | Boundary shrinking simulation |
 | `matrix/3` | Medium | Set Matrix Zeroes | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Two-pass marking (use the input as its own bookkeeping) |
@@ -81,6 +90,14 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 | `matrix/22` | Medium | Minimum Swaps to Arrange a Binary Grid | [#1536](https://leetcode.com/problems/minimum-swaps-to-arrange-a-binary-grid/) | Greedy bubble-up using trailing-zero counts |
 | `matrix/23` | Medium | First Completely Painted Row or Column | [#2661](https://leetcode.com/problems/first-completely-painted-row-or-column/) | Position map + per-row/column counters |
 | `matrix/24` | Medium | Difference Between Ones and Zeros in Row and Column | [#2482](https://leetcode.com/problems/difference-between-ones-and-zeros-in-row-and-column/) | Precompute row and column counts |
+| `matrix/26` | Medium | Image Overlap | [#835](https://leetcode.com/problems/image-overlap/) | Count translation vectors between pairs of points |
+| `matrix/29` | Medium | As Far from Land as Possible | [#1162](https://leetcode.com/problems/as-far-from-land-as-possible/) | Multi-source BFS (distance to nearest source) |
+| `matrix/31` | Medium | Sort the Matrix Diagonally | [#1329](https://leetcode.com/problems/sort-the-matrix-diagonally/) | Group by i - j (diagonal id), sort, write back |
+| `matrix/32` | Medium | Where Will the Ball Fall | [#1706](https://leetcode.com/problems/where-will-the-ball-fall/) | Row-by-row simulation with a stuck check |
+| `matrix/33` | Medium | Rotating the Box | [#1861](https://leetcode.com/problems/rotating-the-box/) | Two-pointer gravity per row, then rotate by index mapping |
+| `matrix/35` | Medium | Find All Groups of Farmland | [#1992](https://leetcode.com/problems/find-all-groups-of-farmland/) | Find rectangle corners by scanning (no flood fill needed) |
+| `matrix/37` | Medium | Count Unguarded Cells in the Grid | [#2257](https://leetcode.com/problems/count-unguarded-cells-in-the-grid/) | Four directional sweeps with a 'visible' flag |
+| `matrix/41` | Medium | Sum of Matrix After Queries | [#2718](https://leetcode.com/problems/sum-of-matrix-after-queries/) | Process in reverse: the last write wins |
 
 Start one with `python dsa.py start matrix/1`.
 

@@ -92,6 +92,7 @@ Three shapes to memorise:
 ## 8. Practice ladder
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
+| `backtracking/34` | Easy | Binary Watch | [#401](https://leetcode.com/problems/binary-watch/) | Choose k of n positions (combinations), then validate |
 | `backtracking/1` | Medium | Subsets | [#78](https://leetcode.com/problems/subsets/) | Backtracking: include/exclude decision tree (choose -> explore -> un-choose) |
 | `backtracking/2` | Medium | Permutations | [#46](https://leetcode.com/problems/permutations/) | Backtracking with a 'used' set: n! leaves |
 | `backtracking/3` | Medium | Combination Sum | [#39](https://leetcode.com/problems/combination-sum/) | Backtracking over combinations: a start index prevents permutations of the same set |
@@ -116,12 +117,28 @@ Three shapes to memorise:
 | `backtracking/27` | Medium | The k-th Lexicographical String of All Happy Strings of Length n | [#1415](https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/) | Counting subtrees to skip branches (backtracking without enumerating) |
 | `backtracking/28` | Medium | Maximum Length of a Concatenated String with Unique Characters | [#1239](https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/) | Subset search with bitmask conflict checks |
 | `backtracking/30` | Medium | Split a String Into the Max Number of Unique Substrings | [#1593](https://leetcode.com/problems/split-a-string-into-the-max-number-of-unique-substrings/) | Backtracking over cut points with a 'used' set and a bound |
+| `backtracking/31` | Medium | Gray Code | [#89](https://leetcode.com/problems/gray-code/) | Backtracking over a hypercube (or the reflected binary formula) |
+| `backtracking/32` | Medium | Additive Number | [#306](https://leetcode.com/problems/additive-number/) | Choose the seed (first two parts), then verify deterministically |
+| `backtracking/36` | Medium | Pyramid Transition Matrix | [#756](https://leetcode.com/problems/pyramid-transition-matrix/) | Backtracking row by row (with memoisation) |
+| `backtracking/37` | Medium | Split Array into Fibonacci Sequence | [#842](https://leetcode.com/problems/split-array-into-fibonacci-sequence/) | Backtracking with pruning (prefix choices + forced sums) |
+| `backtracking/40` | Medium | Splitting a String Into Descending Consecutive Values | [#1849](https://leetcode.com/problems/splitting-a-string-into-descending-consecutive-values/) | Backtracking on prefix choices with a forced next value |
+| `backtracking/41` | Medium | Find Unique Binary String | [#1980](https://leetcode.com/problems/find-unique-binary-string/) | Backtracking/enumeration vs the diagonal argument |
+| `backtracking/42` | Medium | Count Number of Maximum Bitwise-OR Subsets | [#2044](https://leetcode.com/problems/count-number-of-maximum-bitwise-or-subsets/) | Include / exclude backtracking carrying a running aggregate |
+| `backtracking/43` | Medium | Next Greater Numerically Balanced Number | [#2048](https://leetcode.com/problems/next-greater-numerically-balanced-number/) | Enumerate all candidates (subset of digits + permutations), then binary search |
+| `backtracking/45` | Medium | Fair Distribution of Cookies | [#2305](https://leetcode.com/problems/fair-distribution-of-cookies/) | Backtracking assignment with pruning (symmetry + bound) |
+| `backtracking/46` | Medium | Maximum Rows Covered by Columns | [#2397](https://leetcode.com/problems/maximum-rows-covered-by-columns/) | Enumerate column subsets (bitmask) with a cheap subset test |
+| `backtracking/47` | Medium | Generate Binary Strings Without Adjacent Zeros | [#3211](https://leetcode.com/problems/generate-binary-strings-without-adjacent-zeros/) | Backtracking that prunes invalid prefixes |
 | `backtracking/5` | Hard | N-Queens | [#51](https://leetcode.com/problems/n-queens/) | Backtracking with O(1) conflict checks via sets (columns, diagonals) |
 | `backtracking/20` | Hard | N-Queens II | [#52](https://leetcode.com/problems/n-queens-ii/) | Backtracking with O(1) conflict checks via sets |
 | `backtracking/21` | Hard | Word Break II | [#140](https://leetcode.com/problems/word-break-ii/) | Backtracking over cut points + memoisation of suffix results |
 | `backtracking/22` | Hard | Expression Add Operators | [#282](https://leetcode.com/problems/expression-add-operators/) | Backtracking with a running value and the last term (to handle * precedence) |
 | `backtracking/23` | Hard | Remove Invalid Parentheses | [#301](https://leetcode.com/problems/remove-invalid-parentheses/) | Backtracking with a precomputed removal budget and pruning |
 | `backtracking/29` | Hard | Unique Paths III | [#980](https://leetcode.com/problems/unique-paths-iii/) | Hamiltonian-style path counting by backtracking |
+| `backtracking/33` | Hard | Reconstruct Itinerary | [#332](https://leetcode.com/problems/reconstruct-itinerary/) | Eulerian path (Hierholzer) / backtracking over tickets |
+| `backtracking/35` | Hard | 24 Game | [#679](https://leetcode.com/problems/24-game/) | Backtracking over pairwise combinations |
+| `backtracking/38` | Hard | Number of Squareful Arrays | [#996](https://leetcode.com/problems/number-of-squareful-arrays/) | Backtracking over multiset permutations with a validity filter |
+| `backtracking/39` | Hard | Maximum Score Words Formed by Letters | [#1255](https://leetcode.com/problems/maximum-score-words-formed-by-letters/) | Include / exclude backtracking with a resource counter |
+| `backtracking/44` | Hard | Maximum Good People Based on Statements | [#2151](https://leetcode.com/problems/maximum-good-people-based-on-statements/) | Subset enumeration / backtracking with consistency pruning |
 
 Start one with `python dsa.py start backtracking/1`.
 

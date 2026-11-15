@@ -76,6 +76,7 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/18` | Easy | Maximum Number of Balloons | [#1189](https://leetcode.com/problems/maximum-number-of-balloons/) | Frequency count, bottleneck letter |
 | `hashing/19` | Easy | Check If N and Its Double Exist | [#1346](https://leetcode.com/problems/check-if-n-and-its-double-exist/) | Set of seen values (two-sum style) |
 | `hashing/25` | Easy | Uncommon Words from Two Sentences | [#884](https://leetcode.com/problems/uncommon-words-from-two-sentences/) | Count words over the combined text |
+| `hashing/27` | Easy | Set Mismatch | [#645](https://leetcode.com/problems/set-mismatch/) | Set difference / sum arithmetic |
 | `hashing/2` | Medium | Group Anagrams | [#49](https://leetcode.com/problems/group-anagrams/) | Hash map with a canonical-form key (group by signature) |
 | `hashing/3` | Medium | Longest Consecutive Sequence | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash set + 'only expand from the start of a sequence' (amortised O(n)) |
 | `hashing/10` | Medium | 4Sum II | [#454](https://leetcode.com/problems/4sum-ii/) | Meet in the middle with a hash map of pair sums |
@@ -85,6 +86,22 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/22` | Medium | Find Players With Zero or One Losses | [#2225](https://leetcode.com/problems/find-players-with-zero-or-one-losses/) | Counting with a hash map |
 | `hashing/23` | Medium | Max Sum of a Pair With Equal Sum of Digits | [#2342](https://leetcode.com/problems/max-sum-of-a-pair-with-equal-sum-of-digits/) | Group by key, keep the running maximum |
 | `hashing/24` | Medium | Equal Row and Column Pairs | [#2352](https://leetcode.com/problems/equal-row-and-column-pairs/) | Hash whole rows (tuples) and match against columns |
+| `hashing/26` | Medium | Longest Absolute File Path | [#388](https://leetcode.com/problems/longest-absolute-file-path/) | Hash map / array from depth to the current path length |
+| `hashing/28` | Medium | Find and Replace Pattern | [#890](https://leetcode.com/problems/find-and-replace-pattern/) | Canonical form / normalisation with a first-seen index map |
+| `hashing/29` | Medium | Array of Doubled Pairs | [#954](https://leetcode.com/problems/array-of-doubled-pairs/) | Greedy matching on a frequency map, smallest magnitude first |
+| `hashing/30` | Medium | Divide Array in Sets of K Consecutive Numbers | [#1296](https://leetcode.com/problems/divide-array-in-sets-of-k-consecutive-numbers/) | Greedy from the smallest value with a frequency map |
+| `hashing/31` | Medium | Display Table of Food Orders in a Restaurant | [#1418](https://leetcode.com/problems/display-table-of-food-orders-in-a-restaurant/) | Nested dictionary (table -> food -> count) + sorted keys |
+| `hashing/32` | Medium | Making File Names Unique | [#1487](https://leetcode.com/problems/making-file-names-unique/) | Set of used names + per-name 'next suffix' memo |
+| `hashing/33` | Medium | Restore the Array From Adjacent Pairs | [#1743](https://leetcode.com/problems/restore-the-array-from-adjacent-pairs/) | Adjacency map; walk a path from an endpoint |
+| `hashing/34` | Medium | Evaluate the Bracket Pairs of a String | [#1807](https://leetcode.com/problems/evaluate-the-bracket-pairs-of-a-string/) | Dictionary lookup during a single parse |
+| `hashing/35` | Medium | Count Nice Pairs in an Array | [#1814](https://leetcode.com/problems/count-nice-pairs-in-an-array/) | Move variables to one side -> count equal keys with a hash map |
+| `hashing/36` | Medium | Number of Pairs of Interchangeable Rectangles | [#2001](https://leetcode.com/problems/number-of-pairs-of-interchangeable-rectangles/) | Exact normalised key (reduced fraction) + hash counting |
+| `hashing/37` | Medium | Longest Palindrome by Concatenating Two Letter Words | [#2131](https://leetcode.com/problems/longest-palindrome-by-concatenating-two-letter-words/) | Counting mirror pairs with a hash map |
+| `hashing/38` | Medium | Find All Lonely Numbers in the Array | [#2150](https://leetcode.com/problems/find-all-lonely-numbers-in-the-array/) | Frequency map with neighbour lookups |
+| `hashing/39` | Medium | Minimum Consecutive Cards to Pick Up | [#2260](https://leetcode.com/problems/minimum-consecutive-cards-to-pick-up/) | Last-seen index map; distance between consecutive occurrences |
+| `hashing/40` | Medium | Node With Highest Edge Score | [#2374](https://leetcode.com/problems/node-with-highest-edge-score/) | Accumulate into a hash map / array by target |
+| `hashing/41` | Medium | Most Popular Video Creator | [#2456](https://leetcode.com/problems/most-popular-video-creator/) | Group-by with a running aggregate and a tie-breaking best |
+| `hashing/42` | Medium | Subdomain Visit Count | [#811](https://leetcode.com/problems/subdomain-visit-count/) | Accumulate counts for every dot-suffix in a hash map |
 
 Start one with `python dsa.py start hashing/1`.
 

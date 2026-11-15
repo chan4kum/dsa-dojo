@@ -79,6 +79,7 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/23` | Easy | Make The String Great | [#1544](https://leetcode.com/problems/make-the-string-great/) | Stack cancellation of adjacent pairs |
 | `stack_monotonic/33` | Easy | Final Prices With a Special Discount in a Shop | [#1475](https://leetcode.com/problems/final-prices-with-a-special-discount-in-a-shop/) | Next smaller element (monotonic stack) |
 | `stack_monotonic/34` | Easy | Minimum String Length After Removing Substrings | [#2696](https://leetcode.com/problems/minimum-string-length-after-removing-substrings/) | Stack for cascading adjacent deletions |
+| `stack_monotonic/35` | Easy | Baseball Game | [#682](https://leetcode.com/problems/baseball-game/) | Stack of valid scores |
 | `stack_monotonic/2` | Medium | Daily Temperatures | [#739](https://leetcode.com/problems/daily-temperatures/) | Monotonic (decreasing) stack: 'next greater element' |
 | `stack_monotonic/5` | Medium | Evaluate Reverse Polish Notation | [#150](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack evaluation (operands wait for their operator) |
 | `stack_monotonic/6` | Medium | Decode String | [#394](https://leetcode.com/problems/decode-string/) | Stack of contexts for nested structures |
@@ -101,11 +102,23 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/29` | Medium | Longest Well-Performing Interval | [#1124](https://leetcode.com/problems/longest-well-performing-interval/) | Prefix sums + first-occurrence map (+1/-1 walk) |
 | `stack_monotonic/30` | Medium | Maximum Width Ramp | [#962](https://leetcode.com/problems/maximum-width-ramp/) | Monotonic stack of candidates + right-to-left scan |
 | `stack_monotonic/31` | Medium | Find the Most Competitive Subsequence | [#1673](https://leetcode.com/problems/find-the-most-competitive-subsequence/) | Monotonic stack with a length budget |
+| `stack_monotonic/37` | Medium | Minimum Cost Tree From Leaf Values | [#1130](https://leetcode.com/problems/minimum-cost-tree-from-leaf-values/) | Monotonic decreasing stack (greedy removal of the smallest valley) |
+| `stack_monotonic/38` | Medium | Minimum Remove to Make Valid Parentheses | [#1249](https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/) | Stack of unmatched bracket indices |
+| `stack_monotonic/39` | Medium | Sum of Subarray Ranges | [#2104](https://leetcode.com/problems/sum-of-subarray-ranges/) | Monotonic stack contribution counting (max and min) |
+| `stack_monotonic/41` | Medium | Steps to Make Array Non-decreasing | [#2289](https://leetcode.com/problems/steps-to-make-array-non-decreasing/) | Monotonic stack carrying a 'time of removal' per element |
+| `stack_monotonic/43` | Medium | Construct Smallest Number From DI String | [#2375](https://leetcode.com/problems/construct-smallest-number-from-di-string/) | Stack reversal of runs |
+| `stack_monotonic/46` | Medium | Beautiful Towers I | [#2865](https://leetcode.com/problems/beautiful-towers-i/) | Monotonic stack prefix sums (previous smaller element reuse) |
 | `stack_monotonic/3` | Hard | Largest Rectangle in Histogram | [#84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic (increasing) stack: nearest smaller element on both sides |
 | `stack_monotonic/4` | Hard | Sliding Window Maximum | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Monotonic deque (decreasing) over a sliding window |
 | `stack_monotonic/21` | Hard | Maximal Rectangle | [#85](https://leetcode.com/problems/maximal-rectangle/) | Reduce to Largest Rectangle in Histogram per row |
 | `stack_monotonic/22` | Hard | Basic Calculator | [#224](https://leetcode.com/problems/basic-calculator/) | Stack of (result, sign) saved at each '(' |
 | `stack_monotonic/32` | Hard | Number of Visible People in a Queue | [#1944](https://leetcode.com/problems/number-of-visible-people-in-a-queue/) | Monotonic stack processed right to left |
+| `stack_monotonic/36` | Hard | Shortest Subarray with Sum at Least K | [#862](https://leetcode.com/problems/shortest-subarray-with-sum-at-least-k/) | Prefix sums + monotonic deque |
+| `stack_monotonic/40` | Hard | Replace Non-Coprime Numbers in Array | [#2197](https://leetcode.com/problems/replace-non-coprime-numbers-in-array/) | Stack with cascading merges |
+| `stack_monotonic/42` | Hard | Subarray With Elements Greater Than Varying Threshold | [#2334](https://leetcode.com/problems/subarray-with-elements-greater-than-varying-threshold/) | Monotonic stack: widest window in which each element is the minimum |
+| `stack_monotonic/44` | Hard | Next Greater Element IV | [#2454](https://leetcode.com/problems/next-greater-element-iv/) | Two monotonic stacks (first-greater and second-greater queues) |
+| `stack_monotonic/45` | Hard | Robot Collisions | [#2751](https://leetcode.com/problems/robot-collisions/) | Sort by position + stack of right-movers (asteroid-collision style) |
+| `stack_monotonic/47` | Hard | Find the Number of Subarrays Where Boundary Elements Are Maximum | [#3113](https://leetcode.com/problems/find-the-number-of-subarrays-where-boundary-elements-are-maximum/) | Monotonic stack with run counts |
 
 Start one with `python dsa.py start stack_monotonic/1`.
 

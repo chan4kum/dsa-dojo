@@ -88,6 +88,9 @@ def three_sum(nums):
 | `two_pointers/15` | Easy | Long Pressed Name | [#925](https://leetcode.com/problems/long-pressed-name/) | Two pointers with run-length reasoning |
 | `two_pointers/25` | Easy | Find First Palindromic String in the Array | [#2108](https://leetcode.com/problems/find-first-palindromic-string-in-the-array/) | Two pointers palindrome check |
 | `two_pointers/26` | Easy | Count Pairs Whose Sum is Less than Target | [#2824](https://leetcode.com/problems/count-pairs-whose-sum-is-less-than-target/) | Sort + two pointers counting in bulk |
+| `two_pointers/32` | Easy | Reverse Prefix of Word | [#2000](https://leetcode.com/problems/reverse-prefix-of-word/) | Two pointers swapping inwards (or a reversed slice) |
+| `two_pointers/34` | Easy | Find All K-Distant Indices in an Array | [#2200](https://leetcode.com/problems/find-all-k-distant-indices-in-an-array/) | Union of windows with a 'next unwritten index' pointer |
+| `two_pointers/45` | Easy | Remove Palindromic Subsequences | [#1332](https://leetcode.com/problems/remove-palindromic-subsequences/) | Observation (two letters => at most 2) + two-pointer palindrome check |
 | `two_pointers/2` | Medium | 3Sum | [#15](https://leetcode.com/problems/3sum/) | Sort + fix one element + two pointers on the rest |
 | `two_pointers/3` | Medium | Container With Most Water | [#11](https://leetcode.com/problems/container-with-most-water/) | Two pointers converging, with a greedy discard argument |
 | `two_pointers/5` | Medium | Two Sum II - Input Array Is Sorted | [#167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two pointers on a sorted array (converge from both ends) |
@@ -105,7 +108,21 @@ def three_sum(nums):
 | `two_pointers/24` | Medium | Minimum Length of String After Deleting Similar Ends | [#1750](https://leetcode.com/problems/minimum-length-of-string-after-deleting-similar-ends/) | Two pointers closing in from both ends (greedy maximal strips) |
 | `two_pointers/27` | Medium | Maximum Distance Between a Pair of Values | [#1855](https://leetcode.com/problems/maximum-distance-between-a-pair-of-values/) | Two pointers on two sorted arrays |
 | `two_pointers/28` | Medium | Number of Subsequences That Satisfy the Given Sum Condition | [#1498](https://leetcode.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/) | Sort + two pointers + counting subsets by min/max |
+| `two_pointers/29` | Medium | Swap Adjacent in LR String | [#777](https://leetcode.com/problems/swap-adjacent-in-lr-string/) | Two pointers over the non-blank characters |
+| `two_pointers/30` | Medium | Friends Of Appropriate Ages | [#825](https://leetcode.com/problems/friends-of-appropriate-ages/) | Sort + two sliding bounds (window of valid values per element) |
+| `two_pointers/31` | Medium | 3Sum With Multiplicity | [#923](https://leetcode.com/problems/3sum-with-multiplicity/) | Sort + fix one + two pointers with run lengths |
+| `two_pointers/33` | Medium | Watering Plants II | [#2105](https://leetcode.com/problems/watering-plants-ii/) | Two pointers moving inwards (simulation) |
+| `two_pointers/35` | Medium | Move Pieces to Obtain a String | [#2337](https://leetcode.com/problems/move-pieces-to-obtain-a-string/) | Two pointers over the pieces, ignoring blanks |
+| `two_pointers/36` | Medium | Maximum Matching of Players With Trainers | [#2410](https://leetcode.com/problems/maximum-matching-of-players-with-trainers/) | Sort + greedy two pointers |
+| `two_pointers/37` | Medium | Count the Number of Fair Pairs | [#2563](https://leetcode.com/problems/count-the-number-of-fair-pairs/) | Sort + two pointers counting a prefix of pairs, then subtract |
+| `two_pointers/38` | Medium | Make String a Subsequence Using Cyclic Increments | [#2825](https://leetcode.com/problems/make-string-a-subsequence-using-cyclic-increments/) | Greedy subsequence matching with two pointers (two allowed letters per position) |
+| `two_pointers/39` | Medium | Append Characters to String to Make Subsequence | [#2486](https://leetcode.com/problems/append-characters-to-string-to-make-subsequence/) | Greedy subsequence matching with two pointers |
+| `two_pointers/40` | Medium | The k Strongest Values in an Array | [#1471](https://leetcode.com/problems/the-k-strongest-values-in-an-array/) | Sort + two pointers from both ends |
+| `two_pointers/43` | Medium | Partition Array According to Given Pivot | [#2161](https://leetcode.com/problems/partition-array-according-to-given-pivot/) | Two pointers writing from both ends of the output |
+| `two_pointers/44` | Medium | Rearrange Array Elements by Sign | [#2149](https://leetcode.com/problems/rearrange-array-elements-by-sign/) | Two write pointers stepping by 2 |
 | `two_pointers/4` | Hard | Trapping Rain Water | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two pointers with running maxima (the smaller side decides) |
+| `two_pointers/41` | Hard | Get the Maximum Score | [#1537](https://leetcode.com/problems/get-the-maximum-score/) | Merge-style two pointers with running segment sums |
+| `two_pointers/42` | Hard | Maximum Score of a Good Subarray | [#1793](https://leetcode.com/problems/maximum-score-of-a-good-subarray/) | Greedy expanding two pointers from a centre |
 
 Start one with `python dsa.py start two_pointers/1`.
 

@@ -83,6 +83,7 @@ def find_kth_largest(nums, k):
 | `heap/12` | Easy | The K Weakest Rows in a Matrix | [#1337](https://leetcode.com/problems/the-k-weakest-rows-in-a-matrix/) | Top-k selection with a heap |
 | `heap/17` | Easy | Relative Ranks | [#506](https://leetcode.com/problems/relative-ranks/) | Sort (or heap-pop) indices by score |
 | `heap/18` | Easy | Maximum Product of Two Elements in an Array | [#1464](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/) | Top-2 selection |
+| `heap/31` | Easy | Find Subsequence of Length K With the Largest Sum | [#2099](https://leetcode.com/problems/find-subsequence-of-length-k-with-the-largest-sum/) | Top-k selection by value, restore original order by index |
 | `heap/1` | Medium | Kth Largest Element in an Array | [#215](https://leetcode.com/problems/kth-largest-element-in-an-array/) | Top-K with a size-k min-heap |
 | `heap/2` | Medium | Top K Frequent Elements | [#347](https://leetcode.com/problems/top-k-frequent-elements/) | Frequency map + heap (O(n log k)) or bucket sort (O(n)) |
 | `heap/3` | Medium | Task Scheduler | [#621](https://leetcode.com/problems/task-scheduler/) | Greedy / counting argument on the most frequent task (a heap simulation also works) |
@@ -100,8 +101,23 @@ def find_kth_largest(nums, k):
 | `heap/21` | Medium | Single-Threaded CPU | [#1834](https://leetcode.com/problems/single-threaded-cpu/) | Event simulation with a priority queue |
 | `heap/22` | Medium | Divide Intervals Into Minimum Number of Groups | [#2406](https://leetcode.com/problems/divide-intervals-into-minimum-number-of-groups/) | Sort + min-heap of group end times (meeting-rooms pattern) |
 | `heap/23` | Medium | K-th Smallest Prime Fraction | [#786](https://leetcode.com/problems/k-th-smallest-prime-fraction/) | K-way merge of implicitly sorted lists |
+| `heap/24` | Medium | Longest Happy String | [#1405](https://leetcode.com/problems/longest-happy-string/) | Greedy with a max-heap, falling back to the runner-up to break a triple |
+| `heap/25` | Medium | Jump Game VI | [#1696](https://leetcode.com/problems/jump-game-vi/) | DP + sliding-window maximum (heap with lazy deletion, or a monotonic deque) |
+| `heap/26` | Medium | Maximum Average Pass Ratio | [#1792](https://leetcode.com/problems/maximum-average-pass-ratio/) | Greedy on marginal gain with a max-heap (diminishing returns) |
+| `heap/27` | Medium | Maximum Product After K Increments | [#2233](https://leetcode.com/problems/maximum-product-after-k-increments/) | Greedy on the minimum with a min-heap |
+| `heap/28` | Medium | Total Cost to Hire K Workers | [#2462](https://leetcode.com/problems/total-cost-to-hire-k-workers/) | Two heaps for two sliding ends |
+| `heap/29` | Medium | Maximum Subsequence Score | [#2542](https://leetcode.com/problems/maximum-subsequence-score/) | Sort by one key, heap for the best k of the other |
+| `heap/32` | Medium | Super Ugly Number | [#313](https://leetcode.com/problems/super-ugly-number/) | Generate in order with a min-heap (k-way merge of multiples) |
+| `heap/33` | Medium | Range Sum of Sorted Subarray Sums | [#1508](https://leetcode.com/problems/range-sum-of-sorted-subarray-sums/) | K-way merge of sorted chains with a min-heap |
+| `heap/34` | Medium | Number of Orders in the Backlog | [#1801](https://leetcode.com/problems/number-of-orders-in-the-backlog/) | Order-book simulation with two priority queues |
+| `heap/35` | Medium | Distant Barcodes | [#1054](https://leetcode.com/problems/distant-barcodes/) | Greedy with a max-heap, never repeat the last value (cf. Reorganize String) |
+| `heap/38` | Medium | Split Array into Consecutive Subsequences | [#659](https://leetcode.com/problems/split-array-into-consecutive-subsequences/) | Greedy chain extension with per-end min-heaps |
 | `heap/11` | Hard | IPO | [#502](https://leetcode.com/problems/ipo/) | Two structures: sorted list for 'unlocking', max-heap for 'best now' |
 | `heap/20` | Hard | Minimum Number of Refueling Stops | [#871](https://leetcode.com/problems/minimum-number-of-refueling-stops/) | Greedy with a max-heap of passed options |
+| `heap/30` | Hard | Maximum Performance of a Team | [#1383](https://leetcode.com/problems/maximum-performance-of-a-team/) | Sort by efficiency desc + min-heap of the top-k speeds |
+| `heap/36` | Hard | Minimum Cost to Hire K Workers | [#857](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/) | Sort by ratio, max-heap to keep the k smallest qualities |
+| `heap/37` | Hard | Minimize Deviation in Array | [#1675](https://leetcode.com/problems/minimize-deviation-in-array/) | Normalise to the maximal form, then shrink the maximum with a max-heap |
+| `heap/39` | Hard | Trapping Rain Water II | [#407](https://leetcode.com/problems/trapping-rain-water-ii/) | Dijkstra-style flood from the border with a min-heap |
 
 Start one with `python dsa.py start heap/1`.
 

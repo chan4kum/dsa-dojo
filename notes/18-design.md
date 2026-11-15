@@ -109,6 +109,7 @@ Interview note: be ready to write the doubly linked list **by hand** (head/tail 
 | `design/29` | Medium | Design A Leaderboard | [#1244](https://leetcode.com/problems/design-a-leaderboard/) | Hash map + heap selection for top-K |
 | `design/4` | Hard | Find Median from Data Stream | [#295](https://leetcode.com/problems/find-median-from-data-stream/) | Two heaps (max-heap of the lower half + min-heap of the upper half) |
 | `design/26` | Hard | LFU Cache | [#460](https://leetcode.com/problems/lfu-cache/) | Frequency buckets of LRU-ordered keys + min-frequency pointer |
+| `design/30` | Hard | Design a Text Editor | [#2296](https://leetcode.com/problems/design-a-text-editor/) | Two stacks around a cursor |
 
 Start one with `python dsa.py start design/1`.
 

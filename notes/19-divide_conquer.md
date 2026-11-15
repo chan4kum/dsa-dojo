@@ -80,8 +80,20 @@ def reverse_pairs(nums):
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
 | `divide_conquer/1` | Medium | Sort an Array | [#912](https://leetcode.com/problems/sort-an-array/) | Divide & conquer: split, solve halves, merge in O(n) -> O(n log n) |
+| `divide_conquer/4` | Medium | Different Ways to Add Parentheses | [#241](https://leetcode.com/problems/different-ways-to-add-parentheses/) | Divide and conquer on the last operator + memoisation of substrings |
+| `divide_conquer/6` | Medium | Beautiful Array | [#932](https://leetcode.com/problems/beautiful-array/) | Divide and conquer: affine maps keep the property, parity separates the halves |
+| `divide_conquer/7` | Medium | K-th Symbol in Grammar | [#779](https://leetcode.com/problems/k-th-symbol-in-grammar/) | Divide and conquer: go back to the parent, flip on even positions |
+| `divide_conquer/8` | Medium | Longest Substring with At Least K Repeating Characters | [#395](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/) | Divide and conquer: split on the characters that cannot be inside any answer |
+| `divide_conquer/10` | Medium | Maximum Binary Tree | [#654](https://leetcode.com/problems/maximum-binary-tree/) | Divide and conquer, optimised by a monotonic stack |
+| `divide_conquer/11` | Medium | Super Pow | [#372](https://leetcode.com/problems/super-pow/) | Divide and conquer on the exponent (square/ten-fold per digit) |
+| `divide_conquer/15` | Medium | Count Good Numbers | [#1922](https://leetcode.com/problems/count-good-numbers/) | Fast exponentiation (halve the exponent) |
 | `divide_conquer/2` | Hard | Reverse Pairs | [#493](https://leetcode.com/problems/reverse-pairs/) | Divide & conquer with counting during merge sort (inversion-count family) |
 | `divide_conquer/3` | Hard | Count of Smaller Numbers After Self | [#315](https://leetcode.com/problems/count-of-smaller-numbers-after-self/) | Merge sort that counts while merging (inversion counting) |
+| `divide_conquer/5` | Hard | Count of Range Sum | [#327](https://leetcode.com/problems/count-of-range-sum/) | Merge sort on prefix sums, counting cross pairs |
+| `divide_conquer/9` | Hard | The Skyline Problem | [#218](https://leetcode.com/problems/the-skyline-problem/) | Sweep line with a max-heap (lazy deletion) |
+| `divide_conquer/12` | Hard | Number of Pairs Satisfying Inequality | [#2426](https://leetcode.com/problems/number-of-pairs-satisfying-inequality/) | Merge sort counting of cross pairs (inversion-count family) |
+| `divide_conquer/13` | Hard | Create Sorted Array through Instructions | [#1649](https://leetcode.com/problems/create-sorted-array-through-instructions/) | Counting with a Fenwick tree (online cousin of merge-sort counting) |
+| `divide_conquer/14` | Hard | Number of Ways to Reorder Array to Get Same BST | [#1569](https://leetcode.com/problems/number-of-ways-to-reorder-array-to-get-same-bst/) | Divide and conquer with binomial interleavings |
 
 Start one with `python dsa.py start divide_conquer/1`.
 

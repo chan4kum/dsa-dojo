@@ -69,6 +69,9 @@ Static range query: `P = [0]; for x in a: P.append(P[-1] + x)` then `P[r+1] - P[
 | `prefix_sums/7` | Easy | Sum of All Odd Length Subarrays | [#1588](https://leetcode.com/problems/sum-of-all-odd-length-subarrays/) | Contribution counting: how many subarrays contain each element |
 | `prefix_sums/15` | Easy | Longest Subsequence With Limited Sum | [#2389](https://leetcode.com/problems/longest-subsequence-with-limited-sum/) | Sort + prefix sums + binary search |
 | `prefix_sums/18` | Easy | Check if All the Integers in a Range Are Covered | [#1893](https://leetcode.com/problems/check-if-all-the-integers-in-a-range-are-covered/) | Difference array coverage count |
+| `prefix_sums/26` | Easy | Find the Highest Altitude | [#1732](https://leetcode.com/problems/find-the-highest-altitude/) | Running prefix sum with a max |
+| `prefix_sums/28` | Easy | Find the Middle Index in Array | [#1991](https://leetcode.com/problems/find-the-middle-index-in-array/) | Running left sum vs total |
+| `prefix_sums/29` | Easy | Left and Right Sum Differences | [#2574](https://leetcode.com/problems/left-and-right-sum-differences/) | Prefix sum with the total |
 | `prefix_sums/2` | Medium | Product of Array Except Self | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / suffix accumulation (prefix idea works for any associative operation) |
 | `prefix_sums/3` | Medium | Subarray Sum Equals K | [#560](https://leetcode.com/problems/subarray-sum-equals-k/) | Prefix sum + hash map of counts ('how many earlier prefixes equal current - k?') |
 | `prefix_sums/4` | Medium | Contiguous Array | [#525](https://leetcode.com/problems/contiguous-array/) | Prefix sum + first-occurrence map (transform 0 -> -1) |
@@ -82,7 +85,21 @@ Static range query: `P = [0]; for x in a: P.append(P[-1] + x)` then `P[r+1] - P[
 | `prefix_sums/14` | Medium | Number of Ways to Split Array | [#2270](https://leetcode.com/problems/number-of-ways-to-split-array/) | Running prefix sum against the total |
 | `prefix_sums/16` | Medium | Count Vowel Strings in Ranges | [#2559](https://leetcode.com/problems/count-vowel-strings-in-ranges/) | Prefix sums over a 0/1 indicator |
 | `prefix_sums/17` | Medium | Find the Score of All Prefixes of an Array | [#2640](https://leetcode.com/problems/find-the-score-of-all-prefixes-of-an-array/) | Running max + running prefix sum |
+| `prefix_sums/20` | Medium | Continuous Subarray Sum | [#523](https://leetcode.com/problems/continuous-subarray-sum/) | Prefix sums mod k with a first-seen index map |
+| `prefix_sums/21` | Medium | Make Sum Divisible by P | [#1590](https://leetcode.com/problems/make-sum-divisible-by-p/) | Prefix remainders with a last-seen index map |
+| `prefix_sums/22` | Medium | Count Triplets That Can Form Two Arrays of Equal XOR | [#1442](https://leetcode.com/problems/count-triplets-that-can-form-two-arrays-of-equal-xor/) | Prefix XOR: equal prefixes mean a zero-XOR subarray |
+| `prefix_sums/23` | Medium | XOR Queries of a Subarray | [#1310](https://leetcode.com/problems/xor-queries-of-a-subarray/) | Prefix XOR (XOR is invertible, so it works like prefix sums) |
+| `prefix_sums/24` | Medium | Find Two Non-overlapping Sub-arrays Each With Target Sum | [#1477](https://leetcode.com/problems/find-two-non-overlapping-sub-arrays-each-with-target-sum/) | Sliding window + best-so-far prefix array |
+| `prefix_sums/25` | Medium | Number of Sub-arrays With Odd Sum | [#1524](https://leetcode.com/problems/number-of-sub-arrays-with-odd-sum/) | Prefix parity counting |
+| `prefix_sums/27` | Medium | Range Product Queries of Powers | [#2438](https://leetcode.com/problems/range-product-queries-of-powers/) | Prefix sums of exponents (products become sums in the exponent) |
+| `prefix_sums/30` | Medium | Maximum Absolute Sum of Any Subarray | [#1749](https://leetcode.com/problems/maximum-absolute-sum-of-any-subarray/) | Max prefix - min prefix |
+| `prefix_sums/31` | Medium | Unique Length-3 Palindromic Subsequences | [#1930](https://leetcode.com/problems/unique-length-3-palindromic-subsequences/) | First/last occurrence + distinct letters in between |
+| `prefix_sums/32` | Medium | K Radius Subarray Averages | [#2090](https://leetcode.com/problems/k-radius-subarray-averages/) | Prefix sums for fixed-width window sums |
+| `prefix_sums/33` | Medium | Sum of Absolute Differences in a Sorted Array | [#1685](https://leetcode.com/problems/sum-of-absolute-differences-in-a-sorted-array/) | Prefix sums on a sorted array removes the absolute value |
+| `prefix_sums/34` | Medium | Count of Interesting Subarrays | [#2845](https://leetcode.com/problems/count-of-interesting-subarrays/) | Prefix counts mod m with a frequency map |
+| `prefix_sums/35` | Medium | Count the Number of Beautiful Subarrays | [#2588](https://leetcode.com/problems/count-the-number-of-beautiful-subarrays/) | Reduce to XOR == 0, then prefix XOR + frequency map |
 | `prefix_sums/19` | Hard | Number of Submatrices That Sum to Target | [#1074](https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/) | Reduce 2D to 1D (row pairs) + prefix-sum hashmap |
+| `prefix_sums/36` | Hard | Sum of Floored Pairs | [#1862](https://leetcode.com/problems/sum-of-floored-pairs/) | Counting array + prefix counts over value ranges (harmonic sum) |
 
 Start one with `python dsa.py start prefix_sums/1`.
 

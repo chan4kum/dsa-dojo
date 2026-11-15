@@ -97,6 +97,8 @@ def str_str(haystack, needle):
 | `strings/35` | Easy | Find the Difference | [#389](https://leetcode.com/problems/find-the-difference/) | XOR / sum cancellation |
 | `strings/36` | Easy | Longest Uncommon Subsequence I | [#521](https://leetcode.com/problems/longest-uncommon-subsequence-i/) | Reasoning shortcut (think before coding) |
 | `strings/37` | Easy | Find Common Characters | [#1002](https://leetcode.com/problems/find-common-characters/) | Multiset intersection (min of counts) |
+| `strings/50` | Easy | Buddy Strings | [#859](https://leetcode.com/problems/buddy-strings/) | Compare mismatch positions (+ duplicate-letter special case) |
+| `strings/53` | Easy | Remove Letter To Equalize Frequency | [#2423](https://leetcode.com/problems/remove-letter-to-equalize-frequency/) | Frequency map + simulate each possible removal |
 | `strings/4` | Medium | Reverse Words in a String | [#151](https://leetcode.com/problems/reverse-words-in-a-string/) | Split, reverse, join (in-place version: reverse all then each word) |
 | `strings/5` | Medium | String to Integer (atoi) | [#8](https://leetcode.com/problems/string-to-integer-atoi/) | Careful state-by-state parsing (finite automaton) |
 | `strings/8` | Medium | Multiply Strings | [#43](https://leetcode.com/problems/multiply-strings/) | Schoolbook multiplication with a position array |
@@ -107,8 +109,26 @@ def str_str(haystack, needle):
 | `strings/18` | Medium | Compare Version Numbers | [#165](https://leetcode.com/problems/compare-version-numbers/) | Parse and compare component by component |
 | `strings/29` | Medium | Minimum Number of Steps to Make Two Strings Anagram | [#1347](https://leetcode.com/problems/minimum-number-of-steps-to-make-two-strings-anagram/) | Frequency counting |
 | `strings/34` | Medium | Count Number of Homogenous Substrings | [#1759](https://leetcode.com/problems/count-number-of-homogenous-substrings/) | Run-length counting (substrings ending here) |
+| `strings/39` | Medium | Fraction to Recurring Decimal | [#166](https://leetcode.com/problems/fraction-to-recurring-decimal/) | Long division with a hash map of seen remainders |
+| `strings/40` | Medium | Largest Number | [#179](https://leetcode.com/problems/largest-number/) | Custom comparator sort (order two items by the concatenations) |
+| `strings/42` | Medium | Reconstruct Original Digits from English | [#423](https://leetcode.com/problems/reconstruct-original-digits-from-english/) | Count letters and peel off digits by unique letters |
+| `strings/43` | Medium | Longest Uncommon Subsequence II | [#522](https://leetcode.com/problems/longest-uncommon-subsequence-ii/) | Candidate = the strings themselves; subsequence test with two pointers |
+| `strings/44` | Medium | Optimal Division | [#553](https://leetcode.com/problems/optimal-division/) | Observation / closed form (maximise numerator, minimise denominator) |
+| `strings/45` | Medium | Fraction Addition and Subtraction | [#592](https://leetcode.com/problems/fraction-addition-and-subtraction/) | Parsing + exact fraction arithmetic with gcd reduction |
+| `strings/46` | Medium | Remove Comments | [#722](https://leetcode.com/problems/remove-comments/) | Character state machine (in / out of block comment) |
+| `strings/47` | Medium | Rotated Digits | [#788](https://leetcode.com/problems/rotated-digits/) | Digit counting (inclusion / exclusion on digit sets) |
+| `strings/48` | Medium | Custom Sort String | [#791](https://leetcode.com/problems/custom-sort-string/) | Counting sort by a custom alphabet |
+| `strings/49` | Medium | Find And Replace in String | [#833](https://leetcode.com/problems/find-and-replace-in-string/) | Process edits in sorted order (build left to right) |
+| `strings/51` | Medium | Decoded String at Index | [#880](https://leetcode.com/problems/decoded-string-at-index/) | Reverse traversal with modular reduction of the index |
+| `strings/52` | Medium | Reorder Data in Log Files | [#937](https://leetcode.com/problems/reorder-data-in-log-files/) | Sort with a composite key (stable sort keeps digit-logs in order) |
+| `strings/54` | Medium | Using a Robot to Print the Lexicographically Smallest String | [#2434](https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/) | Greedy stack + suffix minimum |
+| `strings/57` | Medium | Compare Strings by Frequency of the Smallest Character | [#1170](https://leetcode.com/problems/compare-strings-by-frequency-of-the-smallest-character/) | Precompute a value per item, then sorted array + binary search |
 | `strings/2` | Hard | Longest Happy Prefix | [#1392](https://leetcode.com/problems/longest-happy-prefix/) | Prefix function (border of a string) |
 | `strings/23` | Hard | Shortest Palindrome | [#214](https://leetcode.com/problems/shortest-palindrome/) | KMP failure function to find the longest palindromic prefix |
+| `strings/38` | Hard | Text Justification | [#68](https://leetcode.com/problems/text-justification/) | Greedy line packing + arithmetic space distribution |
+| `strings/41` | Hard | Integer to English Words | [#273](https://leetcode.com/problems/integer-to-english-words/) | Chunking into 3-digit groups with lookup tables |
+| `strings/55` | Hard | Match Substring After Replacement | [#2301](https://leetcode.com/problems/match-substring-after-replacement/) | Sliding comparison with a set of allowed substitutions |
+| `strings/56` | Hard | Three Equal Parts | [#927](https://leetcode.com/problems/three-equal-parts/) | Count the ones, then compare three aligned slices |
 
 Start one with `python dsa.py start strings/1`.
 

@@ -85,6 +85,11 @@ def first_missing_positive(nums):
 | `array_tricks/13` | Easy | Pascal's Triangle II | [#119](https://leetcode.com/problems/pascals-triangle-ii/) | In-place DP row update (iterate backwards) |
 | `array_tricks/14` | Easy | Third Maximum Number | [#414](https://leetcode.com/problems/third-maximum-number/) | Track the top-k with k variables |
 | `array_tricks/15` | Easy | Maximum Product of Three Numbers | [#628](https://leetcode.com/problems/maximum-product-of-three-numbers/) | Consider both ends of the sorted order (negatives flip signs) |
+| `array_tricks/18` | Easy | Longest Continuous Increasing Subsequence | [#674](https://leetcode.com/problems/longest-continuous-increasing-subsequence/) | Single pass with a running run length |
+| `array_tricks/19` | Easy | Valid Mountain Array | [#941](https://leetcode.com/problems/valid-mountain-array/) | Two phases with one pointer |
+| `array_tricks/26` | Easy | Degree of an Array | [#697](https://leetcode.com/problems/degree-of-an-array/) | Hash map of (count, first, last) |
+| `array_tricks/27` | Easy | 1-bit and 2-bit Characters | [#717](https://leetcode.com/problems/1-bit-and-2-bit-characters/) | Deterministic left-to-right parsing |
+| `array_tricks/28` | Easy | Positions of Large Groups | [#830](https://leetcode.com/problems/positions-of-large-groups/) | Run-length scan |
 | `array_tricks/1` | Medium | Maximum Subarray | [#53](https://leetcode.com/problems/maximum-subarray/) | Kadane's algorithm (1-D DP: best subarray ending here) |
 | `array_tricks/4` | Medium | Maximum Product Subarray | [#152](https://leetcode.com/problems/maximum-product-subarray/) | Kadane variant tracking both max and min (negatives flip order) |
 | `array_tricks/6` | Medium | Rotate Array | [#189](https://leetcode.com/problems/rotate-array/) | Triple reversal trick |
@@ -92,7 +97,14 @@ def first_missing_positive(nums):
 | `array_tricks/8` | Medium | Next Permutation | [#31](https://leetcode.com/problems/next-permutation/) | Find the pivot, swap, reverse the suffix |
 | `array_tricks/9` | Medium | Majority Element II | [#229](https://leetcode.com/problems/majority-element-ii/) | Boyer-Moore voting with two candidates |
 | `array_tricks/16` | Medium | Non-decreasing Array | [#665](https://leetcode.com/problems/non-decreasing-array/) | One-pass greedy with a single allowed repair |
+| `array_tricks/17` | Medium | Shortest Unsorted Continuous Subarray | [#581](https://leetcode.com/problems/shortest-unsorted-continuous-subarray/) | Two scans: running max from the left, running min from the right |
+| `array_tricks/20` | Medium | Rotate Function | [#396](https://leetcode.com/problems/rotate-function/) | Recurrence between consecutive rotations |
+| `array_tricks/21` | Medium | Minimum Moves to Equal Array Elements | [#453](https://leetcode.com/problems/minimum-moves-to-equal-array-elements/) | Change of viewpoint: relative differences |
+| `array_tricks/22` | Medium | Minimum Moves to Equal Array Elements II | [#462](https://leetcode.com/problems/minimum-moves-to-equal-array-elements-ii/) | Median minimises the sum of absolute deviations |
+| `array_tricks/23` | Medium | Array Nesting | [#565](https://leetcode.com/problems/array-nesting/) | Cycles of a permutation, visit each once |
+| `array_tricks/25` | Medium | Partition Array into Disjoint Intervals | [#915](https://leetcode.com/problems/partition-array-into-disjoint-intervals/) | Running maximum with a movable boundary |
 | `array_tricks/3` | Hard | First Missing Positive | [#41](https://leetcode.com/problems/first-missing-positive/) | Cyclic sort / in-place hashing (index = value - 1) |
+| `array_tricks/24` | Hard | Max Chunks To Make Sorted II | [#768](https://leetcode.com/problems/max-chunks-to-make-sorted-ii/) | Prefix max vs suffix min |
 
 Start one with `python dsa.py start array_tricks/1`.
 

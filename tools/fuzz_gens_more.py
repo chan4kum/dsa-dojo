@@ -1973,7 +1973,7 @@ GX30 = {
     ("sliding_window", "Find the Longest Semi-Repetitive Substring"): lambda: (st("123", 1, 9),),
     ("sliding_window", "Continuous Subarrays"): lambda: (ints(8, 1, 6, 1),),
     ("sliding_window", "Count Complete Subarrays in an Array"): lambda: (ints(8, 1, 4, 1),),
-    ("sliding_window", "Maximum Sum of Almost Unique Subarrays"): _semi_win,
+    ("sliding_window", "Maximum Sum of Almost Unique Subarray"): _semi_win,
     ("sliding_window", "Count Subarrays Where Max Element Appears at Least K Times"): lambda: (
         ints(8, 1, 4, 1),
         R(1, 4),

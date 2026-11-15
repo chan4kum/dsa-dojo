@@ -88,6 +88,7 @@ def min_eating_speed(piles, h):
 | `binary_search/22` | Easy | Kth Missing Positive Number | [#1539](https://leetcode.com/problems/kth-missing-positive-number/) | Binary search on 'how many are missing so far' |
 | `binary_search/23` | Easy | Arranging Coins | [#441](https://leetcode.com/problems/arranging-coins/) | Binary search on the answer |
 | `binary_search/25` | Easy | Find the Distance Value Between Two Arrays | [#1385](https://leetcode.com/problems/find-the-distance-value-between-two-arrays/) | Range-emptiness test with binary search |
+| `binary_search/40` | Easy | Special Array With X Elements Greater Than or Equal X | [#1608](https://leetcode.com/problems/special-array-with-x-elements-greater-than-or-equal-x/) | Sort + binary search on the answer x |
 | `binary_search/2` | Medium | Search in Rotated Sorted Array | [#33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary search with 'which half is sorted?' reasoning |
 | `binary_search/3` | Medium | Koko Eating Bananas | [#875](https://leetcode.com/problems/koko-eating-bananas/) | Binary search on the ANSWER (monotonic feasibility predicate) |
 | `binary_search/7` | Medium | Find First and Last Position of Element in Sorted Array | [#34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Two lower-bound searches (left edge, right edge) |
@@ -109,11 +110,19 @@ def min_eating_speed(piles, h):
 | `binary_search/30` | Medium | Successful Pairs of Spells and Potions | [#2300](https://leetcode.com/problems/successful-pairs-of-spells-and-potions/) | Sort once + binary search per query |
 | `binary_search/31` | Medium | Magnetic Force Between Two Balls | [#1552](https://leetcode.com/problems/magnetic-force-between-two-balls/) | Binary search on the answer + greedy placement check |
 | `binary_search/34` | Medium | Minimum Time to Repair Cars | [#2594](https://leetcode.com/problems/minimum-time-to-repair-cars/) | Binary search on the answer (time) |
+| `binary_search/35` | Medium | H-Index II | [#275](https://leetcode.com/problems/h-index-ii/) | Binary search on a monotone condition over the sorted array |
+| `binary_search/38` | Medium | Ugly Number III | [#1201](https://leetcode.com/problems/ugly-number-iii/) | Binary search on the answer with a three-set inclusion-exclusion counter |
+| `binary_search/39` | Medium | Sum of Mutated Array Closest to Target | [#1300](https://leetcode.com/problems/sum-of-mutated-array-closest-to-target/) | Binary search on a monotone sum, then compare the two neighbours |
+| `binary_search/41` | Medium | Minimize Maximum of Array | [#2439](https://leetcode.com/problems/minimize-maximum-of-array/) | Prefix average lower bound (greedy / binary search on the answer) |
+| `binary_search/42` | Medium | Maximum Tastiness of Candy Basket | [#2517](https://leetcode.com/problems/maximum-tastiness-of-candy-basket/) | Binary search on the answer + greedy feasibility check |
+| `binary_search/43` | Medium | House Robber IV | [#2560](https://leetcode.com/problems/house-robber-iv/) | Binary search on the answer + greedy non-adjacent count |
 | `binary_search/4` | Hard | Split Array Largest Sum | [#410](https://leetcode.com/problems/split-array-largest-sum/) | Binary search on the answer + greedy feasibility check |
 | `binary_search/5` | Hard | Median of Two Sorted Arrays | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary search on a partition point (not on values) |
 | `binary_search/18` | Hard | Find Minimum in Rotated Sorted Array II | [#154](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) | Binary search against the right end, with a safe shrink on ties |
 | `binary_search/32` | Hard | Find K-th Smallest Pair Distance | [#719](https://leetcode.com/problems/find-k-th-smallest-pair-distance/) | Binary search on the answer + two-pointer counting |
 | `binary_search/33` | Hard | Kth Smallest Number in Multiplication Table | [#668](https://leetcode.com/problems/kth-smallest-number-in-multiplication-table/) | Binary search on the value with a counting function |
+| `binary_search/36` | Hard | Preimage Size of Factorial Zeroes Function | [#793](https://leetcode.com/problems/preimage-size-of-factorial-zeroes-function/) | Binary search on a monotone function (lower bound twice) |
+| `binary_search/37` | Hard | Nth Magical Number | [#878](https://leetcode.com/problems/nth-magical-number/) | Binary search on the answer with an inclusion-exclusion counter |
 
 Start one with `python dsa.py start binary_search/1`.
 

@@ -72,6 +72,8 @@ def length_of_longest_substring(s):
 | `sliding_window/5` | Easy | Best Time to Buy and Sell Stock | [#121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) | Running minimum (one-pass 'best so far' scan) |
 | `sliding_window/25` | Easy | Minimum Recolors to Get K Consecutive Black Blocks | [#2379](https://leetcode.com/problems/minimum-recolors-to-get-k-consecutive-black-blocks/) | Fixed-size sliding window |
 | `sliding_window/29` | Easy | Minimum Difference Between Highest and Lowest of K Scores | [#1984](https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/) | Sort + fixed-size window |
+| `sliding_window/36` | Easy | Substrings of Size Three with Distinct Characters | [#1876](https://leetcode.com/problems/substrings-of-size-three-with-distinct-characters/) | Fixed-size sliding window with a letter counter |
+| `sliding_window/45` | Easy | Maximum Length Substring With Two Occurrences | [#3090](https://leetcode.com/problems/maximum-length-substring-with-two-occurrences/) | Variable-size sliding window with per-character caps |
 | `sliding_window/2` | Medium | Longest Substring Without Repeating Characters | [#3](https://leetcode.com/problems/longest-substring-without-repeating-characters/) | Variable-size sliding window with a 'last seen' map (expand right, shrink left to restore validity) |
 | `sliding_window/3` | Medium | Minimum Size Subarray Sum | [#209](https://leetcode.com/problems/minimum-size-subarray-sum/) | Variable window that SHRINKS while the condition holds (needs non-negative values) |
 | `sliding_window/6` | Medium | Longest Repeating Character Replacement | [#424](https://leetcode.com/problems/longest-repeating-character-replacement/) | Sliding window with a validity condition (length - max_freq <= k) |
@@ -95,6 +97,21 @@ def length_of_longest_substring(s):
 | `sliding_window/26` | Medium | Number of Sub-arrays of Size K and Average Greater than or Equal to Threshold | [#1343](https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/) | Fixed-size sliding window sum |
 | `sliding_window/27` | Medium | Maximum Sum of Distinct Subarrays With Length K | [#2461](https://leetcode.com/problems/maximum-sum-of-distinct-subarrays-with-length-k/) | Fixed window + frequency map |
 | `sliding_window/28` | Medium | Length of Longest Subarray With at Most K Frequency | [#2958](https://leetcode.com/problems/length-of-longest-subarray-with-at-most-k-frequency/) | Variable window with a frequency cap |
+| `sliding_window/30` | Medium | Longest Turbulent Subarray | [#978](https://leetcode.com/problems/longest-turbulent-subarray/) | Sliding window over the sequence of comparison signs |
+| `sliding_window/31` | Medium | Swap For Longest Repeated Character Substring | [#1156](https://leetcode.com/problems/swap-for-longest-repeated-character-substring/) | Run-length groups + cap by total letter count |
+| `sliding_window/32` | Medium | Replace the Substring for Balanced String | [#1234](https://leetcode.com/problems/replace-the-substring-for-balanced-string/) | Shrinkable window where the condition is on what is OUTSIDE it |
+| `sliding_window/33` | Medium | Maximum Number of Occurrences of a Substring | [#1297](https://leetcode.com/problems/maximum-number-of-occurrences-of-a-substring/) | Fixed-size sliding window + a hash counter of window contents |
+| `sliding_window/34` | Medium | Frequency of the Most Frequent Element | [#1838](https://leetcode.com/problems/frequency-of-the-most-frequent-element/) | Sort + sliding window with a cost constraint |
+| `sliding_window/35` | Medium | Longest Substring Of All Vowels in Order | [#1839](https://leetcode.com/problems/longest-substring-of-all-vowels-in-order/) | Window that resets whenever monotonicity breaks |
+| `sliding_window/37` | Medium | Minimum Swaps to Group All 1's Together II | [#2134](https://leetcode.com/problems/minimum-swaps-to-group-all-1s-together-ii/) | Fixed-size circular sliding window |
+| `sliding_window/38` | Medium | Longest Nice Subarray | [#2401](https://leetcode.com/problems/longest-nice-subarray/) | Sliding window with a bitmask of occupied bits |
+| `sliding_window/39` | Medium | Take K of Each Character From Left and Right | [#2516](https://leetcode.com/problems/take-k-of-each-character-from-left-and-right/) | Maximise a window while the complement satisfies a constraint |
+| `sliding_window/40` | Medium | Find the Longest Semi-Repetitive Substring | [#2730](https://leetcode.com/problems/find-the-longest-semi-repetitive-substring/) | Sliding window with a bounded 'violation' counter |
+| `sliding_window/41` | Medium | Continuous Subarrays | [#2762](https://leetcode.com/problems/continuous-subarrays/) | Sliding window with monotonic deques for max and min |
+| `sliding_window/42` | Medium | Count Complete Subarrays in an Array | [#2799](https://leetcode.com/problems/count-complete-subarrays-in-an-array/) | 'At least' sliding window: count all extensions of the minimal valid window |
+| `sliding_window/43` | Medium | Maximum Sum of Almost Unique Subarray | [#2841](https://leetcode.com/problems/maximum-sum-of-almost-unique-subarray/) | Fixed-size sliding window with a sum and a distinct counter |
+| `sliding_window/44` | Medium | Count Subarrays Where Max Element Appears at Least K Times | [#2962](https://leetcode.com/problems/count-subarrays-where-max-element-appears-at-least-k-times/) | 'At least k' window: count valid starts per right end |
+| `sliding_window/46` | Medium | Find the Power of K-Size Subarrays I | [#3254](https://leetcode.com/problems/find-the-power-of-k-size-subarrays-i/) | Fixed window answered by a running 'streak length' |
 | `sliding_window/4` | Hard | Minimum Window Substring | [#76](https://leetcode.com/problems/minimum-window-substring/) | Variable window: expand until valid, then shrink to the minimum while still valid |
 | `sliding_window/16` | Hard | Subarrays with K Different Integers | [#992](https://leetcode.com/problems/subarrays-with-k-different-integers/) | Exactly K = atMost(K) - atMost(K - 1) |
 

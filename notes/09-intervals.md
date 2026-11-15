@@ -73,6 +73,7 @@ Tuples sort by time then delta, so at equal time the `-1` sorts before `+1`: tou
 | `intervals/4` | Easy | Meeting Rooms | [#252](https://leetcode.com/problems/meeting-rooms/) | Sort by start, compare neighbours |
 | `intervals/8` | Easy | Summary Ranges | [#228](https://leetcode.com/problems/summary-ranges/) | Linear scan grouping consecutive runs |
 | `intervals/10` | Easy | Teemo Attacking | [#495](https://leetcode.com/problems/teemo-attacking/) | Merge overlapping intervals by looking at consecutive gaps |
+| `intervals/27` | Easy | Points That Intersect With Cars | [#2848](https://leetcode.com/problems/points-that-intersect-with-cars/) | Sort and count the new part of each interval |
 | `intervals/1` | Medium | Merge Intervals | [#56](https://leetcode.com/problems/merge-intervals/) | Sort by start + sweep, merging into the last output interval |
 | `intervals/2` | Medium | Insert Interval | [#57](https://leetcode.com/problems/insert-interval/) | Linear scan in three phases (before / overlapping / after) |
 | `intervals/3` | Medium | Non-overlapping Intervals | [#435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy on interval END times (activity selection) |
@@ -88,7 +89,20 @@ Tuples sort by time then delta, so at equal time the `-1` sorts before `+1`: tou
 | `intervals/16` | Medium | Meeting Scheduler | [#1229](https://leetcode.com/problems/meeting-scheduler/) | Two pointers over two sorted interval lists |
 | `intervals/17` | Medium | Remove Interval | [#1272](https://leetcode.com/problems/remove-interval/) | Per-interval case analysis |
 | `intervals/19` | Medium | Maximum Distance in Arrays | [#624](https://leetcode.com/problems/maximum-distance-in-arrays/) | Running min/max across a scan |
+| `intervals/20` | Medium | My Calendar I | [#729](https://leetcode.com/problems/my-calendar-i/) | Sorted list + binary search: only the two neighbours can overlap |
+| `intervals/21` | Medium | My Calendar II | [#731](https://leetcode.com/problems/my-calendar-ii/) | Maintain the single-booked and double-booked regions |
+| `intervals/26` | Medium | Count Ways to Group Overlapping Ranges | [#2580](https://leetcode.com/problems/count-ways-to-group-overlapping-ranges/) | Merge intervals, count components, power of two |
+| `intervals/30` | Medium | Video Stitching | [#1024](https://leetcode.com/problems/video-stitching/) | Interval covering: greedy furthest reach (or DP over time) |
+| `intervals/32` | Medium | Two Best Non-Overlapping Events | [#2054](https://leetcode.com/problems/two-best-non-overlapping-events/) | Sort by end, prefix maximum + binary search |
+| `intervals/33` | Medium | Shifting Letters II | [#2381](https://leetcode.com/problems/shifting-letters-ii/) | Difference array (range add) + prefix sum |
 | `intervals/18` | Hard | Meeting Rooms III | [#2402](https://leetcode.com/problems/meeting-rooms-iii/) | Simulation with two heaps |
+| `intervals/22` | Hard | My Calendar III | [#732](https://leetcode.com/problems/my-calendar-iii/) | Dynamic segment tree: range add, global max (no push-down needed) |
+| `intervals/23` | Hard | Set Intersection Size At Least Two | [#757](https://leetcode.com/problems/set-intersection-size-at-least-two/) | Greedy: sort by right end, keep the two rightmost chosen points |
+| `intervals/24` | Hard | Rectangle Area II | [#850](https://leetcode.com/problems/rectangle-area-ii/) | Sweep line over x; union length of the active y-intervals |
+| `intervals/25` | Hard | Minimum Interval to Include Each Query | [#1851](https://leetcode.com/problems/minimum-interval-to-include-each-query/) | Offline queries sorted + min-heap with lazy deletion |
+| `intervals/28` | Hard | Number of Flowers in Full Bloom | [#2251](https://leetcode.com/problems/number-of-flowers-in-full-bloom/) | Counting with two sorted arrays and binary search |
+| `intervals/29` | Hard | Maximum Profit in Job Scheduling | [#1235](https://leetcode.com/problems/maximum-profit-in-job-scheduling/) | Weighted interval scheduling: DP over jobs sorted by end + binary search |
+| `intervals/31` | Hard | Minimum Number of Taps to Open to Water a Garden | [#1326](https://leetcode.com/problems/minimum-number-of-taps-to-open-to-water-a-garden/) | Interval covering reduced to Jump Game II |
 
 Start one with `python dsa.py start intervals/1`.
 

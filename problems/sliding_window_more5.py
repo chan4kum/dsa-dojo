@@ -891,12 +891,12 @@ def count_complete_subarrays(nums):
     return count
 """,
     ),
-    # ---- Maximum Sum of Almost Unique Subarrays (LeetCode 2841) ----
+    # ---- Maximum Sum of Almost Unique Subarray (LeetCode 2841) ----
     dict(
-        title="Maximum Sum of Almost Unique Subarrays",
+        title="Maximum Sum of Almost Unique Subarray",
         diff="M",
         lc=2841,
-        slug="maximum-sum-of-almost-unique-subarrays",
+        slug="maximum-sum-of-almost-unique-subarray",
         prompt=(
             "A subarray of length k is almost unique if it has at least m distinct elements. Return the maximum sum "
             "of an almost unique subarray of length exactly k, or 0 if there is none."

@@ -109,6 +109,7 @@ def reverse_list(head):
 | `linked_list/31` | Medium | Merge In Between Linked Lists | [#1669](https://leetcode.com/problems/merge-in-between-linked-lists/) | Splice a list between two anchor nodes |
 | `linked_list/32` | Medium | Find the Minimum and Maximum Number of Nodes Between Critical Points | [#2058](https://leetcode.com/problems/find-the-minimum-and-maximum-number-of-nodes-between-critical-points/) | Single pass remembering first and previous special positions |
 | `linked_list/33` | Medium | Remove Nodes From Linked List | [#2487](https://leetcode.com/problems/remove-nodes-from-linked-list/) | Monotonic (non-increasing) stack |
+| `linked_list/34` | Medium | Double a Number Represented as a Linked List | [#2816](https://leetcode.com/problems/double-a-number-represented-as-a-linked-list/) | Look-ahead carry in a single pass |
 | `linked_list/5` | Hard | Reverse Nodes in k-Group | [#25](https://leetcode.com/problems/reverse-nodes-in-k-group/) | Sub-list reversal with a dummy head and boundary reconnection |
 | `linked_list/11` | Hard | Merge k Sorted Lists | [#23](https://leetcode.com/problems/merge-k-sorted-lists/) | Heap of k candidates (k-way merge) |
 
