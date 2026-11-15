@@ -908,3 +908,32 @@ GX13 = {
 }
 
 GX.update(GX13)
+
+
+def _desc(n_max, lo, hi, k=1):
+    return sorted(ints(n_max, lo, hi, k), reverse=True)
+
+
+GX14 = {
+    ("two_pointers", "Longest Word in Dictionary through Deleting"): lambda: (
+        st("abc", 1, 8),
+        [st("abc", 1, 5) for _ in range(R(1, 5))],
+    ),
+    ("two_pointers", "Sum of Square Numbers"): lambda: (R(0, 200),),
+    ("two_pointers", "Valid Triangle Number"): lambda: (ints(8, 0, 9),),
+    ("two_pointers", "Heaters"): lambda: (ints(7, 1, 20, 1), ints(4, 1, 20, 1)),
+    ("two_pointers", "K-diff Pairs in an Array"): lambda: (ints(8, 0, 6, 1), R(0, 3)),
+    ("two_pointers", "Longest Mountain in Array"): lambda: (ints(10, 0, 4),),
+    ("two_pointers", "Bag of Tokens"): lambda: (ints(5, 0, 50), R(0, 60)),
+    ("two_pointers", "Shortest Subarray to be Removed to Make Array Sorted"): lambda: (ints(8, 0, 5, 1),),
+    ("two_pointers", "Minimum Length of String After Deleting Similar Ends"): lambda: (st("abc", 1, 10),),
+    ("two_pointers", "Find First Palindromic String in the Array"): lambda: ([st("ab", 1, 4) for _ in range(R(1, 4))],),
+    ("two_pointers", "Count Pairs Whose Sum is Less than Target"): lambda: (ints(8, -5, 5), R(-6, 8)),
+    ("two_pointers", "Maximum Distance Between a Pair of Values"): lambda: (_desc(7, 1, 20), _desc(7, 1, 20)),
+    ("two_pointers", "Number of Subsequences That Satisfy the Given Sum Condition"): lambda: (
+        ints(8, 1, 9, 1),
+        R(2, 18),
+    ),
+}
+
+GX.update(GX14)
