@@ -1031,3 +1031,73 @@ GX16 = {
 }
 
 GX.update(GX16)
+
+
+def _unique_start_intervals():
+    starts = random.sample(range(0, 15), R(1, 6))
+    return ([[s, s + R(0, 4)] for s in starts],)
+
+
+def _pairs_chain():
+    return ([[a, a + R(1, 4)] for a in (R(-5, 10) for _ in range(R(1, 7)))],)
+
+
+def _trips():
+    trips = []
+    for _ in range(R(1, 5)):
+        a = R(0, 8)
+        trips.append([R(1, 4), a, a + R(1, 5)])
+    return (trips, R(1, 8))
+
+
+def _bookings():
+    n = R(1, 6)
+    out = []
+    for _ in range(R(1, 5)):
+        first = R(1, n)
+        out.append([first, R(first, n), R(1, 6)])
+    return (out, n)
+
+
+def _free_slots():
+    cursor, slots = R(0, 5), []
+    for _ in range(R(1, 4)):
+        a = cursor + R(0, 3)
+        b = a + R(1, 6)
+        slots.append([a, b])
+        cursor = b + R(1, 3)
+    return slots
+
+
+def _disjoint_intervals():
+    cursor, out = R(-3, 3), []
+    for _ in range(R(1, 5)):
+        a = cursor + R(0, 3)
+        b = a + R(1, 5)
+        out.append([a, b])
+        cursor = b + R(1, 3)  # a gap of at least 1 keeps them truly disjoint
+    a = R(-2, 12)
+    return (out, [a, a + R(1, 8)])
+
+
+def _rooms_args():
+    starts = random.sample(range(0, 12), R(1, 6))
+    return (R(1, 4), [[s, s + R(1, 6)] for s in starts])
+
+
+def _sorted_arrays():
+    return ([sorted(R(-5, 9) for _ in range(R(1, 4))) for _ in range(R(2, 5))],)
+
+
+GX17 = {
+    ("intervals", "Find Right Interval"): _unique_start_intervals,
+    ("intervals", "Maximum Length of Pair Chain"): _pairs_chain,
+    ("intervals", "Car Pooling"): _trips,
+    ("intervals", "Corporate Flight Bookings"): _bookings,
+    ("intervals", "Meeting Scheduler"): lambda: (_free_slots(), _free_slots(), R(1, 5)),
+    ("intervals", "Remove Interval"): _disjoint_intervals,
+    ("intervals", "Meeting Rooms III"): _rooms_args,
+    ("intervals", "Maximum Distance in Arrays"): _sorted_arrays,
+}
+
+GX.update(GX17)
