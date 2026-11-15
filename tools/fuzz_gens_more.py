@@ -642,3 +642,42 @@ def _enclave_grid():
 
 
 GX.update(GX8)
+
+
+def _digits_k():
+    n = R(1, 6)
+    num = [R(1, 9)] + [R(0, 9) for _ in range(n - 1)] if n > 1 else [R(0, 9)]
+    return (num, R(1, 5000))
+
+
+def _divide_args():
+    divisor = 0
+    while divisor == 0:
+        divisor = R(-50, 50)
+    return (R(-2000, 2000), divisor)
+
+
+def _span():
+    a = R(1, 500)
+    return (a, a + R(0, 60))
+
+
+GX9 = {
+    ("bits_math", "Power of Four"): lambda: (R(-5, 300),),
+    ("bits_math", "Convert a Number to Hexadecimal"): lambda: (R(-(2**31), 2**31 - 1) if R(0, 1) else R(-1000, 1000),),
+    ("bits_math", "Number Complement"): lambda: (R(1, 1000),),
+    ("bits_math", "Binary Number with Alternating Bits"): lambda: (R(1, 200),),
+    ("bits_math", "Prime Number of Set Bits in Binary Representation"): lambda: (lambda a: (a, a + R(0, 60)))(
+        R(1, 500)
+    ),
+    ("bits_math", "Binary Gap"): lambda: (R(1, 5000),),
+    ("bits_math", "Number of Steps to Reduce a Number to Zero"): lambda: (R(0, 10000),),
+    ("bits_math", "Add to Array-Form of Integer"): _digits_k,
+    ("bits_math", "Base 7"): lambda: (R(-5000, 5000),),
+    ("bits_math", "Add Digits"): lambda: (R(0, 100000),),
+    ("bits_math", "Minimum Bit Flips to Convert Number"): lambda: (R(0, 1000), R(0, 1000)),
+    ("bits_math", "Divide Two Integers"): _divide_args,
+    ("bits_math", "XOR Operation in an Array"): lambda: (R(1, 12), R(0, 40)),
+}
+
+GX.update(GX9)
