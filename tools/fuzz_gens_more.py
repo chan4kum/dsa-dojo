@@ -1414,3 +1414,29 @@ GX22 = {
 }
 
 GX.update(GX22)
+
+
+def _disjoint():
+    left = [R(0, 5) for _ in range(R(1, 4))]
+    right = [R(5, 10) for _ in range(R(1, 4))]
+    random.shuffle(left)
+    random.shuffle(right)
+    return (left + right,)
+
+
+GX23 = {
+    ("array_tricks", "Shortest Unsorted Continuous Subarray"): lambda: (ints(8, -5, 5, 1),),
+    ("array_tricks", "Longest Continuous Increasing Subsequence"): lambda: (ints(10, 0, 5, 1),),
+    ("array_tricks", "Valid Mountain Array"): lambda: (ints(8, 0, 4, 1),),
+    ("array_tricks", "Rotate Function"): lambda: (ints(8, -5, 5, 1),),
+    ("array_tricks", "Minimum Moves to Equal Array Elements"): lambda: (ints(5, 1, 6, 1),),
+    ("array_tricks", "Minimum Moves to Equal Array Elements II"): lambda: (ints(8, -10, 10, 1),),
+    ("array_tricks", "Array Nesting"): lambda: (random.sample(range(n := R(1, 9)), n),),
+    ("array_tricks", "Max Chunks To Make Sorted II"): lambda: (ints(7, 0, 5, 1),),
+    ("array_tricks", "Partition Array into Disjoint Intervals"): _disjoint,
+    ("array_tricks", "Degree of an Array"): lambda: (ints(8, 1, 4, 1),),
+    ("array_tricks", "1-bit and 2-bit Characters"): lambda: ([R(0, 1) for _ in range(R(0, 8))] + [0],),
+    ("array_tricks", "Positions of Large Groups"): lambda: (st("abc", 1, 14),),
+}
+
+GX.update(GX23)
