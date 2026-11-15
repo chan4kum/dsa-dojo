@@ -2310,3 +2310,28 @@ GX33 = {
 }
 
 GX.update(GX33)
+
+
+def _bs_candy():
+    prices = ints(8, 1, 30, 2)
+    return (prices, R(2, len(prices)))
+
+
+def _bs_robber():
+    n = R(1, 8)
+    return ([R(1, 20) for _ in range(n)], R(1, (n + 1) // 2))
+
+
+GX34 = {
+    ("binary_search", "H-Index II"): lambda: (sorted(ints(8, 0, 10, 1)),),
+    ("binary_search", "Preimage Size of Factorial Zeroes Function"): lambda: (R(0, 60),),
+    ("binary_search", "Nth Magical Number"): lambda: (R(1, 30), R(2, 6), R(2, 6)),
+    ("binary_search", "Ugly Number III"): lambda: (R(1, 30), R(1, 6), R(1, 6), R(1, 6)),
+    ("binary_search", "Sum of Mutated Array Closest to Target"): lambda: (ints(6, 1, 20, 1), R(1, 60)),
+    ("binary_search", "Special Array With X Elements Greater Than or Equal X"): lambda: (ints(8, 0, 10, 1),),
+    ("binary_search", "Minimize Maximum of Array"): lambda: (ints(8, 0, 12, 1),),
+    ("binary_search", "Maximum Tastiness of Candy Basket"): _bs_candy,
+    ("binary_search", "House Robber IV"): _bs_robber,
+}
+
+GX.update(GX34)
