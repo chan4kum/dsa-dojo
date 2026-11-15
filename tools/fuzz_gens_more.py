@@ -1865,3 +1865,71 @@ GX28 = {
 }
 
 GX.update(GX28)
+
+
+def _blank_pair(blank):
+    start = st("LR" + blank, 1, 6)
+    if R(0, 2) == 0:
+        return (start, "".join(random.sample(start, len(start))))
+    end = start
+    for _ in range(R(0, 5)):
+        i = R(0, len(end) - 1) if len(end) > 1 else 0
+        pair = end[i : i + 2]
+        if pair == blank + "L":
+            end = end[:i] + "L" + blank + end[i + 2 :]
+        elif pair == "R" + blank:
+            end = end[:i] + blank + "R" + end[i + 2 :]
+    return (start, end)
+
+
+def _plants():
+    return (ints(7, 1, 5, 1), R(5, 8), R(5, 8))
+
+
+def _fair_pairs():
+    low = R(-4, 4)
+    return (ints(8, -5, 5, 2), low, low + R(0, 6))
+
+
+def _strongest():
+    arr = ints(8, -5, 9, 1)
+    return (arr, R(1, len(arr)))
+
+
+def _sorted_distinct():
+    return sorted(random.sample(range(1, 12), R(1, 6)))
+
+
+def _good_subarray():
+    nums = ints(8, 1, 6, 1)
+    return (nums, R(0, len(nums) - 1))
+
+
+def _signs():
+    m = R(1, 4)
+    nums = [R(1, 5) for _ in range(m)] + [-R(1, 5) for _ in range(m)]
+    random.shuffle(nums)
+    return (nums,)
+
+
+GX29 = {
+    ("two_pointers", "Swap Adjacent in LR String"): lambda: _blank_pair("X"),
+    ("two_pointers", "Friends Of Appropriate Ages"): lambda: (ints(8, 1, 120, 1),),
+    ("two_pointers", "3Sum With Multiplicity"): lambda: (ints(9, 0, 6, 3), R(0, 15)),
+    ("two_pointers", "Reverse Prefix of Word"): lambda: (st("abc", 1, 7), random.choice("abcd")),
+    ("two_pointers", "Watering Plants II"): _plants,
+    ("two_pointers", "Find All K-Distant Indices in an Array"): lambda: (ints(9, 0, 3, 1), R(0, 3), R(0, 4)),
+    ("two_pointers", "Move Pieces to Obtain a String"): lambda: _blank_pair("_"),
+    ("two_pointers", "Maximum Matching of Players With Trainers"): lambda: (ints(5, 1, 6, 1), ints(5, 1, 6, 1)),
+    ("two_pointers", "Count the Number of Fair Pairs"): _fair_pairs,
+    ("two_pointers", "Make String a Subsequence Using Cyclic Increments"): lambda: (st("abz", 1, 6), st("abcz", 1, 3)),
+    ("two_pointers", "Append Characters to String to Make Subsequence"): lambda: (st("abc", 1, 6), st("abc", 1, 5)),
+    ("two_pointers", "The k Strongest Values in an Array"): _strongest,
+    ("two_pointers", "Get the Maximum Score"): lambda: (_sorted_distinct(), _sorted_distinct()),
+    ("two_pointers", "Maximum Score of a Good Subarray"): _good_subarray,
+    ("two_pointers", "Partition Array According to Given Pivot"): lambda: (ints(8, -3, 3, 1), R(-3, 3)),
+    ("two_pointers", "Rearrange Array Elements by Sign"): _signs,
+    ("two_pointers", "Remove Palindromic Subsequences"): lambda: (st("ab", 0, 6),),
+}
+
+GX.update(GX29)
