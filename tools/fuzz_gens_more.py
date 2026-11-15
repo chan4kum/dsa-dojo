@@ -1983,3 +1983,99 @@ GX30 = {
 }
 
 GX.update(GX30)
+
+
+def _bt_gray_norm(args, res):
+    size = 1 << args[0]
+    ok = isinstance(res, list) and len(res) == size and len(set(res)) == size and res[0] == 0
+    ok = ok and all(0 <= x < size for x in res)
+    return ok and all(bin(res[i] ^ res[(i + 1) % size]).count("1") == 1 for i in range(size))
+
+
+def _bt_itinerary():
+    cities = ["JFK", "A", "B", "C"]
+    current, tickets = "JFK", []
+    for _ in range(R(1, 6)):
+        nxt = random.choice(cities)
+        tickets.append([current, nxt])
+        current = nxt
+    random.shuffle(tickets)
+    return (tickets,)
+
+
+def _bt_pyramid():
+    return (st("ABC", 2, 4), ["".join(random.choices("ABC", k=3)) for _ in range(R(0, 8))])
+
+
+def _bt_fib_gen():
+    if R(0, 1):
+        parts = [R(0, 9), R(0, 9)]
+        for _ in range(R(1, 3)):
+            parts.append(parts[-1] + parts[-2])
+        return ("".join(map(str, parts)),)
+    return (st("0123", 3, 8),)
+
+
+def _bt_fib_norm(args, res):
+    if not res:
+        return "none"
+    num = args[0]
+    valid = len(res) >= 3 and "".join(map(str, res)) == num and all(p <= 2**31 - 1 for p in res)
+    valid = valid and all(res[i] + res[i + 1] == res[i + 2] for i in range(len(res) - 2))
+    return "ok" if valid else "bad"
+
+
+def _bt_words():
+    words = [st("abc", 1, 3) for _ in range(R(1, 5))]
+    return (words, list(st("abc", 0, 8)), [R(0, 5) for _ in range(3)] + [0] * 23)
+
+
+def _bt_descending():
+    if R(0, 1):
+        top = R(1, 12)
+        parts = ["0" * R(0, 1) + str(v) for v in range(top, max(top - R(1, 3), -1), -1)]
+        return ("".join(parts),)
+    return (st("0123", 2, 8),)
+
+
+def _bt_unique_gen():
+    n = R(1, 5)
+    return (random.sample([format(i, f"0{n}b") for i in range(2**n)], n),)
+
+
+def _bt_unique_norm(args, res):
+    nums = args[0]
+    return isinstance(res, str) and len(res) == len(nums) and set(res) <= {"0", "1"} and res not in nums
+
+
+def _bt_statements():
+    n = R(1, 4)
+    return ([[2 if i == j else R(0, 2) for j in range(n)] for i in range(n)],)
+
+
+def _bt_columns():
+    m, n = R(1, 5), R(1, 5)
+    return ([[R(0, 1) for _ in range(n)] for _ in range(m)], R(1, n))
+
+
+GX31 = {
+    ("backtracking", "Gray Code"): (lambda: (R(1, 3),), _bt_gray_norm),
+    ("backtracking", "Additive Number"): lambda: (st("0123", 3, 8),),
+    ("backtracking", "Reconstruct Itinerary"): _bt_itinerary,
+    ("backtracking", "Binary Watch"): lambda: (R(0, 10),),
+    ("backtracking", "24 Game"): lambda: ([R(1, 9) for _ in range(4)],),
+    ("backtracking", "Pyramid Transition Matrix"): _bt_pyramid,
+    ("backtracking", "Split Array into Fibonacci Sequence"): (_bt_fib_gen, _bt_fib_norm),
+    ("backtracking", "Number of Squareful Arrays"): lambda: (ints(6, 1, 20, 1),),
+    ("backtracking", "Maximum Score Words Formed by Letters"): _bt_words,
+    ("backtracking", "Splitting a String Into Descending Consecutive Values"): _bt_descending,
+    ("backtracking", "Find Unique Binary String"): (_bt_unique_gen, _bt_unique_norm),
+    ("backtracking", "Count Number of Maximum Bitwise-OR Subsets"): lambda: (ints(8, 1, 8, 1),),
+    ("backtracking", "Next Greater Numerically Balanced Number"): lambda: (R(0, 10000),),
+    ("backtracking", "Maximum Good People Based on Statements"): _bt_statements,
+    ("backtracking", "Fair Distribution of Cookies"): lambda: (ints(7, 1, 9, 1), R(1, 3)),
+    ("backtracking", "Maximum Rows Covered by Columns"): _bt_columns,
+    ("backtracking", "Generate Binary Strings Without Adjacent Zeros"): lambda: (R(1, 8),),
+}
+
+GX.update(GX31)
