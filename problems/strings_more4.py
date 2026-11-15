@@ -713,12 +713,9 @@ def find_lus_length(a, b):
         pattern="Multiset intersection (min of counts)",
         explain="A letter can appear in the answer as many times as the word with the fewest copies allows.",
         cx="O(total characters) time",
-        brute_cx=(
-            "O(total * letters) time - for each letter of the first word try to remove it from copies of the other "
-            "words"
-        ),
+        brute_cx="O(total * letters) time - remove each letter of the first word from copies of the others",
         brute=r"""
-# BRUTE FORCE: O(total * letters) time - for each letter of the first word try to remove it from copies of the other words
+# BRUTE FORCE: O(total * letters) time - remove each letter of the first word from copies of the others
 def common_chars(words):
     others = [list(w) for w in words[1:]]
     result = []
