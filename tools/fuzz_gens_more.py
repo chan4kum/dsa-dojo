@@ -1503,3 +1503,59 @@ GX24 = {
 }
 
 GX.update(GX24)
+
+
+def _interesting():
+    modulo = R(1, 5)
+    return (ints(8, 0, 9, 1), modulo, R(0, modulo - 1))
+
+
+def _queries(n):
+    out = []
+    for _ in range(R(1, 5)):
+        left = R(0, n - 1)
+        out.append([left, R(left, n - 1)])
+    return out
+
+
+def _xor_queries():
+    arr = ints(8, 0, 15, 1)
+    return (arr, _queries(len(arr)))
+
+
+def _sorted_ints():
+    return (sorted(ints(8, 0, 12, 1)),)
+
+
+def _k_radius():
+    return (ints(9, 0, 20, 1), R(0, 3))
+
+
+GX25 = {
+    ("prefix_sums", "Continuous Subarray Sum"): lambda: (ints(8, 0, 9, 2), R(1, 7)),
+    ("prefix_sums", "Make Sum Divisible by P"): lambda: (ints(8, 1, 9, 1), R(1, 9)),
+    ("prefix_sums", "Count Triplets That Can Form Two Arrays of Equal XOR"): lambda: (ints(7, 0, 7, 1),),
+    ("prefix_sums", "XOR Queries of a Subarray"): _xor_queries,
+    ("prefix_sums", "Find Two Non-overlapping Sub-arrays Each With Target Sum"): lambda: (ints(9, 1, 5, 1), R(1, 8)),
+    ("prefix_sums", "Number of Sub-arrays With Odd Sum"): lambda: (ints(9, 1, 9, 1),),
+    ("prefix_sums", "Find the Highest Altitude"): lambda: (ints(8, -6, 6),),
+    ("prefix_sums", "Range Product Queries of Powers"): lambda: _power_queries(),
+    ("prefix_sums", "Find the Middle Index in Array"): lambda: (ints(7, -3, 3, 1),),
+    ("prefix_sums", "Left and Right Sum Differences"): lambda: (ints(8, 0, 9, 1),),
+    ("prefix_sums", "Maximum Absolute Sum of Any Subarray"): lambda: (ints(8, -6, 6, 1),),
+    ("prefix_sums", "Unique Length-3 Palindromic Subsequences"): lambda: (st("abc", 1, 12),),
+    ("prefix_sums", "K Radius Subarray Averages"): _k_radius,
+    ("prefix_sums", "Sum of Absolute Differences in a Sorted Array"): _sorted_ints,
+    ("prefix_sums", "Count of Interesting Subarrays"): _interesting,
+    ("prefix_sums", "Count the Number of Beautiful Subarrays"): lambda: (ints(8, 0, 7, 1),),
+    ("prefix_sums", "Sum of Floored Pairs"): lambda: (ints(8, 1, 20, 1),),
+}
+
+
+def _power_queries():
+    n = R(1, 200)
+    bits = bin(n).count("1")
+    return (n, _queries(bits))
+
+
+GX.update(GX25)
