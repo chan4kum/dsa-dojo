@@ -1650,3 +1650,127 @@ GX26 = {
 }
 
 GX.update(GX26)
+
+
+def _bin_square(n):
+    return [[R(0, 1) for _ in range(n)] for _ in range(n)]
+
+
+def _overlap():
+    n = R(1, 4)
+    return (_bin_square(n), _bin_square(n))
+
+
+def _ttt_moves():
+    cells = [[i, j] for i in range(3) for j in range(3)]
+    random.shuffle(cells)
+    moves = []
+    for cell in cells:
+        moves.append(cell)
+        mine = {tuple(c) for c in moves[len(moves) - 1 :: -2]}
+        lines = [[(i, j) for j in range(3)] for i in range(3)] + [[(i, j) for i in range(3)] for j in range(3)]
+        lines += [[(0, 0), (1, 1), (2, 2)], [(0, 2), (1, 1), (2, 0)]]
+        if any(all(p in mine for p in line) for line in lines) or R(0, 5) == 0:
+            break
+    return (moves,)
+
+
+def _farmland():
+    m, n = R(1, 6), R(1, 6)
+    grid = [[0] * n for _ in range(m)]
+    for _ in range(R(0, 3)):
+        r1, c1 = R(0, m - 1), R(0, n - 1)
+        r2, c2 = R(r1, min(m - 1, r1 + 2)), R(c1, min(n - 1, c1 + 2))
+        near = [(r, c) for r in range(max(0, r1 - 1), min(m, r2 + 2)) for c in range(max(0, c1 - 1), min(n, c2 + 2))]
+        if all(grid[r][c] == 0 for r, c in near):
+            for r in range(r1, r2 + 1):
+                for c in range(c1, c2 + 1):
+                    grid[r][c] = 1
+    return (grid,)
+
+
+def _valid_matrix():
+    n = R(1, 4)
+    grid = [[(i + j) % n + 1 for j in range(n)] for i in range(n)]
+    if R(0, 1):
+        grid[R(0, n - 1)][R(0, n - 1)] = R(1, n)
+    return (grid,)
+
+
+def _unguarded():
+    m, n = R(1, 5), R(1, 5)
+    cells = [[r, c] for r in range(m) for c in range(n)]
+    random.shuffle(cells)
+    g, w = R(1, max(1, len(cells) // 2)), R(0, len(cells) // 3)
+    guards = cells[:g]
+    return (m, n, guards, cells[g : g + w])
+
+
+def _local_grid():
+    n = R(3, 6)
+    return ([[R(0, 9) for _ in range(n)] for _ in range(n)],)
+
+
+def _similar():
+    n = R(1, 4)
+    return ([[R(1, 2) for _ in range(n)] for _ in range(R(1, 3))], R(1, 6))
+
+
+def _missing_repeated():
+    n = R(2, 4)
+    vals = list(range(1, n * n + 1))
+    random.shuffle(vals)
+    p, q = random.sample(range(len(vals)), 2)
+    vals[q] = vals[p]
+    return ([vals[i * n : (i + 1) * n] for i in range(n)],)
+
+
+def _sum_queries():
+    n = R(1, 4)
+    return (n, [[R(0, 1), R(0, n - 1), R(0, 5)] for _ in range(R(1, 6))])
+
+
+def _box():
+    m, n = R(1, 4), R(1, 5)
+    return ([[random.choice("#.*") for _ in range(n)] for _ in range(m)],)
+
+
+def _ball_grid():
+    m, n = R(1, 4), R(1, 5)
+    return ([[random.choice([1, -1]) for _ in range(n)] for _ in range(m)],)
+
+
+def _same_pair():
+    a = _bin_square(R(1, 3))
+    target = [row[:] for row in a]
+    for _ in range(R(0, 3)):
+        target = [list(row) for row in zip(*target[::-1])]
+    if R(0, 2) == 0:
+        i, j = R(0, len(a) - 1), R(0, len(a) - 1)
+        target[i][j] ^= 1
+    return (a, target)
+
+
+GX27 = {
+    ("matrix", "Reshape the Matrix"): lambda: ([[R(0, 9) for _ in range(R(1, 3))]] * R(1, 3), R(1, 4), R(1, 4)),
+    ("matrix", "Image Overlap"): _overlap,
+    ("matrix", "Projection Area of 3D Shapes"): lambda: ([[R(0, 4) for _ in range(3)] for _ in range(3)],),
+    ("matrix", "Surface Area of 3D Shapes"): lambda: ([[R(0, 4) for _ in range(3)] for _ in range(3)],),
+    ("matrix", "As Far from Land as Possible"): lambda: (_bin_square(R(1, 5)),),
+    ("matrix", "Find Winner on a Tic Tac Toe Game"): _ttt_moves,
+    ("matrix", "Sort the Matrix Diagonally"): lambda: ([[R(1, 9) for _ in range(R(1, 5))]] * R(1, 4),),
+    ("matrix", "Where Will the Ball Fall"): _ball_grid,
+    ("matrix", "Rotating the Box"): _box,
+    ("matrix", "Determine Whether Matrix Can Be Obtained By Rotation"): lambda: (lambda a: (a, a))(
+        _bin_square(R(1, 3))
+    ),
+    ("matrix", "Find All Groups of Farmland"): _farmland,
+    ("matrix", "Check if Every Row and Column Contains All Numbers"): _valid_matrix,
+    ("matrix", "Count Unguarded Cells in the Grid"): _unguarded,
+    ("matrix", "Largest Local Values in a Matrix"): _local_grid,
+    ("matrix", "Matrix Similarity After Cyclic Shifts"): _similar,
+    ("matrix", "Find Missing and Repeated Values"): _missing_repeated,
+    ("matrix", "Sum of Matrix After Queries"): _sum_queries,
+}
+
+GX.update(GX27)
