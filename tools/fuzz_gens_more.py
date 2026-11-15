@@ -1350,3 +1350,67 @@ GX21 = {
 }
 
 GX.update(GX21)
+
+
+def _expression():
+    parts = [str(R(1, 9))]
+    for _ in range(R(0, 3)):
+        parts += [random.choice("+-*"), str(R(1, 9))]
+    return ("".join(parts),)
+
+
+def _range_sum():
+    lower = R(-6, 3)
+    return (ints(7, -5, 5, 1), lower, lower + R(0, 6))
+
+
+def _beautiful_norm(args, got):
+    n = args[0]
+    return sorted(got) == list(range(1, n + 1)) and all(
+        2 * got[k] != got[i] + got[j] for i in range(n) for j in range(i + 2, n) for k in range(i + 1, j)
+    )
+
+
+def _grammar():
+    n = R(1, 10)
+    return (n, R(1, 2 ** (n - 1)))
+
+
+def _skyline():
+    out = []
+    for _ in range(R(1, 6)):
+        left = R(0, 8)
+        out.append([left, left + R(1, 6), R(1, 6)])
+    return (out,)
+
+
+def _distinct(n_max, lo, hi):
+    return random.sample(range(lo, hi + 1), R(1, n_max))
+
+
+def _super_pow():
+    digits = [R(1, 9)] + [R(0, 9) for _ in range(R(0, 2))]
+    return (R(1, 60), digits)
+
+
+def _pairs():
+    n = R(2, 8)
+    return ([R(-5, 5) for _ in range(n)], [R(-5, 5) for _ in range(n)], R(-4, 4))
+
+
+GX22 = {
+    ("divide_conquer", "Different Ways to Add Parentheses"): _expression,
+    ("divide_conquer", "Count of Range Sum"): _range_sum,
+    ("divide_conquer", "Beautiful Array"): (lambda: (R(1, 8),), _beautiful_norm),
+    ("divide_conquer", "K-th Symbol in Grammar"): _grammar,
+    ("divide_conquer", "Longest Substring with At Least K Repeating Characters"): lambda: (st("abc", 1, 12), R(1, 4)),
+    ("divide_conquer", "The Skyline Problem"): _skyline,
+    ("divide_conquer", "Maximum Binary Tree"): lambda: (_distinct(8, 0, 20),),
+    ("divide_conquer", "Super Pow"): _super_pow,
+    ("divide_conquer", "Number of Pairs Satisfying Inequality"): _pairs,
+    ("divide_conquer", "Create Sorted Array through Instructions"): lambda: (ints(10, 1, 6, 1),),
+    ("divide_conquer", "Number of Ways to Reorder Array to Get Same BST"): lambda: (_distinct(7, 1, 9),),
+    ("divide_conquer", "Count Good Numbers"): lambda: (R(1, 200),),
+}
+
+GX.update(GX22)
