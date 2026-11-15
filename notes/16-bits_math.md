@@ -60,7 +60,7 @@ def my_pow(x, n):
 ```
 
 ## 6. Traps
-- Operator precedence: `a & b == c` parses as `a & (b == c)`; always parenthesise bit-ops.
+- Operator precedence differs by language: in **C/Java** `a & b == c` parses as `a & (b == c)`; in **Python** bitwise operators bind tighter than `==`, so it is `(a & b) == c`. Either way, parenthesise bit-ops - it removes the doubt.
 - Negative numbers and `>>` (arithmetic shift) - Python never overflows, so mimic 32-bit explicitly.
 - `1 << i` for i >= 31 in other languages needs a long.
 - Floating-point `x ** n` for huge n; use the squaring loop with modulo.

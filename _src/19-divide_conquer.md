@@ -6,7 +6,7 @@
 - Three steps: **divide**, **conquer** (recurse), **combine**.
 - Cost: `T(n) = a*T(n/b) + f(n)`. For merge sort `a = 2, b = 2, f(n) = O(n)` -> `log n` levels x `O(n)` per level = **O(n log n)**.
 - The combine step can do more than merge: **count pairs across the two halves** while both halves are sorted (inversions, reverse pairs, count of smaller numbers after self, count of range sum).
-- Same shape elsewhere: quicksort/quickselect (partition then recurse on one side), binary search (recurse on one half), closest pair, fast Fourier transform, Karatsuba, segment trees.
+- Same shape elsewhere: quicksort (partition, then recurse on **both** sides) and quickselect (partition, then recurse on **one** side only, which is why it is O(n) on average), binary search (recurse on one half), closest pair, fast Fourier transform, Karatsuba, segment trees.
 
 ## 2. How to spot it
 - "count pairs (i < j) with property between a[i] and a[j]" with `n ~ 10^5` - O(n^2) is too slow.

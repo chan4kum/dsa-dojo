@@ -15,4 +15,5 @@ jobs:
       - run: python dsa.py selftest
       - run: python tools/fuzz.py
       - run: python tools/fuzz_diff.py
+      - run: python tools/verify_claims.py
       - run: python tools/build_notes.py && git diff --exit-code notes/

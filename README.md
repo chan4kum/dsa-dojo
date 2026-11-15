@@ -64,7 +64,17 @@ python dsa.py review                  # what to redo from a blank file
 | B2 | interview playbook & job search | protocol, stuck-protocol, stories, pipeline |
 | B3 | coverage map (generated) | Blind 75 + classics -> where each is taught |
 
-**Current content:** 458 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
+**Current content:** 587 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
+
+## How the content is verified (run these yourself)
+| Command | What it proves |
+|---|---|
+| `python3 dsa.py selftest` | every reference solution passes its tests and every brute force is correct |
+| `python3 tools/fuzz_diff.py` | brute force and optimised solution agree on random inputs |
+| `python3 tools/check_metadata.py` | every problem's LeetCode number, title, slug and difficulty (and every title in the "More:" lists) matches LeetCode data |
+| `python3 tools/verify_claims.py` | the factual claims made in the tutorials (Python semantics, algorithm identities, speed rules) are true - each one is *executed* |
+
+Time-sensitive material (AI/system-design map, interview formats) carries an "as of" date and source links at the bottom of the note.
 
 ## Repo layout
 ```
@@ -95,5 +105,5 @@ Put new problems in `problems/<topic>_more*.py` (same `PROBLEMS = [...]` list). 
 **Copyright note:** prompts are original paraphrases, not copied statements. Each problem links to the original on LeetCode for the official statement and examples.
 
 ## Roadmap of content (by topic, not by date)
-Done: 20 DSA topics, 458 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
+Done: 20 DSA topics, 587 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
 Next (same format): more problems per topic (hard tiers, company-frequent sets), segment tree / SCC / Manacher notes, then full hand-notes + runnable labs for each block of the system-design and AI maps.

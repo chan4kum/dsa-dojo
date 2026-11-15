@@ -36,9 +36,9 @@ empty / single element / all equal / already sorted / reverse sorted / negatives
 - `grid = [[0]*C]*R` shares rows - use a comprehension.
 - `list.pop(0)` / `insert(0, x)` are O(n): use `deque`.
 - `a = b` aliases lists; copy with `b[:]` or `list(b)`; record results with `path[:]` in backtracking.
-- Floor division and modulo with negatives (`-7 // 2 == -4`); truncate with `int(a / b)`.
+- Floor division and modulo with negatives (`-7 // 2 == -4`); to truncate toward zero use `int(a / b)` only for small values (float division loses precision beyond about 2^53) - for big integers use `-(-a // b)` or compare signs.
 - Recursion limit (default 1000): deep DFS needs an explicit stack or `sys.setrecursionlimit`.
-- String concatenation in a loop is O(n^2) in the worst case: collect pieces, `''.join`.
+- `s = piece + s` / `s += piece` in a loop can be O(n^2) (each step may copy the string; CPython's in-place shortcut for `+=` is not guaranteed): collect pieces, `''.join`.
 - `heapq` is a MIN-heap: negate for max-heap; add a tie-breaker so payloads are never compared.
 
 ## 6. "You are ready when..." (a checklist, not a calendar)
@@ -61,6 +61,13 @@ Many companies publish their values or leadership principles on their careers si
 5. **Prepare per stage**: recruiter screen (story + salary range research), phone screen (1-2 problems), onsite (coding x2-3, system design, behavioural, sometimes domain deep-dive).
 6. **Offers**: always ask for time; compare total compensation (base, bonus, equity vesting, joining bonus), growth, team, and manager; negotiate respectfully with evidence (other offers, market data). Never lie about competing offers.
 7. **After every interview write 5 lines**: what was asked, what went well, what slipped, one thing to drill, follow-up email sent.
+
+## 8b. AI-assisted coding rounds (reported, as of 2026-11-15 - formats are pilots and vary by team)
+- **Meta**: an AI-enabled coding round has been reported since October 2025, replacing one of the two onsite coding rounds (about 60 minutes, one staged problem, approved assistant inside the editor). The other round stays a classic no-AI algorithm interview.
+- **Google**: reported in 2026 as a pilot of a "human-led, AI-assisted" **code comprehension** round (read, debug and improve an existing codebase with Gemini available); classic algorithm rounds remain.
+- Other companies differ (some forbid AI in live coding unless the interview is explicitly AI-assisted and announced in advance). **Ask your recruiter which format you will get.**
+- What is scored (as reported): breaking the problem down before prompting, directing the assistant precisely, **verifying and testing its output**, and spotting its bugs. You are still graded on your own judgement, so the habits in this repo (state brute force, hand-trace, test edge cases, state complexity) are exactly what carries over.
+- Sources are mostly secondary (news and prep sites quoting internal documents), so treat details as indicative, not contractual: https://www.greatfrontend.com/blog/frontend-interview-process-at-google-amazon-and-meta-what-to-expect , https://www.byteherald.com/2026/10/google-changed-coding-interview-ai-is.html , https://medium.com/@fahimulhaq/meta-just-transformed-their-coding-interviews-with-ai-heres-what-developers-must-know-363b50dceda4
 
 ## 9. AI / LLM engineer track (what is asked besides coding)
 - Coding rounds are the same patterns (see the pattern finder) - often plus data-manipulation in Python/SQL and a small ML or retrieval implementation.

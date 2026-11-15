@@ -30,7 +30,7 @@
 - Forgetting the separator character (`#`) so borders cross from pattern into text.
 - Off-by-one when converting the match end to a start index (`i - 2*m`).
 - Empty needle/pattern.
-- Using `str` concatenation in a loop (O(n^2)); use a list and `''.join`.
+- Building a string with `s = piece + s` / `s += piece` in a loop: each step may copy the whole string, so it can be O(n^2) (CPython sometimes optimises `s += x` in place, but that is an implementation detail, never a guarantee). Collect pieces in a list and `''.join` once - always O(n).
 - Rolling hash collisions: use a large modulus (or two) and verify on a hash hit.
 
 ## 7. Self-check

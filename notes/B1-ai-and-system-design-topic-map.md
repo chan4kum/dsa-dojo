@@ -1,7 +1,7 @@
 # B1 - Topic map: System Design & AI engineering (concepts first, no timeline)
 
 > DSA is the *vocabulary*; system design and AI engineering are the *sentences*. This page lists the concepts to learn, why each matters, the DSA idea underneath it, and a **local mini-lab** you can run on your laptop with plain Python.
-> Status: concept map. Each block gets full hand-notes and runnable labs in later batches (same format as the DSA topics).
+> Status: concept map (not yet full hand-notes). Stable concepts (CAP, quorums, BM25, HNSW, LoRA) are textbook; fast-moving items (agent protocols, security lists, interview formats) carry an **as-of date** and a source in the Sources list at the bottom. Last reviewed: **2026-11-15**.
 
 ## Part 1 - System design
 
@@ -43,13 +43,13 @@ For each, be able to answer: *what is the bottleneck, what is the partition key,
 | Embeddings & similarity | vectors, dot product, cosine similarity, normalisation, curse of dimensionality | linear algebra, heap for top-k | brute-force kNN over sentence vectors; measure latency vs size |
 | Tokenisation & LLM basics | tokens, BPE, context window, attention (concept), sampling (temperature, top-p), logprobs | priority merges (heap), hashing, tries | toy BPE tokenizer; temperature-sampling demo |
 | Prompting & structured output | roles, few-shot, chain-of-thought, JSON schema output, prompt versioning | - | prompt test-suite with expected outputs |
-| **RAG** | chunking (size/overlap), embeddings, vector index (flat / IVF / HNSW), **hybrid search (BM25 + dense)**, reranking, query rewriting, citations | sliding window (chunk overlap), inverted index, graph (HNSW), heap | BM25 from scratch + dense kNN + reciprocal-rank-fusion; measure **recall@k** on a golden set |
-| Agents | tool calling, ReAct loop, planning, memory (short/long), guardrails, multi-agent orchestration, MCP | DAG / topological order for workflows, state machines, queues | a ReAct loop with a stubbed model and two tools; add a step limit + loop detection |
+| **RAG** | chunking (size/overlap), embeddings, vector index (flat / IVF / HNSW), **hybrid search (BM25 + dense, fused with reciprocal rank fusion: score = sum of 1/(k + rank), k = 60 by convention)**, reranking, query rewriting, citations | sliding window (chunk overlap), inverted index, graph (HNSW), heap | BM25 from scratch + dense kNN + reciprocal-rank-fusion; measure **recall@k** on a golden set |
+| Agents | tool calling, ReAct loop, planning, memory (short/long), guardrails, multi-agent orchestration, MCP (Model Context Protocol: an open JSON-RPC standard for connecting agents to tools and data; **as of 2026-11-15** stewarded by the Linux Foundation's Agentic AI Foundation, and its newest spec revision moves to a stateless design - check the current spec version before building) | DAG / topological order for workflows, state machines, queues | a ReAct loop with a stubbed model and two tools; add a step limit + loop detection |
 | Evaluation | golden datasets, offline vs online eval, LLM-as-judge (and its biases), regression suites, groundedness/faithfulness | sets, statistics | eval harness: run cases, score, diff vs the previous run |
 | Fine-tuning | SFT, LoRA/QLoRA (low-rank adapters), preference tuning (idea), when *not* to fine-tune | low-rank matrices | count trainable parameters for full vs LoRA on a given layer shape |
 | Serving & cost | batching, KV cache, quantisation, streaming, latency/throughput, caching (exact + semantic), routing to cheaper models | hash map (cache), LRU, heap (scheduler), binary search (threshold tuning) | semantic-cache prototype + hit-rate/cost report |
 | Data pipelines & MLOps | ingestion, dedup (hashing / MinHash), versioning, orchestration (DAGs), monitoring drift | hashing, topological sort | DAG runner with retries and a dependency graph |
-| Safety & security | prompt injection, data exfiltration, PII handling, least-privilege tools, tenant isolation | access-control sets | red-team list: 10 injection prompts against your own RAG app |
+| Safety & security | prompt injection, data exfiltration, PII handling, least-privilege tools, tenant isolation; use the **OWASP Top 10 for LLM Applications (2025 edition)** as the checklist (LLM01 Prompt Injection, LLM02 Sensitive Information Disclosure, LLM03 Supply Chain, LLM07 System Prompt Leakage, LLM08 Vector and Embedding Weaknesses, LLM10 Unbounded Consumption, ...) | access-control sets | red-team list: 10 injection prompts against your own RAG app |
 
 ### 2.2 The bridge: where DSA shows up in AI systems
 - **Top-k retrieval** -> heap. **Approximate nearest neighbour (HNSW)** -> layered graphs + greedy search.
@@ -57,6 +57,13 @@ For each, be able to answer: *what is the bottleneck, what is the partition key,
 - **Chunking with overlap** -> sliding window. **Deduplication** -> hashing / MinHash + union-find.
 - **Agent workflows** -> DAGs: topological sort, cycle detection, parallel stages.
 - **Caches / rate limits for model APIs** -> LRU, token bucket, sliding-window counters.
+
+## Sources (checked 2026-11-15)
+- HNSW: Malkov & Yashunin, *Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs*, IEEE TPAMI 2020 - https://arxiv.org/abs/1603.09320
+- Reciprocal rank fusion with k = 60: Cormack & Clarke (2009), as cited in implementation docs such as https://docs.rs/crate/nodedb-vector/0.3.0/source/src/hybrid/rrf.rs (secondary source; read the original paper before quoting it).
+- MCP governance and spec: donated to the Linux Foundation's Agentic AI Foundation on 2025-12-09 (https://mcp.directory/blog/mcp-foundation-linux-foundation-aaif-2026-explained); stable spec 2025-11-25 and a newer stateless revision (2026-07-28) reported at https://www.theregister.com/a/5280027 and https://aaif.io/blog/mcp-graduates-to-enterprise-infrastructure-stateless-architecture-formal-governance-and-security
+- OWASP Top 10 for LLM Applications 2025: https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025 (one vendor page mentions a later 2026 edition; confirm on the OWASP GenAI Security Project site, which I could not verify here).
+- Not re-verified in this pass because they are textbook and stable: CAP/PACELC, quorum R+W>N, token/leaky bucket, BM25, LoRA/QLoRA, KV cache.
 
 ## How to use this map
 Pick a block, read its concepts, then do the **mini-lab on paper first** (data structures + invariants), then in code with tests - same loop as `notes/00-foundations.md`. Blocks marked with a DSA idea you have not met yet tell you which DSA topic to study first.

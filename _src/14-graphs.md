@@ -4,7 +4,7 @@
 
 ## 1. First principles
 - Representation: adjacency list `adj[u] = [v, ...]` (sparse, usual) or a grid where the neighbours are the 4 (or 8) surrounding cells. Implicit graphs (words differing by one letter, game states) are never built - neighbours are generated on demand.
-- Always keep a **visited** set; mark visited **when you push**, not when you pop.
+- Always keep a **visited** set. For BFS (and DFS), mark a node visited **when you push it**, not when you pop it. **Dijkstra is the exception:** a node's distance is final only when it is *popped* (a cheaper path may still be queued), so skip stale pops instead.
 - **Which tool?**
   | Question | Tool | Cost |
   |---|---|---|
@@ -54,7 +54,7 @@ Dijkstra:
 The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a level loop, `graphs/3` Kahn's topological sort, `graphs/4` union-find, `graphs/6` BFS on an implicit graph.
 
 ## 6. Traps
-- Marking visited on pop -> the same node enters the queue many times.
+- Marking visited on pop in BFS -> the same node enters the queue many times (for Dijkstra, finalising on pop is correct, but it fails with negative edges: use Bellman-Ford).
 - Using DFS to find a shortest path in an unweighted graph (use BFS).
 - Dijkstra with negative edges (wrong), or without skipping stale heap entries (slow).
 - Forgetting disconnected components: loop over **all** start nodes.

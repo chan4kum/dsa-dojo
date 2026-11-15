@@ -24,9 +24,11 @@ The spine is strong: concept-first notes, a pattern finder, hint ladders that es
 - Local, dependency-free execution with timeouts, so brute force visibly times out where it should.
 
 ## Honest limits (do not hide these from students)
-1. **Count**: 408 problems are taught in depth (the target is 1000; growth continues in batches of ~200). The coverage map shows what is covered; for further practice use the "More:" lists at the end of each note *after* finishing the ladder.
+1. **Count**: 587 problems are taught in depth (the target is 1000; growth continues in batches of ~200). The coverage map shows what is covered; for further practice use the "More:" lists at the end of each note *after* finishing the ladder.
 2. **Statements are paraphrases**, not LeetCode's text; always read the official statement via the link before submitting there.
 3. **Tests are small and hand-picked** plus random cross-checks; they do not replace a judge's large hidden tests. Complexity claims should be argued by the student, not trusted.
 4. **Not covered in depth yet**: segment trees (only Fenwick), Tarjan/Kosaraju SCC, Manacher, advanced geometry, SQL and concurrency questions.
 5. **Not tested with real learners.** The first cohort's confusion points should drive the next edit.
-6. **Publishing**: the repository is public at github.com/chan4kum/dsa-dojo; pushes are made from the maintainer's own machine.
+6. **Verification has limits.** `check_metadata.py` compares against a third-party mirror of LeetCode's problem list (plus 12 premium entries confirmed by hand on 2026-11-15), not LeetCode itself. `verify_claims.py` proves the claims it lists; it cannot prove that the tutorials contain *no other* wrong sentence. Brute-vs-optimised fuzzing does not cover design problems, and in-place problems (26, 27, 80, 905, 922) are unsupported by the harness. Complexity claims are argued, not measured.
+7. **Fast-moving topics** (agent protocols, LLM security lists, interview formats) were checked on 2026-11-15 against secondary sources and will age; re-check before relying on them.
+8. **Publishing**: the repository is public at github.com/chan4kum/dsa-dojo; pushes are made from the maintainer's own machine.

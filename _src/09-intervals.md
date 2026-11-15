@@ -26,7 +26,15 @@
 ## 5. Template
 {{solution:intervals/1}}
 
-Sweep-line skeleton (max overlap): `events = sorted([(s, 1), (e, -1) for each]); running += delta; best = max(best, running)` - at equal time the `-1` sorts before `+1`, which means touching intervals do **not** overlap.
+Sweep-line skeleton (max overlap), valid Python:
+```python
+events = sorted([(s, 1) for s, e in intervals] + [(e, -1) for s, e in intervals])
+running = best = 0
+for _, delta in events:
+    running += delta
+    best = max(best, running)
+```
+Tuples sort by time then delta, so at equal time the `-1` sorts before `+1`: touching intervals such as `[1,2]` and `[2,3]` do **not** overlap. If the problem treats touching as overlapping (closed intervals), flip the tie-break (`+1` first).
 
 ## 6. Traps
 - Forgetting `max(last.end, e)` (nested intervals).
