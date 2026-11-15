@@ -64,13 +64,13 @@ python dsa.py review                  # what to redo from a blank file
 | B2 | interview playbook & job search | protocol, stuck-protocol, stories, pipeline |
 | B3 | coverage map (generated) | Blind 75 + classics -> where each is taught |
 
-**Current content:** 208 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
+**Current content:** 290 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
 
 ## Repo layout
 ```
 dsa.py                 CLI: list / notes / start / test / hint / solution / review / quiz / coverage / selftest
 core.py                test engine + helpers (ListNode, TreeNode, list<->tree adapters)
-problems/<topic>.py    problem data (+ <topic>_more.py for the extra batch; _brute.py has brute forces of the first batch)
+problems/<topic>.py    problem data (+ <topic>_more*.py extra batches); each problem holds its brute force, optimised solution and complexity
 notes/                 generated hand-notes (read these)
 _src/                  note sources with {{trace}} / {{solution}} / {{ladder}} placeholders
 tools/                 build_notes.py, traces.py (hand traces), anchors.py (teacher anchors), coverage.py + lists.py, fuzz.py, fuzz_diff.py
@@ -88,10 +88,12 @@ dict(title="...", diff="E|M|H", lc=<LeetCode number>, slug="<leetcode-slug>",
      brute=r'''def f(...): ...''', brute_cx="O(n^2) ...",       # naive but CORRECT (may time out on big inputs)
      solution=r'''def f(...): ...''', cx="O(n) ...")
 ```
-Put new problems in `problems/<topic>_more.py` (same `PROBLEMS = [...]` list). Several valid answers? use `check=lambda args, got: ...`; mutates an argument? use `inplace=<arg index>`. Then `python dsa.py selftest && python tools/fuzz_diff.py && python tools/build_notes.py`. Class-based problems use `kind="design"` (see `problems/design.py`); tree/linked-list problems use `adapt_in` / `adapt_out`.
+Put new problems in `problems/<topic>_more*.py` (same `PROBLEMS = [...]` list). Several valid answers? use `check=lambda args, got: ...`; mutates an argument? use `inplace=<arg index>`. Then `python dsa.py selftest && python tools/fuzz_diff.py && python tools/build_notes.py`. Class-based problems use `kind="design"` (see `problems/design.py`); tree/linked-list problems use `adapt_in` / `adapt_out`.
+
+**Code style (checked in CI):** `ruff check .` and `ruff format --check .` must pass (config in `ruff.toml`, 120 columns). The code inside the `brute` / `solution` strings is linted too: `python tools/lint_solutions.py`. After adding a problem run `python tools/format_problems.py` - it lays every problem out the same way and puts a plain-English header on each solution (`# OPTIMISED: O(n) time ... / Idea: ...`). Comment the *why*, not the *what*, inside solutions.
 
 **Copyright note:** prompts are original paraphrases, not copied statements. Each problem links to the original on LeetCode for the official statement and examples.
 
 ## Roadmap of content (by topic, not by date)
-Done: 20 DSA topics, 208 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
+Done: 20 DSA topics, 290 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
 Next (same format): more problems per topic (hard tiers, company-frequent sets), segment tree / SCC / Manacher notes, then full hand-notes + runnable labs for each block of the system-design and AI maps.

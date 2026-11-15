@@ -43,15 +43,17 @@ capacity 2; list shown **least recent -> most recent**
 *Reference solution for **LRU Cache** (`design/2`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: get/put O(1)
+# Idea: Hash map + doubly linked list (or OrderedDict): O(1) ordered cache
 class LRUCache:
     def __init__(self, capacity):
         self.cap = capacity
-        self.d = OrderedDict()                 # least recent first
+        self.d = OrderedDict()  # least recent first
 
     def get(self, key):
         if key not in self.d:
             return -1
-        self.d.move_to_end(key)                # mark most recent
+        self.d.move_to_end(key)  # mark most recent
         return self.d[key]
 
     def put(self, key, value):
@@ -59,7 +61,7 @@ class LRUCache:
             self.d.move_to_end(key)
         self.d[key] = value
         if len(self.d) > self.cap:
-            self.d.popitem(last=False)         # evict least recent
+            self.d.popitem(last=False)  # evict least recent
 ```
 
 Interview note: be ready to write the doubly linked list **by hand** (head/tail sentinels, `_remove(node)`, `_add_front(node)`) - `OrderedDict` hides it.

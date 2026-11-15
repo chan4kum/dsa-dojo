@@ -71,6 +71,8 @@ Match -> take the diagonal + 1; otherwise the max of up / left. Answer is the bo
 *Reference solution for **Coin Change** (`dynamic_programming/3`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(amount * coins) time, O(amount) space
+# Idea: Unbounded knapsack / DP over amount (min coins)
 def coin_change(coins, amount):
     INF = float("inf")
     dp = [0] + [INF] * amount
@@ -122,8 +124,21 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/21` | Medium | Triangle | [#120](https://leetcode.com/problems/triangle/) | Bottom-up DP with a rolling 1-D array |
 | `dynamic_programming/22` | Medium | Longest Palindromic Subsequence | [#516](https://leetcode.com/problems/longest-palindromic-subsequence/) | Interval DP / reduce to LCS with the reversed string |
 | `dynamic_programming/24` | Medium | Coin Change II | [#518](https://leetcode.com/problems/coin-change-ii/) | Unbounded knapsack - counting combinations (coin loop outside) |
+| `dynamic_programming/25` | Medium | Min Falling Path Sum | [#931](https://leetcode.com/problems/minimum-falling-path-sum/) | Grid DP: best(r, c) = cell + min of the 3 cells above |
+| `dynamic_programming/26` | Medium | Maximal Square | [#221](https://leetcode.com/problems/maximal-square/) | Grid DP: biggest square ending at a cell = 1 + min of 3 neighbours |
+| `dynamic_programming/27` | Medium | Delete and Earn | [#740](https://leetcode.com/problems/delete-and-earn/) | Reduce to House Robber (adjacent values are 'adjacent houses') |
+| `dynamic_programming/28` | Medium | Interleaving String | [#97](https://leetcode.com/problems/interleaving-string/) | 2-D DP over (chars used of s1, chars used of s2) |
+| `dynamic_programming/29` | Medium | Unique Paths II | [#63](https://leetcode.com/problems/unique-paths-ii/) | Grid DP: paths into a cell = paths from above + paths from left |
+| `dynamic_programming/30` | Medium | Minimum Cost For Tickets | [#983](https://leetcode.com/problems/minimum-cost-for-tickets/) | Timeline DP: cheapest to cover day d = min over last pass type |
+| `dynamic_programming/31` | Medium | Longest String Chain | [#1048](https://leetcode.com/problems/longest-string-chain/) | DP over a DAG ordered by length, predecessors found by deleting a letter |
+| `dynamic_programming/34` | Medium | Number of Longest Increasing Subsequence | [#673](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) | LIS DP with a counter next to the length |
+| `dynamic_programming/35` | Medium | Ones and Zeroes | [#474](https://leetcode.com/problems/ones-and-zeroes/) | 0/1 knapsack with two capacities (iterate capacities downwards) |
+| `dynamic_programming/37` | Medium | Best Time to Buy and Sell Stock with Transaction Fee | [#714](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/) | Two-state DP (hold / cash); fee charged on sell |
 | `dynamic_programming/9` | Hard | Burst Balloons | [#312](https://leetcode.com/problems/burst-balloons/) | Interval DP: split an interval on the LAST action |
 | `dynamic_programming/23` | Hard | Regular Expression Matching | [#10](https://leetcode.com/problems/regular-expression-matching/) | 2-D DP on two string positions (with branching for '*') |
+| `dynamic_programming/32` | Hard | Russian Doll Envelopes | [#354](https://leetcode.com/problems/russian-doll-envelopes/) | Sort one dimension, then LIS on the other (patience sorting) |
+| `dynamic_programming/33` | Hard | Distinct Subsequences | [#115](https://leetcode.com/problems/distinct-subsequences/) | 2-D string DP: use the matching character or skip it |
+| `dynamic_programming/36` | Hard | Best Time to Buy and Sell Stock IV | [#188](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/) | State-machine DP: (transactions used, holding or not) |
 
 Start one with `python dsa.py start dynamic_programming/1`.
 

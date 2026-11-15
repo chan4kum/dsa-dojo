@@ -40,14 +40,17 @@
 *Reference solution for **Longest Substring Without Repeating Characters** (`sliding_window/2`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(min(n, alphabet)) space
+# Idea: Variable-size sliding window with a 'last seen' map (expand right, shrink left to
+#       restore validity)
 def length_of_longest_substring(s):
     last = {}
-    l = best = 0
+    left = best = 0
     for r, c in enumerate(s):
-        if c in last and last[c] >= l:     # duplicate inside the window
-            l = last[c] + 1
+        if c in last and last[c] >= left:  # duplicate inside the window
+            left = last[c] + 1
         last[c] = r
-        best = max(best, r - l + 1)
+        best = max(best, r - left + 1)
     return best
 ```
 
@@ -73,6 +76,9 @@ def length_of_longest_substring(s):
 | `sliding_window/7` | Medium | Permutation in String | [#567](https://leetcode.com/problems/permutation-in-string/) | Fixed-size sliding window + frequency map comparison |
 | `sliding_window/8` | Medium | Find All Anagrams in a String | [#438](https://leetcode.com/problems/find-all-anagrams-in-a-string/) | Fixed-size sliding window + frequency map |
 | `sliding_window/9` | Medium | Max Consecutive Ones III | [#1004](https://leetcode.com/problems/max-consecutive-ones-iii/) | Sliding window: 'at most k bad items' |
+| `sliding_window/10` | Medium | Subarray Product Less Than K | [#713](https://leetcode.com/problems/subarray-product-less-than-k/) | Variable sliding window, counting subarrays ending at r |
+| `sliding_window/11` | Medium | Fruit Into Baskets | [#904](https://leetcode.com/problems/fruit-into-baskets/) | Variable window with a count map (at most K distinct) |
+| `sliding_window/12` | Medium | Longest Subarray of 1's After Deleting One Element | [#1493](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) | Variable window with at most K = 1 violations |
 | `sliding_window/4` | Hard | Minimum Window Substring | [#76](https://leetcode.com/problems/minimum-window-substring/) | Variable window: expand until valid, then shrink to the minimum while still valid |
 
 Start one with `python dsa.py start sliding_window/1`.

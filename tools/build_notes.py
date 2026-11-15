@@ -7,6 +7,7 @@ Placeholders in the sources:
 
     python tools/build_notes.py
 """
+
 import re
 import sys
 import textwrap
@@ -15,16 +16,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-from dsa import DIFF, TOPICS, by_difficulty, load  # noqa: E402
-from traces import TRACES  # noqa: E402
 import anchors  # noqa: E402
 import coverage  # noqa: E402
+from traces import TRACES  # noqa: E402
+
+from dsa import DIFF, TOPICS, by_difficulty, load  # noqa: E402
 
 
 def ladder(topic):
     rows = ["| id | difficulty | problem | LeetCode | pattern it trains |", "|---|---|---|---|---|"]
     for n, p in by_difficulty(load(topic)):
-        rows.append(f"| `{topic}/{n}` | {DIFF[p['diff']]} | {p['title']} | [#{p['lc']}](https://leetcode.com/problems/{p['slug']}/) | {p['pattern']} |")
+        rows.append(
+            f"| `{topic}/{n}` | {DIFF[p['diff']]} | {p['title']} "
+            f"| [#{p['lc']}](https://leetcode.com/problems/{p['slug']}/) | {p['pattern']} |"
+        )
     rows.append(f"\nStart one with `python dsa.py start {topic}/1`.")
     return "\n".join(rows)
 
@@ -32,7 +37,11 @@ def ladder(topic):
 def solution(pid):
     topic, n = pid.split("/")
     p = load(topic)[int(n) - 1]
-    return f"*Reference solution for **{p['title']}** (`{pid}`) - tested by `python dsa.py selftest`:*\n\n```python\n" + textwrap.dedent(p["solution"]).strip("\n") + "\n```"
+    return (
+        f"*Reference solution for **{p['title']}** (`{pid}`) - tested by `python dsa.py selftest`:*\n\n```python\n"
+        + textwrap.dedent(p["solution"]).strip("\n")
+        + "\n```"
+    )
 
 
 def index():
@@ -52,6 +61,7 @@ def render(text, topic):
         if m.group(1) not in TRACES:
             sys.exit(f"unknown trace {m.group(1)}")
         return TRACES[m.group(1)]()
+
     return re.sub(r"\{\{trace:([a-z_0-9]+)\}\}", tr, text)
 
 

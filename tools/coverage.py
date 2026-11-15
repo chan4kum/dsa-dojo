@@ -1,12 +1,14 @@
 """Builds notes/B3-coverage.md: which well-known problems this repo already teaches (and where)."""
+
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-from dsa import TOPICS, load  # noqa: E402
 from lists import BLIND75, FREQUENT  # noqa: E402
+
+from dsa import TOPICS, load  # noqa: E402
 
 
 def have():
@@ -41,9 +43,9 @@ def render():
     return f"""# B3 - Coverage map (generated - do not edit by hand)
 
 > Honest accounting: this repo teaches **{own} distinct problems** in depth (concept, hints, brute force, optimised
-> solution, tests). The big public lists below show what is covered. A struck-through number is **not in the repo yet** -
-> but it is almost always a *variation of a pattern that is*; the last column of the pattern finder (`notes/00-pattern-finder.md`)
-> tells you which.
+> solution, tests). The big public lists below show what is covered. A struck-through number is **not in the repo
+> yet** - but it is almost always a *variation of a pattern that is*; the last column of the pattern finder
+> (`notes/00-pattern-finder.md`) tells you which.
 
 ## Blind 75 (community list, with a couple of popular swaps): {g1}/{n1} covered
 {t1}

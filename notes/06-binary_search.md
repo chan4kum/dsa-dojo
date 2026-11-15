@@ -49,14 +49,17 @@ Answer: **4**
 *Reference solution for **Koko Eating Bananas** (`binary_search/3`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n log max(piles)) time, O(1) space
+# Idea: Binary search on the ANSWER (monotonic feasibility predicate)
 def min_eating_speed(piles, h):
     def feasible(k):
-        return sum(-(-p // k) for p in piles) <= h       # ceil(p / k) without floats
+        return sum(-(-p // k) for p in piles) <= h  # ceil(p / k) without floats
+
     lo, hi = 1, max(piles)
     while lo < hi:
         mid = (lo + hi) // 2
         if feasible(mid):
-            hi = mid                                      # mid works: try smaller (keep mid)
+            hi = mid  # mid works: try smaller (keep mid)
         else:
             lo = mid + 1
     return lo
@@ -80,12 +83,17 @@ def min_eating_speed(piles, h):
 | `binary_search/1` | Easy | Binary Search | [#704](https://leetcode.com/problems/binary-search/) | Binary search on a sorted index range |
 | `binary_search/6` | Easy | Search Insert Position | [#35](https://leetcode.com/problems/search-insert-position/) | Binary search for the lower bound (first index satisfying a monotone predicate) |
 | `binary_search/9` | Easy | Sqrt(x) | [#69](https://leetcode.com/problems/sqrtx/) | Binary search on the ANSWER (monotone predicate over candidate values) |
+| `binary_search/12` | Easy | Valid Perfect Square | [#367](https://leetcode.com/problems/valid-perfect-square/) | Binary search on the answer (monotone predicate r*r vs num) |
+| `binary_search/16` | Easy | Find Smallest Letter Greater Than Target | [#744](https://leetcode.com/problems/find-smallest-letter-greater-than-target/) | Upper-bound binary search (first element strictly greater) |
 | `binary_search/2` | Medium | Search in Rotated Sorted Array | [#33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary search with 'which half is sorted?' reasoning |
 | `binary_search/3` | Medium | Koko Eating Bananas | [#875](https://leetcode.com/problems/koko-eating-bananas/) | Binary search on the ANSWER (monotonic feasibility predicate) |
 | `binary_search/7` | Medium | Find First and Last Position of Element in Sorted Array | [#34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Two lower-bound searches (left edge, right edge) |
 | `binary_search/8` | Medium | Find Minimum in Rotated Sorted Array | [#153](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/) | Binary search on a rotated array: compare mid with the right end |
 | `binary_search/10` | Medium | Search a 2D Matrix | [#74](https://leetcode.com/problems/search-a-2d-matrix/) | Binary search over a virtual 1D index (index arithmetic) |
 | `binary_search/11` | Medium | Find Peak Element | [#162](https://leetcode.com/problems/find-peak-element/) | Binary search on a 'slope' (guarantee exists on one side) |
+| `binary_search/13` | Medium | Capacity To Ship Packages Within D Days | [#1011](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Binary search on the answer + greedy feasibility check |
+| `binary_search/14` | Medium | Single Element in a Sorted Array | [#540](https://leetcode.com/problems/single-element-in-a-sorted-array/) | Binary search on a structural invariant (pair parity) |
+| `binary_search/15` | Medium | Find K Closest Elements | [#658](https://leetcode.com/problems/find-k-closest-elements/) | Binary search for a window start (compare the two boundary elements) |
 | `binary_search/4` | Hard | Split Array Largest Sum | [#410](https://leetcode.com/problems/split-array-largest-sum/) | Binary search on the answer + greedy feasibility check |
 | `binary_search/5` | Hard | Median of Two Sorted Arrays | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary search on a partition point (not on values) |
 

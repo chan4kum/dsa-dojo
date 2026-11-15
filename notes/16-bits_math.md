@@ -45,6 +45,8 @@
 *Reference solution for **Pow(x, n)** (`bits_math/4`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(log n) time (binary exponentiation)
+# Idea: Exponentiation by squaring (binary decomposition of the exponent)
 def my_pow(x, n):
     if n < 0:
         x, n = 1 / x, -n
@@ -79,10 +81,20 @@ def my_pow(x, n):
 | `bits_math/9` | Easy | Hamming Distance | [#461](https://leetcode.com/problems/hamming-distance/) | XOR = difference mask, then popcount |
 | `bits_math/10` | Easy | Plus One | [#66](https://leetcode.com/problems/plus-one/) | Carry propagation from the least significant end |
 | `bits_math/12` | Easy | Happy Number | [#202](https://leetcode.com/problems/happy-number/) | Cycle detection on an implicit sequence (set or Floyd) |
+| `bits_math/17` | Easy | Palindrome Number | [#9](https://leetcode.com/problems/palindrome-number/) | Reverse only half the digits (no overflow, no string) |
+| `bits_math/18` | Easy | Excel Sheet Column Title | [#168](https://leetcode.com/problems/excel-sheet-column-title/) | Bijective base-26 (subtract 1 each step) |
+| `bits_math/19` | Easy | Excel Sheet Column Number | [#171](https://leetcode.com/problems/excel-sheet-column-number/) | Positional number system (Horner's rule in base 26) |
+| `bits_math/20` | Easy | Power of Three | [#326](https://leetcode.com/problems/power-of-three/) | Divisibility of the largest power (3 is prime) |
+| `bits_math/21` | Easy | Ugly Number | [#263](https://leetcode.com/problems/ugly-number/) | Strip the allowed prime factors, check what is left |
 | `bits_math/3` | Medium | Sum of Two Integers | [#371](https://leetcode.com/problems/sum-of-two-integers/) | Bit manipulation: XOR = sum without carry, (AND << 1) = carry |
 | `bits_math/4` | Medium | Pow(x, n) | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by squaring (binary decomposition of the exponent) |
 | `bits_math/8` | Medium | Reverse Integer | [#7](https://leetcode.com/problems/reverse-integer/) | Digit extraction with divmod |
 | `bits_math/11` | Medium | Count Primes | [#204](https://leetcode.com/problems/count-primes/) | Sieve: eliminate multiples instead of testing each number |
+| `bits_math/13` | Medium | Single Number III | [#260](https://leetcode.com/problems/single-number-iii/) | XOR cancels pairs; split into two groups by a differing bit |
+| `bits_math/14` | Medium | Single Number II | [#137](https://leetcode.com/problems/single-number-ii/) | Count each bit modulo 3 (two bit-masks as a base-3 counter) |
+| `bits_math/15` | Medium | Bitwise AND of Numbers Range | [#201](https://leetcode.com/problems/bitwise-and-of-numbers-range/) | Common binary prefix of the two endpoints |
+| `bits_math/16` | Medium | Factorial Trailing Zeroes | [#172](https://leetcode.com/problems/factorial-trailing-zeroes/) | Count prime factors (the scarcer prime, 5, decides) |
+| `bits_math/22` | Medium | Integer to Roman | [#12](https://leetcode.com/problems/integer-to-roman/) | Greedy over a descending value table |
 
 Start one with `python dsa.py start bits_math/1`.
 

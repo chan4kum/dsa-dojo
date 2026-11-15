@@ -34,6 +34,8 @@ input `[[1, 3], [8, 10], [2, 6], [15, 18]]` -> sorted by start first
 *Reference solution for **Merge Intervals** (`intervals/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n log n) time
+# Idea: Sort by start + sweep, merging into the last output interval
 def merge(intervals):
     out = []
     for s, e in sorted(intervals):
@@ -61,12 +63,14 @@ Sweep-line skeleton (max overlap): `events = sorted([(s, 1), (e, -1) for each]);
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
 | `intervals/4` | Easy | Meeting Rooms | [#252](https://leetcode.com/problems/meeting-rooms/) | Sort by start, compare neighbours |
+| `intervals/8` | Easy | Summary Ranges | [#228](https://leetcode.com/problems/summary-ranges/) | Linear scan grouping consecutive runs |
 | `intervals/1` | Medium | Merge Intervals | [#56](https://leetcode.com/problems/merge-intervals/) | Sort by start + sweep, merging into the last output interval |
 | `intervals/2` | Medium | Insert Interval | [#57](https://leetcode.com/problems/insert-interval/) | Linear scan in three phases (before / overlapping / after) |
 | `intervals/3` | Medium | Non-overlapping Intervals | [#435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy on interval END times (activity selection) |
 | `intervals/5` | Medium | Meeting Rooms II | [#253](https://leetcode.com/problems/meeting-rooms-ii/) | Sweep line over events / min-heap of end times |
 | `intervals/6` | Medium | Minimum Number of Arrows to Burst Balloons | [#452](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | Greedy on interval END (sort by end) |
 | `intervals/7` | Medium | Interval List Intersections | [#986](https://leetcode.com/problems/interval-list-intersections/) | Two pointers over two sorted interval lists |
+| `intervals/9` | Medium | Remove Covered Intervals | [#1288](https://leetcode.com/problems/remove-covered-intervals/) | Sort (start asc, end desc) + running max end |
 
 Start one with `python dsa.py start intervals/1`.
 

@@ -41,9 +41,11 @@ Answer: `[1, 1, 4, 2, 1, 1, 0, 0]` (days left on the stack never see a warmer da
 *Reference solution for **Daily Temperatures** (`stack_monotonic/2`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(n) space
+# Idea: Monotonic (decreasing) stack: 'next greater element'
 def daily_temperatures(temperatures):
     ans = [0] * len(temperatures)
-    stack = []                                   # indices, temperatures decreasing
+    stack = []  # indices, temperatures decreasing
     for i, t in enumerate(temperatures):
         while stack and temperatures[stack[-1]] < t:
             j = stack.pop()
@@ -71,6 +73,8 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
 | `stack_monotonic/1` | Easy | Valid Parentheses | [#20](https://leetcode.com/problems/valid-parentheses/) | Stack (LIFO matching of nested structure) |
+| `stack_monotonic/11` | Easy | Next Greater Element I | [#496](https://leetcode.com/problems/next-greater-element-i/) | Monotonic decreasing stack + lookup dict |
+| `stack_monotonic/12` | Easy | Remove All Adjacent Duplicates In String | [#1047](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/) | Stack as a self-cancelling accumulator |
 | `stack_monotonic/2` | Medium | Daily Temperatures | [#739](https://leetcode.com/problems/daily-temperatures/) | Monotonic (decreasing) stack: 'next greater element' |
 | `stack_monotonic/5` | Medium | Evaluate Reverse Polish Notation | [#150](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack evaluation (operands wait for their operator) |
 | `stack_monotonic/6` | Medium | Decode String | [#394](https://leetcode.com/problems/decode-string/) | Stack of contexts for nested structures |
@@ -78,6 +82,11 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/8` | Medium | Asteroid Collision | [#735](https://leetcode.com/problems/asteroid-collision/) | Stack simulation (chain reactions) |
 | `stack_monotonic/9` | Medium | Remove K Digits | [#402](https://leetcode.com/problems/remove-k-digits/) | Monotonic (increasing) stack - greedy removal |
 | `stack_monotonic/10` | Medium | Next Greater Element II | [#503](https://leetcode.com/problems/next-greater-element-ii/) | Monotonic stack + doubled traversal for circular arrays |
+| `stack_monotonic/13` | Medium | Validate Stack Sequences | [#946](https://leetcode.com/problems/validate-stack-sequences/) | Simulate with a stack (greedy pop whenever possible) |
+| `stack_monotonic/14` | Medium | Simplify Path | [#71](https://leetcode.com/problems/simplify-path/) | Stack of path components |
+| `stack_monotonic/15` | Medium | Basic Calculator II | [#227](https://leetcode.com/problems/basic-calculator-ii/) | Stack of terms (resolve * and / immediately, sum the rest) |
+| `stack_monotonic/16` | Medium | 132 Pattern | [#456](https://leetcode.com/problems/132-pattern/) | Right-to-left monotonic stack keeping the best '2' |
+| `stack_monotonic/17` | Medium | Remove Duplicate Letters | [#316](https://leetcode.com/problems/remove-duplicate-letters/) | Monotonic stack with 'can I drop it' (last-occurrence) guard |
 | `stack_monotonic/3` | Hard | Largest Rectangle in Histogram | [#84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic (increasing) stack: nearest smaller element on both sides |
 | `stack_monotonic/4` | Hard | Sliding Window Maximum | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Monotonic deque (decreasing) over a sliding window |
 

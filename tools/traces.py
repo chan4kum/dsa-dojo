@@ -3,14 +3,14 @@
 Every table is produced by RUNNING an instrumented copy of the algorithm, so a trace can never
 disagree with the real behaviour. build_notes.py swaps  {{trace:name}}  in the note sources for these.
 """
-import bisect
+
 import heapq
 import sys
 from collections import OrderedDict, deque
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from core import ListNode, list_to_ll, list_to_tree  # noqa: E402
+from core import list_to_ll, list_to_tree  # noqa: E402
 
 TRACES = {}
 
@@ -19,11 +19,14 @@ def trace(name):
     def deco(f):
         TRACES[name] = f
         return f
+
     return deco
 
 
 def table(headers, rows):
-    esc = lambda c: str(c).replace("|", "\\|")
+    def esc(c):
+        return str(c).replace("|", "\\|")
+
     out = ["| " + " | ".join(esc(h) for h in headers) + " |", "|" + "|".join("---" for _ in headers) + "|"]
     out += ["| " + " | ".join(esc(c) for c in r) + " |" for r in rows]
     return "\n".join(out)
@@ -36,10 +39,19 @@ def block(lines):
 @trace("growth")
 def _():
     import math
+
     rows = []
     for n in (10, 100, 1000, 10_000, 100_000, 1_000_000):
-        rows.append([f"{n:,}", f"{math.log2(n):.0f}", f"{n:,}", f"{int(n * math.log2(n)):,}", f"{n * n:,}",
-                     f"{2 ** n:,}" if n <= 20 else f"about 10^{int(n * math.log10(2))}"])
+        rows.append(
+            [
+                f"{n:,}",
+                f"{math.log2(n):.0f}",
+                f"{n:,}",
+                f"{int(n * math.log2(n)):,}",
+                f"{n * n:,}",
+                f"{2**n:,}" if n <= 20 else f"about 10^{int(n * math.log10(2))}",
+            ]
+        )
     return table(["n", "log2 n", "n", "n log n", "n^2", "2^n"], rows)
 
 
@@ -54,7 +66,9 @@ def _():
         if hit:
             break
         seen[x] = i
-    return f"`nums = {nums}`, `target = {target}`\n\n" + table(["i", "x", "need = target - x", "seen (before)", "action"], rows)
+    return f"`nums = {nums}`, `target = {target}`\n\n" + table(
+        ["i", "x", "need = target - x", "seen (before)", "action"], rows
+    )
 
 
 @trace("prefix_hash")
@@ -68,21 +82,22 @@ def _():
         ans += add
         seen[pref] = seen.get(pref, 0) + 1
         rows.append([x, pref, need, add, ans, dict(seen)])
-    return (f"`nums = {nums}`, `k = {k}`; start with `seen = {{0: 1}}` (the empty prefix)\n\n"
-            + table(["x", "prefix", "need = prefix - k", "subarrays ending here", "ans", "seen after"], rows))
+    return f"`nums = {nums}`, `k = {k}`; start with `seen = {{0: 1}}` (the empty prefix)\n\n" + table(
+        ["x", "prefix", "need = prefix - k", "subarrays ending here", "ans", "seen after"], rows
+    )
 
 
 @trace("container")
 def _():
     h = [1, 8, 6, 2, 5, 4, 8, 3, 7]
-    l, r, best, rows = 0, len(h) - 1, 0, []
-    while l < r:
-        area = (r - l) * min(h[l], h[r])
+    left, r, best, rows = 0, len(h) - 1, 0, []
+    while left < r:
+        area = (r - left) * min(h[left], h[r])
         best = max(best, area)
-        move = "l += 1 (left is shorter)" if h[l] < h[r] else "r -= 1"
-        rows.append([l, r, h[l], h[r], f"{r - l} x {min(h[l], h[r])} = {area}", best, move])
-        if h[l] < h[r]:
-            l += 1
+        move = "l += 1 (left is shorter)" if h[left] < h[r] else "r -= 1"
+        rows.append([left, r, h[left], h[r], f"{r - left} x {min(h[left], h[r])} = {area}", best, move])
+        if h[left] < h[r]:
+            left += 1
         else:
             r -= 1
     return f"`height = {h}`\n\n" + table(["l", "r", "h[l]", "h[r]", "area", "best", "move"], rows)
@@ -91,16 +106,16 @@ def _():
 @trace("window_unique")
 def _():
     s = "abcabcbb"
-    last, l, best, rows = {}, 0, 0, []
+    last, left, best, rows = {}, 0, 0, []
     for r, c in enumerate(s):
         note = "-"
-        if c in last and last[c] >= l:
+        if c in last and last[c] >= left:
             note = f"'{c}' last seen at {last[c]} (inside window) -> l = {last[c] + 1}"
-            l = last[c] + 1
+            left = last[c] + 1
         last[c] = r
-        best = max(best, r - l + 1)
-        rows.append([r, c, note, l, repr(s[l:r + 1]), best])
-    return f"`s = \"{s}\"`\n\n" + table(["r", "s[r]", "what happened", "l", "window", "best"], rows)
+        best = max(best, r - left + 1)
+        rows.append([r, c, note, left, repr(s[left : r + 1]), best])
+    return f'`s = "{s}"`\n\n' + table(["r", "s[r]", "what happened", "l", "window", "best"], rows)
 
 
 @trace("kadane")
@@ -126,8 +141,11 @@ def _():
             a[i], a[j] = a[j], a[i]
             rows.append([i, f"swap positions {i} and {j}", list(a)])
     ans = next((i + 1 for i in range(n) if a[i] != i + 1), n + 1)
-    return (f"`nums = [3, 4, -1, 1]`; value v belongs at index v-1\n\n" + table(["i", "action", "array after"], rows)
-            + f"\n\nFinal scan: first index where `a[i] != i+1` is the answer -> **{ans}**.")
+    return (
+        "`nums = [3, 4, -1, 1]`; value v belongs at index v-1\n\n"
+        + table(["i", "action", "array after"], rows)
+        + f"\n\nFinal scan: first index where `a[i] != i+1` is the answer -> **{ans}**."
+    )
 
 
 @trace("binary_search")
@@ -161,8 +179,11 @@ def _():
             hi = mid
         else:
             lo = mid + 1
-    return (f"`piles = {piles}`, `h = {h}`; predicate: *can she finish at speed `mid`?*\n\n"
-            + table(["lo", "hi", "mid", "hours needed", "hours <= h ?"], rows) + f"\n\nAnswer: **{lo}**")
+    return (
+        f"`piles = {piles}`, `h = {h}`; predicate: *can she finish at speed `mid`?*\n\n"
+        + table(["lo", "hi", "mid", "hours needed", "hours <= h ?"], rows)
+        + f"\n\nAnswer: **{lo}**"
+    )
 
 
 @trace("mono_stack")
@@ -177,22 +198,32 @@ def _():
             popped.append(f"day {j} waited {i - j}")
         st.append(i)
         rows.append([i, x, ", ".join(popped) or "-", [f"{j}:{t[j]}" for j in st]])
-    return (f"`temperatures = {t}`\n\n" + table(["i", "temp", "resolved (popped)", "stack (index:temp)"], rows)
-            + f"\n\nAnswer: `{ans}` (days left on the stack never see a warmer day -> 0).")
+    return (
+        f"`temperatures = {t}`\n\n"
+        + table(["i", "temp", "resolved (popped)", "stack (index:temp)"], rows)
+        + f"\n\nAnswer: `{ans}` (days left on the stack never see a warmer day -> 0)."
+    )
 
 
 @trace("reverse_ll")
 def _():
     head = list_to_ll([1, 2, 3])
     prev, cur, rows, step = None, head, [], 0
-    fmt = lambda n: "None" if n is None else str(n.val)
+
+    def fmt(n):
+        return "None" if n is None else str(n.val)
+
     while cur:
         nxt = cur.next
         cur.next = prev
         step += 1
         rows.append([step, fmt(prev), fmt(cur), fmt(nxt), f"{cur.val}.next now -> {fmt(prev)}"])
         prev, cur = cur, nxt
-    return "`1 -> 2 -> 3`\n\n" + table(["step", "prev", "cur", "nxt (saved)", "re-wire"], rows) + "\n\nReturn `prev` = 3 -> 2 -> 1."
+    return (
+        "`1 -> 2 -> 3`\n\n"
+        + table(["step", "prev", "cur", "nxt (saved)", "re-wire"], rows)
+        + "\n\nReturn `prev` = 3 -> 2 -> 1."
+    )
 
 
 @trace("floyd")
@@ -210,8 +241,11 @@ def _():
     while slow != fast:
         slow, fast = nums[slow], nums[fast]
         rows.append(["phase 2", slow, fast])
-    return (f"`nums = {nums}`; edges: i -> nums[i]  (0->1, 1->3, 2->4, 3->2, 4->2: the cycle is 2->4->2)\n\n"
-            + table(["phase", "slow", "fast"], rows) + f"\n\nThey meet at **{slow}** = the duplicate.")
+    return (
+        f"`nums = {nums}`; edges: i -> nums[i]  (0->1, 1->3, 2->4, 3->2, 4->2: the cycle is 2->4->2)\n\n"
+        + table(["phase", "slow", "fast"], rows)
+        + f"\n\nThey meet at **{slow}** = the duplicate."
+    )
 
 
 @trace("merge_intervals")
@@ -255,8 +289,11 @@ def _():
         if len(h) > k:
             ev = f"pop smallest = {heapq.heappop(h)}"
         rows.append([x, ev, list(h)])
-    return (f"`nums = {nums}`, `k = {k}` (min-heap of the k largest so far)\n\n" + table(["x", "eviction", "heap after"], rows)
-            + f"\n\nRoot `{h[0]}` is the {k}-nd largest.")
+    return (
+        f"`nums = {nums}`, `k = {k}` (min-heap of the k largest so far)\n\n"
+        + table(["x", "eviction", "heap after"], rows)
+        + f"\n\nRoot `{h[0]}` is the {k}-nd largest."
+    )
 
 
 @trace("tree_path")
@@ -267,15 +304,28 @@ def _():
     def gain(n):
         if not n:
             return 0
-        l, r = max(gain(n.left), 0), max(gain(n.right), 0)
-        bend = n.val + l + r
+        left, r = max(gain(n.left), 0), max(gain(n.right), 0)
+        bend = n.val + left + r
         best[0] = max(best[0], bend)
-        rows.append([n.val, l, r, bend, n.val + max(l, r), best[0]])
-        return n.val + max(l, r)
+        rows.append([n.val, left, r, bend, n.val + max(left, r), best[0]])
+        return n.val + max(left, r)
+
     gain(root)
-    return ("Tree `[-10, 9, 20, null, null, 15, 7]` (post-order: children are finished before their parent)\n\n"
-            + table(["node", "left gain (>=0)", "right gain (>=0)", "bend here = val+l+r", "returned upward = val+max(l,r)", "best so far"], rows)
-            + f"\n\nAnswer: **{best[0]}** (path 15 -> 20 -> 7; the root -10 would only hurt).")
+    return (
+        "Tree `[-10, 9, 20, null, null, 15, 7]` (post-order: children are finished before their parent)\n\n"
+        + table(
+            [
+                "node",
+                "left gain (>=0)",
+                "right gain (>=0)",
+                "bend here = val+l+r",
+                "returned upward = val+max(l,r)",
+                "best so far",
+            ],
+            rows,
+        )
+        + f"\n\nAnswer: **{best[0]}** (path 15 -> 20 -> 7; the root -10 would only hurt)."
+    )
 
 
 @trace("subsets_tree")
@@ -293,6 +343,7 @@ def _():
         path.pop()
         lines.append(f"{pad}go({i}) path={path}: skip {nums[i]}")
         go(i + 1, d + 1)
+
     go(0, 0)
     return "`nums = [1, 2, 3]` - read top to bottom; indentation = recursion depth\n\n" + block(lines)
 
@@ -307,7 +358,10 @@ def _():
                 q.append((r, c))
             elif g[r][c] == 1:
                 fresh += 1
-    show = lambda m: ["".join(".12"[v] for v in row) for row in g]
+
+    def show(m):
+        return ["".join(".12"[v] for v in row) for row in g]
+
     lines = ["minute 0:   " + "  ".join(show(0)) + f"   fresh={fresh}"]
     minute = 0
     while q and fresh:
@@ -320,7 +374,11 @@ def _():
                     q.append((nx, ny))
         minute += 1
         lines.append(f"minute {minute}:   " + "  ".join(show(0)) + f"   fresh={fresh}")
-    return "`.` empty, `1` fresh, `2` rotten - each row of the grid shown side by side\n\n" + block(lines) + f"\n\nAnswer: **{minute}** minutes."
+    return (
+        "`.` empty, `1` fresh, `2` rotten - each row of the grid shown side by side\n\n"
+        + block(lines)
+        + f"\n\nAnswer: **{minute}** minutes."
+    )
 
 
 @trace("dijkstra")
@@ -339,8 +397,11 @@ def _():
                 heapq.heappush(heap, (d + w, v))
                 pushed.append(f"({d + w}, {v})")
         rows.append([f"({d}, {u})", f"settle {u} at {d}", ", ".join(pushed) or "-"])
-    return ("Edges: 1->2 (1), 1->3 (4), 2->3 (2), 2->4 (6), 3->4 (3); source 1\n\n"
-            + table(["heap pop (dist, node)", "action", "pushed"], rows) + f"\n\nFinal distances: `{dist}`")
+    return (
+        "Edges: 1->2 (1), 1->3 (4), 2->3 (2), 2->4 (6), 3->4 (3); source 1\n\n"
+        + table(["heap pop (dist, node)", "action", "pushed"], rows)
+        + f"\n\nFinal distances: `{dist}`"
+    )
 
 
 @trace("dsu")
@@ -353,11 +414,14 @@ def _():
             parent[x] = parent[parent[x]]
             x = parent[x]
         return x
+
     rows = []
     for u, v in edges:
         ru, rv = find(u), find(v)
         if ru == rv:
-            rows.append([[u, v], f"find({u})={ru} == find({v})={rv}", "SAME component -> this edge closes a cycle", parent[1:]])
+            rows.append(
+                [[u, v], f"find({u})={ru} == find({v})={rv}", "SAME component -> this edge closes a cycle", parent[1:]]
+            )
         else:
             parent[ru] = rv
             rows.append([[u, v], f"find({u})={ru}, find({v})={rv}", f"union: parent[{ru}] = {rv}", parent[1:]])
@@ -382,8 +446,11 @@ def _():
             if indeg[v] == 0:
                 q.append(v)
         rows.append([f"pop {u}", order[:], indeg[:], list(q)])
-    return ("Edges (b -> a): 0->1, 0->2, 1->3, 2->3\n\n" + table(["step", "order so far", "in-degree [0..3]", "queue"], rows)
-            + f"\n\nAll {n} nodes processed -> no cycle; a valid order is `{order}`.")
+    return (
+        "Edges (b -> a): 0->1, 0->2, 1->3, 2->3\n\n"
+        + table(["step", "order so far", "in-degree [0..3]", "queue"], rows)
+        + f"\n\nAll {n} nodes processed -> no cycle; a valid order is `{order}`."
+    )
 
 
 @trace("coin_dp")
@@ -399,10 +466,15 @@ def _():
     while a:
         used.append(last[a])
         a -= last[a]
-    return (f"`coins = {coins}`, `amount = {amt}`\n\n"
-            + table(["amount a"] + list(range(amt + 1)), [["dp[a] (fewest coins)"] + dp, ["last coin used"] + ["-"] + last[1:]])
-            + f"\n\nRead it back: dp[{amt}] = {dp[amt]}. Follow 'last coin used' from {amt} downwards: "
-            + " then ".join(map(str, used)) + f" -> coins {sorted(used, reverse=True)}.")
+    return (
+        f"`coins = {coins}`, `amount = {amt}`\n\n"
+        + table(
+            ["amount a"] + list(range(amt + 1)), [["dp[a] (fewest coins)"] + dp, ["last coin used"] + ["-"] + last[1:]]
+        )
+        + f"\n\nRead it back: dp[{amt}] = {dp[amt]}. Follow 'last coin used' from {amt} downwards: "
+        + " then ".join(map(str, used))
+        + f" -> coins {sorted(used, reverse=True)}."
+    )
 
 
 @trace("lcs_dp")
@@ -414,9 +486,11 @@ def _():
         for j in range(1, n + 1):
             dp[i][j] = dp[i - 1][j - 1] + 1 if a[i - 1] == b[j - 1] else max(dp[i - 1][j], dp[i][j - 1])
     rows = [[f"{a[i - 1] if i else ''} (i={i})"] + dp[i] for i in range(m + 1)]
-    return (f'`text1 = "{a}"` (rows), `text2 = "{b}"` (columns)\n\n'
-            + table(["", "''"] + [f"{b[j - 1]}" for j in range(1, n + 1)], rows)
-            + "\n\nMatch -> take the diagonal + 1; otherwise the max of up / left. Answer is the bottom-right cell.")
+    return (
+        f'`text1 = "{a}"` (rows), `text2 = "{b}"` (columns)\n\n'
+        + table(["", "''"] + [f"{b[j - 1]}" for j in range(1, n + 1)], rows)
+        + "\n\nMatch -> take the diagonal + 1; otherwise the max of up / left. Answer is the bottom-right cell."
+    )
 
 
 @trace("bits")
@@ -429,8 +503,15 @@ def _():
     bits = [0] * 9
     for i in range(1, 9):
         bits[i] = bits[i >> 1] + (i & 1)
-    b = table(["i"] + list(range(9)), [["binary"] + [format(i, "04b") for i in range(9)], ["bits[i>>1] + (i&1)"] + bits])
-    return "**XOR cancels pairs** (`[4,1,2,1,2]`):\n\n" + a + "\n\n**Counting bits** (`bits[i] = bits[i>>1] + (i & 1)`):\n\n" + b
+    b = table(
+        ["i"] + list(range(9)), [["binary"] + [format(i, "04b") for i in range(9)], ["bits[i>>1] + (i&1)"] + bits]
+    )
+    return (
+        "**XOR cancels pairs** (`[4,1,2,1,2]`):\n\n"
+        + a
+        + "\n\n**Counting bits** (`bits[i] = bits[i>>1] + (i & 1)`):\n\n"
+        + b
+    )
 
 
 @trace("prefix_fn")
@@ -446,7 +527,9 @@ def _():
             k += 1
         pi[i] = k
         rows.append([i, s[i], ("fell back from " + " -> ".join(map(str, chain))) if chain else "-", k])
-    return f'`s = "{s}"`; pi[i] = length of the longest proper prefix of s[:i+1] that is also a suffix\n\n' + table(["i", "s[i]", "fallback", "pi[i]"], rows)
+    return f'`s = "{s}"`; pi[i] = length of the longest proper prefix of s[:i+1] that is also a suffix\n\n' + table(
+        ["i", "s[i]", "fallback", "pi[i]"], rows
+    )
 
 
 @trace("lru")
@@ -466,7 +549,12 @@ def _():
         if k in d:
             d.move_to_end(k)
         rows.append([f"get({k})", list(d.items()), f"-> {d[k]}" if k in d else "-> -1"])
-    put(1, 1); put(2, 2); get(1); put(3, 3); get(2)
+
+    put(1, 1)
+    put(2, 2)
+    get(1)
+    put(3, 3)
+    get(2)
     return "capacity 2; list shown **least recent -> most recent**\n\n" + table(["op", "cache state", "note"], rows)
 
 
@@ -480,16 +568,19 @@ def _():
             return a
         mid = len(a) // 2
         lines.append(f"{pad}split {a} -> {a[:mid]} | {a[mid:]}")
-        l, r = sort(a[:mid], d + 1), sort(a[mid:], d + 1)
+        left, r = sort(a[:mid], d + 1), sort(a[mid:], d + 1)
         out, i, j = [], 0, 0
-        while i < len(l) and j < len(r):
-            if l[i] <= r[j]:
-                out.append(l[i]); i += 1
+        while i < len(left) and j < len(r):
+            if left[i] <= r[j]:
+                out.append(left[i])
+                i += 1
             else:
-                out.append(r[j]); j += 1
-        out += l[i:] + r[j:]
-        lines.append(f"{pad}merge {l} + {r} -> {out}")
+                out.append(r[j])
+                j += 1
+        out += left[i:] + r[j:]
+        lines.append(f"{pad}merge {left} + {r} -> {out}")
         return out
+
     sort([5, 2, 4, 1, 3])
     return block(lines)
 

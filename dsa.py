@@ -12,6 +12,7 @@
 
 Your progress lives in .progress.json (git-ignored).
 """
+
 import argparse
 import importlib
 import json
@@ -29,29 +30,40 @@ WORKSPACE = ROOT / "workspace"
 
 # Concept order: each topic only needs ideas from the ones before it.
 TOPICS = [
-    "hashing", "prefix_sums", "two_pointers", "sliding_window", "array_tricks",
-    "binary_search", "stack_monotonic", "linked_list", "intervals", "greedy",
-    "heap", "trees", "backtracking", "graphs", "dynamic_programming",
-    "bits_math", "strings", "design", "divide_conquer", "matrix",
+    "hashing",
+    "prefix_sums",
+    "two_pointers",
+    "sliding_window",
+    "array_tricks",
+    "binary_search",
+    "stack_monotonic",
+    "linked_list",
+    "intervals",
+    "greedy",
+    "heap",
+    "trees",
+    "backtracking",
+    "graphs",
+    "dynamic_programming",
+    "bits_math",
+    "strings",
+    "design",
+    "divide_conquer",
+    "matrix",
 ]
 DIFF = {"E": "Easy", "M": "Medium", "H": "Hard"}
 
 
 def load(topic):
-    """Base problems + optional problems/<topic>_more.py + brute-force solutions from problems/_brute.py."""
+    """Load a topic: the base file plus its `_more*` batches. Every problem carries its own brute force and cost."""
     probs = list(importlib.import_module(f"problems.{topic}").PROBLEMS)
-    try:
-        probs += importlib.import_module(f"problems.{topic}_more").PROBLEMS
-    except ModuleNotFoundError as e:
-        if e.name != f"problems.{topic}_more":
-            raise
-    from problems._brute import BRUTE, CX
-    for i, p in enumerate(probs, 1):
-        b = BRUTE.get(f"{topic}/{i}")
-        if b and "brute" not in p:
-            p["brute"], p["brute_cx"] = b
-        if f"{topic}/{i}" in CX and "cx" not in p:
-            p["cx"] = CX[f"{topic}/{i}"]
+    for suffix in ("_more", "_more2", "_more3", "_more4"):
+        name = f"problems.{topic}{suffix}"
+        try:
+            probs += importlib.import_module(name).PROBLEMS
+        except ModuleNotFoundError as e:
+            if e.name != name:
+                raise
     return probs
 
 
@@ -86,7 +98,7 @@ def icon(rec):
     if rec.get("solved") and not rec.get("peeked"):
         return "[x]"
     if rec.get("solved"):
-        return "[~]"   # solved, but after peeking at the solution -> redo later
+        return "[~]"  # solved, but after peeking at the solution -> redo later
     if rec.get("peeked"):
         return "[?]"
     return "[.]"
@@ -116,7 +128,10 @@ def cmd_list(args):
     probs = load(args.topic)
     print(f"\n{args.topic}\n")
     for n, p in by_difficulty(probs):
-        print(f"  {icon(pr.get(f'{args.topic}/{n}'))} {args.topic}/{n:<3} {DIFF[p['diff']]:<7} LC#{p['lc']:<5} {p['title']}")
+        print(
+            f"  {icon(pr.get(f'{args.topic}/{n}'))} {args.topic}/{n:<3} {DIFF[p['diff']]:<7} "
+            f"LC#{p['lc']:<5} {p['title']}"
+        )
     print()
 
 
@@ -124,7 +139,7 @@ def cmd_notes(args):
     if args.topic not in TOPICS:
         sys.exit("Unknown topic. See: python dsa.py list")
     f = ROOT / "notes" / f"{TOPICS.index(args.topic) + 1:02d}-{args.topic}.md"
-    print(f.read_text(encoding="utf-8") if f.exists() else f"(notes not generated yet: run python tools/build_notes.py)")
+    print(f.read_text(encoding="utf-8") if f.exists() else "(notes not generated yet: run python tools/build_notes.py)")
 
 
 def cmd_start(args):
@@ -134,9 +149,9 @@ def cmd_start(args):
     if path.exists():
         print(f"Already exists: {path}  (delete it to start from a blank file)")
         return
-    prompt = "\n".join("# " + l for l in textwrap.wrap(p["prompt"], 92))
+    prompt = "\n".join("# " + left for left in textwrap.wrap(p["prompt"], 92))
     sig = textwrap.dedent(p["sig"]).strip("\n")
-    stub = f'''# PROBLEM: {topic}/{n}
+    stub = f"""# PROBLEM: {topic}/{n}
 # {p["title"]}  ({DIFF[p["diff"]]})   LeetCode #{p["lc"]}   {url(p)}
 #
 {prompt}
@@ -156,13 +171,15 @@ from core import *   # List, Optional, ListNode, TreeNode, heapq, deque, Counter
 if __name__ == "__main__":
     from dsa import run_file
     run_file(__file__)
-'''
+"""
     path.write_text(stub, encoding="utf-8")
     pr = progress()
     pr.setdefault(args.id, {})["started"] = True
     save(pr)
-    print(f"Created {path.relative_to(ROOT)}\nSolve it, then run:  python {path.relative_to(ROOT)}\n"
-          f"Stuck? python dsa.py hint {args.id}")
+    print(
+        f"Created {path.relative_to(ROOT)}\nSolve it, then run:  python {path.relative_to(ROOT)}\n"
+        f"Stuck? python dsa.py hint {args.id}"
+    )
 
 
 def run_file(file):
@@ -213,7 +230,9 @@ def cmd_hint(args):
         print(f"\nHint {k + 1}/{len(hints)}: {hints[k]}\n")
         rec["hints"] = k + 1
     else:
-        print(f"\nNo more hints. The pattern is: {p['pattern']}\nRead: notes/{TOPICS.index(topic) + 1:02d}-{topic}.md\n")
+        print(
+            f"\nNo more hints. The pattern is: {p['pattern']}\nRead: notes/{TOPICS.index(topic) + 1:02d}-{topic}.md\n"
+        )
     save(pr)
 
 
@@ -222,8 +241,14 @@ def cmd_solution(args):
     print(f"\n{p['title']}  ({DIFF[p['diff']]})  {url(p)}\n\nPattern: {p['pattern']}\n")
     print(textwrap.dedent(p["explain"]).strip(), "\n")
     if p.get("brute"):
-        print(f"BRUTE FORCE  ({p.get('brute_cx', '')})\n```python\n" + textwrap.dedent(p["brute"]).strip("\n") + "\n```\n")
-    print(f"OPTIMISED  ({p.get('cx', 'see explanation')})\n```python\n" + textwrap.dedent(p["solution"]).strip("\n") + "\n```\n")
+        print(
+            f"BRUTE FORCE  ({p.get('brute_cx', '')})\n```python\n" + textwrap.dedent(p["brute"]).strip("\n") + "\n```\n"
+        )
+    print(
+        f"OPTIMISED  ({p.get('cx', 'see explanation')})\n```python\n"
+        + textwrap.dedent(p["solution"]).strip("\n")
+        + "\n```\n"
+    )
     pr = progress()
     pr.setdefault(args.id, {})["peeked"] = True
     save(pr)
@@ -243,10 +268,10 @@ def cmd_review(args):
     print()
 
 
-
 def cmd_quiz(args):
-    """Pattern-recognition drill: read a problem, name the pattern BEFORE seeing it. Spot-the-pattern is the #1 interview skill."""
+    """Pattern drill: read a problem, name the pattern BEFORE seeing it (the #1 interview skill)."""
     import random
+
     pool = []
     pr = progress()
     for t in TOPICS:
@@ -265,7 +290,12 @@ def cmd_quiz(args):
         print(textwrap.fill(p["prompt"], 72))
         print("=" * 72)
         if interactive:
-            input("1) Which PATTERN does this smell like?  2) Brute-force cost?  3) Target cost?   (think / write it, then press Enter) ")
+            input(
+                (
+                    "1) Which PATTERN does this smell like?  2) Brute-force cost?  3) Target cost?   (think / write "
+                    "it, then press Enter) "
+                )
+            )
         print(f"PATTERN : {p['pattern']}")
         if p.get("brute_cx"):
             print(f"BRUTE   : {p['brute_cx']}")
@@ -276,17 +306,22 @@ def cmd_quiz(args):
             got = input("Did you name the pattern (y/n)? ").strip().lower() == "y"
             score += got
             if not got:
-                pr.setdefault(key, {})["peeked"] = True      # goes into `review`
+                pr.setdefault(key, {})["peeked"] = True  # goes into `review`
         print()
     if interactive:
         save(pr)
-        print(f"Pattern recognition: {score}/{min(args.count, len(pool))}. Missed ones were added to `python dsa.py review`.")
+        print(
+            f"Pattern recognition: {score}/{min(args.count, len(pool))}. "
+            "Missed ones were added to `python dsa.py review`."
+        )
 
 
 def cmd_coverage(args):
     sys.path.insert(0, str(ROOT / "tools"))
     import coverage
+
     print(coverage.render())
+
 
 def cmd_selftest(args):
     bad = 0
@@ -296,8 +331,23 @@ def cmd_selftest(args):
     for t in TOPICS:
         for n, p in enumerate(load(t), 1):
             count += 1
-            problems = [f for f in ("title", "diff", "lc", "slug", "prompt", "sig", "tests", "hints",
-                                    "pattern", "explain", "solution") if f not in p]
+            problems = [
+                f
+                for f in (
+                    "title",
+                    "diff",
+                    "lc",
+                    "slug",
+                    "prompt",
+                    "sig",
+                    "tests",
+                    "hints",
+                    "pattern",
+                    "explain",
+                    "solution",
+                )
+                if f not in p
+            ]
             if problems:
                 print(f"{t}/{n}: missing fields {problems}")
                 bad += 1
@@ -317,31 +367,53 @@ def cmd_selftest(args):
             if p.get("brute"):
                 st = {}
                 bp, bt = run_problem(p, textwrap.dedent(p["brute"]), verbose=False, timeout=1.0, stats=st)
-                if bp + st["timeouts"] != bt:      # brute may be too slow on big tests, but must never be WRONG
+                if bp + st["timeouts"] != bt:  # brute may be too slow on big tests, but must never be WRONG
                     print(f"BRUTE WRONG {t}/{n} {p['title']}: {bp}/{bt} (timeouts {st['timeouts']})")
                     run_problem(p, textwrap.dedent(p["brute"]), verbose=True, timeout=1.0)
                     bad += 1
                 brutes += 1
             else:
                 missing_brute.append(f"{t}/{n}")
-    print(f"\nselftest: {count - bad}/{count} problems OK; {brutes} with a verified brute force"
-          + (f"; no brute yet: {len(missing_brute)}" if missing_brute else ""))
+    print(
+        f"\nselftest: {count - bad}/{count} problems OK; {brutes} with a verified brute force"
+        + (f"; no brute yet: {len(missing_brute)}" if missing_brute else "")
+    )
     sys.exit(1 if bad else 0)
 
 
 def main():
-    ap = argparse.ArgumentParser(prog="dsa.py", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        prog="dsa.py", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     sub = ap.add_subparsers(dest="cmd", required=True)
-    s = sub.add_parser("list"); s.add_argument("topic", nargs="?"); s.set_defaults(f=cmd_list)
-    s = sub.add_parser("notes"); s.add_argument("topic"); s.set_defaults(f=cmd_notes)
-    s = sub.add_parser("start"); s.add_argument("id"); s.set_defaults(f=cmd_start)
-    s = sub.add_parser("test"); s.add_argument("target"); s.set_defaults(f=cmd_test)
-    s = sub.add_parser("hint"); s.add_argument("id"); s.set_defaults(f=cmd_hint)
-    s = sub.add_parser("solution"); s.add_argument("id"); s.set_defaults(f=cmd_solution)
-    s = sub.add_parser("review"); s.set_defaults(f=cmd_review)
-    s = sub.add_parser("quiz"); s.add_argument("count", nargs="?", type=int, default=5); s.add_argument("--topic"); s.set_defaults(f=cmd_quiz)
-    s = sub.add_parser("coverage"); s.set_defaults(f=cmd_coverage)
-    s = sub.add_parser("selftest"); s.set_defaults(f=cmd_selftest)
+    s = sub.add_parser("list")
+    s.add_argument("topic", nargs="?")
+    s.set_defaults(f=cmd_list)
+    s = sub.add_parser("notes")
+    s.add_argument("topic")
+    s.set_defaults(f=cmd_notes)
+    s = sub.add_parser("start")
+    s.add_argument("id")
+    s.set_defaults(f=cmd_start)
+    s = sub.add_parser("test")
+    s.add_argument("target")
+    s.set_defaults(f=cmd_test)
+    s = sub.add_parser("hint")
+    s.add_argument("id")
+    s.set_defaults(f=cmd_hint)
+    s = sub.add_parser("solution")
+    s.add_argument("id")
+    s.set_defaults(f=cmd_solution)
+    s = sub.add_parser("review")
+    s.set_defaults(f=cmd_review)
+    s = sub.add_parser("quiz")
+    s.add_argument("count", nargs="?", type=int, default=5)
+    s.add_argument("--topic")
+    s.set_defaults(f=cmd_quiz)
+    s = sub.add_parser("coverage")
+    s.set_defaults(f=cmd_coverage)
+    s = sub.add_parser("selftest")
+    s.set_defaults(f=cmd_selftest)
     a = ap.parse_args()
     a.f(a)
 

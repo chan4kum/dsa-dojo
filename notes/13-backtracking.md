@@ -54,16 +54,20 @@ go(0) path=[]: skip 1
 *Reference solution for **Subsets** (`backtracking/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n * 2^n) time
+# Idea: Backtracking: include/exclude decision tree (choose -> explore -> un-choose)
 def subsets(nums):
     res, path = [], []
+
     def go(i):
         if i == len(nums):
-            res.append(path[:])          # copy!
+            res.append(path[:])  # copy!
             return
-        path.append(nums[i])             # choose
+        path.append(nums[i])  # choose
         go(i + 1)
-        path.pop()                       # un-choose
-        go(i + 1)                        # skip nums[i]
+        path.pop()  # un-choose
+        go(i + 1)  # skip nums[i]
+
     go(0)
     return res
 ```
@@ -100,6 +104,10 @@ Three shapes to memorise:
 | `backtracking/11` | Medium | Word Search | [#79](https://leetcode.com/problems/word-search/) | Grid DFS backtracking with in-place visited marking |
 | `backtracking/12` | Medium | Palindrome Partitioning | [#131](https://leetcode.com/problems/palindrome-partitioning/) | Backtracking over cut positions with a validity check (prune early) |
 | `backtracking/13` | Medium | Restore IP Addresses | [#93](https://leetcode.com/problems/restore-ip-addresses/) | Backtracking with validity constraints and length pruning |
+| `backtracking/14` | Medium | Combination Sum III | [#216](https://leetcode.com/problems/combination-sum-iii/) | Backtracking with increasing start index and pruning |
+| `backtracking/15` | Medium | Letter Case Permutation | [#784](https://leetcode.com/problems/letter-case-permutation/) | Binary decision per position (subset-style backtracking) |
+| `backtracking/16` | Medium | Beautiful Arrangement | [#526](https://leetcode.com/problems/beautiful-arrangement/) | Backtracking with constraint pruning (permutation search) |
+| `backtracking/17` | Medium | Partition to K Equal Sum Subsets | [#698](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/) | Backtracking on bucket assignment with symmetry pruning |
 | `backtracking/5` | Hard | N-Queens | [#51](https://leetcode.com/problems/n-queens/) | Backtracking with O(1) conflict checks via sets (columns, diagonals) |
 
 Start one with `python dsa.py start backtracking/1`.

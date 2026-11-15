@@ -35,13 +35,15 @@
 *Reference solution for **Subarray Sum Equals K** (`prefix_sums/3`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(n) space
+# Idea: Prefix sum + hash map of counts ('how many earlier prefixes equal current - k?')
 def subarray_sum(nums, k):
     seen = defaultdict(int)
-    seen[0] = 1                      # empty prefix
+    seen[0] = 1  # empty prefix
     pref = ans = 0
     for x in nums:
         pref += x
-        ans += seen[pref - k]        # earlier prefixes that make a subarray of sum k ending here
+        ans += seen[pref - k]  # earlier prefixes that make a subarray of sum k ending here
         seen[pref] += 1
     return ans
 ```
@@ -65,6 +67,8 @@ Static range query: `P = [0]; for x in a: P.append(P[-1] + x)` then `P[r+1] - P[
 | `prefix_sums/1` | Easy | Find Pivot Index | [#724](https://leetcode.com/problems/find-pivot-index/) | Prefix sum (running total) with total-minus-left trick |
 | `prefix_sums/2` | Medium | Product of Array Except Self | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / suffix accumulation (prefix idea works for any associative operation) |
 | `prefix_sums/3` | Medium | Subarray Sum Equals K | [#560](https://leetcode.com/problems/subarray-sum-equals-k/) | Prefix sum + hash map of counts ('how many earlier prefixes equal current - k?') |
+| `prefix_sums/4` | Medium | Contiguous Array | [#525](https://leetcode.com/problems/contiguous-array/) | Prefix sum + first-occurrence map (transform 0 -> -1) |
+| `prefix_sums/5` | Medium | Subarray Sums Divisible by K | [#974](https://leetcode.com/problems/subarray-sums-divisible-by-k/) | Prefix sums modulo k (same remainder = divisible difference) |
 
 Start one with `python dsa.py start prefix_sums/1`.
 

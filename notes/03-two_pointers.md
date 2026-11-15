@@ -39,26 +39,28 @@
 *Reference solution for **3Sum** (`two_pointers/2`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n^2) time, O(1) extra space (sort + two pointers)
+# Idea: Sort + fix one element + two pointers on the rest
 def three_sum(nums):
     nums.sort()
     res = []
     n = len(nums)
     for i in range(n - 2):
-        if i and nums[i] == nums[i - 1]:      # skip duplicate anchors
+        if i and nums[i] == nums[i - 1]:  # skip duplicate anchors
             continue
-        l, r = i + 1, n - 1
-        while l < r:
-            s = nums[i] + nums[l] + nums[r]
+        left, right = i + 1, n - 1
+        while left < right:
+            s = nums[i] + nums[left] + nums[right]
             if s < 0:
-                l += 1
+                left += 1
             elif s > 0:
-                r -= 1
+                right -= 1
             else:
-                res.append([nums[i], nums[l], nums[r]])
-                l += 1
-                r -= 1
-                while l < r and nums[l] == nums[l - 1]:
-                    l += 1
+                res.append([nums[i], nums[left], nums[right]])
+                left += 1
+                right -= 1
+                while left < right and nums[left] == nums[left - 1]:
+                    left += 1
     return res
 ```
 
@@ -81,10 +83,13 @@ def three_sum(nums):
 | `two_pointers/7` | Easy | Move Zeroes | [#283](https://leetcode.com/problems/move-zeroes/) | Read/write pointers (partition in place) |
 | `two_pointers/9` | Easy | Merge Sorted Array | [#88](https://leetcode.com/problems/merge-sorted-array/) | Merge from the back (use the free space as a buffer) |
 | `two_pointers/10` | Easy | Valid Palindrome II | [#680](https://leetcode.com/problems/valid-palindrome-ii/) | Two pointers with one allowed skip (branch once) |
+| `two_pointers/11` | Easy | Reverse String | [#344](https://leetcode.com/problems/reverse-string/) | Two pointers from both ends (swap inward) |
 | `two_pointers/2` | Medium | 3Sum | [#15](https://leetcode.com/problems/3sum/) | Sort + fix one element + two pointers on the rest |
 | `two_pointers/3` | Medium | Container With Most Water | [#11](https://leetcode.com/problems/container-with-most-water/) | Two pointers converging, with a greedy discard argument |
 | `two_pointers/5` | Medium | Two Sum II - Input Array Is Sorted | [#167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two pointers on a sorted array (converge from both ends) |
 | `two_pointers/8` | Medium | Sort Colors | [#75](https://leetcode.com/problems/sort-colors/) | Three-way partition (Dutch national flag) with an invariant |
+| `two_pointers/12` | Medium | 3Sum Closest | [#16](https://leetcode.com/problems/3sum-closest/) | Sort + fix one + two pointers (optimise distance) |
+| `two_pointers/13` | Medium | 4Sum | [#18](https://leetcode.com/problems/4sum/) | k-Sum reduction: sort, fix k-2 values, two pointers for the last pair |
 | `two_pointers/4` | Hard | Trapping Rain Water | [#42](https://leetcode.com/problems/trapping-rain-water/) | Two pointers with running maxima (the smaller side decides) |
 
 Start one with `python dsa.py start two_pointers/1`.

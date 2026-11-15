@@ -23,13 +23,15 @@
 *Reference solution for **Rotate Image** (`matrix/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n^2) time, O(1) extra space
+# Idea: Matrix transform = composition of simple transforms (transpose + reverse)
 def rotate(matrix):
     n = len(matrix)
     for r in range(n):
         for c in range(r + 1, n):
-            matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]   # transpose
+            matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]  # transpose
     for row in matrix:
-        row.reverse()                                                  # mirror left-right
+        row.reverse()  # mirror left-right
 ```
 
 Spiral traversal keeps four walls (`top, bottom, left, right`) and shrinks them after each side; the two guards before the bottom and left sides stop double-visiting when a single row or column remains.
@@ -55,11 +57,15 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 ## 8. Practice ladder
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
+| `matrix/8` | Easy | Transpose Matrix | [#867](https://leetcode.com/problems/transpose-matrix/) | Swap the roles of row and column index |
+| `matrix/9` | Easy | Matrix Diagonal Sum | [#1572](https://leetcode.com/problems/matrix-diagonal-sum/) | Index arithmetic: visit only the diagonal cells |
 | `matrix/1` | Medium | Rotate Image | [#48](https://leetcode.com/problems/rotate-image/) | Matrix transform = composition of simple transforms (transpose + reverse) |
 | `matrix/2` | Medium | Spiral Matrix | [#54](https://leetcode.com/problems/spiral-matrix/) | Boundary shrinking simulation |
 | `matrix/3` | Medium | Set Matrix Zeroes | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Two-pass marking (use the input as its own bookkeeping) |
 | `matrix/4` | Medium | Game of Life | [#289](https://leetcode.com/problems/game-of-life/) | Simulation with simultaneous update (copy, or encode old+new state in the cell) |
 | `matrix/5` | Medium | Valid Sudoku | [#36](https://leetcode.com/problems/valid-sudoku/) | Hash sets keyed by row / column / box (index arithmetic) |
+| `matrix/6` | Medium | Search a 2D Matrix II | [#240](https://leetcode.com/problems/search-a-2d-matrix-ii/) | Staircase search from the top-right corner |
+| `matrix/7` | Medium | Spiral Matrix II | [#59](https://leetcode.com/problems/spiral-matrix-ii/) | Shrinking boundaries (layer by layer) |
 
 Start one with `python dsa.py start matrix/1`.
 

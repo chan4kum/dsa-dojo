@@ -3,6 +3,7 @@
 Solution files do `from core import *`, so List, Optional, ListNode, TreeNode,
 heapq, deque, Counter, defaultdict, bisect, math ... are all available.
 """
+
 import bisect
 import collections
 import copy
@@ -21,10 +22,33 @@ from typing import Dict, List, Optional, Set, Tuple
 SKIP = Ellipsis  # in design-problem ops: "call this method, don't check the result"
 
 __all__ = [
-    "bisect", "collections", "copy", "functools", "heapq", "itertools", "math", "random",
-    "Counter", "OrderedDict", "defaultdict", "deque", "lru_cache",
-    "Dict", "List", "Optional", "Set", "Tuple",
-    "ListNode", "TreeNode", "Node", "list_to_ll", "ll_to_list", "list_to_tree", "tree_to_list", "find_node", "SKIP",
+    "bisect",
+    "collections",
+    "copy",
+    "functools",
+    "heapq",
+    "itertools",
+    "math",
+    "random",
+    "Counter",
+    "OrderedDict",
+    "defaultdict",
+    "deque",
+    "lru_cache",
+    "Dict",
+    "List",
+    "Optional",
+    "Set",
+    "Tuple",
+    "ListNode",
+    "TreeNode",
+    "Node",
+    "list_to_ll",
+    "ll_to_list",
+    "list_to_tree",
+    "tree_to_list",
+    "find_node",
+    "SKIP",
 ]
 
 
@@ -37,6 +61,7 @@ class ListNode:
 
 class Node:
     """Graph node for Clone Graph: a value and a list of neighbour nodes."""
+
     def __init__(self, val=0, neighbors=None):
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
@@ -121,8 +146,10 @@ class Timeout(Exception):
 
 def _arm(seconds):
     if hasattr(signal, "SIGALRM"):  # not available on Windows -> no timeout there
+
         def handler(*_):
             raise Timeout()
+
         signal.signal(signal.SIGALRM, handler)
         signal.setitimer(signal.ITIMER_REAL, seconds)
 
@@ -134,7 +161,7 @@ def _disarm():
 
 def base_namespace():
     ns = {name: globals()[name] for name in __all__}
-    ns["__name__"] = "solution"   # so a stub's `if __name__ == "__main__"` block is skipped
+    ns["__name__"] = "solution"  # so a stub's `if __name__ == "__main__"` block is skipped
     ns["__file__"] = __file__
     return ns
 
@@ -146,9 +173,9 @@ def compile_solution(source):
 
 
 def _normalize(x, mode):
-    if mode == "unordered":            # outer order free, inner order matters
+    if mode == "unordered":  # outer order free, inner order matters
         return sorted(x, key=repr)
-    if mode == "nested_unordered":     # both outer and inner order free
+    if mode == "nested_unordered":  # both outer and inner order free
         return sorted((sorted(i, key=repr) for i in x), key=repr)
     return x
 
@@ -203,11 +230,11 @@ def run_problem(p, source, verbose=True, timeout=2.0, stats=None):
                 _arm(timeout)
                 got = ns[p["fn"]](*a)
                 _disarm()
-                if "inplace" in p:                 # function mutates argument #inplace instead of returning
+                if "inplace" in p:  # function mutates argument #inplace instead of returning
                     got = a[p["inplace"]]
                 if "adapt_out" in p:
                     got = p["adapt_out"](got)
-                if "check" in p:                   # several answers are valid -> custom validator
+                if "check" in p:  # several answers are valid -> custom validator
                     ok = bool(p["check"](args, got))
                 else:
                     ok = equal(got, exp, p.get("compare", "exact"))

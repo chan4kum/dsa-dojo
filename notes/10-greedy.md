@@ -48,6 +48,8 @@
 *Reference solution for **Jump Game** (`greedy/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(1) space
+# Idea: Greedy: maintain the farthest reachable frontier
 def can_jump(nums):
     reach = 0
     for i, x in enumerate(nums):
@@ -72,6 +74,7 @@ def can_jump(nums):
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
 | `greedy/6` | Easy | Assign Cookies | [#455](https://leetcode.com/problems/assign-cookies/) | Greedy matching after sorting (smallest sufficient) |
+| `greedy/10` | Easy | Lemonade Change | [#860](https://leetcode.com/problems/lemonade-change/) | Greedy: spend the least flexible bill first |
 | `greedy/1` | Medium | Jump Game | [#55](https://leetcode.com/problems/jump-game/) | Greedy: maintain the farthest reachable frontier |
 | `greedy/2` | Medium | Gas Station | [#134](https://leetcode.com/problems/gas-station/) | Greedy with a 'discard the failed prefix' argument |
 | `greedy/3` | Medium | Partition Labels | [#763](https://leetcode.com/problems/partition-labels/) | Greedy interval extension using last occurrences |
@@ -79,6 +82,8 @@ def can_jump(nums):
 | `greedy/5` | Medium | Jump Game II | [#45](https://leetcode.com/problems/jump-game-ii/) | Greedy BFS over index ranges (implicit layers) |
 | `greedy/7` | Medium | Hand of Straights | [#846](https://leetcode.com/problems/hand-of-straights/) | Greedy from the smallest + frequency map |
 | `greedy/8` | Medium | Valid Parenthesis String | [#678](https://leetcode.com/problems/valid-parenthesis-string/) | Greedy with a range of possible states |
+| `greedy/11` | Medium | Queue Reconstruction by Height | [#406](https://leetcode.com/problems/queue-reconstruction-by-height/) | Greedy insertion order (place the constraint-free ones first) |
+| `greedy/12` | Medium | Wiggle Subsequence | [#376](https://leetcode.com/problems/wiggle-subsequence/) | Greedy: count direction changes (peaks and valleys) |
 | `greedy/9` | Hard | Candy | [#135](https://leetcode.com/problems/candy/) | Two-pass greedy (satisfy left constraints, then right constraints) |
 
 Start one with `python dsa.py start greedy/1`.

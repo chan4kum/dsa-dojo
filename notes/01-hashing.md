@@ -33,10 +33,12 @@
 *Reference solution for **Two Sum** (`hashing/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(n) space
+# Idea: Hash map: trade memory for O(1) 'have I seen the complement?' lookups
 def two_sum(nums, target):
-    seen = {}                      # value -> index
+    seen = {}  # value -> index
     for i, x in enumerate(nums):
-        if target - x in seen:     # complement already seen?
+        if target - x in seen:  # complement already seen?
             return [seen[target - x], i]
         seen[x] = i
     return []
@@ -62,8 +64,13 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/4` | Easy | Contains Duplicate | [#217](https://leetcode.com/problems/contains-duplicate/) | Hash set: O(1) 'seen before?' |
 | `hashing/5` | Easy | Valid Anagram | [#242](https://leetcode.com/problems/valid-anagram/) | Frequency counting (canonical form of a multiset) |
 | `hashing/6` | Easy | Isomorphic Strings | [#205](https://leetcode.com/problems/isomorphic-strings/) | Bijection check with two hash maps (or normalised pattern) |
+| `hashing/7` | Easy | First Unique Character in a String | [#387](https://leetcode.com/problems/first-unique-character-in-a-string/) | Frequency map, two passes (count first, decide second) |
+| `hashing/8` | Easy | Ransom Note | [#383](https://leetcode.com/problems/ransom-note/) | Frequency map as a budget (inventory) |
+| `hashing/9` | Easy | Contains Duplicate II | [#219](https://leetcode.com/problems/contains-duplicate-ii/) | Hash map of last-seen index (closest previous occurrence) |
+| `hashing/11` | Easy | Word Pattern | [#290](https://leetcode.com/problems/word-pattern/) | Bijection check with two maps |
 | `hashing/2` | Medium | Group Anagrams | [#49](https://leetcode.com/problems/group-anagrams/) | Hash map with a canonical-form key (group by signature) |
 | `hashing/3` | Medium | Longest Consecutive Sequence | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash set + 'only expand from the start of a sequence' (amortised O(n)) |
+| `hashing/10` | Medium | 4Sum II | [#454](https://leetcode.com/problems/4sum-ii/) | Meet in the middle with a hash map of pair sums |
 
 Start one with `python dsa.py start hashing/1`.
 

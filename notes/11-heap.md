@@ -54,12 +54,14 @@ stream `5, 2, 8, 1`
 *Reference solution for **Kth Largest Element in an Array** (`heap/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n log k) time (or O(n) average with quickselect), O(k) space
+# Idea: Top-K with a size-k min-heap
 def find_kth_largest(nums, k):
     heap = []
     for x in nums:
         heapq.heappush(heap, x)
         if len(heap) > k:
-            heapq.heappop(heap)       # evict the smallest of the k+1
+            heapq.heappop(heap)  # evict the smallest of the k+1
     return heap[0]
 ```
 
@@ -85,6 +87,8 @@ def find_kth_largest(nums, k):
 | `heap/6` | Medium | Reorganize String | [#767](https://leetcode.com/problems/reorganize-string/) | Greedy with a max-heap (most frequent first, avoid the last used) |
 | `heap/7` | Medium | Top K Frequent Words | [#692](https://leetcode.com/problems/top-k-frequent-words/) | Counter + top-k with a composite sort key |
 | `heap/8` | Medium | Find K Pairs with Smallest Sums | [#373](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/) | Best-first search with a heap over a sorted 2D implicit grid |
+| `heap/9` | Medium | Ugly Number II | [#264](https://leetcode.com/problems/ugly-number-ii/) | k-way merge of implicit sorted sequences (multiples of earlier results) |
+| `heap/10` | Medium | Kth Smallest Element in a Sorted Matrix | [#378](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | k-way merge with a heap (or binary search on value) |
 
 Start one with `python dsa.py start heap/1`.
 

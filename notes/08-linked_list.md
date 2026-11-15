@@ -52,11 +52,13 @@ They meet at **2** = the duplicate.
 *Reference solution for **Reverse Linked List** (`linked_list/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(1) space
+# Idea: Pointer re-wiring with prev/cur/next (three-pointer walk)
 def reverse_list(head):
     prev, cur = None, head
     while cur:
-        nxt = cur.next        # save the rest of the list
-        cur.next = prev       # flip the arrow
+        nxt = cur.next  # save the rest of the list
+        cur.next = prev  # flip the arrow
         prev, cur = cur, nxt
     return prev
 ```

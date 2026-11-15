@@ -1,7 +1,8 @@
 """Randomised cross-check of reference solutions against brute force (extra confidence beyond the fixed tests).
 
-    python tools/fuzz.py
+python tools/fuzz.py
 """
+
 import itertools
 import random
 import sys
@@ -10,7 +11,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from core import compile_solution  # noqa: E402
-from dsa import TOPICS, load  # noqa: E402
+from dsa import load  # noqa: E402
 
 random.seed(7)
 
@@ -44,7 +45,7 @@ def f_three_sum():
 def f_trap():
     f = sol("two_pointers", "Trapping Rain Water")
     h = rl(10, 0, 6)
-    exp = sum(max(0, min(max(h[:i + 1]), max(h[i:])) - h[i]) for i in range(len(h)))
+    exp = sum(max(0, min(max(h[: i + 1]), max(h[i:])) - h[i]) for i in range(len(h)))
     assert f(h) == exp, h
 
 
@@ -60,6 +61,7 @@ def f_min_window():
     s = "".join(random.choice("abc") for _ in range(random.randint(0, 9)))
     t = "".join(random.choice("abc") for _ in range(random.randint(1, 3)))
     from collections import Counter
+
     best = None
     for i in range(len(s)):
         for j in range(i + 1, len(s) + 1):
@@ -81,7 +83,7 @@ def f_longest_unique():
 def f_subarray_k():
     f = sol("prefix_sums", "Subarray Sum Equals K")
     a, k = rl(9, -3, 3), random.randint(-3, 3)
-    exp = sum(1 for i in range(len(a)) for j in range(i, len(a)) if sum(a[i:j + 1]) == k)
+    exp = sum(1 for i in range(len(a)) for j in range(i, len(a)) if sum(a[i : j + 1]) == k)
     assert f(a, k) == exp, (a, k)
 
 
@@ -96,7 +98,7 @@ def f_sliding_max():
     f = sol("stack_monotonic", "Sliding Window Maximum")
     a = [random.randint(-5, 5) for _ in range(random.randint(1, 10))]
     k = random.randint(1, len(a))
-    assert f(a, k) == [max(a[i:i + k]) for i in range(len(a) - k + 1)], (a, k)
+    assert f(a, k) == [max(a[i : i + k]) for i in range(len(a) - k + 1)], (a, k)
 
 
 def f_rotated():
@@ -124,8 +126,10 @@ def f_split():
     a = [random.randint(0, 9) for _ in range(random.randint(1, 8))]
     a[0] = max(a[0], 1)
     k = random.randint(1, len(a))
-    best = min(max(sum(a[x:y]) for x, y in zip((0,) + c, c + (len(a),)))
-               for c in itertools.combinations(range(1, len(a)), k - 1))
+    best = min(
+        max(sum(a[x:y]) for x, y in zip((0,) + c, c + (len(a),)))
+        for c in itertools.combinations(range(1, len(a)), k - 1)
+    )
     assert f(a, k) == best, (a, k)
 
 
@@ -164,6 +168,7 @@ def f_edit():
         if j == 0:
             return i
         return min(d(i - 1, j) + 1, d(i, j - 1) + 1, d(i - 1, j - 1) + (a[i - 1] != b[j - 1]))
+
     assert f(a, b) == d(len(a), len(b)), (a, b)
 
 
@@ -176,9 +181,9 @@ def f_burst():
         idx = list(range(len(a)))
         for o in order:
             p = idx.index(o)
-            l = arr[p - 1] if p > 0 else 1
+            left = arr[p - 1] if p > 0 else 1
             r = arr[p + 1] if p + 1 < len(arr) else 1
-            tot += l * arr[p] * r
+            tot += left * arr[p] * r
             del arr[p]
             del idx[p]
         best = max(best, tot)
@@ -230,7 +235,7 @@ def f_merge_intervals():
         iv.append([s, s + random.randint(0, 4)])
     pts = set()
     for s, e in iv:
-        pts.update(range(s * 2, e * 2 + 1))       # doubled so touching [1,2],[2,3] merges but [1,2],[3,4] doesn't
+        pts.update(range(s * 2, e * 2 + 1))  # doubled so touching [1,2],[2,3] merges but [1,2],[3,4] doesn't
     got = f([x[:] for x in iv])
     assert all(a[1] < b[0] for a, b in zip(got, got[1:])), (iv, got)
     covered = set()

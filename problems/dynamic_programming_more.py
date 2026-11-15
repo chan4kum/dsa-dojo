@@ -1,4 +1,15 @@
-from core import *
+"""extra batch of Dynamic Programming problems - the problem bank for the "dynamic_programming" topic.
+
+Each entry in PROBLEMS is ONE problem, written so you can read it top to bottom:
+  title / lc / slug  name and LeetCode number (the official statement lives on LeetCode)
+  prompt             the task in plain words          sig / fn   the function signature students implement
+  tests              (arguments, expected result)     hints      three nudges, smallest first
+  pattern / explain  the idea, and WHY it works       cx         complexity of the optimised solution
+  brute / brute_cx   a simple correct solution and its cost (may be slow - that is the point)
+  solution           the optimised solution, tested by `python dsa.py selftest`
+Optional keys: compare (how to compare answers), adapt_in/adapt_out (convert lists <-> linked lists / trees),
+check (validate any correct answer), inplace (which argument is mutated).
+"""
 
 
 def _lps_ok(args, got):
@@ -8,54 +19,97 @@ def _lps_ok(args, got):
 
 
 PROBLEMS = [
+    # ---- Min Cost Climbing Stairs (LeetCode 746) ----
     dict(
-        title="Min Cost Climbing Stairs", diff="E", lc=746, slug="min-cost-climbing-stairs",
-        prompt="cost[i] is paid when you step on stair i; you may then climb 1 or 2 stairs. You can start at stair 0 or 1. Return the minimum cost to reach the top (one past the last stair).",
-        sig="def min_cost_climbing_stairs(cost: List[int]) -> int:", fn="min_cost_climbing_stairs",
-        tests=[(([10, 15, 20],), 15), (([1, 100, 1, 1, 1, 100, 1, 1, 100, 1],), 6), (([0, 0],), 0), (([5, 3],), 3)],
-        hints=["Define f(i) = min cost to arrive at position i. How can you arrive at i?",
-               "From i-1 (paying cost[i-1]) or from i-2 (paying cost[i-2]).",
-               "f(i) = min(f(i-1) + cost[i-1], f(i-2) + cost[i-2]), f(0) = f(1) = 0. Only the last two values matter."],
+        title="Min Cost Climbing Stairs",
+        diff="E",
+        lc=746,
+        slug="min-cost-climbing-stairs",
+        prompt=(
+            "cost[i] is paid when you step on stair i; you may then climb 1 or 2 stairs. You can start at stair 0 "
+            "or 1. Return the minimum cost to reach the top (one past the last stair)."
+        ),
+        sig="def min_cost_climbing_stairs(cost: List[int]) -> int:",
+        fn="min_cost_climbing_stairs",
+        tests=[
+            (([10, 15, 20],), 15),
+            (([1, 100, 1, 1, 1, 100, 1, 1, 100, 1],), 6),
+            (([0, 0],), 0),
+            (([5, 3],), 3),
+        ],
+        hints=[
+            "Define f(i) = min cost to arrive at position i. How can you arrive at i?",
+            "From i-1 (paying cost[i-1]) or from i-2 (paying cost[i-2]).",
+            "f(i) = min(f(i-1) + cost[i-1], f(i-2) + cost[i-2]), f(0) = f(1) = 0. Only the last two values matter.",
+        ],
         pattern="1-D DP: state = position, transition = last 1 or 2 steps",
-        explain="""
-        This is Climbing Stairs with weights. Recognise it by 'minimum/maximum/count ways to reach i from smaller
-        indices with a fixed set of moves'. Space optimisation: keep two variables.""",
-        cx="O(n) time, O(1) space", brute_cx="O(2^n) time - plain recursion",
-        brute=r'''
+        explain=(
+            "This is Climbing Stairs with weights. Recognise it by 'minimum/maximum/count ways to reach i from "
+            "smaller\n        indices with a fixed set of moves'. Space optimisation: keep two variables."
+        ),
+        cx="O(n) time, O(1) space",
+        brute_cx="O(2^n) time - plain recursion",
+        brute=r"""
+# BRUTE FORCE: O(2^n) time - plain recursion
 def min_cost_climbing_stairs(cost):
     n = len(cost)
+
     def f(i):
         if i <= 1:
             return 0
         return min(f(i - 1) + cost[i - 1], f(i - 2) + cost[i - 2])
+
     return f(n)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n) time, O(1) space
+# Idea: 1-D DP: state = position, transition = last 1 or 2 steps
 def min_cost_climbing_stairs(cost):
-    a = b = 0                      # f(i-2), f(i-1)
+    a = b = 0  # f(i-2), f(i-1)
     for i in range(2, len(cost) + 1):
         a, b = b, min(b + cost[i - 1], a + cost[i - 2])
     return b
-''',
+""",
     ),
+    # ---- House Robber II (LeetCode 213) ----
     dict(
-        title="House Robber II", diff="M", lc=213, slug="house-robber-ii",
-        prompt="Houses are arranged in a circle (first and last are neighbours). You cannot rob two adjacent houses. Return the maximum amount.",
-        sig="def rob(nums: List[int]) -> int:", fn="rob",
-        tests=[(([2, 3, 2],), 3), (([1, 2, 3, 1],), 4), (([1],), 1), (([1, 2],), 2), (([5, 1, 1, 5],), 6), (([200, 3, 140, 20, 10],), 340)],
-        hints=["The circle creates a conflict only between the first and last houses.",
-               "Break it into two LINEAR problems.",
-               "answer = max(rob_line(nums[:-1]), rob_line(nums[1:])) using the House Robber I recurrence."],
+        title="House Robber II",
+        diff="M",
+        lc=213,
+        slug="house-robber-ii",
+        prompt=(
+            "Houses are arranged in a circle (first and last are neighbours). You cannot rob two adjacent houses. "
+            "Return the maximum amount."
+        ),
+        sig="def rob(nums: List[int]) -> int:",
+        fn="rob",
+        tests=[
+            (([2, 3, 2],), 3),
+            (([1, 2, 3, 1],), 4),
+            (([1],), 1),
+            (([1, 2],), 2),
+            (([5, 1, 1, 5],), 6),
+            (([200, 3, 140, 20, 10],), 340),
+        ],
+        hints=[
+            "The circle creates a conflict only between the first and last houses.",
+            "Break it into two LINEAR problems.",
+            "answer = max(rob_line(nums[:-1]), rob_line(nums[1:])) using the House Robber I recurrence.",
+        ],
         pattern="Reduce a circular structure to two linear cases",
-        explain="""
-        Either house 0 is excluded or the last house is excluded (maybe both). Solving both linear halves covers every
-        legal choice. Edge case: a single house.""",
-        cx="O(n) time, O(1) space", brute_cx="O(2^n) time - try take/skip for each house with the circular constraint",
-        brute=r'''
+        explain=(
+            "Either house 0 is excluded or the last house is excluded (maybe both). Solving both linear halves "
+            "covers every\n        legal choice. Edge case: a single house."
+        ),
+        cx="O(n) time, O(1) space",
+        brute_cx="O(2^n) time - try take/skip for each house with the circular constraint",
+        brute=r"""
+# BRUTE FORCE: O(2^n) time - try take/skip for each house with the circular constraint
 def rob(nums):
     n = len(nums)
     if n == 1:
         return nums[0]
+
     def go(i, took_first):
         if i >= n:
             return 0
@@ -63,65 +117,112 @@ def rob(nums):
         if not (i == n - 1 and took_first):
             best = max(best, nums[i] + go(i + 2, took_first or i == 0))
         return best
+
     return go(0, False)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n) time, O(1) space
+# Idea: Reduce a circular structure to two linear cases
 def rob(nums):
     def line(a):
         prev = cur = 0
         for x in a:
             prev, cur = cur, max(cur, prev + x)
         return cur
+
     if len(nums) == 1:
         return nums[0]
     return max(line(nums[:-1]), line(nums[1:]))
-''',
+""",
     ),
+    # ---- Unique Paths (LeetCode 62) ----
     dict(
-        title="Unique Paths", diff="M", lc=62, slug="unique-paths",
-        prompt="A robot starts at the top-left of an m x n grid and can only move right or down. Count the paths to the bottom-right.",
-        sig="def unique_paths(m: int, n: int) -> int:", fn="unique_paths",
-        tests=[((3, 7), 28), ((3, 2), 3), ((1, 1), 1), ((7, 3), 28), ((1, 5), 1), ((10, 10), 48620)],
-        hints=["To reach a cell you must come from above or from the left.",
-               "paths(r, c) = paths(r-1, c) + paths(r, c-1); the first row and column are all 1.",
-               "Keep only one row of the table. (Closed form: C(m+n-2, m-1).)"],
+        title="Unique Paths",
+        diff="M",
+        lc=62,
+        slug="unique-paths",
+        prompt=(
+            "A robot starts at the top-left of an m x n grid and can only move right or down. Count the paths to "
+            "the bottom-right."
+        ),
+        sig="def unique_paths(m: int, n: int) -> int:",
+        fn="unique_paths",
+        tests=[
+            ((3, 7), 28),
+            ((3, 2), 3),
+            ((1, 1), 1),
+            ((7, 3), 28),
+            ((1, 5), 1),
+            ((10, 10), 48620),
+        ],
+        hints=[
+            "To reach a cell you must come from above or from the left.",
+            "paths(r, c) = paths(r-1, c) + paths(r, c-1); the first row and column are all 1.",
+            "Keep only one row of the table. (Closed form: C(m+n-2, m-1).)",
+        ],
         pattern="2-D grid DP (count paths = sum of the two predecessors)",
-        explain="""
-        Each path is a sequence of (m-1) downs and (n-1) rights, so the count is also a binomial coefficient - a nice
-        way to verify the DP. The row-rolling trick reduces space from O(mn) to O(n).""",
-        cx="O(m*n) time, O(n) space (or O(min(m,n)) with the formula)", brute_cx="O(2^(m+n)) time - recursion without memo",
-        brute=r'''
+        explain=(
+            "Each path is a sequence of (m-1) downs and (n-1) rights, so the count is also a binomial coefficient - "
+            "a nice\n        way to verify the DP. The row-rolling trick reduces space from O(mn) to O(n)."
+        ),
+        cx="O(m*n) time, O(n) space (or O(min(m,n)) with the formula)",
+        brute_cx="O(2^(m+n)) time - recursion without memo",
+        brute=r"""
+# BRUTE FORCE: O(2^(m+n)) time - recursion without memo
 def unique_paths(m, n):
     def go(r, c):
         if r == 0 or c == 0:
             return 1
         return go(r - 1, c) + go(r, c - 1)
+
     return go(m - 1, n - 1)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(m*n) time, O(n) space (or O(min(m,n)) with the formula)
+# Idea: 2-D grid DP (count paths = sum of the two predecessors)
 def unique_paths(m, n):
     row = [1] * n
     for _ in range(1, m):
         for c in range(1, n):
             row[c] += row[c - 1]
     return row[-1]
-''',
+""",
     ),
+    # ---- Minimum Path Sum (LeetCode 64) ----
     dict(
-        title="Minimum Path Sum", diff="M", lc=64, slug="minimum-path-sum",
-        prompt="Grid of non-negative numbers. Moving only right or down from the top-left to the bottom-right, return the minimum sum of the cells on the path.",
-        sig="def min_path_sum(grid: List[List[int]]) -> int:", fn="min_path_sum",
-        tests=[(([[1, 3, 1], [1, 5, 1], [4, 2, 1]],), 7), (([[1, 2, 3], [4, 5, 6]],), 12), (([[5]],), 5), (([[1, 2], [1, 1]],), 3)],
-        hints=["Same shape as Unique Paths, but minimise a cost instead of counting.",
-               "best(r,c) = grid[r][c] + min(best(r-1,c), best(r,c-1)).",
-               "Handle the first row and column (only one predecessor). Can be done in place."],
+        title="Minimum Path Sum",
+        diff="M",
+        lc=64,
+        slug="minimum-path-sum",
+        prompt=(
+            "Grid of non-negative numbers. Moving only right or down from the top-left to the bottom-right, return "
+            "the minimum sum of the cells on the path."
+        ),
+        sig="def min_path_sum(grid: List[List[int]]) -> int:",
+        fn="min_path_sum",
+        tests=[
+            (([[1, 3, 1], [1, 5, 1], [4, 2, 1]],), 7),
+            (([[1, 2, 3], [4, 5, 6]],), 12),
+            (([[5]],), 5),
+            (([[1, 2], [1, 1]],), 3),
+        ],
+        hints=[
+            "Same shape as Unique Paths, but minimise a cost instead of counting.",
+            "best(r,c) = grid[r][c] + min(best(r-1,c), best(r,c-1)).",
+            "Handle the first row and column (only one predecessor). Can be done in place.",
+        ],
         pattern="2-D grid DP (min over predecessors)",
-        explain="""
-        Replace '+' of counts by 'min' of costs: the DP skeleton is identical. Recognise the family: grid + two moves.""",
-        cx="O(m*n) time, O(n) space", brute_cx="O(2^(m+n)) time - recursion without memo",
-        brute=r'''
+        explain=(
+            "Replace '+' of counts by 'min' of costs: the DP skeleton is identical. Recognise the family: grid + "
+            "two moves."
+        ),
+        cx="O(m*n) time, O(n) space",
+        brute_cx="O(2^(m+n)) time - recursion without memo",
+        brute=r"""
+# BRUTE FORCE: O(2^(m+n)) time - recursion without memo
 def min_path_sum(grid):
     R, C = len(grid), len(grid[0])
+
     def go(r, c):
         if r == R - 1 and c == C - 1:
             return grid[r][c]
@@ -131,9 +232,12 @@ def min_path_sum(grid):
         if c + 1 < C:
             best = min(best, go(r, c + 1))
         return grid[r][c] + best
+
     return go(0, 0)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(m*n) time, O(n) space
+# Idea: 2-D grid DP (min over predecessors)
 def min_path_sum(grid):
     R, C = len(grid), len(grid[0])
     dp = [float("inf")] * C
@@ -143,22 +247,41 @@ def min_path_sum(grid):
             best_prev = dp[c] if c == 0 else min(dp[c], dp[c - 1])
             dp[c] = grid[r][c] + best_prev
     return dp[-1]
-''',
+""",
     ),
+    # ---- Longest Palindromic Substring (LeetCode 5) ----
     dict(
-        title="Longest Palindromic Substring", diff="M", lc=5, slug="longest-palindromic-substring",
+        title="Longest Palindromic Substring",
+        diff="M",
+        lc=5,
+        slug="longest-palindromic-substring",
         prompt="Return the longest palindromic substring of s (if several have the same length, any one is accepted).",
-        sig="def longest_palindrome(s: str) -> str:", fn="longest_palindrome", check=_lps_ok,
-        tests=[(("babad",), "bab"), (("cbbd",), "bb"), (("a",), "a"), (("ac",), "a"), (("racecar",), "racecar"), (("forgeeksskeegfor",), "geeksskeeg")],
-        hints=["Every palindrome mirrors around a centre. How many centres are there?",
-               "2n - 1 centres: n characters (odd length) and n-1 gaps (even length).",
-               "Expand outward from each centre while the two ends match; track the longest. O(n^2) time, O(1) space."],
+        sig="def longest_palindrome(s: str) -> str:",
+        fn="longest_palindrome",
+        check=_lps_ok,
+        tests=[
+            (("babad",), "bab"),
+            (("cbbd",), "bb"),
+            (("a",), "a"),
+            (("ac",), "a"),
+            (("racecar",), "racecar"),
+            (("forgeeksskeegfor",), "geeksskeeg"),
+        ],
+        hints=[
+            "Every palindrome mirrors around a centre. How many centres are there?",
+            "2n - 1 centres: n characters (odd length) and n-1 gaps (even length).",
+            "Expand outward from each centre while the two ends match; track the longest. O(n^2) time, O(1) space.",
+        ],
         pattern="Expand around the centre",
-        explain="""
-        Checking all O(n^2) substrings at O(n) each is O(n^3). Mirroring means a palindrome is determined by its
-        centre, so expansion is O(n) per centre. (Manacher's algorithm is O(n) but rarely required.)""",
-        cx="O(n^2) time, O(1) space", brute_cx="O(n^3) time - test every substring",
-        brute=r'''
+        explain=(
+            "Checking all O(n^2) substrings at O(n) each is O(n^3). Mirroring means a palindrome is determined by "
+            "its\n        centre, so expansion is O(n) per centre. (Manacher's algorithm is O(n) but rarely "
+            "required.)"
+        ),
+        cx="O(n^2) time, O(1) space",
+        brute_cx="O(n^3) time - test every substring",
+        brute=r"""
+# BRUTE FORCE: O(n^3) time - test every substring
 def longest_palindrome(s):
     best = ""
     for i in range(len(s)):
@@ -166,62 +289,103 @@ def longest_palindrome(s):
             if s[i:j] == s[i:j][::-1] and j - i > len(best):
                 best = s[i:j]
     return best
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n^2) time, O(1) space
+# Idea: Expand around the centre
 def longest_palindrome(s):
     best = ""
-    def expand(l, r):
-        while l >= 0 and r < len(s) and s[l] == s[r]:
-            l, r = l - 1, r + 1
-        return s[l + 1:r]
+
+    def expand(left, right):
+        while left >= 0 and right < len(s) and s[left] == s[right]:
+            left, right = left - 1, right + 1
+        return s[left + 1 : right]
+
     for i in range(len(s)):
         for cand in (expand(i, i), expand(i, i + 1)):
             if len(cand) > len(best):
                 best = cand
     return best
-''',
+""",
     ),
+    # ---- Palindromic Substrings (LeetCode 647) ----
     dict(
-        title="Palindromic Substrings", diff="M", lc=647, slug="palindromic-substrings",
+        title="Palindromic Substrings",
+        diff="M",
+        lc=647,
+        slug="palindromic-substrings",
         prompt="Count how many substrings of s are palindromes (substrings at different positions count separately).",
-        sig="def count_substrings(s: str) -> int:", fn="count_substrings",
-        tests=[(("abc",), 3), (("aaa",), 6), (("a",), 1), (("abba",), 6), (("",), 0)],
-        hints=["Same mirror idea as the longest palindromic substring.",
-               "Each successful expansion step from a centre is one more palindrome.",
-               "For each of the 2n-1 centres, expand while ends match and count +1 per step."],
+        sig="def count_substrings(s: str) -> int:",
+        fn="count_substrings",
+        tests=[
+            (("abc",), 3),
+            (("aaa",), 6),
+            (("a",), 1),
+            (("abba",), 6),
+            (("",), 0),
+        ],
+        hints=[
+            "Same mirror idea as the longest palindromic substring.",
+            "Each successful expansion step from a centre is one more palindrome.",
+            "For each of the 2n-1 centres, expand while ends match and count +1 per step.",
+        ],
         pattern="Expand around the centre (count instead of maximise)",
-        explain="""
-        Counting is easier than locating: every expansion that still matches is one new palindromic substring.""",
-        cx="O(n^2) time, O(1) space", brute_cx="O(n^3) time - test every substring",
-        brute=r'''
+        explain=(
+            "Counting is easier than locating: every expansion that still matches is one new palindromic substring."
+        ),
+        cx="O(n^2) time, O(1) space",
+        brute_cx="O(n^3) time - test every substring",
+        brute=r"""
+# BRUTE FORCE: O(n^3) time - test every substring
 def count_substrings(s):
     return sum(1 for i in range(len(s)) for j in range(i + 1, len(s) + 1) if s[i:j] == s[i:j][::-1])
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n^2) time, O(1) space
+# Idea: Expand around the centre (count instead of maximise)
 def count_substrings(s):
     total = 0
     for c in range(2 * len(s) - 1):
-        l, r = c // 2, c // 2 + c % 2
-        while l >= 0 and r < len(s) and s[l] == s[r]:
+        left, r = c // 2, c // 2 + c % 2
+        while left >= 0 and r < len(s) and s[left] == s[r]:
             total += 1
-            l, r = l - 1, r + 1
+            left, r = left - 1, r + 1
     return total
-''',
+""",
     ),
+    # ---- Decode Ways (LeetCode 91) ----
     dict(
-        title="Decode Ways", diff="M", lc=91, slug="decode-ways",
+        title="Decode Ways",
+        diff="M",
+        lc=91,
+        slug="decode-ways",
         prompt="'A'=1, 'B'=2, ..., 'Z'=26. Count the ways to decode a digit string (0 if it cannot be decoded).",
-        sig="def num_decodings(s: str) -> int:", fn="num_decodings",
-        tests=[(("12",), 2), (("226",), 3), (("06",), 0), (("0",), 0), (("10",), 1), (("2101",), 1), (("11106",), 2), (("27",), 1)],
-        hints=["Look at the LAST one or two digits of the prefix.",
-               "A single digit 1-9 is valid; a pair 10-26 is valid.",
-               "dp[i] = (dp[i-1] if s[i-1] != '0') + (dp[i-2] if 10 <= int(s[i-2:i]) <= 26). dp[0] = 1."],
+        sig="def num_decodings(s: str) -> int:",
+        fn="num_decodings",
+        tests=[
+            (("12",), 2),
+            (("226",), 3),
+            (("06",), 0),
+            (("0",), 0),
+            (("10",), 1),
+            (("2101",), 1),
+            (("11106",), 2),
+            (("27",), 1),
+        ],
+        hints=[
+            "Look at the LAST one or two digits of the prefix.",
+            "A single digit 1-9 is valid; a pair 10-26 is valid.",
+            "dp[i] = (dp[i-1] if s[i-1] != '0') + (dp[i-2] if 10 <= int(s[i-2:i]) <= 26). dp[0] = 1.",
+        ],
         pattern="1-D DP: count ways with 1- and 2-step transitions plus validity",
-        explain="""
-        It is Climbing Stairs where each step is allowed only if the digits form a valid code. A '0' can only be the
-        second digit of 10 or 20, which is handled automatically by the validity checks.""",
-        cx="O(n) time, O(1) space", brute_cx="O(2^n) time - recursion trying 1 or 2 digits",
-        brute=r'''
+        explain=(
+            "It is Climbing Stairs where each step is allowed only if the digits form a valid code. A '0' can only "
+            "be the\n        second digit of 10 or 20, which is handled automatically by the validity checks."
+        ),
+        cx="O(n) time, O(1) space",
+        brute_cx="O(2^n) time - recursion trying 1 or 2 digits",
+        brute=r"""
+# BRUTE FORCE: O(2^n) time - recursion trying 1 or 2 digits
 def num_decodings(s):
     def go(i):
         if i == len(s):
@@ -229,39 +393,57 @@ def num_decodings(s):
         if s[i] == "0":
             return 0
         total = go(i + 1)
-        if i + 1 < len(s) and 10 <= int(s[i:i + 2]) <= 26:
+        if i + 1 < len(s) and 10 <= int(s[i : i + 2]) <= 26:
             total += go(i + 2)
         return total
+
     return go(0)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n) time, O(1) space
+# Idea: 1-D DP: count ways with 1- and 2-step transitions plus validity
 def num_decodings(s):
     if not s:
         return 0
-    a, b = 1, (1 if s[0] != "0" else 0)     # a = dp[i-2] (dp[0] = 1), b = dp[i-1] (dp[1])
+    a, b = 1, (1 if s[0] != "0" else 0)  # a = dp[i-2] (dp[0] = 1), b = dp[i-1] (dp[1])
     for i in range(2, len(s) + 1):
         cur = 0
         if s[i - 1] != "0":
             cur += b
-        if 10 <= int(s[i - 2:i]) <= 26:
+        if 10 <= int(s[i - 2 : i]) <= 26:
             cur += a
         a, b = b, cur
     return b
-''',
+""",
     ),
+    # ---- Perfect Squares (LeetCode 279) ----
     dict(
-        title="Perfect Squares", diff="M", lc=279, slug="perfect-squares",
+        title="Perfect Squares",
+        diff="M",
+        lc=279,
+        slug="perfect-squares",
         prompt="Return the least number of perfect squares (1, 4, 9, 16, ...) that sum to n.",
-        sig="def num_squares(n: int) -> int:", fn="num_squares",
-        tests=[((12,), 3), ((13,), 2), ((1,), 1), ((43,), 3), ((100,), 1), ((7,), 4)],
-        hints=["This is Coin Change where the coins are the perfect squares.",
-               "dp[x] = 1 + min(dp[x - s*s]) over all squares s*s <= x.",
-               "Build dp[0..n] bottom-up with dp[0] = 0."],
+        sig="def num_squares(n: int) -> int:",
+        fn="num_squares",
+        tests=[
+            ((12,), 3),
+            ((13,), 2),
+            ((1,), 1),
+            ((43,), 3),
+            ((100,), 1),
+            ((7,), 4),
+        ],
+        hints=[
+            "This is Coin Change where the coins are the perfect squares.",
+            "dp[x] = 1 + min(dp[x - s*s]) over all squares s*s <= x.",
+            "Build dp[0..n] bottom-up with dp[0] = 0.",
+        ],
         pattern="Unbounded knapsack / coin change (min coins)",
-        explain="""
-        Same DP as Coin Change. Spot the disguise: 'fewest numbers from a fixed set that sum to a target'.""",
-        cx="O(n sqrt n) time, O(n) space", brute_cx="exponential - recursion without memo",
-        brute=r'''
+        explain="Same DP as Coin Change. Spot the disguise: 'fewest numbers from a fixed set that sum to a target'.",
+        cx="O(n sqrt n) time, O(n) space",
+        brute_cx="exponential - recursion without memo",
+        brute=r"""
+# BRUTE FORCE: exponential - recursion without memo
 def num_squares(n):
     def go(x):
         if x == 0:
@@ -271,9 +453,12 @@ def num_squares(n):
             best = min(best, 1 + go(x - s * s))
             s += 1
         return best
+
     return go(n)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n sqrt n) time, O(n) space
+# Idea: Unbounded knapsack / coin change (min coins)
 def num_squares(n):
     dp = [0] + [float("inf")] * n
     for x in range(1, n + 1):
@@ -282,30 +467,49 @@ def num_squares(n):
             dp[x] = min(dp[x], dp[x - s * s] + 1)
             s += 1
     return dp[n]
-''',
+""",
     ),
+    # ---- Combination Sum IV (LeetCode 377) ----
     dict(
-        title="Combination Sum IV", diff="M", lc=377, slug="combination-sum-iv",
+        title="Combination Sum IV",
+        diff="M",
+        lc=377,
+        slug="combination-sum-iv",
         prompt="Count the sequences (order matters) of numbers from nums (reuse allowed) that add up to target.",
-        sig="def combination_sum4(nums: List[int], target: int) -> int:", fn="combination_sum4",
-        tests=[(([1, 2, 3], 4), 7), (([9], 3), 0), (([1, 2], 5), 8), (([4], 4), 1), (([2, 1, 3], 10), 274)],
-        hints=["Order matters, so (1,2) and (2,1) are different.",
-               "Think of the LAST number placed: ways(t) = sum of ways(t - x) over x in nums.",
-               "dp[0] = 1; loop the TARGET on the outside and nums on the inside (that order counts permutations)."],
+        sig="def combination_sum4(nums: List[int], target: int) -> int:",
+        fn="combination_sum4",
+        tests=[
+            (([1, 2, 3], 4), 7),
+            (([9], 3), 0),
+            (([1, 2], 5), 8),
+            (([4], 4), 1),
+            (([2, 1, 3], 10), 274),
+        ],
+        hints=[
+            "Order matters, so (1,2) and (2,1) are different.",
+            "Think of the LAST number placed: ways(t) = sum of ways(t - x) over x in nums.",
+            "dp[0] = 1; loop the TARGET on the outside and nums on the inside (that order counts permutations).",
+        ],
         pattern="Counting DP - loop order decides combinations vs permutations",
-        explain="""
-        Outer loop over amounts, inner over coins counts ordered sequences (permutations). Swapping the loops - coins
-        outside - counts unordered combinations (Coin Change II). A classic interview trap.""",
-        cx="O(target * len(nums)) time", brute_cx="exponential - recursion without memo",
-        brute=r'''
+        explain=(
+            "Outer loop over amounts, inner over coins counts ordered sequences (permutations). Swapping the loops "
+            "- coins\n        outside - counts unordered combinations (Coin Change II). A classic interview trap."
+        ),
+        cx="O(target * len(nums)) time",
+        brute_cx="exponential - recursion without memo",
+        brute=r"""
+# BRUTE FORCE: exponential - recursion without memo
 def combination_sum4(nums, target):
     def go(t):
         if t == 0:
             return 1
         return sum(go(t - x) for x in nums if x <= t)
+
     return go(target)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(target * len(nums)) time
+# Idea: Counting DP - loop order decides combinations vs permutations
 def combination_sum4(nums, target):
     dp = [1] + [0] * target
     for t in range(1, target + 1):
@@ -313,29 +517,52 @@ def combination_sum4(nums, target):
             if x <= t:
                 dp[t] += dp[t - x]
     return dp[target]
-''',
+""",
     ),
+    # ---- Target Sum (LeetCode 494) ----
     dict(
-        title="Target Sum", diff="M", lc=494, slug="target-sum",
+        title="Target Sum",
+        diff="M",
+        lc=494,
+        slug="target-sum",
         prompt="Put a + or - in front of every number of nums. Count the assignments whose total equals target.",
-        sig="def find_target_sum_ways(nums: List[int], target: int) -> int:", fn="find_target_sum_ways",
-        tests=[(([1, 1, 1, 1, 1], 3), 5), (([1], 1), 1), (([1, 0], 1), 2), (([1, 2, 3], 7), 0), (([2, 3, 5], 0), 2)],
-        hints=["2^n assignments is too many for large n. Let P = sum of numbers with '+', N = sum with '-'.",
-               "P - N = target and P + N = total, so P = (total + target) / 2.",
-               "Count subsets of nums that sum to (total + target) / 2 - a 0/1 knapsack counting DP (return 0 if the value is negative or not an integer)."],
+        sig="def find_target_sum_ways(nums: List[int], target: int) -> int:",
+        fn="find_target_sum_ways",
+        tests=[
+            (([1, 1, 1, 1, 1], 3), 5),
+            (([1], 1), 1),
+            (([1, 0], 1), 2),
+            (([1, 2, 3], 7), 0),
+            (([2, 3, 5], 0), 2),
+        ],
+        hints=[
+            "2^n assignments is too many for large n. Let P = sum of numbers with '+', N = sum with '-'.",
+            "P - N = target and P + N = total, so P = (total + target) / 2.",
+            (
+                "Count subsets of nums that sum to (total + target) / 2 - a 0/1 knapsack counting DP (return 0 if "
+                "the value is negative or not an integer)."
+            ),
+        ],
         pattern="Reduce to 'count subsets with sum S' (0/1 knapsack)",
-        explain="""
-        Algebra turns signs into a subset choice. Iterate the capacity backwards so each number is used at most once.""",
-        cx="O(n * S) time, O(S) space", brute_cx="O(2^n) time - try both signs for every number",
-        brute=r'''
+        explain=(
+            "Algebra turns signs into a subset choice. Iterate the capacity backwards so each number is used at "
+            "most once."
+        ),
+        cx="O(n * S) time, O(S) space",
+        brute_cx="O(2^n) time - try both signs for every number",
+        brute=r"""
+# BRUTE FORCE: O(2^n) time - try both signs for every number
 def find_target_sum_ways(nums, target):
     def go(i, total):
         if i == len(nums):
             return 1 if total == target else 0
         return go(i + 1, total + nums[i]) + go(i + 1, total - nums[i])
+
     return go(0, 0)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n * S) time, O(S) space
+# Idea: Reduce to 'count subsets with sum S' (0/1 knapsack)
 def find_target_sum_ways(nums, target):
     total = sum(nums)
     if abs(target) > total or (total + target) % 2:
@@ -346,34 +573,61 @@ def find_target_sum_ways(nums, target):
         for c in range(s, x - 1, -1):
             dp[c] += dp[c - x]
     return dp[s]
-''',
+""",
     ),
+    # ---- Best Time to Buy and Sell Stock with Cooldown (LeetCode 309) ----
     dict(
-        title="Best Time to Buy and Sell Stock with Cooldown", diff="M", lc=309, slug="best-time-to-buy-and-sell-stock-with-cooldown",
-        prompt="Unlimited transactions, but after selling you must wait one day before buying again. Return the maximum profit.",
-        sig="def max_profit(prices: List[int]) -> int:", fn="max_profit",
-        tests=[(([1, 2, 3, 0, 2],), 3), (([1],), 0), (([2, 1],), 0), (([1, 2, 4],), 3), (([6, 1, 3, 2, 4, 7],), 6)],
-        hints=["What are the possible 'states' at the end of a day?",
-               "holding a stock / not holding and free to buy / not holding and in cooldown.",
-               "hold = max(hold, free - p); sold = hold_prev + p; free = max(free, cooldown_prev). Update all from the previous day's values."],
+        title="Best Time to Buy and Sell Stock with Cooldown",
+        diff="M",
+        lc=309,
+        slug="best-time-to-buy-and-sell-stock-with-cooldown",
+        prompt=(
+            "Unlimited transactions, but after selling you must wait one day before buying again. Return the "
+            "maximum profit."
+        ),
+        sig="def max_profit(prices: List[int]) -> int:",
+        fn="max_profit",
+        tests=[
+            (([1, 2, 3, 0, 2],), 3),
+            (([1],), 0),
+            (([2, 1],), 0),
+            (([1, 2, 4],), 3),
+            (([6, 1, 3, 2, 4, 7],), 6),
+        ],
+        hints=[
+            "What are the possible 'states' at the end of a day?",
+            "holding a stock / not holding and free to buy / not holding and in cooldown.",
+            (
+                "hold = max(hold, free - p); sold = hold_prev + p; free = max(free, cooldown_prev). Update all from "
+                "the previous day's values."
+            ),
+        ],
         pattern="State-machine DP (a few states, transitions per day)",
-        explain="""
-        Draw the states as circles and the allowed moves as arrows (buy, sell, rest). The DP is just 'best profit to be
-        in state S after day i'. This pattern extends to 'at most k transactions' and 'transaction fee'.""",
-        cx="O(n) time, O(1) space", brute_cx="O(3^n) time - recursion over buy/sell/skip with cooldown",
-        brute=r'''
+        explain=(
+            "Draw the states as circles and the allowed moves as arrows (buy, sell, rest). The DP is just 'best "
+            "profit to be\n        in state S after day i'. This pattern extends to 'at most k transactions' and "
+            "'transaction fee'."
+        ),
+        cx="O(n) time, O(1) space",
+        brute_cx="O(3^n) time - recursion over buy/sell/skip with cooldown",
+        brute=r"""
+# BRUTE FORCE: O(3^n) time - recursion over buy/sell/skip with cooldown
 def max_profit(prices):
     n = len(prices)
+
     def go(i, holding):
         if i >= n:
             return 0
         skip = go(i + 1, holding)
         if holding:
-            return max(skip, prices[i] + go(i + 2, False))   # sell, then cooldown day
+            return max(skip, prices[i] + go(i + 2, False))  # sell, then cooldown day
         return max(skip, -prices[i] + go(i + 1, True))
+
     return go(0, False)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n) time, O(1) space
+# Idea: State-machine DP (a few states, transitions per day)
 def max_profit(prices):
     hold, sold, free = float("-inf"), 0, 0
     for p in prices:
@@ -382,52 +636,89 @@ def max_profit(prices):
         hold = max(hold, free - p)
         free = max(free, prev_sold)
     return max(sold, free)
-''',
+""",
     ),
+    # ---- Triangle (LeetCode 120) ----
     dict(
-        title="Triangle", diff="M", lc=120, slug="triangle",
-        prompt="Given a triangle of numbers, return the minimum path sum from top to bottom, moving each step to an adjacent number on the row below (index i or i+1).",
-        sig="def minimum_total(triangle: List[List[int]]) -> int:", fn="minimum_total",
-        tests=[(([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]],), 11), (([[-10]],), -10), (([[1], [2, 3]],), 3), (([[1], [-5, 3], [4, 4, -1]],), 0)],
-        hints=["Top-down needs to remember too many options. What if you work from the bottom?",
-               "The best path from a cell = its value + min of the best paths from the two cells below.",
-               "Start with the last row as dp and fold upward in place: dp[i] = row[i] + min(dp[i], dp[i+1])."],
+        title="Triangle",
+        diff="M",
+        lc=120,
+        slug="triangle",
+        prompt=(
+            "Given a triangle of numbers, return the minimum path sum from top to bottom, moving each step to an "
+            "adjacent number on the row below (index i or i+1)."
+        ),
+        sig="def minimum_total(triangle: List[List[int]]) -> int:",
+        fn="minimum_total",
+        tests=[
+            (([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]],), 11),
+            (([[-10]],), -10),
+            (([[1], [2, 3]],), 3),
+            (([[1], [-5, 3], [4, 4, -1]],), 0),
+        ],
+        hints=[
+            "Top-down needs to remember too many options. What if you work from the bottom?",
+            "The best path from a cell = its value + min of the best paths from the two cells below.",
+            "Start with the last row as dp and fold upward in place: dp[i] = row[i] + min(dp[i], dp[i+1]).",
+        ],
         pattern="Bottom-up DP with a rolling 1-D array",
-        explain="""
-        Going bottom-up makes every subproblem 'best path from here to the bottom', which has a clean recurrence and
-        needs only O(n) extra space.""",
-        cx="O(n^2) time, O(n) space", brute_cx="O(2^n) time - recursion over left/right choices",
-        brute=r'''
+        explain=(
+            "Going bottom-up makes every subproblem 'best path from here to the bottom', which has a clean "
+            "recurrence and\n        needs only O(n) extra space."
+        ),
+        cx="O(n^2) time, O(n) space",
+        brute_cx="O(2^n) time - recursion over left/right choices",
+        brute=r"""
+# BRUTE FORCE: O(2^n) time - recursion over left/right choices
 def minimum_total(triangle):
     def go(r, i):
         if r == len(triangle) - 1:
             return triangle[r][i]
         return triangle[r][i] + min(go(r + 1, i), go(r + 1, i + 1))
+
     return go(0, 0)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n^2) time, O(n) space
+# Idea: Bottom-up DP with a rolling 1-D array
 def minimum_total(triangle):
     dp = triangle[-1][:]
     for r in range(len(triangle) - 2, -1, -1):
         for i in range(len(triangle[r])):
             dp[i] = triangle[r][i] + min(dp[i], dp[i + 1])
     return dp[0]
-''',
+""",
     ),
+    # ---- Longest Palindromic Subsequence (LeetCode 516) ----
     dict(
-        title="Longest Palindromic Subsequence", diff="M", lc=516, slug="longest-palindromic-subsequence",
+        title="Longest Palindromic Subsequence",
+        diff="M",
+        lc=516,
+        slug="longest-palindromic-subsequence",
         prompt="Return the length of the longest palindromic SUBSEQUENCE of s (characters need not be contiguous).",
-        sig="def longest_palindrome_subseq(s: str) -> int:", fn="longest_palindrome_subseq",
-        tests=[(("bbbab",), 4), (("cbbd",), 2), (("a",), 1), (("abcde",), 1), (("agbdba",), 5)],
-        hints=["Relate it to a problem you know: a palindrome reads the same reversed.",
-               "LPS(s) = LCS(s, reverse(s)).",
-               "Or directly: dp[i][j] = dp[i+1][j-1] + 2 if s[i] == s[j], else max(dp[i+1][j], dp[i][j-1])."],
+        sig="def longest_palindrome_subseq(s: str) -> int:",
+        fn="longest_palindrome_subseq",
+        tests=[
+            (("bbbab",), 4),
+            (("cbbd",), 2),
+            (("a",), 1),
+            (("abcde",), 1),
+            (("agbdba",), 5),
+        ],
+        hints=[
+            "Relate it to a problem you know: a palindrome reads the same reversed.",
+            "LPS(s) = LCS(s, reverse(s)).",
+            "Or directly: dp[i][j] = dp[i+1][j-1] + 2 if s[i] == s[j], else max(dp[i+1][j], dp[i][j-1]).",
+        ],
         pattern="Interval DP / reduce to LCS with the reversed string",
-        explain="""
-        Reducing a new problem to a known one (LCS) is a core interview skill. The interval DP is worth knowing because
-        it generalises to Burst Balloons and Palindrome Partitioning II.""",
-        cx="O(n^2) time and space", brute_cx="O(2^n) time - recursion on (i, j)",
-        brute=r'''
+        explain=(
+            "Reducing a new problem to a known one (LCS) is a core interview skill. The interval DP is worth "
+            "knowing because\n        it generalises to Burst Balloons and Palindrome Partitioning II."
+        ),
+        cx="O(n^2) time and space",
+        brute_cx="O(2^n) time - recursion on (i, j)",
+        brute=r"""
+# BRUTE FORCE: O(2^n) time - recursion on (i, j)
 def longest_palindrome_subseq(s):
     def go(i, j):
         if i > j:
@@ -437,9 +728,12 @@ def longest_palindrome_subseq(s):
         if s[i] == s[j]:
             return 2 + go(i + 1, j - 1)
         return max(go(i + 1, j), go(i, j - 1))
+
     return go(0, len(s) - 1)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(n^2) time and space
+# Idea: Interval DP / reduce to LCS with the reversed string
 def longest_palindrome_subseq(s):
     n = len(s)
     dp = [[0] * n for _ in range(n)]
@@ -451,22 +745,48 @@ def longest_palindrome_subseq(s):
             else:
                 dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
     return dp[0][n - 1] if n else 0
-''',
+""",
     ),
+    # ---- Regular Expression Matching (LeetCode 10) ----
     dict(
-        title="Regular Expression Matching", diff="H", lc=10, slug="regular-expression-matching",
-        prompt="Implement matching of the whole string s against pattern p where '.' matches any single character and 'x*' matches zero or more of the preceding element x.",
-        sig="def is_match(s: str, p: str) -> bool:", fn="is_match",
-        tests=[(("aa", "a"), False), (("aa", "a*"), True), (("ab", ".*"), True), (("aab", "c*a*b"), True), (("mississippi", "mis*is*p*."), False), (("", "a*"), True), (("", ""), True), (("abc", "abc"), True)],
-        hints=["Think about the first characters of s and p. When does a '*' matter?",
-               "If p[1] == '*': either skip the 'x*' entirely (zero copies) or, if the first characters match, consume one char of s and keep the same pattern.",
-               "match(i, j) with memoisation on (i, j) turns the exponential recursion into O(m*n)."],
+        title="Regular Expression Matching",
+        diff="H",
+        lc=10,
+        slug="regular-expression-matching",
+        prompt=(
+            "Implement matching of the whole string s against pattern p where '.' matches any single character and "
+            "'x*' matches zero or more of the preceding element x."
+        ),
+        sig="def is_match(s: str, p: str) -> bool:",
+        fn="is_match",
+        tests=[
+            (("aa", "a"), False),
+            (("aa", "a*"), True),
+            (("ab", ".*"), True),
+            (("aab", "c*a*b"), True),
+            (("mississippi", "mis*is*p*."), False),
+            (("", "a*"), True),
+            (("", ""), True),
+            (("abc", "abc"), True),
+        ],
+        hints=[
+            "Think about the first characters of s and p. When does a '*' matter?",
+            (
+                "If p[1] == '*': either skip the 'x*' entirely (zero copies) or, if the first characters match, "
+                "consume one char of s and keep the same pattern."
+            ),
+            "match(i, j) with memoisation on (i, j) turns the exponential recursion into O(m*n).",
+        ],
         pattern="2-D DP on two string positions (with branching for '*')",
-        explain="""
-        The star produces two choices (use zero copies / use one more copy), which is why plain recursion is
-        exponential; the state (i, j) has only m*n distinct values, so caching them makes it polynomial.""",
-        cx="O(m*n) time and space", brute_cx="exponential - plain recursion",
-        brute=r'''
+        explain=(
+            "The star produces two choices (use zero copies / use one more copy), which is why plain recursion "
+            "is\n        exponential; the state (i, j) has only m*n distinct values, so caching them makes it "
+            "polynomial."
+        ),
+        cx="O(m*n) time and space",
+        brute_cx="exponential - plain recursion",
+        brute=r"""
+# BRUTE FORCE: exponential - plain recursion
 def is_match(s, p):
     def go(i, j):
         if j == len(p):
@@ -475,9 +795,12 @@ def is_match(s, p):
         if j + 1 < len(p) and p[j + 1] == "*":
             return go(i, j + 2) or (first and go(i + 1, j))
         return first and go(i + 1, j + 1)
+
     return go(0, 0)
-''',
-        solution=r'''
+""",
+        solution=r"""
+# OPTIMISED: O(m*n) time and space
+# Idea: 2-D DP on two string positions (with branching for '*')
 def is_match(s, p):
     @lru_cache(maxsize=None)
     def go(i, j):
@@ -487,23 +810,46 @@ def is_match(s, p):
         if j + 1 < len(p) and p[j + 1] == "*":
             return go(i, j + 2) or (first and go(i + 1, j))
         return first and go(i + 1, j + 1)
+
     return go(0, 0)
-''',
+""",
     ),
+    # ---- Coin Change II (LeetCode 518) ----
     dict(
-        title="Coin Change II", diff="M", lc=518, slug="coin-change-ii",
-        prompt="Count the number of COMBINATIONS (order does not matter) of coins that make up amount; unlimited supply of each coin. Return 0 if impossible.",
-        sig="def change(amount: int, coins: List[int]) -> int:", fn="change",
-        tests=[((5, [1, 2, 5]), 4), ((3, [2]), 0), ((10, [10]), 1), ((0, [7]), 1), ((11, [1, 5, 10]), 4)],
-        hints=["Counting sequences would count 1+2 and 2+1 separately. How do you avoid that?",
-               "Decide coin types one at a time: for each coin, how many copies do you use?",
-               "dp[0] = 1. For each coin (OUTER loop), for a from coin..amount: dp[a] += dp[a - coin]. Coins outside = combinations; amounts outside = permutations (Combination Sum IV)."],
+        title="Coin Change II",
+        diff="M",
+        lc=518,
+        slug="coin-change-ii",
+        prompt=(
+            "Count the number of COMBINATIONS (order does not matter) of coins that make up amount; unlimited "
+            "supply of each coin. Return 0 if impossible."
+        ),
+        sig="def change(amount: int, coins: List[int]) -> int:",
+        fn="change",
+        tests=[
+            ((5, [1, 2, 5]), 4),
+            ((3, [2]), 0),
+            ((10, [10]), 1),
+            ((0, [7]), 1),
+            ((11, [1, 5, 10]), 4),
+        ],
+        hints=[
+            "Counting sequences would count 1+2 and 2+1 separately. How do you avoid that?",
+            "Decide coin types one at a time: for each coin, how many copies do you use?",
+            (
+                "dp[0] = 1. For each coin (OUTER loop), for a from coin..amount: dp[a] += dp[a - coin]. Coins "
+                "outside = combinations; amounts outside = permutations (Combination Sum IV)."
+            ),
+        ],
         pattern="Unbounded knapsack - counting combinations (coin loop outside)",
-        explain="""
-        Processing one coin type at a time fixes an order of coin types, so each multiset of coins is generated exactly
-        once. Compare with Combination Sum IV, where swapping the loops counts ordered sequences.""",
-        cx="O(amount * coins) time, O(amount) space", brute_cx="exponential - recursion over (coin index, remaining) without memo",
-        brute='''
+        explain=(
+            "Processing one coin type at a time fixes an order of coin types, so each multiset of coins is "
+            "generated exactly\n        once. Compare with Combination Sum IV, where swapping the loops counts "
+            "ordered sequences."
+        ),
+        cx="O(amount * coins) time, O(amount) space",
+        brute_cx="exponential - recursion over (coin index, remaining) without memo",
+        brute="""
 def change(amount, coins):
     def go(i, rem):
         if rem == 0:
@@ -512,14 +858,14 @@ def change(amount, coins):
             return 0
         return go(i, rem - coins[i]) + go(i + 1, rem)
     return go(0, amount)
-''',
-        solution='''
+""",
+        solution="""
 def change(amount, coins):
     dp = [1] + [0] * amount
     for c in coins:
         for a in range(c, amount + 1):
             dp[a] += dp[a - c]
     return dp[amount]
-''',
+""",
     ),
 ]

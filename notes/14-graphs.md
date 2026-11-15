@@ -90,6 +90,8 @@ Final distances: `{1: 0, 2: 1, 3: 3, 4: 6}`
 *Reference solution for **Network Delay Time** (`graphs/5`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(E log V) time (Dijkstra with a heap)
+# Idea: Dijkstra's algorithm (single-source shortest paths, non-negative weights)
 def network_delay_time(times, n, k):
     adj = defaultdict(list)
     for u, v, w in times:
@@ -99,7 +101,7 @@ def network_delay_time(times, n, k):
     while heap:
         d, u = heapq.heappop(heap)
         if u in dist:
-            continue                         # stale entry
+            continue  # stale entry
         dist[u] = d
         for v, w in adj[u]:
             if v not in dist:
@@ -126,6 +128,9 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 ## 8. Practice ladder
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
+| `graphs/20` | Easy | Island Perimeter | [#463](https://leetcode.com/problems/island-perimeter/) | Local counting on a grid (4 - 2*shared edges) |
+| `graphs/21` | Easy | Flood Fill | [#733](https://leetcode.com/problems/flood-fill/) | Grid DFS/BFS (connected region), mutate-as-visited |
+| `graphs/23` | Easy | Find the Town Judge | [#997](https://leetcode.com/problems/find-the-town-judge/) | Degree counting on a directed graph |
 | `graphs/1` | Medium | Number of Islands | [#200](https://leetcode.com/problems/number-of-islands/) | Graph traversal on a grid: count connected components with DFS/BFS flood fill |
 | `graphs/2` | Medium | Rotting Oranges | [#994](https://leetcode.com/problems/rotting-oranges/) | Multi-source BFS (level = time) |
 | `graphs/3` | Medium | Course Schedule | [#207](https://leetcode.com/problems/course-schedule/) | Topological sort (Kahn's BFS) / cycle detection in a directed graph |
@@ -142,6 +147,9 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 | `graphs/15` | Medium | Cheapest Flights Within K Stops | [#787](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | Bellman-Ford with a bounded number of edges (layered relaxation) |
 | `graphs/16` | Medium | Keys and Rooms | [#841](https://leetcode.com/problems/keys-and-rooms/) | Reachability in a directed graph |
 | `graphs/17` | Medium | Clone Graph | [#133](https://leetcode.com/problems/clone-graph/) | Graph traversal + memo dict (old -> new) to handle cycles |
+| `graphs/22` | Medium | Shortest Path in Binary Matrix | [#1091](https://leetcode.com/problems/shortest-path-in-binary-matrix/) | BFS on a grid (unweighted shortest path) |
+| `graphs/24` | Medium | Min Cost to Connect All Points | [#1584](https://leetcode.com/problems/min-cost-to-connect-all-points/) | Minimum spanning tree (Kruskal + Union-Find / Prim) |
+| `graphs/25` | Medium | Find Eventual Safe States | [#802](https://leetcode.com/problems/find-eventual-safe-states/) | Cycle detection with DFS colors / reverse topological order |
 | `graphs/6` | Hard | Word Ladder | [#127](https://leetcode.com/problems/word-ladder/) | BFS on an implicit graph (shortest path, unweighted) |
 | `graphs/18` | Hard | Alien Dictionary | [#269](https://leetcode.com/problems/alien-dictionary/) | Derive a graph from the data, then topological sort |
 | `graphs/19` | Hard | Word Search II | [#212](https://leetcode.com/problems/word-search-ii/) | Trie + grid DFS (search many words in one pass) |

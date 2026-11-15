@@ -1,9 +1,9 @@
 # B3 - Coverage map (generated - do not edit by hand)
 
-> Honest accounting: this repo teaches **208 distinct problems** in depth (concept, hints, brute force, optimised
-> solution, tests). The big public lists below show what is covered. A struck-through number is **not in the repo yet** -
-> but it is almost always a *variation of a pattern that is*; the last column of the pattern finder (`notes/00-pattern-finder.md`)
-> tells you which.
+> Honest accounting: this repo teaches **290 distinct problems** in depth (concept, hints, brute force, optimised
+> solution, tests). The big public lists below show what is covered. A struck-through number is **not in the repo
+> yet** - but it is almost always a *variation of a pattern that is*; the last column of the pattern finder
+> (`notes/00-pattern-finder.md`) tells you which.
 
 ## Blind 75 (community list, with a couple of popular swaps): 76/76 covered
 | group | LeetCode # -> where it is taught |

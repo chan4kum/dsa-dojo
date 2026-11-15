@@ -42,16 +42,20 @@ Answer: **42** (path 15 -> 20 -> 7; the root -10 would only hurt).
 *Reference solution for **Binary Tree Maximum Path Sum** (`trees/5`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n) time, O(h) space
+# Idea: Tree DP: return one value upward, record a different value (the bend) in a global
 def max_path_sum(root):
     best = float("-inf")
+
     def gain(node):
         nonlocal best
         if not node:
             return 0
         left = max(gain(node.left), 0)
         right = max(gain(node.right), 0)
-        best = max(best, node.val + left + right)      # path bending at this node
-        return node.val + max(left, right)             # chain a parent may extend
+        best = max(best, node.val + left + right)  # path bending at this node
+        return node.val + max(left, right)  # chain a parent may extend
+
     gain(root)
     return best
 ```
@@ -80,6 +84,9 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/9` | Easy | Subtree of Another Tree | [#572](https://leetcode.com/problems/subtree-of-another-tree/) | Tree recursion reusing a helper (same-tree at every node) |
 | `trees/10` | Easy | Balanced Binary Tree | [#110](https://leetcode.com/problems/balanced-binary-tree/) | Post-order DFS returning a value + failure sentinel (bottom-up) |
 | `trees/11` | Easy | Diameter of Binary Tree | [#543](https://leetcode.com/problems/diameter-of-binary-tree/) | Tree DP: return one thing upward, update the answer with another |
+| `trees/20` | Easy | Path Sum | [#112](https://leetcode.com/problems/path-sum/) | DFS carrying a running remainder (top-down) |
+| `trees/21` | Easy | Minimum Depth of Binary Tree | [#111](https://leetcode.com/problems/minimum-depth-of-binary-tree/) | BFS for the nearest leaf (early exit) |
+| `trees/24` | Easy | Convert Sorted Array to Binary Search Tree | [#108](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/) | Divide and conquer on the midpoint (balanced construction) |
 | `trees/2` | Medium | Binary Tree Level Order Traversal | [#102](https://leetcode.com/problems/binary-tree-level-order-traversal/) | BFS with a queue, one level per round (snapshot len(queue)) |
 | `trees/3` | Medium | Validate Binary Search Tree | [#98](https://leetcode.com/problems/validate-binary-search-tree/) | Tree recursion passing constraints DOWN (top-down), or in-order traversal must be increasing |
 | `trees/4` | Medium | Lowest Common Ancestor of a Binary Tree | [#236](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | Post-order tree recursion returning 'what I found below me' |
@@ -90,6 +97,8 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/16` | Medium | Path Sum III | [#437](https://leetcode.com/problems/path-sum-iii/) | Prefix sums + hash map on a tree path (with backtracking of the counts) |
 | `trees/17` | Medium | Lowest Common Ancestor of a Binary Search Tree | [#235](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/) | BST property turns a search into a single downward walk |
 | `trees/18` | Medium | House Robber III | [#337](https://leetcode.com/problems/house-robber-iii/) | Tree DP returning a pair of states (take / skip) |
+| `trees/22` | Medium | Sum Root to Leaf Numbers | [#129](https://leetcode.com/problems/sum-root-to-leaf-numbers/) | DFS carrying an accumulated value (top-down) |
+| `trees/23` | Medium | Find Largest Value in Each Tree Row | [#515](https://leetcode.com/problems/find-largest-value-in-each-tree-row/) | BFS by levels (aggregate per level) |
 | `trees/5` | Hard | Binary Tree Maximum Path Sum | [#124](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | Tree DP: return one value upward, record a different value (the bend) in a global |
 | `trees/19` | Hard | Serialize and Deserialize Binary Tree | [#297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Preorder with null markers (a traversal that is uniquely decodable) |
 

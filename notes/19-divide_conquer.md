@@ -36,6 +36,8 @@ merge [2, 5] + [1, 3, 4] -> [1, 2, 3, 4, 5]
 *Reference solution for **Reverse Pairs** (`divide_conquer/2`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n log n) time (count while merging)
+# Idea: Divide & conquer with counting during merge sort (inversion-count family)
 def reverse_pairs(nums):
     def sort(a):
         if len(a) <= 1:
@@ -45,18 +47,21 @@ def reverse_pairs(nums):
         right, y = sort(a[mid:])
         count = x + y
         j = 0
-        for v in left:                           # cross pairs: v > 2 * right[j]
+        for v in left:  # cross pairs: v > 2 * right[j]
             while j < len(right) and v > 2 * right[j]:
                 j += 1
             count += j
         merged, i, j = [], 0, 0
         while i < len(left) and j < len(right):
             if left[i] <= right[j]:
-                merged.append(left[i]); i += 1
+                merged.append(left[i])
+                i += 1
             else:
-                merged.append(right[j]); j += 1
+                merged.append(right[j])
+                j += 1
         merged += left[i:] + right[j:]
         return merged, count
+
     return sort(list(nums))[1]
 ```
 
@@ -76,6 +81,7 @@ def reverse_pairs(nums):
 |---|---|---|---|---|
 | `divide_conquer/1` | Medium | Sort an Array | [#912](https://leetcode.com/problems/sort-an-array/) | Divide & conquer: split, solve halves, merge in O(n) -> O(n log n) |
 | `divide_conquer/2` | Hard | Reverse Pairs | [#493](https://leetcode.com/problems/reverse-pairs/) | Divide & conquer with counting during merge sort (inversion-count family) |
+| `divide_conquer/3` | Hard | Count of Smaller Numbers After Self | [#315](https://leetcode.com/problems/count-of-smaller-numbers-after-self/) | Merge sort that counts while merging (inversion counting) |
 
 Start one with `python dsa.py start divide_conquer/1`.
 

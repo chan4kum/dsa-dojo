@@ -1,0 +1,10 @@
+# Lint settings for the whole repo (run:  ruff check .)
+line-length = 120
+target-version = "py39"
+
+[lint]
+# E/W = pycodestyle, F = pyflakes, I = import order, B = likely bugs, UP = modern syntax
+select = ["E", "W", "F", "I", "B"]
+
+[format]
+quote-style = "double"

@@ -37,6 +37,8 @@
 *Reference solution for **Find the Index of the First Occurrence in a String** (`strings/1`) - tested by `python dsa.py selftest`:*
 
 ```python
+# OPTIMISED: O(n + m) time (KMP)
+# Idea: KMP / prefix function (reuse knowledge from partial matches)
 def str_str(haystack, needle):
     if not needle:
         return 0
@@ -46,12 +48,12 @@ def str_str(haystack, needle):
     for i in range(1, len(s)):
         k = pi[i - 1]
         while k and s[i] != s[k]:
-            k = pi[k - 1]                # fall back, do not restart
+            k = pi[k - 1]  # fall back, do not restart
         if s[i] == s[k]:
             k += 1
         pi[i] = k
         if k == m:
-            return i - 2 * m             # match ends at i in s; start inside haystack
+            return i - 2 * m  # match ends at i in s; start inside haystack
     return -1
 ```
 
@@ -74,10 +76,17 @@ def str_str(haystack, needle):
 | `strings/3` | Easy | Longest Common Prefix | [#14](https://leetcode.com/problems/longest-common-prefix/) | Vertical scanning (column by column) |
 | `strings/6` | Easy | Roman to Integer | [#13](https://leetcode.com/problems/roman-to-integer/) | Single left-to-right pass with a lookahead rule |
 | `strings/7` | Easy | Add Strings | [#415](https://leetcode.com/problems/add-strings/) | Digit-by-digit arithmetic with carry (two pointers from the right) |
+| `strings/10` | Easy | Reverse Vowels of a String | [#345](https://leetcode.com/problems/reverse-vowels-of-a-string/) | Two pointers from both ends, skipping non-vowels |
+| `strings/11` | Easy | Repeated Substring Pattern | [#459](https://leetcode.com/problems/repeated-substring-pattern/) | String rotation trick: s is periodic iff s in (s + s)[1:-1] |
+| `strings/12` | Easy | Count Binary Substrings | [#696](https://leetcode.com/problems/count-binary-substrings/) | Run-length groups: add min(previous run, current run) |
+| `strings/15` | Easy | Longest Palindrome | [#409](https://leetcode.com/problems/longest-palindrome/) | Count frequencies: use all pairs, allow one odd centre |
 | `strings/4` | Medium | Reverse Words in a String | [#151](https://leetcode.com/problems/reverse-words-in-a-string/) | Split, reverse, join (in-place version: reverse all then each word) |
 | `strings/5` | Medium | String to Integer (atoi) | [#8](https://leetcode.com/problems/string-to-integer-atoi/) | Careful state-by-state parsing (finite automaton) |
 | `strings/8` | Medium | Multiply Strings | [#43](https://leetcode.com/problems/multiply-strings/) | Schoolbook multiplication with a position array |
 | `strings/9` | Medium | Encode and Decode Strings | [#271](https://leetcode.com/problems/encode-and-decode-strings/) | Length-prefixed framing (the idea behind most network protocols) |
+| `strings/13` | Medium | Count and Say | [#38](https://leetcode.com/problems/count-and-say/) | Run-length encoding, applied n - 1 times |
+| `strings/14` | Medium | Zigzag Conversion | [#6](https://leetcode.com/problems/zigzag-conversion/) | Simulate a bouncing row index |
+| `strings/16` | Medium | Repeated DNA Sequences | [#187](https://leetcode.com/problems/repeated-dna-sequences/) | Sliding window of fixed length + hash set of seen windows |
 | `strings/2` | Hard | Longest Happy Prefix | [#1392](https://leetcode.com/problems/longest-happy-prefix/) | Prefix function (border of a string) |
 
 Start one with `python dsa.py start strings/1`.
