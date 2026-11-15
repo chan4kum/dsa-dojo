@@ -1178,3 +1178,52 @@ GX18 = {
 }
 
 GX.update(GX18)
+
+
+def _n_repeated():
+    n = R(2, 5)
+    vals = random.sample(range(0, 20), n + 1)
+    nums = [vals[0]] * n + vals[1:]
+    random.shuffle(nums)
+    return (nums,)
+
+
+def _matches():
+    out = []
+    for _ in range(R(1, 8)):
+        winner, loser = random.sample(range(1, 7), 2)
+        out.append([winner, loser])
+    return (out,)
+
+
+def _square_grid():
+    n = R(1, 4)
+    return ([[R(1, 2) for _ in range(n)] for _ in range(n)],)
+
+
+def _sentence():
+    return " ".join(st("ab", 1, 2) for _ in range(R(1, 4)))
+
+
+GX19 = {
+    ("hashing", "X of a Kind in a Deck of Cards"): lambda: (ints(10, 0, 3, 1),),
+    ("hashing", "N-Repeated Element in Size 2N Array"): _n_repeated,
+    ("hashing", "Pairs of Songs With Total Durations Divisible by 60"): lambda: (ints(10, 1, 120, 1),),
+    ("hashing", "Number of Equivalent Domino Pairs"): lambda: ([[R(1, 4), R(1, 4)] for _ in range(R(1, 8))],),
+    ("hashing", "Maximum Number of Balloons"): lambda: (st("balonx", 1, 20),),
+    ("hashing", "Check If N and Its Double Exist"): lambda: (ints(8, -6, 6, 2),),
+    ("hashing", "Determine if Two Strings Are Close"): lambda: _close_args(),
+    ("hashing", "Max Number of K-Sum Pairs"): lambda: (ints(9, 1, 6, 1), R(2, 12)),
+    ("hashing", "Find Players With Zero or One Losses"): _matches,
+    ("hashing", "Max Sum of a Pair With Equal Sum of Digits"): lambda: (ints(8, 1, 99, 1),),
+    ("hashing", "Equal Row and Column Pairs"): _square_grid,
+    ("hashing", "Uncommon Words from Two Sentences"): lambda: (_sentence(), _sentence()),
+}
+
+
+def _close_args():
+    n = R(1, 5)
+    return (st("abc", n, n), st("abc", n, n))
+
+
+GX.update(GX19)
