@@ -45,11 +45,13 @@ def load(topic):
     except ModuleNotFoundError as e:
         if e.name != f"problems.{topic}_more":
             raise
-    from problems._brute import BRUTE
+    from problems._brute import BRUTE, CX
     for i, p in enumerate(probs, 1):
         b = BRUTE.get(f"{topic}/{i}")
         if b and "brute" not in p:
             p["brute"], p["brute_cx"] = b
+        if f"{topic}/{i}" in CX and "cx" not in p:
+            p["cx"] = CX[f"{topic}/{i}"]
     return probs
 
 

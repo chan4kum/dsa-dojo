@@ -4,7 +4,8 @@ Learn data structures & algorithms the way a good teacher would explain them: **
 
 - No timeline. You move when you understand, not when a calendar says so.
 - No dependencies. Python 3.9+ only.
-- Every reference solution is **executed against tests** (`python dsa.py selftest`), and many are cross-checked against brute force (`python tools/fuzz.py`).
+- Every problem has a **brute-force AND an optimised Python solution**, both executed against tests (`python dsa.py selftest`) and cross-checked on random inputs (`python tools/fuzz.py`, `python tools/fuzz_diff.py`).
+- Read `REVIEW.md` for an honest audit: what is strong, what was fixed, what is still missing.
 
 ## Quick start (2 minutes)
 
@@ -15,7 +16,9 @@ python dsa.py list two_pointers       # its practice ladder, easy -> hard
 python dsa.py start two_pointers/2    # creates workspace/two_pointers_02_3sum.py
 python workspace/two_pointers_02_3sum.py     # run YOUR solution against the tests
 python dsa.py hint two_pointers/2     # progressive hints (3), then the pattern name
-python dsa.py solution two_pointers/2 # explained reference solution (marks it for review)
+python dsa.py solution two_pointers/2 # brute force + optimised, explained (marks it for review)
+python dsa.py quiz 10                 # pattern-recognition drill: name the pattern BEFORE the reveal
+python dsa.py coverage                # which Blind-75 / classic problems are covered, and where
 python dsa.py review                  # what to redo from a blank file
 ```
 
@@ -29,7 +32,9 @@ python dsa.py review                  # what to redo from a blank file
 ## Where to start
 - `notes/00-foundations.md` - cost model, constraints -> complexity, invariants, the paper method.
 - `notes/00-pattern-finder.md` - **how to recognise which pattern a problem wants** (constraints, input shape, wording, flowchart, confusable pairs, drill).
-- Then topics `01 ... 19` in order. Each only needs ideas from the ones before it.
+- Then topics `01 ... 20` in order. Each only needs ideas from the ones before it; each ends with **"Make it stay"** (picture, rule, why, teach-back, mistakes, when NOT to use).
+- `notes/B2-interview-playbook-and-job-search.md` - how to run the interview, get unstuck, behavioural stories, the job-search pipeline, AI-engineer track.
+- `notes/B3-coverage.md` - generated map of covered Blind-75 and frequently asked problems.
 
 ## What is inside
 
@@ -54,18 +59,21 @@ python dsa.py review                  # what to redo from a blank file
 | 17 | strings | KMP, borders, hashing |
 | 18 | design | LRU, trie, min-stack, median finder |
 | 19 | divide_conquer | merge sort and counting while merging |
+| 20 | matrix | coordinates, compose transforms, in-place encoding |
 | B1 | AI & system design topic map | concepts + local mini-labs |
+| B2 | interview playbook & job search | protocol, stuck-protocol, stories, pipeline |
+| B3 | coverage map (generated) | Blind 75 + classics -> where each is taught |
 
-**Current content:** 77 problems with hints, explanations and tests (this is batch 1 of a growing set - see below).
+**Current content:** 208 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
 
 ## Repo layout
 ```
-dsa.py                 CLI: list / notes / start / test / hint / solution / review / selftest
+dsa.py                 CLI: list / notes / start / test / hint / solution / review / quiz / coverage / selftest
 core.py                test engine + helpers (ListNode, TreeNode, list<->tree adapters)
-problems/<topic>.py    problem data: prompt, hints, explanation, reference solution, tests
+problems/<topic>.py    problem data (+ <topic>_more.py for the extra batch; _brute.py has brute forces of the first batch)
 notes/                 generated hand-notes (read these)
 _src/                  note sources with {{trace}} / {{solution}} / {{ladder}} placeholders
-tools/                 build_notes.py (regenerates notes), traces.py (hand-trace tables), fuzz.py
+tools/                 build_notes.py, traces.py (hand traces), anchors.py (teacher anchors), coverage.py + lists.py, fuzz.py, fuzz_diff.py
 workspace/             your solutions (git-ignored)
 ```
 
@@ -76,12 +84,14 @@ dict(title="...", diff="E|M|H", lc=<LeetCode number>, slug="<leetcode-slug>",
      prompt="<your OWN short paraphrase>", sig="def f(...):", fn="f",
      tests=[((args...), expected), ...],            # >= 3 tests; compare= "unordered"|"nested_unordered"|"float"
      hints=["nudge", "bigger nudge", "almost the answer"],   # exactly 3
-     pattern="...", explain="...", solution=r'''def f(...): ...''')
+     pattern="...", explain="...",
+     brute=r'''def f(...): ...''', brute_cx="O(n^2) ...",       # naive but CORRECT (may time out on big inputs)
+     solution=r'''def f(...): ...''', cx="O(n) ...")
 ```
-Then `python dsa.py selftest && python tools/build_notes.py`. Class-based problems use `kind="design"` (see `problems/design.py`); tree/linked-list problems use `adapt_in` / `adapt_out`.
+Put new problems in `problems/<topic>_more.py` (same `PROBLEMS = [...]` list). Several valid answers? use `check=lambda args, got: ...`; mutates an argument? use `inplace=<arg index>`. Then `python dsa.py selftest && python tools/fuzz_diff.py && python tools/build_notes.py`. Class-based problems use `kind="design"` (see `problems/design.py`); tree/linked-list problems use `adapt_in` / `adapt_out`.
 
 **Copyright note:** prompts are original paraphrases, not copied statements. Each problem links to the original on LeetCode for the official statement and examples.
 
 ## Roadmap of content (by topic, not by date)
-Batch 1 (this): 19 DSA topics, 77 problems, pattern finder, foundations, AI/system-design concept map.
-Next batches (same format): more problems per topic until ~1000 (adding monotone-DP variants, graph variants, hard tiers, company-frequent sets), then full hand-notes + runnable labs for each block of the system-design and AI maps.
+Done: 20 DSA topics, 208 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
+Next (same format): more problems per topic (hard tiers, company-frequent sets), segment tree / SCC / Manacher notes, then full hand-notes + runnable labs for each block of the system-design and AI maps.
