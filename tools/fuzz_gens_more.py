@@ -1559,3 +1559,94 @@ def _power_queries():
 
 
 GX.update(GX25)
+
+
+def _happy_norm(args, got):
+    ok = not any(ch * 3 in got for ch in "abc") and all(got.count(ch) <= n for ch, n in zip("abc", args))
+    return (ok, len(got))
+
+
+def _topk_norm(args, got):
+    nums, k = args
+    rest = iter(nums)
+    return (len(got), sum(got), all(x in rest for x in got))
+
+
+def _barcodes():
+    while True:
+        a = ints(7, 1, 3, 1)
+        if max(a.count(v) for v in a) <= (len(a) + 1) // 2:
+            return (a,)
+
+
+def _barcodes_norm(args, got):
+    return (sorted(got) == sorted(args[0]), all(got[i] != got[i + 1] for i in range(len(got) - 1)))
+
+
+def _pass_ratio():
+    classes = []
+    for _ in range(R(1, 3)):
+        total = R(1, 6)
+        classes.append([R(0, total), total])
+    return (classes, R(0, 4))
+
+
+def _hire_costs():
+    n = R(1, 8)
+    return (ints(n, 1, 20, n), R(1, n), R(1, 4))
+
+
+def _two_arrays():
+    n = R(1, 6)
+    return ([R(1, 9) for _ in range(n)], [R(1, 9) for _ in range(n)], R(1, n))
+
+
+def _performance():
+    n = R(1, 6)
+    return (n, [R(1, 9) for _ in range(n)], [R(1, 9) for _ in range(n)], R(1, n))
+
+
+def _hire_workers():
+    n = R(1, 6)
+    return ([R(1, 9) for _ in range(n)], [R(1, 20) for _ in range(n)], R(1, n))
+
+
+def _sorted_subsums():
+    nums = ints(6, 1, 9, 1)
+    total = len(nums) * (len(nums) + 1) // 2
+    left = R(1, total)
+    return (nums, len(nums), left, R(left, total))
+
+
+def _orders():
+    return ([[R(1, 6), R(1, 5), R(0, 1)] for _ in range(R(1, 7))],)
+
+
+def _height_map():
+    rows, cols = R(1, 4), R(1, 4)
+    return ([[R(0, 5) for _ in range(cols)] for _ in range(rows)],)
+
+
+GX26 = {
+    ("heap", "Longest Happy String"): (lambda: (R(0, 5), R(0, 5), R(0, 5)), _happy_norm),
+    ("heap", "Jump Game VI"): lambda: (ints(8, -6, 6, 1), R(1, 4)),
+    ("heap", "Maximum Average Pass Ratio"): _pass_ratio,
+    ("heap", "Maximum Product After K Increments"): lambda: (ints(4, 0, 5, 1), R(0, 4)),
+    ("heap", "Total Cost to Hire K Workers"): _hire_costs,
+    ("heap", "Maximum Subsequence Score"): _two_arrays,
+    ("heap", "Maximum Performance of a Team"): _performance,
+    ("heap", "Find Subsequence of Length K With the Largest Sum"): (
+        lambda: (lambda a: (a, R(1, len(a))))(ints(8, -5, 5, 1)),
+        _topk_norm,
+    ),
+    ("heap", "Super Ugly Number"): lambda: (R(1, 14), [2, *random.sample([3, 5, 7, 11, 13], R(0, 2))]),
+    ("heap", "Range Sum of Sorted Subarray Sums"): _sorted_subsums,
+    ("heap", "Number of Orders in the Backlog"): _orders,
+    ("heap", "Distant Barcodes"): (_barcodes, _barcodes_norm),
+    ("heap", "Minimum Cost to Hire K Workers"): _hire_workers,
+    ("heap", "Minimize Deviation in Array"): lambda: (ints(4, 1, 12, 1),),
+    ("heap", "Split Array into Consecutive Subsequences"): lambda: (sorted(ints(8, 1, 5, 1)),),
+    ("heap", "Trapping Rain Water II"): _height_map,
+}
+
+GX.update(GX26)
