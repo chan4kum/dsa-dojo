@@ -75,6 +75,8 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/1` | Easy | Valid Parentheses | [#20](https://leetcode.com/problems/valid-parentheses/) | Stack (LIFO matching of nested structure) |
 | `stack_monotonic/11` | Easy | Next Greater Element I | [#496](https://leetcode.com/problems/next-greater-element-i/) | Monotonic decreasing stack + lookup dict |
 | `stack_monotonic/12` | Easy | Remove All Adjacent Duplicates In String | [#1047](https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/) | Stack as a self-cancelling accumulator |
+| `stack_monotonic/18` | Easy | Remove Outermost Parentheses | [#1021](https://leetcode.com/problems/remove-outermost-parentheses/) | Depth counter instead of a stack |
+| `stack_monotonic/23` | Easy | Make The String Great | [#1544](https://leetcode.com/problems/make-the-string-great/) | Stack cancellation of adjacent pairs |
 | `stack_monotonic/2` | Medium | Daily Temperatures | [#739](https://leetcode.com/problems/daily-temperatures/) | Monotonic (decreasing) stack: 'next greater element' |
 | `stack_monotonic/5` | Medium | Evaluate Reverse Polish Notation | [#150](https://leetcode.com/problems/evaluate-reverse-polish-notation/) | Stack evaluation (operands wait for their operator) |
 | `stack_monotonic/6` | Medium | Decode String | [#394](https://leetcode.com/problems/decode-string/) | Stack of contexts for nested structures |
@@ -87,8 +89,12 @@ Plain-stack skeleton (brackets): push openers, on a closer compare with `stack.p
 | `stack_monotonic/15` | Medium | Basic Calculator II | [#227](https://leetcode.com/problems/basic-calculator-ii/) | Stack of terms (resolve * and / immediately, sum the rest) |
 | `stack_monotonic/16` | Medium | 132 Pattern | [#456](https://leetcode.com/problems/132-pattern/) | Right-to-left monotonic stack keeping the best '2' |
 | `stack_monotonic/17` | Medium | Remove Duplicate Letters | [#316](https://leetcode.com/problems/remove-duplicate-letters/) | Monotonic stack with 'can I drop it' (last-occurrence) guard |
+| `stack_monotonic/19` | Medium | Minimum Add to Make Parentheses Valid | [#921](https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/) | Balance counter (stack reduced to two integers) |
+| `stack_monotonic/20` | Medium | Sum of Subarray Minimums | [#907](https://leetcode.com/problems/sum-of-subarray-minimums/) | Monotonic stack: contribution technique (each element's reach) |
 | `stack_monotonic/3` | Hard | Largest Rectangle in Histogram | [#84](https://leetcode.com/problems/largest-rectangle-in-histogram/) | Monotonic (increasing) stack: nearest smaller element on both sides |
 | `stack_monotonic/4` | Hard | Sliding Window Maximum | [#239](https://leetcode.com/problems/sliding-window-maximum/) | Monotonic deque (decreasing) over a sliding window |
+| `stack_monotonic/21` | Hard | Maximal Rectangle | [#85](https://leetcode.com/problems/maximal-rectangle/) | Reduce to Largest Rectangle in Histogram per row |
+| `stack_monotonic/22` | Hard | Basic Calculator | [#224](https://leetcode.com/problems/basic-calculator/) | Stack of (result, sign) saved at each '(' |
 
 Start one with `python dsa.py start stack_monotonic/1`.
 

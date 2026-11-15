@@ -64,6 +64,7 @@ Sweep-line skeleton (max overlap): `events = sorted([(s, 1), (e, -1) for each]);
 |---|---|---|---|---|
 | `intervals/4` | Easy | Meeting Rooms | [#252](https://leetcode.com/problems/meeting-rooms/) | Sort by start, compare neighbours |
 | `intervals/8` | Easy | Summary Ranges | [#228](https://leetcode.com/problems/summary-ranges/) | Linear scan grouping consecutive runs |
+| `intervals/10` | Easy | Teemo Attacking | [#495](https://leetcode.com/problems/teemo-attacking/) | Merge overlapping intervals by looking at consecutive gaps |
 | `intervals/1` | Medium | Merge Intervals | [#56](https://leetcode.com/problems/merge-intervals/) | Sort by start + sweep, merging into the last output interval |
 | `intervals/2` | Medium | Insert Interval | [#57](https://leetcode.com/problems/insert-interval/) | Linear scan in three phases (before / overlapping / after) |
 | `intervals/3` | Medium | Non-overlapping Intervals | [#435](https://leetcode.com/problems/non-overlapping-intervals/) | Greedy on interval END times (activity selection) |
@@ -71,6 +72,7 @@ Sweep-line skeleton (max overlap): `events = sorted([(s, 1), (e, -1) for each]);
 | `intervals/6` | Medium | Minimum Number of Arrows to Burst Balloons | [#452](https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/) | Greedy on interval END (sort by end) |
 | `intervals/7` | Medium | Interval List Intersections | [#986](https://leetcode.com/problems/interval-list-intersections/) | Two pointers over two sorted interval lists |
 | `intervals/9` | Medium | Remove Covered Intervals | [#1288](https://leetcode.com/problems/remove-covered-intervals/) | Sort (start asc, end desc) + running max end |
+| `intervals/11` | Medium | Minimum Time Difference | [#539](https://leetcode.com/problems/minimum-time-difference/) | Sort, then compare neighbours (plus the circular wrap-around) |
 
 Start one with `python dsa.py start intervals/1`.
 

@@ -65,6 +65,8 @@ Static range query: `P = [0]; for x in a: P.append(P[-1] + x)` then `P[r+1] - P[
 | id | difficulty | problem | LeetCode | pattern it trains |
 |---|---|---|---|---|
 | `prefix_sums/1` | Easy | Find Pivot Index | [#724](https://leetcode.com/problems/find-pivot-index/) | Prefix sum (running total) with total-minus-left trick |
+| `prefix_sums/6` | Easy | Running Sum of 1d Array | [#1480](https://leetcode.com/problems/running-sum-of-1d-array/) | Prefix sum (the base of every range-sum trick) |
+| `prefix_sums/7` | Easy | Sum of All Odd Length Subarrays | [#1588](https://leetcode.com/problems/sum-of-all-odd-length-subarrays/) | Contribution counting: how many subarrays contain each element |
 | `prefix_sums/2` | Medium | Product of Array Except Self | [#238](https://leetcode.com/problems/product-of-array-except-self/) | Prefix / suffix accumulation (prefix idea works for any associative operation) |
 | `prefix_sums/3` | Medium | Subarray Sum Equals K | [#560](https://leetcode.com/problems/subarray-sum-equals-k/) | Prefix sum + hash map of counts ('how many earlier prefixes equal current - k?') |
 | `prefix_sums/4` | Medium | Contiguous Array | [#525](https://leetcode.com/problems/contiguous-array/) | Prefix sum + first-occurrence map (transform 0 -> -1) |

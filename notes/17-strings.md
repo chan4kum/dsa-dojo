@@ -80,6 +80,11 @@ def str_str(haystack, needle):
 | `strings/11` | Easy | Repeated Substring Pattern | [#459](https://leetcode.com/problems/repeated-substring-pattern/) | String rotation trick: s is periodic iff s in (s + s)[1:-1] |
 | `strings/12` | Easy | Count Binary Substrings | [#696](https://leetcode.com/problems/count-binary-substrings/) | Run-length groups: add min(previous run, current run) |
 | `strings/15` | Easy | Longest Palindrome | [#409](https://leetcode.com/problems/longest-palindrome/) | Count frequencies: use all pairs, allow one odd centre |
+| `strings/17` | Easy | Length of Last Word | [#58](https://leetcode.com/problems/length-of-last-word/) | Scan from the end |
+| `strings/19` | Easy | Number of Segments in a String | [#434](https://leetcode.com/problems/number-of-segments-in-a-string/) | Count boundaries instead of building pieces |
+| `strings/20` | Easy | Reverse String II | [#541](https://leetcode.com/problems/reverse-string-ii/) | Stride through blocks and slice |
+| `strings/21` | Easy | Reverse Words in a String III | [#557](https://leetcode.com/problems/reverse-words-in-a-string-iii/) | Per-word two-pointer reversal |
+| `strings/22` | Easy | Merge Strings Alternately | [#1768](https://leetcode.com/problems/merge-strings-alternately/) | Parallel iteration with bounds checks |
 | `strings/4` | Medium | Reverse Words in a String | [#151](https://leetcode.com/problems/reverse-words-in-a-string/) | Split, reverse, join (in-place version: reverse all then each word) |
 | `strings/5` | Medium | String to Integer (atoi) | [#8](https://leetcode.com/problems/string-to-integer-atoi/) | Careful state-by-state parsing (finite automaton) |
 | `strings/8` | Medium | Multiply Strings | [#43](https://leetcode.com/problems/multiply-strings/) | Schoolbook multiplication with a position array |
@@ -87,7 +92,9 @@ def str_str(haystack, needle):
 | `strings/13` | Medium | Count and Say | [#38](https://leetcode.com/problems/count-and-say/) | Run-length encoding, applied n - 1 times |
 | `strings/14` | Medium | Zigzag Conversion | [#6](https://leetcode.com/problems/zigzag-conversion/) | Simulate a bouncing row index |
 | `strings/16` | Medium | Repeated DNA Sequences | [#187](https://leetcode.com/problems/repeated-dna-sequences/) | Sliding window of fixed length + hash set of seen windows |
+| `strings/18` | Medium | Compare Version Numbers | [#165](https://leetcode.com/problems/compare-version-numbers/) | Parse and compare component by component |
 | `strings/2` | Hard | Longest Happy Prefix | [#1392](https://leetcode.com/problems/longest-happy-prefix/) | Prefix function (border of a string) |
+| `strings/23` | Hard | Shortest Palindrome | [#214](https://leetcode.com/problems/shortest-palindrome/) | KMP failure function to find the longest palindromic prefix |
 
 Start one with `python dsa.py start strings/1`.
 

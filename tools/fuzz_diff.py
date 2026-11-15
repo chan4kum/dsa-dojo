@@ -11,6 +11,8 @@ import textwrap
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from fuzz_gens_more import GX  # noqa: E402
+
 from core import compile_solution, equal  # noqa: E402
 from dsa import TOPICS, load  # noqa: E402
 
@@ -444,7 +446,7 @@ def _grid_sorted():
 def main():
     bad = ran = 0
     by_title = {(t, p["title"]): p for t in TOPICS for p in load(t)}
-    for key, entry in {**G, **G2, **G3, **G4, **G5}.items():
+    for key, entry in {**G, **G2, **G3, **G4, **G5, **GX}.items():
         gen, norm = entry if isinstance(entry, tuple) else (entry, None)
         p = by_title.get(key)
         if p is None or not p.get("brute"):

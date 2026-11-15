@@ -59,6 +59,10 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 |---|---|---|---|---|
 | `matrix/8` | Easy | Transpose Matrix | [#867](https://leetcode.com/problems/transpose-matrix/) | Swap the roles of row and column index |
 | `matrix/9` | Easy | Matrix Diagonal Sum | [#1572](https://leetcode.com/problems/matrix-diagonal-sum/) | Index arithmetic: visit only the diagonal cells |
+| `matrix/10` | Easy | Toeplitz Matrix | [#766](https://leetcode.com/problems/toeplitz-matrix/) | Local neighbour check instead of whole-line scans |
+| `matrix/11` | Easy | Flipping an Image | [#832](https://leetcode.com/problems/flipping-an-image/) | Fuse two passes into one with two pointers |
+| `matrix/12` | Easy | Cells with Odd Values in a Matrix | [#1252](https://leetcode.com/problems/cells-with-odd-values-in-a-matrix/) | Track parities instead of simulating |
+| `matrix/13` | Easy | Special Positions in a Binary Matrix | [#1582](https://leetcode.com/problems/special-positions-in-a-binary-matrix/) | Precompute row and column aggregates |
 | `matrix/1` | Medium | Rotate Image | [#48](https://leetcode.com/problems/rotate-image/) | Matrix transform = composition of simple transforms (transpose + reverse) |
 | `matrix/2` | Medium | Spiral Matrix | [#54](https://leetcode.com/problems/spiral-matrix/) | Boundary shrinking simulation |
 | `matrix/3` | Medium | Set Matrix Zeroes | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Two-pass marking (use the input as its own bookkeeping) |

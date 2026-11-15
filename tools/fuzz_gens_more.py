@@ -1,0 +1,477 @@
+"""Random-input generators for tools/fuzz_diff.py (batch 4 onwards).
+
+GX maps (topic, problem title) -> a function returning one random argument tuple.
+A value may also be (generator, normaliser) when answers need normalising before they are compared.
+"""
+
+import random
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from core import TreeNode, tree_to_list  # noqa: E402
+
+R = random.randint
+
+
+def ints(n, lo, hi, k=0):
+    return [R(lo, hi) for _ in range(R(k, n))]
+
+
+def st(alpha, lo, hi):
+    return "".join(random.choice(alpha) for _ in range(R(lo, hi)))
+
+
+def rand_tree(n_max, lo=0, hi=9, unique=False):
+    """A random binary tree (any shape) with up to n_max nodes; returns the root (or None)."""
+    n = R(0, n_max)
+    if n == 0:
+        return None
+    values = random.sample(range(lo, lo + max(hi - lo + 1, n)), n) if unique else [R(lo, hi) for _ in range(n)]
+    root = TreeNode(values[0])
+    free = [(root, "left"), (root, "right")]  # empty child slots
+    for v in values[1:]:
+        node, side = free.pop(R(0, len(free) - 1))
+        child = TreeNode(v)
+        setattr(node, side, child)
+        free += [(child, "left"), (child, "right")]
+    return root
+
+
+def tree_list(n_max, lo=0, hi=9, unique=False):
+    return tree_to_list(rand_tree(n_max, lo, hi, unique))
+
+
+def bst_list(n_max):
+    """A random binary SEARCH tree (distinct values) as a level-order list."""
+    values = random.sample(range(0, 40), R(0, n_max))
+    root = None
+    for v in values:
+        if root is None:
+            root = TreeNode(v)
+            continue
+        node = root
+        while True:
+            side = "left" if v < node.val else "right"
+            if getattr(node, side) is None:
+                setattr(node, side, TreeNode(v))
+                break
+            node = getattr(node, side)
+    return tree_to_list(root)
+
+
+def traversals():
+    """(inorder, postorder) of a random tree with distinct values."""
+    root = rand_tree(9, 0, 30, unique=True)
+    ino, post = [], []
+
+    def walk(n):
+        if n:
+            walk(n.left)
+            ino.append(n.val)
+            walk(n.right)
+            post.append(n.val)
+
+    walk(root)
+    return (ino, post)
+
+
+def digits():
+    n = R(1, 5)
+    return [R(1, 9)] + [R(0, 9) for _ in range(n - 1)] if R(0, 5) else [0]
+
+
+def path_sum_args():
+    lst = tree_list(9, 0, 5)
+    return (lst, R(0, 15))
+
+
+def delete_args():
+    lst = tree_list(9, 1, 20, unique=True)
+    vals = [v for v in lst if v is not None]
+    return (lst, random.sample(vals, R(0, len(vals))) if vals else [])
+
+
+GX = {
+    ("linked_list", "Swap Nodes in Pairs"): lambda: (ints(8, 0, 9),),
+    ("linked_list", "Rotate List"): lambda: (ints(8, 0, 9), R(0, 12)),
+    ("linked_list", "Remove Duplicates from Sorted List II"): lambda: (sorted(ints(9, 0, 4)),),
+    ("linked_list", "Partition List"): lambda: (ints(8, 0, 9), R(0, 9)),
+    ("linked_list", "Odd Even Linked List"): lambda: (ints(8, 0, 9),),
+    ("linked_list", "Remove Linked List Elements"): lambda: (ints(8, 0, 4), R(0, 4)),
+    ("linked_list", "Add Two Numbers II"): lambda: (digits(), digits()),
+    ("linked_list", "Sort List"): lambda: (ints(8, -5, 5),),
+    ("trees", "Binary Tree Inorder Traversal"): lambda: (tree_list(10),),
+    ("trees", "Binary Tree Postorder Traversal"): lambda: (tree_list(10),),
+    ("trees", "Binary Tree Zigzag Level Order Traversal"): lambda: (tree_list(10),),
+    ("trees", "Binary Tree Paths"): lambda: (tree_list(9),),
+    ("trees", "Count Complete Tree Nodes"): lambda: (list(range(1, R(0, 20) + 1)),),
+    ("trees", "Construct Binary Tree from Inorder and Postorder Traversal"): traversals,
+    ("trees", "Search in a Binary Search Tree"): lambda: (bst_list(9), R(0, 39)),
+    ("trees", "Convert BST to Greater Tree"): lambda: (bst_list(9),),
+    ("trees", "Path Sum II"): path_sum_args,
+    ("trees", "Sum of Left Leaves"): lambda: (tree_list(10),),
+    ("trees", "Merge Two Binary Trees"): lambda: (tree_list(8), tree_list(8)),
+    ("trees", "Average of Levels in Binary Tree"): lambda: (tree_list(10),),
+    ("trees", "Maximum Width of Binary Tree"): lambda: (tree_list(10),),
+    ("trees", "Longest Univalue Path"): lambda: (tree_list(10, 0, 2),),
+    ("trees", "Binary Tree Cameras"): lambda: (tree_list(9),),
+    ("trees", "Delete Nodes And Return Forest"): delete_args,
+    ("trees", "Lowest Common Ancestor of Deepest Leaves"): lambda: (tree_list(10, 0, 20, unique=True),),
+}
+
+
+def _undirected(n, k):
+    edges = set()
+    for _ in range(R(0, k)):
+        if n > 1:
+            u, v = random.sample(range(n), 2)
+            edges.add((min(u, v), max(u, v)))
+    return [list(e) for e in sorted(edges)]
+
+
+def _adj(n, edges):
+    adj = [[] for _ in range(n)]
+    for u, v in edges:
+        adj[u].append(v)
+        adj[v].append(u)
+    return adj
+
+
+def path_args():
+    n = R(1, 8)
+    return (n, _undirected(n, 10), R(0, n - 1), R(0, n - 1))
+
+
+def dag_args():
+    n = R(2, 7)
+    return ([[j for j in range(i + 1, n) if R(0, 9) < 4] for i in range(n)],)
+
+
+def bipartite_args():
+    n = R(1, 8)
+    return (_adj(n, _undirected(n, 10)),)
+
+
+def division_args():
+    names = "abcde"
+    hidden = {c: random.choice([0.25, 0.5, 1.0, 2.0, 4.0, 8.0]) for c in names}
+    eqs, vals = [], []
+    for _ in range(R(1, 5)):
+        a, b = random.sample(names, 2)
+        eqs.append([a, b])
+        vals.append(hidden[a] / hidden[b])
+    qs = [[random.choice("abcdez"), random.choice("abcdez")] for _ in range(R(1, 5))]
+    return (eqs, vals, qs)
+
+
+def stones_args():
+    cells = random.sample([(r, c) for r in range(5) for c in range(5)], R(1, 8))
+    return ([list(c) for c in cells],)
+
+
+def equality_args():
+    return ([f"{random.choice('abcd')}{random.choice(['==', '!='])}{random.choice('abcd')}" for _ in range(R(1, 6))],)
+
+
+def effort_args():
+    rows, cols = R(1, 4), R(1, 4)
+    return ([[R(1, 9) for _ in range(cols)] for _ in range(rows)],)
+
+
+def city_args():
+    n = R(1, 6)
+    edges = [[u, v, R(1, 5)] for u, v in _undirected(n, 9)]
+    return (n, edges, R(1, 8))
+
+
+def probability_args():
+    n = R(2, 6)
+    edges = _undirected(n, 8)
+    probs = [random.choice([0.125, 0.25, 0.5, 1.0]) for _ in edges]
+    start, end = random.sample(range(n), 2)
+    return (n, edges, probs, start, end)
+
+
+def mht_args():
+    n = R(1, 9)
+    return (n, [[i, R(0, i - 1)] for i in range(1, n)])
+
+
+GX2 = {
+    ("graphs", "Find if Path Exists in Graph"): path_args,
+    ("graphs", "All Paths From Source to Target"): dag_args,
+    ("graphs", "Is Graph Bipartite?"): bipartite_args,
+    ("graphs", "Evaluate Division"): division_args,
+    ("graphs", "Most Stones Removed with Same Row or Column"): stones_args,
+    ("graphs", "Satisfiability of Equality Equations"): equality_args,
+    ("graphs", "Path With Minimum Effort"): effort_args,
+    (
+        "graphs",
+        "Find the City With the Smallest Number of Neighbors at a Threshold Distance",
+    ): city_args,
+    ("graphs", "Path with Maximum Probability"): probability_args,
+    ("graphs", "Minimum Height Trees"): mht_args,
+}
+GX.update(GX2)
+
+
+def stone_args():
+    while True:
+        piles = [R(1, 9) for _ in range(2 * R(1, 4))]
+        if sum(piles) % 2:
+            return (piles,)
+
+
+def dungeon_args():
+    return ([[R(-9, 9) for _ in range(3)] for _ in range(R(1, 4))],)
+
+
+GX3 = {
+    ("dynamic_programming", "Integer Break"): lambda: (R(2, 13),),
+    ("dynamic_programming", "Arithmetic Slices"): lambda: (ints(10, -3, 6),),
+    ("dynamic_programming", "Predict the Winner"): lambda: ([R(0, 9) for _ in range(R(1, 9))],),
+    ("dynamic_programming", "Delete Operation for Two Strings"): lambda: (st("abc", 0, 7), st("abc", 0, 7)),
+    ("dynamic_programming", "Maximum Length of Repeated Subarray"): lambda: (ints(8, 0, 3), ints(8, 0, 3)),
+    ("dynamic_programming", "Stone Game"): stone_args,
+    ("dynamic_programming", "Is Subsequence"): lambda: (st("abc", 0, 4), st("abc", 0, 8)),
+    ("dynamic_programming", "Uncrossed Lines"): lambda: (ints(7, 1, 4), ints(7, 1, 4)),
+    ("dynamic_programming", "Minimum Insertion Steps to Make a String Palindrome"): lambda: (st("abc", 1, 9),),
+    ("dynamic_programming", "Number of Dice Rolls With Target Sum"): lambda: (R(1, 4), R(1, 5), R(1, 16)),
+    ("dynamic_programming", "Dungeon Game"): dungeon_args,
+    ("dynamic_programming", "Longest Valid Parentheses"): lambda: (st("()", 0, 12),),
+    ("dynamic_programming", "Wildcard Matching"): lambda: (st("ab", 0, 6), st("ab?*", 0, 6)),
+    ("dynamic_programming", "Best Time to Buy and Sell Stock III"): lambda: (ints(9, 0, 9),),
+}
+GX.update(GX3)
+
+
+def rotated(n_max=8):
+    arr = sorted(ints(n_max, 0, 4, 1))
+    k = R(0, len(arr) - 1)
+    return arr[k:] + arr[:k]
+
+
+def mountain():
+    n = R(3, 9)
+    vals = random.sample(range(40), n)
+    peak = max(vals)
+    rest = [v for v in vals if v != peak]
+    random.shuffle(rest)
+    i = R(1, len(rest) - 1)
+    return sorted(rest[:i]) + [peak] + sorted(rest[i:], reverse=True)
+
+
+def balanced_str():
+    k = R(1, 5)
+    chars = list("L" * k + "R" * k)
+    random.shuffle(chars)
+    return ("".join(chars),)
+
+
+def paren_valid():
+    out, depth = [], 0
+    for _ in range(R(1, 6) * 2):
+        if depth == 0 or (R(0, 1) and len(out) < 10):
+            out.append("(")
+            depth += 1
+        else:
+            out.append(")")
+            depth -= 1
+    out += [")"] * depth
+    return ("".join(out),)
+
+
+def calc_expr(depth=0):
+    parts = [random.choice(["", "-"]) if depth else ""]
+    n_terms = R(1, 3)
+    out = ""
+    for t in range(n_terms):
+        if t:
+            out += random.choice([" + ", "-", " - ", "+"])
+        if depth < 2 and R(0, 2) == 0:
+            out += "(" + calc_expr(depth + 1) + ")"
+        else:
+            out += str(R(0, 20))
+    return parts[0] + out
+
+
+def version_str():
+    return ".".join(("0" * R(0, 2)) + str(R(0, 12)) for _ in range(R(1, 4)))
+
+
+def last_word_args():
+    return (st("ab ", 0, 8) + "a" + st(" ", 0, 3),)
+
+
+def _flowerbed():
+    bed = []
+    for _ in range(R(1, 9)):
+        bed.append(1 if (not bed or bed[-1] == 0) and R(0, 3) == 0 else 0)
+    return bed
+
+
+GX4 = {
+    ("greedy", "Two City Scheduling"): lambda: ([[R(1, 30), R(1, 30)] for _ in range(2 * R(1, 4))],),
+    ("greedy", "Maximize Sum Of Array After K Negations"): lambda: (ints(6, -6, 6, 1), R(1, 4)),
+    ("greedy", "Largest Perimeter Triangle"): lambda: (ints(8, 1, 9, 3),),
+    ("greedy", "Array Partition"): lambda: ([R(-9, 9) for _ in range(2 * R(1, 4))],),
+    ("greedy", "Can Place Flowers"): lambda: (_flowerbed(), R(0, 4)),
+    ("greedy", "Boats to Save People"): lambda: _boats(),
+    ("greedy", "Split a String in Balanced Strings"): balanced_str,
+    ("greedy", "Assign Cookies"): lambda: (ints(5, 1, 5), ints(5, 1, 5)),
+    ("binary_search", "Search in Rotated Sorted Array II"): lambda: (rotated(), R(0, 5)),
+    ("binary_search", "Find Minimum in Rotated Sorted Array II"): lambda: (rotated(),),
+    ("binary_search", "Minimum Number of Days to Make m Bouquets"): lambda: (ints(8, 1, 9, 1), R(1, 3), R(1, 3)),
+    ("binary_search", "Peak Index in a Mountain Array"): lambda: (mountain(),),
+    ("binary_search", "Find the Smallest Divisor Given a Threshold"): lambda: _divisor(),
+    ("binary_search", "Kth Missing Positive Number"): lambda: _missing(),
+    ("stack_monotonic", "Remove Outermost Parentheses"): paren_valid,
+    ("stack_monotonic", "Minimum Add to Make Parentheses Valid"): lambda: (st("()", 0, 10),),
+    ("stack_monotonic", "Sum of Subarray Minimums"): lambda: (ints(9, 1, 9, 1),),
+    ("stack_monotonic", "Maximal Rectangle"): lambda: (
+        [[random.choice("01") for _ in range(3)] for _ in range(R(1, 4))],
+    ),
+    ("stack_monotonic", "Basic Calculator"): lambda: (calc_expr(),),
+    ("stack_monotonic", "Make The String Great"): lambda: (st("aAbB", 0, 10),),
+    ("strings", "Length of Last Word"): last_word_args,
+    ("strings", "Compare Version Numbers"): lambda: (version_str(), version_str()),
+    ("strings", "Number of Segments in a String"): lambda: (st("ab ", 0, 10),),
+    ("strings", "Reverse String II"): lambda: (st("abcd", 0, 10), R(1, 5)),
+    ("strings", "Reverse Words in a String III"): lambda: (" ".join(st("abc", 1, 5) for _ in range(R(1, 4))),),
+    ("strings", "Merge Strings Alternately"): lambda: (st("abc", 0, 6), st("xyz", 0, 6)),
+    ("strings", "Shortest Palindrome"): lambda: (st("ab", 0, 9),),
+}
+
+
+def _bin_grid():
+    return [[random.choice("01") for _ in range(3)] for _ in range(R(1, 4))]
+
+
+def _boats():
+    limit = R(3, 8)
+    return ([R(1, limit) for _ in range(R(1, 7))], limit)
+
+
+def _divisor():
+    nums = ints(6, 1, 9, 1)
+    return (nums, R(len(nums), len(nums) * 9))
+
+
+def _missing():
+    arr = sorted(random.sample(range(1, 15), R(1, 7)))
+    return (arr, R(1, 8))
+
+
+GX.update(GX4)
+
+
+GX5 = {
+    ("array_tricks", "Majority Element II"): lambda: (ints(9, 0, 3, 1),),
+    ("array_tricks", "Find All Numbers Disappeared in an Array"): lambda: _disappeared(),
+    ("array_tricks", "Max Consecutive Ones"): lambda: (ints(10, 0, 1, 1),),
+    ("array_tricks", "Pascal's Triangle"): lambda: (R(1, 8),),
+    ("array_tricks", "Pascal's Triangle II"): lambda: (R(0, 9),),
+    ("array_tricks", "Third Maximum Number"): lambda: (ints(7, -4, 6, 1),),
+    ("array_tricks", "Maximum Product of Three Numbers"): lambda: (ints(8, -9, 9, 3),),
+    ("array_tricks", "Non-decreasing Array"): lambda: (ints(7, 0, 6, 1),),
+}
+
+
+def _disappeared():
+    n = R(1, 8)
+    return ([R(1, n) for _ in range(n)],)
+
+
+GX.update(GX5)
+
+
+def _toeplitz():
+    rows, cols = R(1, 4), R(1, 4)
+    if R(0, 1):
+        return ([[R(0, 2) for _ in range(cols)] for _ in range(rows)],)
+    first = [R(0, 3) for _ in range(rows + cols - 1)]
+    return ([[first[c - r + rows - 1] for c in range(cols)] for r in range(rows)],)
+
+
+def _times():
+    return (["%02d:%02d" % (R(0, 23), R(0, 59)) for _ in range(R(2, 6))],)
+
+
+def _poison():
+    return (sorted(set(ints(6, 1, 15, 1))), R(1, 5))
+
+
+def _ipo():
+    n = R(1, 6)
+    return (R(1, 4), R(0, 4), [R(0, 9) for _ in range(n)], [R(0, 6) for _ in range(n)])
+
+
+def _vowels():
+    s = st("abcde", 1, 9)
+    return (s, R(1, len(s)))
+
+
+def _isomorphic():
+    n = R(1, 7)
+    return (st("abc", n, n), st("xyz", n, n))
+
+
+def _word_pattern():
+    return (st("ab", 1, 5), " ".join(random.choice(["x", "y", "z"]) for _ in range(R(1, 5))))
+
+
+def _grumpy():
+    n = R(1, 8)
+    return ([R(0, 9) for _ in range(n)], [R(0, 1) for _ in range(n)], R(1, n))
+
+
+def _odd_cells_args():
+    m, n = R(1, 5), R(1, 5)
+    return (m, n, [[R(0, m - 1), R(0, n - 1)] for _ in range(R(0, 5))])
+
+
+GX6 = {
+    ("sliding_window", "Maximum Number of Vowels in a Substring of Given Length"): _vowels,
+    ("sliding_window", "Grumpy Bookstore Owner"): _grumpy,
+    ("sliding_window", "Binary Subarrays With Sum"): lambda: (ints(9, 0, 1, 1), R(0, 3)),
+    ("sliding_window", "Subarrays with K Different Integers"): lambda: (ints(8, 1, 3, 1), R(1, 3)),
+    ("heap", "IPO"): _ipo,
+    ("backtracking", "Letter Tile Possibilities"): lambda: (st("ABC", 1, 6),),
+    ("backtracking", "Non-decreasing Subsequences"): lambda: (ints(8, 0, 3, 1),),
+    ("backtracking", "N-Queens II"): lambda: (R(1, 7),),
+    ("hashing", "Intersection of Two Arrays"): lambda: (ints(6, 0, 5), ints(6, 0, 5)),
+    ("hashing", "Intersection of Two Arrays II"): lambda: (ints(6, 0, 5), ints(6, 0, 5)),
+    ("hashing", "First Unique Character in a String"): lambda: (st("abc", 1, 8),),
+    ("hashing", "Isomorphic Strings"): _isomorphic,
+    ("hashing", "Word Pattern"): _word_pattern,
+    ("matrix", "Toeplitz Matrix"): _toeplitz,
+    ("matrix", "Flipping an Image"): lambda: (_square01(),),
+    ("matrix", "Cells with Odd Values in a Matrix"): _odd_cells_args,
+    ("matrix", "Special Positions in a Binary Matrix"): lambda: (_bin_rect(),),
+    ("two_pointers", "Backspace String Compare"): lambda: (st("ab#", 0, 8), st("ab#", 0, 8)),
+    ("two_pointers", "Long Pressed Name"): lambda: _long_pressed(),
+    ("two_pointers", "Valid Palindrome II"): lambda: (st("ab", 1, 9),),
+    ("intervals", "Teemo Attacking"): _poison,
+    ("intervals", "Minimum Time Difference"): _times,
+    ("prefix_sums", "Running Sum of 1d Array"): lambda: (ints(8, -5, 5),),
+    ("prefix_sums", "Sum of All Odd Length Subarrays"): lambda: (ints(9, 1, 9, 1),),
+}
+
+
+def _square01():
+    n = R(1, 4)
+    return [[R(0, 1) for _ in range(n)] for _ in range(n)]
+
+
+def _bin_rect():
+    return [[R(0, 1) for _ in range(3)] for _ in range(R(1, 4))]
+
+
+def _long_pressed():
+    name = st("abc", 1, 5)
+    typed = "".join(ch * R(1, 2) for ch in name) if R(0, 2) else st("abc", 1, 7)
+    return (name, typed)
+
+
+GX.update(GX6)

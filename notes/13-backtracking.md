@@ -108,7 +108,10 @@ Three shapes to memorise:
 | `backtracking/15` | Medium | Letter Case Permutation | [#784](https://leetcode.com/problems/letter-case-permutation/) | Binary decision per position (subset-style backtracking) |
 | `backtracking/16` | Medium | Beautiful Arrangement | [#526](https://leetcode.com/problems/beautiful-arrangement/) | Backtracking with constraint pruning (permutation search) |
 | `backtracking/17` | Medium | Partition to K Equal Sum Subsets | [#698](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/) | Backtracking on bucket assignment with symmetry pruning |
+| `backtracking/18` | Medium | Letter Tile Possibilities | [#1079](https://leetcode.com/problems/letter-tile-possibilities/) | Backtracking over a frequency table (no duplicates by construction) |
+| `backtracking/19` | Medium | Non-decreasing Subsequences | [#491](https://leetcode.com/problems/non-decreasing-subsequences/) | Backtracking with a per-level 'used' set to skip duplicates |
 | `backtracking/5` | Hard | N-Queens | [#51](https://leetcode.com/problems/n-queens/) | Backtracking with O(1) conflict checks via sets (columns, diagonals) |
+| `backtracking/20` | Hard | N-Queens II | [#52](https://leetcode.com/problems/n-queens-ii/) | Backtracking with O(1) conflict checks via sets |
 
 Start one with `python dsa.py start backtracking/1`.
 

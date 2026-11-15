@@ -104,6 +104,7 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 |---|---|---|---|---|
 | `dynamic_programming/1` | Easy | Climbing Stairs | [#70](https://leetcode.com/problems/climbing-stairs/) | 1-D DP: state = position, transition from the previous 1-2 states (Fibonacci shape) |
 | `dynamic_programming/10` | Easy | Min Cost Climbing Stairs | [#746](https://leetcode.com/problems/min-cost-climbing-stairs/) | 1-D DP: state = position, transition = last 1 or 2 steps |
+| `dynamic_programming/44` | Easy | Is Subsequence | [#392](https://leetcode.com/problems/is-subsequence/) | Two pointers (greedy matching) |
 | `dynamic_programming/2` | Medium | House Robber | [#198](https://leetcode.com/problems/house-robber/) | 1-D DP with a take/skip decision at each element |
 | `dynamic_programming/3` | Medium | Coin Change | [#322](https://leetcode.com/problems/coin-change/) | Unbounded knapsack / DP over amount (min coins) |
 | `dynamic_programming/4` | Medium | Longest Increasing Subsequence | [#300](https://leetcode.com/problems/longest-increasing-subsequence/) | DP -> patience sorting with binary search (tails array) |
@@ -134,11 +135,24 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/34` | Medium | Number of Longest Increasing Subsequence | [#673](https://leetcode.com/problems/number-of-longest-increasing-subsequence/) | LIS DP with a counter next to the length |
 | `dynamic_programming/35` | Medium | Ones and Zeroes | [#474](https://leetcode.com/problems/ones-and-zeroes/) | 0/1 knapsack with two capacities (iterate capacities downwards) |
 | `dynamic_programming/37` | Medium | Best Time to Buy and Sell Stock with Transaction Fee | [#714](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/) | Two-state DP (hold / cash); fee charged on sell |
+| `dynamic_programming/38` | Medium | Integer Break | [#343](https://leetcode.com/problems/integer-break/) | DP first, then spot the math pattern (split into 3s) |
+| `dynamic_programming/39` | Medium | Arithmetic Slices | [#413](https://leetcode.com/problems/arithmetic-slices/) | Count subarrays by the number ending at each index (1-D DP) |
+| `dynamic_programming/40` | Medium | Predict the Winner | [#486](https://leetcode.com/problems/predict-the-winner/) | Interval DP on a score difference (minimax) |
+| `dynamic_programming/41` | Medium | Delete Operation for Two Strings | [#583](https://leetcode.com/problems/delete-operation-for-two-strings/) | Reduce to Longest Common Subsequence |
+| `dynamic_programming/42` | Medium | Maximum Length of Repeated Subarray | [#718](https://leetcode.com/problems/maximum-length-of-repeated-subarray/) | 2-D DP where a mismatch resets to 0 (longest common substring) |
+| `dynamic_programming/43` | Medium | Stone Game | [#877](https://leetcode.com/problems/stone-game/) | Interval DP, then a parity / strategy-stealing insight |
+| `dynamic_programming/45` | Medium | Uncrossed Lines | [#1035](https://leetcode.com/problems/uncrossed-lines/) | Disguised Longest Common Subsequence |
+| `dynamic_programming/47` | Medium | Number of Dice Rolls With Target Sum | [#1155](https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/) | Counting DP over (items used, sum reached) |
 | `dynamic_programming/9` | Hard | Burst Balloons | [#312](https://leetcode.com/problems/burst-balloons/) | Interval DP: split an interval on the LAST action |
 | `dynamic_programming/23` | Hard | Regular Expression Matching | [#10](https://leetcode.com/problems/regular-expression-matching/) | 2-D DP on two string positions (with branching for '*') |
 | `dynamic_programming/32` | Hard | Russian Doll Envelopes | [#354](https://leetcode.com/problems/russian-doll-envelopes/) | Sort one dimension, then LIS on the other (patience sorting) |
 | `dynamic_programming/33` | Hard | Distinct Subsequences | [#115](https://leetcode.com/problems/distinct-subsequences/) | 2-D string DP: use the matching character or skip it |
 | `dynamic_programming/36` | Hard | Best Time to Buy and Sell Stock IV | [#188](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/) | State-machine DP: (transactions used, holding or not) |
+| `dynamic_programming/46` | Hard | Minimum Insertion Steps to Make a String Palindrome | [#1312](https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/) | Longest Palindromic Subsequence via LCS with the reverse |
+| `dynamic_programming/48` | Hard | Dungeon Game | [#174](https://leetcode.com/problems/dungeon-game/) | Backward DP (compute requirements from the goal) |
+| `dynamic_programming/49` | Hard | Longest Valid Parentheses | [#32](https://leetcode.com/problems/longest-valid-parentheses/) | Stack of indices as 'last unmatched position' markers |
+| `dynamic_programming/50` | Hard | Wildcard Matching | [#44](https://leetcode.com/problems/wildcard-matching/) | 2-D string-matching DP (the simpler cousin of Regular Expression Matching) |
+| `dynamic_programming/51` | Hard | Best Time to Buy and Sell Stock III | [#123](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/) | State-machine DP (one variable per stage of the process) |
 
 Start one with `python dsa.py start dynamic_programming/1`.
 

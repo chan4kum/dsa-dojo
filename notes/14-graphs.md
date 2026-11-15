@@ -131,6 +131,7 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 | `graphs/20` | Easy | Island Perimeter | [#463](https://leetcode.com/problems/island-perimeter/) | Local counting on a grid (4 - 2*shared edges) |
 | `graphs/21` | Easy | Flood Fill | [#733](https://leetcode.com/problems/flood-fill/) | Grid DFS/BFS (connected region), mutate-as-visited |
 | `graphs/23` | Easy | Find the Town Judge | [#997](https://leetcode.com/problems/find-the-town-judge/) | Degree counting on a directed graph |
+| `graphs/26` | Easy | Find if Path Exists in Graph | [#1971](https://leetcode.com/problems/find-if-path-exists-in-graph/) | Connectivity: BFS/DFS or Union-Find |
 | `graphs/1` | Medium | Number of Islands | [#200](https://leetcode.com/problems/number-of-islands/) | Graph traversal on a grid: count connected components with DFS/BFS flood fill |
 | `graphs/2` | Medium | Rotting Oranges | [#994](https://leetcode.com/problems/rotting-oranges/) | Multi-source BFS (level = time) |
 | `graphs/3` | Medium | Course Schedule | [#207](https://leetcode.com/problems/course-schedule/) | Topological sort (Kahn's BFS) / cycle detection in a directed graph |
@@ -150,6 +151,15 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 | `graphs/22` | Medium | Shortest Path in Binary Matrix | [#1091](https://leetcode.com/problems/shortest-path-in-binary-matrix/) | BFS on a grid (unweighted shortest path) |
 | `graphs/24` | Medium | Min Cost to Connect All Points | [#1584](https://leetcode.com/problems/min-cost-to-connect-all-points/) | Minimum spanning tree (Kruskal + Union-Find / Prim) |
 | `graphs/25` | Medium | Find Eventual Safe States | [#802](https://leetcode.com/problems/find-eventual-safe-states/) | Cycle detection with DFS colors / reverse topological order |
+| `graphs/27` | Medium | All Paths From Source to Target | [#797](https://leetcode.com/problems/all-paths-from-source-to-target/) | DFS backtracking on a DAG |
+| `graphs/28` | Medium | Is Graph Bipartite? | [#785](https://leetcode.com/problems/is-graph-bipartite/) | Graph 2-colouring with BFS (an odd cycle makes it impossible) |
+| `graphs/29` | Medium | Evaluate Division | [#399](https://leetcode.com/problems/evaluate-division/) | Weighted graph / weighted Union-Find |
+| `graphs/30` | Medium | Most Stones Removed with Same Row or Column | [#947](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | Union-Find where rows and columns are the nodes |
+| `graphs/31` | Medium | Satisfiability of Equality Equations | [#990](https://leetcode.com/problems/satisfiability-of-equality-equations/) | Union-Find: merge equalities first, then verify inequalities |
+| `graphs/32` | Medium | Path With Minimum Effort | [#1631](https://leetcode.com/problems/path-with-minimum-effort/) | Dijkstra with a minimax cost (max instead of sum) |
+| `graphs/33` | Medium | Find the City With the Smallest Number of Neighbors at a Threshold Distance | [#1334](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | All-pairs shortest paths (Floyd-Warshall) |
+| `graphs/34` | Medium | Path with Maximum Probability | [#1514](https://leetcode.com/problems/path-with-maximum-probability/) | Dijkstra with a max-heap on products |
+| `graphs/35` | Medium | Minimum Height Trees | [#310](https://leetcode.com/problems/minimum-height-trees/) | Topological-style leaf trimming to find the tree centre |
 | `graphs/6` | Hard | Word Ladder | [#127](https://leetcode.com/problems/word-ladder/) | BFS on an implicit graph (shortest path, unweighted) |
 | `graphs/18` | Hard | Alien Dictionary | [#269](https://leetcode.com/problems/alien-dictionary/) | Derive a graph from the data, then topological sort |
 | `graphs/19` | Hard | Word Search II | [#212](https://leetcode.com/problems/word-search-ii/) | Trie + grid DFS (search many words in one pass) |

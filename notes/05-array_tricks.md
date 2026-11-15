@@ -79,11 +79,19 @@ def first_missing_positive(nums):
 |---|---|---|---|---|
 | `array_tricks/2` | Easy | Missing Number | [#268](https://leetcode.com/problems/missing-number/) | Math / XOR cancellation (range is known, so use the invariant) |
 | `array_tricks/5` | Easy | Majority Element | [#169](https://leetcode.com/problems/majority-element/) | Boyer-Moore voting (cancellation argument) |
+| `array_tricks/10` | Easy | Find All Numbers Disappeared in an Array | [#448](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/) | Index as hash: mark visited by negating in place |
+| `array_tricks/11` | Easy | Max Consecutive Ones | [#485](https://leetcode.com/problems/max-consecutive-ones/) | Running streak counter |
+| `array_tricks/12` | Easy | Pascal's Triangle | [#118](https://leetcode.com/problems/pascals-triangle/) | Build each row from the previous row |
+| `array_tricks/13` | Easy | Pascal's Triangle II | [#119](https://leetcode.com/problems/pascals-triangle-ii/) | In-place DP row update (iterate backwards) |
+| `array_tricks/14` | Easy | Third Maximum Number | [#414](https://leetcode.com/problems/third-maximum-number/) | Track the top-k with k variables |
+| `array_tricks/15` | Easy | Maximum Product of Three Numbers | [#628](https://leetcode.com/problems/maximum-product-of-three-numbers/) | Consider both ends of the sorted order (negatives flip signs) |
 | `array_tricks/1` | Medium | Maximum Subarray | [#53](https://leetcode.com/problems/maximum-subarray/) | Kadane's algorithm (1-D DP: best subarray ending here) |
 | `array_tricks/4` | Medium | Maximum Product Subarray | [#152](https://leetcode.com/problems/maximum-product-subarray/) | Kadane variant tracking both max and min (negatives flip order) |
 | `array_tricks/6` | Medium | Rotate Array | [#189](https://leetcode.com/problems/rotate-array/) | Triple reversal trick |
 | `array_tricks/7` | Medium | Find All Duplicates in an Array | [#442](https://leetcode.com/problems/find-all-duplicates-in-an-array/) | Index-as-hash (sign marking) when values are in [1, n] |
 | `array_tricks/8` | Medium | Next Permutation | [#31](https://leetcode.com/problems/next-permutation/) | Find the pivot, swap, reverse the suffix |
+| `array_tricks/9` | Medium | Majority Element II | [#229](https://leetcode.com/problems/majority-element-ii/) | Boyer-Moore voting with two candidates |
+| `array_tricks/16` | Medium | Non-decreasing Array | [#665](https://leetcode.com/problems/non-decreasing-array/) | One-pass greedy with a single allowed repair |
 | `array_tricks/3` | Hard | First Missing Positive | [#41](https://leetcode.com/problems/first-missing-positive/) | Cyclic sort / in-place hashing (index = value - 1) |
 
 Start one with `python dsa.py start array_tricks/1`.

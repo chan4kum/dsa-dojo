@@ -24,9 +24,9 @@ The spine is strong: concept-first notes, a pattern finder, hint ladders that es
 - Local, dependency-free execution with timeouts, so brute force visibly times out where it should.
 
 ## Honest limits (do not hide these from students)
-1. **Count**: ~208 problems are taught in depth, not 1000. The coverage map shows what is covered; for further practice use the "More:" lists at the end of each note *after* finishing the ladder.
+1. **Count**: 408 problems are taught in depth (the target is 1000; growth continues in batches of ~200). The coverage map shows what is covered; for further practice use the "More:" lists at the end of each note *after* finishing the ladder.
 2. **Statements are paraphrases**, not LeetCode's text; always read the official statement via the link before submitting there.
 3. **Tests are small and hand-picked** plus random cross-checks; they do not replace a judge's large hidden tests. Complexity claims should be argued by the student, not trusted.
 4. **Not covered in depth yet**: segment trees (only Fenwick), Tarjan/Kosaraju SCC, Manacher, advanced geometry, SQL and concurrency questions.
 5. **Not tested with real learners.** The first cohort's confusion points should drive the next edit.
-6. **Publishing**: the build environment could not create or push to a GitHub repository (no authorised remote). The repository is committed locally and ready to push.
+6. **Publishing**: the repository is public at github.com/chan4kum/dsa-dojo; pushes are made from the maintainer's own machine.

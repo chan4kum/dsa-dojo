@@ -82,6 +82,11 @@ Interview note: be ready to write the doubly linked list **by hand** (head/tail 
 |---|---|---|---|---|
 | `design/5` | Easy | Kth Largest Element in a Stream | [#703](https://leetcode.com/problems/kth-largest-element-in-a-stream/) | Fixed-size min-heap = 'k largest so far' (root = k-th largest) |
 | `design/6` | Easy | Implement Queue using Stacks | [#232](https://leetcode.com/problems/implement-queue-using-stacks/) | Two stacks + lazy transfer (amortised O(1)) |
+| `design/11` | Easy | Design HashMap | [#706](https://leetcode.com/problems/design-hashmap/) | Hash table with separate chaining |
+| `design/12` | Easy | Design HashSet | [#705](https://leetcode.com/problems/design-hashset/) | Hash table with separate chaining (keys only) |
+| `design/14` | Easy | Implement Stack using Queues | [#225](https://leetcode.com/problems/implement-stack-using-queues/) | Queue rotation to reverse order |
+| `design/16` | Easy | Number of Recent Calls | [#933](https://leetcode.com/problems/number-of-recent-calls/) | Sliding window over a time-ordered queue |
+| `design/19` | Easy | Range Sum Query - Immutable | [#303](https://leetcode.com/problems/range-sum-query-immutable/) | Prefix sums |
 | `design/1` | Medium | Min Stack | [#155](https://leetcode.com/problems/min-stack/) | Augmented stack: keep running aggregates next to each element |
 | `design/2` | Medium | LRU Cache | [#146](https://leetcode.com/problems/lru-cache/) | Hash map + doubly linked list (or OrderedDict): O(1) ordered cache |
 | `design/3` | Medium | Implement Trie (Prefix Tree) | [#208](https://leetcode.com/problems/implement-trie-prefix-tree/) | Trie (prefix tree): O(L) insert/search per word, shared prefixes |
@@ -89,6 +94,11 @@ Interview note: be ready to write the doubly linked list **by hand** (head/tail 
 | `design/8` | Medium | Design Add and Search Words Data Structure | [#211](https://leetcode.com/problems/design-add-and-search-words-data-structure/) | Trie + DFS branching on wildcards |
 | `design/9` | Medium | Design Browser History | [#1472](https://leetcode.com/problems/design-browser-history/) | Array + cursor (truncate on write) |
 | `design/10` | Medium | Range Sum Query - Mutable | [#307](https://leetcode.com/problems/range-sum-query-mutable/) | Fenwick tree / BIT (prefix sums with point updates) |
+| `design/13` | Medium | Design Circular Queue | [#622](https://leetcode.com/problems/design-circular-queue/) | Ring buffer (head index + size, indices taken modulo capacity) |
+| `design/15` | Medium | Online Stock Span | [#901](https://leetcode.com/problems/online-stock-span/) | Monotonic stack that merges spans |
+| `design/17` | Medium | Product of the Last K Numbers | [#1352](https://leetcode.com/problems/product-of-the-last-k-numbers/) | Prefix products with a reset on zero |
+| `design/18` | Medium | Peeking Iterator | [#284](https://leetcode.com/problems/peeking-iterator/) | One-element look-ahead buffer |
+| `design/20` | Medium | Range Sum Query 2D - Immutable | [#304](https://leetcode.com/problems/range-sum-query-2d-immutable/) | 2-D prefix sums (inclusion-exclusion) |
 | `design/4` | Hard | Find Median from Data Stream | [#295](https://leetcode.com/problems/find-median-from-data-stream/) | Two heaps (max-heap of the lower half + min-heap of the upper half) |
 
 Start one with `python dsa.py start design/1`.

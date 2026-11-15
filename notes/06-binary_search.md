@@ -85,6 +85,7 @@ def min_eating_speed(piles, h):
 | `binary_search/9` | Easy | Sqrt(x) | [#69](https://leetcode.com/problems/sqrtx/) | Binary search on the ANSWER (monotone predicate over candidate values) |
 | `binary_search/12` | Easy | Valid Perfect Square | [#367](https://leetcode.com/problems/valid-perfect-square/) | Binary search on the answer (monotone predicate r*r vs num) |
 | `binary_search/16` | Easy | Find Smallest Letter Greater Than Target | [#744](https://leetcode.com/problems/find-smallest-letter-greater-than-target/) | Upper-bound binary search (first element strictly greater) |
+| `binary_search/22` | Easy | Kth Missing Positive Number | [#1539](https://leetcode.com/problems/kth-missing-positive-number/) | Binary search on 'how many are missing so far' |
 | `binary_search/2` | Medium | Search in Rotated Sorted Array | [#33](https://leetcode.com/problems/search-in-rotated-sorted-array/) | Binary search with 'which half is sorted?' reasoning |
 | `binary_search/3` | Medium | Koko Eating Bananas | [#875](https://leetcode.com/problems/koko-eating-bananas/) | Binary search on the ANSWER (monotonic feasibility predicate) |
 | `binary_search/7` | Medium | Find First and Last Position of Element in Sorted Array | [#34](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/) | Two lower-bound searches (left edge, right edge) |
@@ -94,8 +95,13 @@ def min_eating_speed(piles, h):
 | `binary_search/13` | Medium | Capacity To Ship Packages Within D Days | [#1011](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/) | Binary search on the answer + greedy feasibility check |
 | `binary_search/14` | Medium | Single Element in a Sorted Array | [#540](https://leetcode.com/problems/single-element-in-a-sorted-array/) | Binary search on a structural invariant (pair parity) |
 | `binary_search/15` | Medium | Find K Closest Elements | [#658](https://leetcode.com/problems/find-k-closest-elements/) | Binary search for a window start (compare the two boundary elements) |
+| `binary_search/17` | Medium | Search in Rotated Sorted Array II | [#81](https://leetcode.com/problems/search-in-rotated-sorted-array-ii/) | Binary search on a rotated array (one half is always sorted) |
+| `binary_search/19` | Medium | Minimum Number of Days to Make m Bouquets | [#1482](https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/) | Binary search on the answer + a greedy feasibility check |
+| `binary_search/20` | Medium | Peak Index in a Mountain Array | [#852](https://leetcode.com/problems/peak-index-in-a-mountain-array/) | Binary search on a slope (rising vs falling) |
+| `binary_search/21` | Medium | Find the Smallest Divisor Given a Threshold | [#1283](https://leetcode.com/problems/find-the-smallest-divisor-given-a-threshold/) | Binary search on the answer (monotone predicate) |
 | `binary_search/4` | Hard | Split Array Largest Sum | [#410](https://leetcode.com/problems/split-array-largest-sum/) | Binary search on the answer + greedy feasibility check |
 | `binary_search/5` | Hard | Median of Two Sorted Arrays | [#4](https://leetcode.com/problems/median-of-two-sorted-arrays/) | Binary search on a partition point (not on values) |
+| `binary_search/18` | Hard | Find Minimum in Rotated Sorted Array II | [#154](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/) | Binary search against the right end, with a safe shrink on ties |
 
 Start one with `python dsa.py start binary_search/1`.
 

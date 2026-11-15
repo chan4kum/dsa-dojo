@@ -84,6 +84,9 @@ def three_sum(nums):
 | `two_pointers/9` | Easy | Merge Sorted Array | [#88](https://leetcode.com/problems/merge-sorted-array/) | Merge from the back (use the free space as a buffer) |
 | `two_pointers/10` | Easy | Valid Palindrome II | [#680](https://leetcode.com/problems/valid-palindrome-ii/) | Two pointers with one allowed skip (branch once) |
 | `two_pointers/11` | Easy | Reverse String | [#344](https://leetcode.com/problems/reverse-string/) | Two pointers from both ends (swap inward) |
+| `two_pointers/14` | Easy | Backspace String Compare | [#844](https://leetcode.com/problems/backspace-string-compare/) | Two pointers from the end (O(1) space) |
+| `two_pointers/15` | Easy | Long Pressed Name | [#925](https://leetcode.com/problems/long-pressed-name/) | Two pointers with run-length reasoning |
+| `two_pointers/16` | Easy | Valid Palindrome II | [#680](https://leetcode.com/problems/valid-palindrome-ii/) | Two pointers with one allowed skip |
 | `two_pointers/2` | Medium | 3Sum | [#15](https://leetcode.com/problems/3sum/) | Sort + fix one element + two pointers on the rest |
 | `two_pointers/3` | Medium | Container With Most Water | [#11](https://leetcode.com/problems/container-with-most-water/) | Two pointers converging, with a greedy discard argument |
 | `two_pointers/5` | Medium | Two Sum II - Input Array Is Sorted | [#167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) | Two pointers on a sorted array (converge from both ends) |

@@ -79,7 +79,11 @@ def length_of_longest_substring(s):
 | `sliding_window/10` | Medium | Subarray Product Less Than K | [#713](https://leetcode.com/problems/subarray-product-less-than-k/) | Variable sliding window, counting subarrays ending at r |
 | `sliding_window/11` | Medium | Fruit Into Baskets | [#904](https://leetcode.com/problems/fruit-into-baskets/) | Variable window with a count map (at most K distinct) |
 | `sliding_window/12` | Medium | Longest Subarray of 1's After Deleting One Element | [#1493](https://leetcode.com/problems/longest-subarray-of-1s-after-deleting-one-element/) | Variable window with at most K = 1 violations |
+| `sliding_window/13` | Medium | Maximum Number of Vowels in a Substring of Given Length | [#1456](https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/) | Fixed-size sliding window with a running count |
+| `sliding_window/14` | Medium | Grumpy Bookstore Owner | [#1052](https://leetcode.com/problems/grumpy-bookstore-owner/) | Fixed-size sliding window maximising the extra gain |
+| `sliding_window/15` | Medium | Binary Subarrays With Sum | [#930](https://leetcode.com/problems/binary-subarrays-with-sum/) | Prefix sum + hash map of counts |
 | `sliding_window/4` | Hard | Minimum Window Substring | [#76](https://leetcode.com/problems/minimum-window-substring/) | Variable window: expand until valid, then shrink to the minimum while still valid |
+| `sliding_window/16` | Hard | Subarrays with K Different Integers | [#992](https://leetcode.com/problems/subarrays-with-k-different-integers/) | Exactly K = atMost(K) - atMost(K - 1) |
 
 Start one with `python dsa.py start sliding_window/1`.
 

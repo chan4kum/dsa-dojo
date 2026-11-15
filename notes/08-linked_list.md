@@ -84,12 +84,20 @@ def reverse_list(head):
 | `linked_list/7` | Easy | Linked List Cycle | [#141](https://leetcode.com/problems/linked-list-cycle/) | Floyd's cycle detection (fast & slow pointers) |
 | `linked_list/8` | Easy | Palindrome Linked List | [#234](https://leetcode.com/problems/palindrome-linked-list/) | Fast/slow to find the middle + in-place reverse + two-pointer compare |
 | `linked_list/12` | Easy | Remove Duplicates from Sorted List | [#83](https://leetcode.com/problems/remove-duplicates-from-sorted-list/) | Single pointer, skip equal neighbours |
+| `linked_list/20` | Easy | Remove Linked List Elements | [#203](https://leetcode.com/problems/remove-linked-list-elements/) | Dummy head + delete-after-prev |
 | `linked_list/3` | Medium | Remove Nth Node From End of List | [#19](https://leetcode.com/problems/remove-nth-node-from-end-of-list/) | Two pointers with a fixed gap + dummy head node |
 | `linked_list/4` | Medium | Find the Duplicate Number | [#287](https://leetcode.com/problems/find-the-duplicate-number/) | Fast & slow pointers on an implicit linked list (Floyd cycle detection) |
 | `linked_list/9` | Medium | Add Two Numbers | [#2](https://leetcode.com/problems/add-two-numbers/) | Simulate grade-school addition with a carry |
 | `linked_list/10` | Medium | Reorder List | [#143](https://leetcode.com/problems/reorder-list/) | Middle + reverse + interleave merge (compose list primitives) |
 | `linked_list/13` | Medium | Reverse Linked List II | [#92](https://leetcode.com/problems/reverse-linked-list-ii/) | Pointer surgery with a dummy head (reverse a sub-segment in place) |
 | `linked_list/14` | Medium | Linked List Cycle II | [#142](https://leetcode.com/problems/linked-list-cycle-ii/) | Floyd phase 2: restart one pointer from the head |
+| `linked_list/15` | Medium | Swap Nodes in Pairs | [#24](https://leetcode.com/problems/swap-nodes-in-pairs/) | Dummy head + pointer rewiring in fixed-size groups |
+| `linked_list/16` | Medium | Rotate List | [#61](https://leetcode.com/problems/rotate-list/) | Make the list circular, then cut it at the right place |
+| `linked_list/17` | Medium | Remove Duplicates from Sorted List II | [#82](https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/) | Dummy head + skip whole runs of equal values |
+| `linked_list/18` | Medium | Partition List | [#86](https://leetcode.com/problems/partition-list/) | Split into two lists with dummy heads, then concatenate |
+| `linked_list/19` | Medium | Odd Even Linked List | [#328](https://leetcode.com/problems/odd-even-linked-list/) | Two interleaved chains built in one pass, then joined |
+| `linked_list/21` | Medium | Add Two Numbers II | [#445](https://leetcode.com/problems/add-two-numbers-ii/) | Stacks to read a list backwards; build the answer by prepending |
+| `linked_list/22` | Medium | Sort List | [#148](https://leetcode.com/problems/sort-list/) | Merge sort on a linked list (split with slow/fast, merge with dummy) |
 | `linked_list/5` | Hard | Reverse Nodes in k-Group | [#25](https://leetcode.com/problems/reverse-nodes-in-k-group/) | Sub-list reversal with a dummy head and boundary reconnection |
 | `linked_list/11` | Hard | Merge k Sorted Lists | [#23](https://leetcode.com/problems/merge-k-sorted-lists/) | Heap of k candidates (k-way merge) |
 

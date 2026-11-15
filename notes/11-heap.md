@@ -89,6 +89,7 @@ def find_kth_largest(nums, k):
 | `heap/8` | Medium | Find K Pairs with Smallest Sums | [#373](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/) | Best-first search with a heap over a sorted 2D implicit grid |
 | `heap/9` | Medium | Ugly Number II | [#264](https://leetcode.com/problems/ugly-number-ii/) | k-way merge of implicit sorted sequences (multiples of earlier results) |
 | `heap/10` | Medium | Kth Smallest Element in a Sorted Matrix | [#378](https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/) | k-way merge with a heap (or binary search on value) |
+| `heap/11` | Hard | IPO | [#502](https://leetcode.com/problems/ipo/) | Two structures: sorted list for 'unlocking', max-heap for 'best now' |
 
 Start one with `python dsa.py start heap/1`.
 

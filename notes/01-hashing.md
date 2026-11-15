@@ -68,6 +68,11 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/8` | Easy | Ransom Note | [#383](https://leetcode.com/problems/ransom-note/) | Frequency map as a budget (inventory) |
 | `hashing/9` | Easy | Contains Duplicate II | [#219](https://leetcode.com/problems/contains-duplicate-ii/) | Hash map of last-seen index (closest previous occurrence) |
 | `hashing/11` | Easy | Word Pattern | [#290](https://leetcode.com/problems/word-pattern/) | Bijection check with two maps |
+| `hashing/12` | Easy | Intersection of Two Arrays | [#349](https://leetcode.com/problems/intersection-of-two-arrays/) | Hash set membership |
+| `hashing/13` | Easy | Intersection of Two Arrays II | [#350](https://leetcode.com/problems/intersection-of-two-arrays-ii/) | Frequency counter consumed as you match |
+| `hashing/14` | Easy | First Unique Character in a String | [#387](https://leetcode.com/problems/first-unique-character-in-a-string/) | Two passes: count, then find |
+| `hashing/15` | Easy | Isomorphic Strings | [#205](https://leetcode.com/problems/isomorphic-strings/) | Bijection check with two hash maps |
+| `hashing/16` | Easy | Word Pattern | [#290](https://leetcode.com/problems/word-pattern/) | Bijection check with two hash maps |
 | `hashing/2` | Medium | Group Anagrams | [#49](https://leetcode.com/problems/group-anagrams/) | Hash map with a canonical-form key (group by signature) |
 | `hashing/3` | Medium | Longest Consecutive Sequence | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash set + 'only expand from the start of a sequence' (amortised O(n)) |
 | `hashing/10` | Medium | 4Sum II | [#454](https://leetcode.com/problems/4sum-ii/) | Meet in the middle with a hash map of pair sums |

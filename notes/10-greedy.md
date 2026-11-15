@@ -75,6 +75,12 @@ def can_jump(nums):
 |---|---|---|---|---|
 | `greedy/6` | Easy | Assign Cookies | [#455](https://leetcode.com/problems/assign-cookies/) | Greedy matching after sorting (smallest sufficient) |
 | `greedy/10` | Easy | Lemonade Change | [#860](https://leetcode.com/problems/lemonade-change/) | Greedy: spend the least flexible bill first |
+| `greedy/14` | Easy | Maximize Sum Of Array After K Negations | [#1005](https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/) | Greedy: spend each action on the best remaining gain |
+| `greedy/15` | Easy | Largest Perimeter Triangle | [#976](https://leetcode.com/problems/largest-perimeter-triangle/) | Sort, then test neighbours in a greedy order |
+| `greedy/16` | Easy | Array Partition | [#561](https://leetcode.com/problems/array-partition/) | Sort, then pair neighbours |
+| `greedy/17` | Easy | Can Place Flowers | [#605](https://leetcode.com/problems/can-place-flowers/) | Greedy left-to-right placement |
+| `greedy/19` | Easy | Split a String in Balanced Strings | [#1221](https://leetcode.com/problems/split-a-string-in-balanced-strings/) | Running balance / greedy cut at every zero |
+| `greedy/20` | Easy | Assign Cookies | [#455](https://leetcode.com/problems/assign-cookies/) | Sort both sides and match greedily |
 | `greedy/1` | Medium | Jump Game | [#55](https://leetcode.com/problems/jump-game/) | Greedy: maintain the farthest reachable frontier |
 | `greedy/2` | Medium | Gas Station | [#134](https://leetcode.com/problems/gas-station/) | Greedy with a 'discard the failed prefix' argument |
 | `greedy/3` | Medium | Partition Labels | [#763](https://leetcode.com/problems/partition-labels/) | Greedy interval extension using last occurrences |
@@ -84,6 +90,8 @@ def can_jump(nums):
 | `greedy/8` | Medium | Valid Parenthesis String | [#678](https://leetcode.com/problems/valid-parenthesis-string/) | Greedy with a range of possible states |
 | `greedy/11` | Medium | Queue Reconstruction by Height | [#406](https://leetcode.com/problems/queue-reconstruction-by-height/) | Greedy insertion order (place the constraint-free ones first) |
 | `greedy/12` | Medium | Wiggle Subsequence | [#376](https://leetcode.com/problems/wiggle-subsequence/) | Greedy: count direction changes (peaks and valleys) |
+| `greedy/13` | Medium | Two City Scheduling | [#1029](https://leetcode.com/problems/two-city-scheduling/) | Greedy by difference (opportunity cost) |
+| `greedy/18` | Medium | Boats to Save People | [#881](https://leetcode.com/problems/boats-to-save-people/) | Sort + two pointers (pair the heaviest with the lightest) |
 | `greedy/9` | Hard | Candy | [#135](https://leetcode.com/problems/candy/) | Two-pass greedy (satisfy left constraints, then right constraints) |
 
 Start one with `python dsa.py start greedy/1`.
