@@ -1101,3 +1101,80 @@ GX17 = {
 }
 
 GX.update(GX17)
+
+
+def _two_blocks():
+    nums = ints(9, 0, 9, 2)
+    a = R(1, len(nums) - 1)
+    return (nums, a, R(1, len(nums) - a))
+
+
+def _pali_queries():
+    s = st("abcd", 1, 10)
+    queries = []
+    for _ in range(R(1, 5)):
+        left = R(0, len(s) - 1)
+        queries.append([left, R(left, len(s) - 1), R(0, 3)])
+    return (s, queries)
+
+
+def _grid(lo, hi, size=5):
+    return [[R(lo, hi) for _ in range(R(1, size))] for _ in range(1)]
+
+
+def _block_args():
+    rows, cols = R(1, 5), R(1, 5)
+    return ([[R(0, 9) for _ in range(cols)] for _ in range(rows)], R(1, 3))
+
+
+def _candle_args():
+    s = st("*|", 1, 14)
+    queries = []
+    for _ in range(R(1, 5)):
+        left = R(0, len(s) - 1)
+        queries.append([left, R(left, len(s) - 1)])
+    return (s, queries)
+
+
+def _vowel_args():
+    words = [st("abe", 1, 3) for _ in range(R(1, 6))]
+    queries = []
+    for _ in range(R(1, 5)):
+        left = R(0, len(words) - 1)
+        queries.append([left, R(left, len(words) - 1)])
+    return (words, queries)
+
+
+def _covered_args():
+    ranges = []
+    for _ in range(R(1, 4)):
+        a = R(1, 10)
+        ranges.append([a, R(a, 12)])
+    left = R(1, 10)
+    return (ranges, left, R(left, 12))
+
+
+def _submatrix_args():
+    rows, cols = R(1, 4), R(1, 4)
+    return ([[R(-2, 3) for _ in range(cols)] for _ in range(rows)], R(-2, 4))
+
+
+GX18 = {
+    ("prefix_sums", "Maximum Sum of Two Non-Overlapping Subarrays"): _two_blocks,
+    ("prefix_sums", "Can Make Palindrome from Substring"): _pali_queries,
+    ("prefix_sums", "Matrix Block Sum"): _block_args,
+    ("prefix_sums", "Find the Longest Substring Containing Vowels in Even Counts"): lambda: (st("aeioubcd", 1, 12),),
+    (
+        "prefix_sums",
+        "Maximum Number of Non-Overlapping Subarrays With Sum Equals Target",
+    ): lambda: (ints(8, -3, 4, 1), R(-3, 5)),
+    ("prefix_sums", "Plates Between Candles"): _candle_args,
+    ("prefix_sums", "Number of Ways to Split Array"): lambda: (ints(8, -5, 9, 2),),
+    ("prefix_sums", "Longest Subsequence With Limited Sum"): lambda: (ints(7, 1, 9, 1), ints(5, 0, 30, 1)),
+    ("prefix_sums", "Count Vowel Strings in Ranges"): _vowel_args,
+    ("prefix_sums", "Find the Score of All Prefixes of an Array"): lambda: (ints(8, 1, 9, 1),),
+    ("prefix_sums", "Check if All the Integers in a Range Are Covered"): _covered_args,
+    ("prefix_sums", "Number of Submatrices That Sum to Target"): _submatrix_args,
+}
+
+GX.update(GX18)
