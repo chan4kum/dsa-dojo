@@ -680,3 +680,54 @@ GX9 = {
 }
 
 GX.update(GX9)
+
+
+def _bits(n_max=8):
+    n = R(1, n_max)
+    if n == 1:
+        return random.choice("01")
+    return "1" + "".join(random.choice("01") for _ in range(n - 1))  # no leading zeros
+
+
+def _gcd_strings():
+    base = st("AB", 1, 3)
+    if R(0, 1):
+        return (base * R(1, 4), base * R(1, 4))
+    return (st("AB", 1, 6), st("AB", 1, 6))
+
+
+def _anagram_pair():
+    n = R(1, 8)
+    return (st("abc", n, n), st("abc", n, n))
+
+
+def _find_diff():
+    base = st("abc", 0, 8)
+    chars = list(base + random.choice("abc"))
+    random.shuffle(chars)
+    return (base, "".join(chars))
+
+
+def _halves():
+    n = R(1, 4) * 2
+    return (st("aeAEbB", n, n),)
+
+
+GX10 = {
+    ("strings", "Add Binary"): lambda: (_bits(), _bits()),
+    ("strings", "License Key Formatting"): lambda: (st("ab-C", 0, 12), R(1, 4)),
+    ("strings", "Detect Capital"): lambda: (st("aAbB", 1, 6),),
+    ("strings", "Student Attendance Record I"): lambda: (st("ALP", 1, 8),),
+    ("strings", "Greatest Common Divisor of Strings"): _gcd_strings,
+    ("strings", "Minimum Number of Steps to Make Two Strings Anagram"): _anagram_pair,
+    ("strings", "Increasing Decreasing String"): lambda: (st("abcd", 1, 10),),
+    ("strings", "Consecutive Characters"): lambda: (st("abc", 1, 12),),
+    ("strings", "Largest Substring Between Two Equal Characters"): lambda: (st("abc", 1, 10),),
+    ("strings", "Determine if String Halves Are Alike"): _halves,
+    ("strings", "Count Number of Homogenous Substrings"): lambda: (st("ab", 1, 10),),
+    ("strings", "Find the Difference"): _find_diff,
+    ("strings", "Longest Uncommon Subsequence I"): lambda: (st("ab", 1, 5), st("ab", 1, 5)),
+    ("strings", "Find Common Characters"): lambda: ([st("abc", 1, 5) for _ in range(R(1, 4))],),
+}
+
+GX.update(GX10)
