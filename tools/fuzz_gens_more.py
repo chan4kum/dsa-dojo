@@ -1227,3 +1227,52 @@ def _close_args():
 
 
 GX.update(GX19)
+
+
+def _mat(lo, hi, size=5):
+    rows, cols = R(1, size), R(1, size)
+    return [[R(lo, hi) for _ in range(cols)] for _ in range(rows)]
+
+
+def _sorted_desc_matrix():
+    mat = _mat(-4, 4)
+    mat = [sorted(row, reverse=True) for row in mat]
+    cols = [sorted(col, reverse=True) for col in zip(*mat)]
+    return ([list(row) for row in zip(*cols)],)
+
+
+def _distinct_matrix():
+    rows, cols = R(1, 4), R(1, 4)
+    values = random.sample(range(1, 40), rows * cols)
+    return ([values[r * cols : (r + 1) * cols] for r in range(rows)],)
+
+
+def _binary_square():
+    n = R(1, 5)
+    return ([[R(0, 1) for _ in range(n)] for _ in range(n)],)
+
+
+def _painted_args():
+    m, n = R(1, 4), R(1, 4)
+    values = list(range(1, m * n + 1))
+    order = values[:]
+    random.shuffle(order)
+    random.shuffle(values)
+    return (order, [values[r * n : (r + 1) * n] for r in range(m)])
+
+
+GX20 = {
+    ("matrix", "Diagonal Traverse"): lambda: (_mat(-9, 9),),
+    ("matrix", "Score After Flipping Matrix"): lambda: (_mat(0, 1, 4),),
+    ("matrix", "Shift 2D Grid"): lambda: (_mat(-9, 9, 4), R(0, 20)),
+    ("matrix", "Count Square Submatrices with All Ones"): lambda: (_mat(0, 1),),
+    ("matrix", "Count Negative Numbers in a Sorted Matrix"): _sorted_desc_matrix,
+    ("matrix", "Lucky Numbers in a Matrix"): _distinct_matrix,
+    ("matrix", "Count Submatrices With All Ones"): lambda: (_mat(0, 1),),
+    ("matrix", "Largest 1-Bordered Square"): lambda: (_mat(0, 1),),
+    ("matrix", "Minimum Swaps to Arrange a Binary Grid"): _binary_square,
+    ("matrix", "First Completely Painted Row or Column"): _painted_args,
+    ("matrix", "Difference Between Ones and Zeros in Row and Column"): lambda: (_mat(0, 1),),
+}
+
+GX.update(GX20)
