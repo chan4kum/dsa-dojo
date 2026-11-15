@@ -2335,3 +2335,12 @@ GX34 = {
 }
 
 GX.update(GX34)
+
+
+GX35 = {
+    ("linked_list", "Double a Number Represented as a Linked List"): lambda: (
+        [R(1, 9)] + [R(0, 9) for _ in range(R(0, 7))],
+    ),
+}
+
+GX.update(GX35)
