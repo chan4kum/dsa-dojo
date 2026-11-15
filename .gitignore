@@ -1,0 +1,4 @@
+workspace/*.py
+.progress.json
+__pycache__/
+*.pyc
