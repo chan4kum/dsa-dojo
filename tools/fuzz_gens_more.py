@@ -1774,3 +1774,94 @@ GX27 = {
 }
 
 GX.update(GX27)
+
+
+def _fs():
+    lines, depth, last_dir = [], 0, True
+    for t in range(R(1, 7)):
+        if t:
+            depth = R(0, depth + 1 if last_dir else depth)
+        is_file = R(0, 2) == 0
+        name = "f" * R(1, 3) + ".x" if is_file else "d" * R(1, 3)
+        lines.append("\t" * depth + name)
+        last_dir = not is_file
+    return ("\n".join(lines),)
+
+
+def _set_mismatch():
+    n = R(2, 6)
+    nums = list(range(1, n + 1))
+    i, j = random.sample(range(n), 2)
+    nums[i] = nums[j]
+    random.shuffle(nums)
+    return (nums,)
+
+
+def _orders():
+    return ([[random.choice("XYZ"), str(R(1, 12)), random.choice(["Tea", "Cake", "Soup"])] for _ in range(R(1, 7))],)
+
+
+def _path_pairs():
+    values = random.sample(range(-5, 10), R(2, 6))
+    pairs = [[values[i], values[i + 1]] if R(0, 1) else [values[i + 1], values[i]] for i in range(len(values) - 1)]
+    random.shuffle(pairs)
+    return (pairs,)
+
+
+def _restore_norm(args, got):
+    pairs = args[0]
+    wanted = sorted(sorted(p) for p in pairs)
+    return len(got) == len(pairs) + 1 and sorted(sorted(got[i : i + 2]) for i in range(len(got) - 1)) == wanted
+
+
+def _brackets():
+    s = "".join(random.choice(["x", "y", "(a)", "(b)", "(c)"]) for _ in range(R(1, 6)))
+    return (s, [[k, "v" + k] for k in random.sample("abc", R(0, 3))])
+
+
+def _edges():
+    n = R(2, 6)
+    return ([random.choice([j for j in range(n) if j != i]) for i in range(n)],)
+
+
+def _creators():
+    n = R(1, 6)
+    return (
+        [random.choice("abc") for _ in range(n)],
+        random.sample(["p", "q", "r", "s", "t", "u"], n),
+        [R(0, 5) for _ in range(n)],
+    )
+
+
+def _cpdomains():
+    pool = ["a.b.com", "b.com", "c.org", "x.a.b.com", "org"]
+    return ([f"{R(1, 9)} {random.choice(pool)}" for _ in range(R(1, 5))],)
+
+
+GX28 = {
+    ("hashing", "Longest Absolute File Path"): _fs,
+    ("hashing", "Set Mismatch"): _set_mismatch,
+    ("hashing", "Find and Replace Pattern"): lambda: ([st("abc", 3, 3) for _ in range(R(0, 5))], st("abc", 3, 3)),
+    ("hashing", "Array of Doubled Pairs"): lambda: ([R(-4, 4) for _ in range(2 * R(1, 4))],),
+    ("hashing", "Divide Array in Sets of K Consecutive Numbers"): lambda: (ints(8, 1, 5, 1), R(1, 3)),
+    ("hashing", "Display Table of Food Orders in a Restaurant"): _orders,
+    ("hashing", "Making File Names Unique"): lambda: (
+        [random.choice(["a", "a(1)", "a(2)", "b", "a(1)(1)"]) for _ in range(R(1, 7))],
+    ),
+    ("hashing", "Restore the Array From Adjacent Pairs"): (_path_pairs, _restore_norm),
+    ("hashing", "Evaluate the Bracket Pairs of a String"): _brackets,
+    ("hashing", "Count Nice Pairs in an Array"): lambda: (ints(7, 0, 200, 1),),
+    ("hashing", "Number of Pairs of Interchangeable Rectangles"): lambda: (
+        [[R(1, 6), R(1, 6)] for _ in range(R(1, 7))],
+    ),
+    ("hashing", "Longest Palindrome by Concatenating Two Letter Words"): lambda: (
+        [random.choice(["ab", "ba", "aa", "bb"]) for _ in range(R(1, 5))],
+    ),
+    ("hashing", "Find All Lonely Numbers in the Array"): lambda: (ints(8, 0, 6, 1),),
+    ("hashing", "Minimum Consecutive Cards to Pick Up"): lambda: (ints(8, 0, 5, 1),),
+    ("hashing", "Node With Highest Edge Score"): _edges,
+    ("hashing", "Most Popular Video Creator"): _creators,
+    ("hashing", "Subdomain Visit Count"): _cpdomains,
+}
+
+GX.update(GX28)
