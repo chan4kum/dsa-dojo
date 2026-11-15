@@ -48,7 +48,7 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2) time - scan every interval for every interval
 def find_right_interval(intervals):
     result = []
-    for i, (_, end) in enumerate(intervals):
+    for _, end in intervals:
         best = -1
         for j, (start, _) in enumerate(intervals):
             if start >= end and (best == -1 or start < intervals[best][0]):

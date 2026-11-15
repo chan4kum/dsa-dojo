@@ -80,6 +80,11 @@ def can_jump(nums):
 | `greedy/16` | Easy | Array Partition | [#561](https://leetcode.com/problems/array-partition/) | Sort, then pair neighbours |
 | `greedy/17` | Easy | Can Place Flowers | [#605](https://leetcode.com/problems/can-place-flowers/) | Greedy left-to-right placement |
 | `greedy/19` | Easy | Split a String in Balanced Strings | [#1221](https://leetcode.com/problems/split-a-string-in-balanced-strings/) | Running balance / greedy cut at every zero |
+| `greedy/23` | Easy | Maximum Units on a Truck | [#1710](https://leetcode.com/problems/maximum-units-on-a-truck/) | Greedy: fill the scarce resource with the best value per slot first |
+| `greedy/24` | Easy | Minimum Operations to Make the Array Increasing | [#1827](https://leetcode.com/problems/minimum-operations-to-make-the-array-increasing/) | Greedy: raise each element by the minimum necessary, left to right |
+| `greedy/28` | Easy | Minimum Subsequence in Non-Increasing Order | [#1403](https://leetcode.com/problems/minimum-subsequence-in-non-increasing-order/) | Greedy: take the largest values first until the target is beaten |
+| `greedy/29` | Easy | Minimum Cost of Buying Candies With Discount | [#2144](https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/) | Greedy: group the most expensive items together |
+| `greedy/30` | Easy | Minimum Sum of Four Digit Number After Splitting Digits | [#2160](https://leetcode.com/problems/minimum-sum-of-four-digit-number-after-splitting-digits/) | Greedy: smallest digits get the biggest place values |
 | `greedy/1` | Medium | Jump Game | [#55](https://leetcode.com/problems/jump-game/) | Greedy: maintain the farthest reachable frontier |
 | `greedy/2` | Medium | Gas Station | [#134](https://leetcode.com/problems/gas-station/) | Greedy with a 'discard the failed prefix' argument |
 | `greedy/3` | Medium | Partition Labels | [#763](https://leetcode.com/problems/partition-labels/) | Greedy interval extension using last occurrences |
@@ -91,6 +96,12 @@ def can_jump(nums):
 | `greedy/12` | Medium | Wiggle Subsequence | [#376](https://leetcode.com/problems/wiggle-subsequence/) | Greedy: count direction changes (peaks and valleys) |
 | `greedy/13` | Medium | Two City Scheduling | [#1029](https://leetcode.com/problems/two-city-scheduling/) | Greedy by difference (opportunity cost) |
 | `greedy/18` | Medium | Boats to Save People | [#881](https://leetcode.com/problems/boats-to-save-people/) | Sort + two pointers (pair the heaviest with the lightest) |
+| `greedy/20` | Medium | Monotone Increasing Digits | [#738](https://leetcode.com/problems/monotone-increasing-digits/) | Greedy: lower the first bad digit, then maximise the suffix |
+| `greedy/21` | Medium | Max Chunks To Make Sorted | [#769](https://leetcode.com/problems/max-chunks-to-make-sorted/) | Greedy: cut as soon as the prefix is self-contained |
+| `greedy/22` | Medium | Minimum Deletions to Make Character Frequencies Unique | [#1647](https://leetcode.com/problems/minimum-deletions-to-make-character-frequencies-unique/) | Greedy: sort frequencies, lower each to the highest unused value |
+| `greedy/25` | Medium | Minimum Time to Make Rope Colorful | [#1578](https://leetcode.com/problems/minimum-time-to-make-rope-colorful/) | Greedy: in each group keep the most expensive item |
+| `greedy/26` | Medium | Broken Calculator | [#991](https://leetcode.com/problems/broken-calculator/) | Greedy on the reversed process |
+| `greedy/27` | Medium | Maximum Number of Coins You Can Get | [#1561](https://leetcode.com/problems/maximum-number-of-coins-you-can-get/) | Greedy after sorting: pair the best with the next best |
 | `greedy/9` | Hard | Candy | [#135](https://leetcode.com/problems/candy/) | Two-pass greedy (satisfy left constraints, then right constraints) |
 
 Start one with `python dsa.py start greedy/1`.

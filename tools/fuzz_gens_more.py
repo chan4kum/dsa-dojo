@@ -1276,3 +1276,77 @@ GX20 = {
 }
 
 GX.update(GX20)
+
+
+def _perm():
+    items = list(range(R(1, 8)))
+    random.shuffle(items)
+    return (items,)
+
+
+def _rope():
+    colors = st("abc", 1, 8)
+    return (colors, [R(1, 9) for _ in colors])
+
+
+def _piles():
+    return ([R(1, 9) for _ in range(3 * R(1, 2))],)
+
+
+def _matchsticks():
+    if R(0, 1):
+        side, sticks = R(1, 9), []
+        for _ in range(4):
+            if side >= 2 and R(0, 1):
+                part = R(1, side - 1)
+                sticks += [part, side - part]
+            else:
+                sticks.append(side)
+        if R(0, 2) == 0:
+            sticks[R(0, len(sticks) - 1)] += 1
+        random.shuffle(sticks)
+        return (sticks,)
+    return (ints(7, 1, 6, 1),)
+
+
+def _word_break():
+    words = sorted({st("ab", 1, 3) for _ in range(R(1, 4))})
+    return (st("ab", 1, 8), words)
+
+
+def _unique_paths_iii():
+    rows, cols = R(1, 3), R(2, 4)
+    grid = [[-1 if R(0, 3) == 0 else 0 for _ in range(cols)] for _ in range(rows)]
+    first, second = random.sample(range(rows * cols), 2)
+    grid[first // cols][first % cols] = 1
+    grid[second // cols][second % cols] = 2
+    return (grid,)
+
+
+GX21 = {
+    ("greedy", "Monotone Increasing Digits"): lambda: (R(0, 3000),),
+    ("greedy", "Max Chunks To Make Sorted"): _perm,
+    ("greedy", "Minimum Deletions to Make Character Frequencies Unique"): lambda: (st("abcde", 1, 12),),
+    ("greedy", "Maximum Units on a Truck"): lambda: ([[R(1, 4), R(1, 9)] for _ in range(R(1, 4))], R(0, 12)),
+    ("greedy", "Minimum Operations to Make the Array Increasing"): lambda: (ints(5, 1, 6, 1),),
+    ("greedy", "Minimum Time to Make Rope Colorful"): _rope,
+    ("greedy", "Broken Calculator"): lambda: (R(1, 20), R(1, 40)),
+    ("greedy", "Maximum Number of Coins You Can Get"): _piles,
+    ("greedy", "Minimum Subsequence in Non-Increasing Order"): lambda: (ints(7, 1, 9, 1),),
+    ("greedy", "Minimum Cost of Buying Candies With Discount"): lambda: (ints(6, 1, 9, 1),),
+    ("greedy", "Minimum Sum of Four Digit Number After Splitting Digits"): lambda: (R(1000, 9999),),
+    ("backtracking", "Word Break II"): _word_break,
+    ("backtracking", "Expression Add Operators"): lambda: (st("0123", 1, 5), R(-20, 60)),
+    ("backtracking", "Remove Invalid Parentheses"): lambda: (st("()a", 0, 9),),
+    ("backtracking", "Matchsticks to Square"): _matchsticks,
+    ("backtracking", "Numbers With Same Consecutive Differences"): lambda: (R(2, 4), R(0, 9)),
+    ("backtracking", "Path with Maximum Gold"): lambda: (_mat(0, 9, 4),),
+    ("backtracking", "The k-th Lexicographical String of All Happy Strings of Length n"): lambda: (R(1, 6), R(1, 100)),
+    ("backtracking", "Maximum Length of a Concatenated String with Unique Characters"): lambda: (
+        [st("abcde", 1, 3) for _ in range(R(1, 7))],
+    ),
+    ("backtracking", "Unique Paths III"): _unique_paths_iii,
+    ("backtracking", "Split a String Into the Max Number of Unique Substrings"): lambda: (st("abc", 1, 10),),
+}
+
+GX.update(GX21)

@@ -162,10 +162,10 @@ flowchart TD
 | 07 | [stack_monotonic](07-stack_monotonic.md) | `stack_monotonic/1` ... `stack_monotonic/34` |
 | 08 | [linked_list](08-linked_list.md) | `linked_list/1` ... `linked_list/33` |
 | 09 | [intervals](09-intervals.md) | `intervals/1` ... `intervals/19` |
-| 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/19` |
+| 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/30` |
 | 11 | [heap](11-heap.md) | `heap/1` ... `heap/23` |
 | 12 | [trees](12-trees.md) | `trees/1` ... `trees/57` |
-| 13 | [backtracking](13-backtracking.md) | `backtracking/1` ... `backtracking/20` |
+| 13 | [backtracking](13-backtracking.md) | `backtracking/1` ... `backtracking/30` |
 | 14 | [graphs](14-graphs.md) | `graphs/1` ... `graphs/43` |
 | 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/60` |
 | 16 | [bits_math](16-bits_math.md) | `bits_math/1` ... `bits_math/35` |

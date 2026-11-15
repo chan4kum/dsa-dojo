@@ -110,8 +110,18 @@ Three shapes to memorise:
 | `backtracking/17` | Medium | Partition to K Equal Sum Subsets | [#698](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/) | Backtracking on bucket assignment with symmetry pruning |
 | `backtracking/18` | Medium | Letter Tile Possibilities | [#1079](https://leetcode.com/problems/letter-tile-possibilities/) | Backtracking over a frequency table (no duplicates by construction) |
 | `backtracking/19` | Medium | Non-decreasing Subsequences | [#491](https://leetcode.com/problems/non-decreasing-subsequences/) | Backtracking with a per-level 'used' set to skip duplicates |
+| `backtracking/24` | Medium | Matchsticks to Square | [#473](https://leetcode.com/problems/matchsticks-to-square/) | Backtracking: assign each item to a bucket with pruning |
+| `backtracking/25` | Medium | Numbers With Same Consecutive Differences | [#967](https://leetcode.com/problems/numbers-with-same-consecutive-differences/) | Backtracking: extend only with the digits that keep the constraint true |
+| `backtracking/26` | Medium | Path with Maximum Gold | [#1219](https://leetcode.com/problems/path-with-maximum-gold/) | Grid backtracking: mark, explore, un-mark |
+| `backtracking/27` | Medium | The k-th Lexicographical String of All Happy Strings of Length n | [#1415](https://leetcode.com/problems/the-k-th-lexicographical-string-of-all-happy-strings-of-length-n/) | Counting subtrees to skip branches (backtracking without enumerating) |
+| `backtracking/28` | Medium | Maximum Length of a Concatenated String with Unique Characters | [#1239](https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/) | Subset search with bitmask conflict checks |
+| `backtracking/30` | Medium | Split a String Into the Max Number of Unique Substrings | [#1593](https://leetcode.com/problems/split-a-string-into-the-max-number-of-unique-substrings/) | Backtracking over cut points with a 'used' set and a bound |
 | `backtracking/5` | Hard | N-Queens | [#51](https://leetcode.com/problems/n-queens/) | Backtracking with O(1) conflict checks via sets (columns, diagonals) |
 | `backtracking/20` | Hard | N-Queens II | [#52](https://leetcode.com/problems/n-queens-ii/) | Backtracking with O(1) conflict checks via sets |
+| `backtracking/21` | Hard | Word Break II | [#140](https://leetcode.com/problems/word-break-ii/) | Backtracking over cut points + memoisation of suffix results |
+| `backtracking/22` | Hard | Expression Add Operators | [#282](https://leetcode.com/problems/expression-add-operators/) | Backtracking with a running value and the last term (to handle * precedence) |
+| `backtracking/23` | Hard | Remove Invalid Parentheses | [#301](https://leetcode.com/problems/remove-invalid-parentheses/) | Backtracking with a precomputed removal budget and pruning |
+| `backtracking/29` | Hard | Unique Paths III | [#980](https://leetcode.com/problems/unique-paths-iii/) | Hamiltonian-style path counting by backtracking |
 
 Start one with `python dsa.py start backtracking/1`.
 

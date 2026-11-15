@@ -356,7 +356,6 @@ def sort_string(s):
     remaining = sorted(s)
     out = []
     while remaining:
-        last = None
         for ch in sorted(set(remaining)):  # ascending pass: one copy of each distinct letter
             out.append(ch)
             remaining.remove(ch)

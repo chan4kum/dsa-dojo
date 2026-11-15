@@ -64,7 +64,7 @@ python dsa.py review                  # what to redo from a blank file
 | B2 | interview playbook & job search | protocol, stuck-protocol, stories, pipeline |
 | B3 | coverage map (generated) | Blind 75 + classics -> where each is taught |
 
-**Current content:** 587 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
+**Current content:** 608 problems, each with 3 hints, an explanation, a brute force (with cost), an optimised solution (with cost) and tests. Blind-75-style list: fully covered (see `notes/B3-coverage.md`).
 
 ## How the content is verified (run these yourself)
 | Command | What it proves |
@@ -105,5 +105,5 @@ Put new problems in `problems/<topic>_more*.py` (same `PROBLEMS = [...]` list). 
 **Copyright note:** prompts are original paraphrases, not copied statements. Each problem links to the original on LeetCode for the official statement and examples.
 
 ## Roadmap of content (by topic, not by date)
-Done: 20 DSA topics, 587 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
+Done: 20 DSA topics, 608 problems with brute + optimised solutions, pattern finder, foundations, teacher anchors, interview playbook, coverage map, AI/system-design concept map.
 Next (same format): more problems per topic (hard tiers, company-frequent sets), segment tree / SCC / Manacher notes, then full hand-notes + runnable labs for each block of the system-design and AI maps.
