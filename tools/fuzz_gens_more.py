@@ -3105,3 +3105,128 @@ GX42 = {
 }
 
 GX.update(GX42)
+
+
+def _sp_str(alphabet, lo, hi):
+    return "".join(random.choice(alphabet) for _ in range(R(lo, hi)))
+
+
+def _sp_pairs_words():
+    import itertools
+
+    pool = [""] + ["".join(p) for n in (1, 2, 3) for p in itertools.product("ab", repeat=n)]
+    return (random.sample(pool, R(1, 6)),)
+
+
+def _sp_freq_norm(args, res):
+    import itertools
+
+    return [len(list(g)) for _, g in itertools.groupby(res)]
+
+
+def _sp_ip():
+    kind = R(0, 2)
+    if kind == 0:
+        parts = ["0", "1", "10", "255", "256", "01", "00", "a", "", "1a", "999", "-1", "7"]
+        return (".".join(random.choice(parts) for _ in range(R(3, 5))),)
+    if kind == 1:
+        parts = ["0", "1", "db8", "FFFF", "fffff", "g", "", "0000", "12345", "a1B"]
+        return (":".join(random.choice(parts) for _ in range(R(7, 9))),)
+    return (_sp_str("0123456789abf.:", 1, 12),)
+
+
+def _sp_files():
+    counter = 0
+    entries = []
+    for _ in range(R(1, 4)):
+        directory = random.choice(["root", "root/a", "a", "r/x"])
+        files = []
+        for _ in range(R(1, 3)):
+            counter += 1
+            files.append("f%d.txt(%s)" % (counter, random.choice(["a", "b", "ab"])))
+        entries.append(directory + " " + " ".join(files))
+    return (entries,)
+
+
+def _sp_paragraph():
+    vocab = ["a", "b", "c", "dd", "e"]
+    while True:
+        words = [random.choice(vocab) for _ in range(R(1, 9))]
+        banned = random.sample(vocab, R(0, 2))
+        top = Counter_(w for w in words if w not in banned).most_common(2)
+        if top and (len(top) == 1 or top[0][1] != top[1][1]):
+            break
+    text = ""
+    for w in words:
+        text += (w.upper() if random.random() < 0.3 else w) + random.choice([" ", ", ", ". ", "! ", "; "])
+    return (text, banned)
+
+
+def Counter_(items):
+    import collections
+
+    return collections.Counter(items)
+
+
+def _sp_alien():
+    letters = list("abc")
+    random.shuffle(letters)
+    return ([_sp_str("abc", 1, 3) for _ in range(R(1, 5))], "".join(letters))
+
+
+def _sp_abc_valid():
+    if random.random() < 0.5:
+        s = ""
+        for _ in range(R(1, 3)):
+            i = R(0, len(s))
+            s = s[:i] + "abc" + s[i:]
+        if random.random() < 0.4:
+            i = R(0, len(s) - 1)
+            s = s[:i] + random.choice("abc") + s[i + 1 :]
+        return (s,)
+    return (_sp_str("abc", 1, 9),)
+
+
+def _sp_parens():
+    n = R(1, 5) * 2 if random.random() < 0.8 else R(1, 9)
+    return (_sp_str("()", n, n), _sp_str("01", n, n))
+
+
+def _sp_hash():
+    n = R(1, 8)
+    s = _sp_str("abc", n, n)
+    power, modulo, k = R(1, 5), R(2, 12), R(1, n)
+    i = R(0, n - k)
+    h = sum((ord(s[i + j]) - 96) * power**j for j in range(k)) % modulo
+    return (s, power, modulo, k, h)
+
+
+def _sp_slanted():
+    rows, cols = R(1, 4), R(1, 5)
+    return (_sp_str("ab ", rows * cols, rows * cols), rows)
+
+
+GX43 = {
+    ("strings", "Maximum Product of Word Lengths"): lambda: ([_sp_str("abcd", 1, 4) for _ in range(R(2, 7))],),
+    ("strings", "Palindrome Pairs"): _sp_pairs_words,
+    ("strings", "Sort Characters By Frequency"): (lambda: (_sp_str("aAbc", 1, 10),), _sp_freq_norm),
+    ("strings", "Validate IP Address"): _sp_ip,
+    ("strings", "Find the Closest Palindrome"): lambda: (str(R(1, 20000)),),
+    ("strings", "Find Duplicate File in System"): _sp_files,
+    ("strings", "Repeated String Match"): lambda: (_sp_str("ab", 1, 4), _sp_str("ab", 1, 8)),
+    ("strings", "Most Common Word"): _sp_paragraph,
+    ("strings", "Groups of Special-Equivalent Strings"): lambda: ([_sp_str("abc", 3, 3) for _ in range(R(1, 6))],),
+    ("strings", "Verifying an Alien Dictionary"): _sp_alien,
+    ("strings", "Check If Word Is Valid After Substitutions"): _sp_abc_valid,
+    ("strings", "Camelcase Matching"): lambda: ([_sp_str("abAB", 1, 6) for _ in range(R(1, 4))], _sp_str("abAB", 1, 3)),
+    ("strings", "Last Substring in Lexicographical Order"): lambda: (_sp_str("abc", 1, 10),),
+    ("strings", "Count Substrings That Differ by One Character"): lambda: (_sp_str("ab", 1, 6), _sp_str("ab", 1, 6)),
+    ("strings", "Maximum Repeating Substring"): lambda: (_sp_str("ab", 1, 10), _sp_str("ab", 1, 3)),
+    ("strings", "Remove All Occurrences of a Substring"): lambda: (_sp_str("ab", 1, 10), _sp_str("ab", 1, 3)),
+    ("strings", "Count Vowel Substrings of a String"): lambda: (_sp_str("aeioux", 1, 12),),
+    ("strings", "Check if a Parentheses String Can Be Valid"): _sp_parens,
+    ("strings", "Find Substring With Given Hash Value"): _sp_hash,
+    ("strings", "Decode the Slanted Ciphertext"): _sp_slanted,
+}
+
+GX.update(GX43)
