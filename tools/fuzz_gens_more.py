@@ -2803,3 +2803,130 @@ GX40 = {
 }
 
 GX.update(GX40)
+
+
+def _hp_lists():
+    return ([sorted(R(0, 9) for _ in range(R(1, 4))) for _ in range(R(1, 3))],)
+
+
+def _hp_apples():
+    apples, days = [], []
+    for _ in range(R(1, 6)):
+        if random.random() < 0.3:
+            apples.append(0)
+            days.append(0)
+        else:
+            apples.append(R(1, 4))
+            days.append(R(1, 4))
+    return (apples, days)
+
+
+def _hp_chairs():
+    n = R(1, 5)
+    arrivals = random.sample(range(1, 15), n)
+    return ([[a, a + R(1, 6)] for a in arrivals], R(0, n - 1))
+
+
+def _hp_grid():
+    rows, cols = R(1, 4), R(1, 4)
+    grid = [[random.choice([0, 1, 1, 2, 3, 4]) for _ in range(cols)] for _ in range(rows)]
+    sr, sc = R(0, rows - 1), R(0, cols - 1)
+    if grid[sr][sc] == 0:
+        grid[sr][sc] = 1
+    low = R(2, 4)
+    return (grid, [low, R(low, 5)], [sr, sc], R(1, 4))
+
+
+def _hp_roads():
+    n = R(1, 6)
+    return (n, _g_pairs(n, 8))
+
+
+def _hp_marbles():
+    n = R(1, 7)
+    return ([R(1, 9) for _ in range(n)], R(1, n))
+
+
+def _hp_elegance():
+    n = R(1, 7)
+    return ([[R(1, 9), R(1, 4)] for _ in range(n)], R(1, n))
+
+
+def _hp_ops():
+    while True:
+        nums = [R(1, 9) for _ in range(R(1, 7))]
+        k = R(1, 40)
+        work = sorted(nums)
+        while len(work) > 1 and work[0] < k:
+            x, y = work[0], work[1]
+            work = sorted(work[2:] + [2 * x + y])
+        if work[0] >= k:
+            return (nums, k)
+
+
+def _hp_ids():
+    counts = {}
+    nums, freq = [], []
+    for _ in range(R(1, 8)):
+        x = R(1, 4)
+        current = counts.get(x, 0)
+        delta = R(-current, 3)
+        if delta == 0:
+            delta = 1
+        counts[x] = current + delta
+        nums.append(x)
+        freq.append(delta)
+    return (nums, freq)
+
+
+def _hp_obstacles():
+    cells = [(x, y) for x in range(-3, 4) for y in range(-3, 4)]
+    return ([list(p) for p in random.sample(cells, R(1, 7))], R(1, 4))
+
+
+def _hp_choose():
+    n = R(1, 6)
+    return ([R(1, 4) for _ in range(n)], [R(1, 9) for _ in range(n)], R(1, n))
+
+
+def _hp_shops():
+    return ([sorted((R(1, 9) for _ in range(R(1, 3))), reverse=True) for _ in range(R(1, 3))],)
+
+
+def _hp_ksum():
+    n = R(1, 6)
+    return ([R(-5, 5) for _ in range(n)], R(1, 2**n))
+
+
+def _hp_marks():
+    nums = ints(6, 1, 6, 1)
+    return (nums, [[R(0, len(nums) - 1), R(0, 4)] for _ in range(R(1, 4))])
+
+
+GX41 = {
+    ("heap", "Smallest Range Covering Elements from K Lists"): _hp_lists,
+    ("heap", "Maximum Number of Eaten Apples"): _hp_apples,
+    ("heap", "Maximum Score From Removing Stones"): lambda: (R(1, 15), R(1, 15), R(1, 15)),
+    ("heap", "Process Tasks Using Servers"): lambda: (ints(4, 1, 5, 1), ints(6, 1, 4, 1)),
+    ("heap", "The Number of the Smallest Unoccupied Chair"): _hp_chairs,
+    ("heap", "K Highest Ranked Items Within a Price Range"): _hp_grid,
+    ("heap", "Maximum Total Importance of Roads"): _hp_roads,
+    ("heap", "Minimum Amount of Time to Fill Cups"): lambda: ([R(0, 6) for _ in range(3)],),
+    ("heap", "Put Marbles in Bags"): _hp_marbles,
+    ("heap", "Take Gifts From the Richest Pile"): lambda: (ints(6, 1, 100, 1), R(0, 6)),
+    ("heap", "Maximum Elegance of a K-Length Subsequence"): _hp_elegance,
+    ("heap", "Minimum Operations to Exceed Threshold Value II"): _hp_ops,
+    ("heap", "Most Frequent IDs"): _hp_ids,
+    ("heap", "Final Array State After K Multiplication Operations I"): lambda: (ints(6, 1, 9, 1), R(0, 6), R(1, 3)),
+    ("heap", "K-th Nearest Obstacle Queries"): _hp_obstacles,
+    ("heap", "Choose K Elements With Maximum Sum"): _hp_choose,
+    ("heap", "Maximum Spending After Buying Items"): _hp_shops,
+    ("heap", "Construct String With Repeat Limit"): lambda: (
+        "".join(random.choice("abc") for _ in range(R(1, 7))),
+        R(1, 3),
+    ),
+    ("heap", "Find the K-Sum of an Array"): _hp_ksum,
+    ("heap", "Mark Elements on Array by Performing Queries"): _hp_marks,
+}
+
+GX.update(GX41)
