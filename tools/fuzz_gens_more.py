@@ -2557,3 +2557,104 @@ GX37 = {
 }
 
 GX.update(GX37)
+
+
+def _gr_adv():
+    n = R(1, 6)
+    return ([R(0, 9) for _ in range(n)], [R(0, 9) for _ in range(n)])
+
+
+def _gr_adv_norm(args, result):
+    """Advantage count of the answer, or None if it is not a rearrangement of nums1."""
+    if not isinstance(result, list) or sorted(result) != sorted(args[0]):
+        return None
+    return sum(x > y for x, y in zip(result, args[1]))
+
+
+def _gr_cols():
+    rows, width = R(1, 4), R(1, 4)
+    return (["".join(random.choice("abcd") for _ in range(width)) for _ in range(rows)],)
+
+
+def _gr_ab():
+    while True:
+        a, b = R(0, 6), R(0, 6)
+        if a + b and max(a, b) <= 2 * (min(a, b) + 1):
+            return (a, b)
+
+
+def _gr_ab_norm(args, result):
+    a, b = args
+    return (
+        isinstance(result, str)
+        and len(result) == a + b
+        and result.count("a") == a
+        and result.count("b") == b
+        and "aaa" not in result
+        and "bbb" not in result
+    )
+
+
+def _gr_pal():
+    n = R(1, 7)
+    half = [random.choice("abc") for _ in range((n + 1) // 2)]
+    return ("".join(half + half[: n // 2][::-1]),)
+
+
+def _gr_uniq():
+    arr = ints(8, 1, 5, 1)
+    return (arr, R(0, len(arr)))
+
+
+def _gr_numeric():
+    n = R(1, 6)
+    return (n, R(n, 26 * n))
+
+
+def _gr_triplets():
+    triplets = [[R(1, 4) for _ in range(3)] for _ in range(R(1, 5))]
+    return (triplets, [R(1, 4) for _ in range(3)])
+
+
+def _gr_brackets():
+    n = R(1, 4)
+    chars = ["["] * n + ["]"] * n
+    random.shuffle(chars)
+    return ("".join(chars),)
+
+
+def _gr_pieces():
+    pool = random.choice(["AB", "AAAB", "ABBB"])
+    return ("".join(random.choice(pool) for _ in range(R(1, 10))),)
+
+
+def _gr_bags():
+    n = R(1, 6)
+    capacity = [R(1, 6) for _ in range(n)]
+    return (capacity, [R(0, c) for c in capacity], R(0, 10))
+
+
+GX38 = {
+    ("greedy", "Dota2 Senate"): lambda: ("".join(random.choice("RD") for _ in range(R(1, 9))),),
+    ("greedy", "Advantage Shuffle"): (_gr_adv, _gr_adv_norm),
+    ("greedy", "Delete Columns to Make Sorted"): _gr_cols,
+    ("greedy", "String Without AAA or BBB"): (_gr_ab, _gr_ab_norm),
+    ("greedy", "Previous Permutation With One Swap"): lambda: (ints(7, 1, 5, 1),),
+    ("greedy", "Break a Palindrome"): _gr_pal,
+    ("greedy", "Max Difference You Can Get From Changing an Integer"): lambda: (R(1, 99999),),
+    ("greedy", "Least Number of Unique Integers after K Removals"): _gr_uniq,
+    ("greedy", "Smallest String With A Given Numeric Value"): _gr_numeric,
+    ("greedy", "Partitioning Into Minimum Number Of Deci-Binary Numbers"): lambda: (str(R(1, 99999999)),),
+    ("greedy", "Maximum Element After Decreasing and Rearranging"): lambda: (ints(8, 1, 12, 1),),
+    ("greedy", "Merge Triplets to Form Target Triplet"): _gr_triplets,
+    ("greedy", "Maximum Number of Weeks for Which You Can Work"): lambda: (ints(4, 1, 4, 1),),
+    ("greedy", "Minimum Number of Swaps to Make the String Balanced"): _gr_brackets,
+    ("greedy", "The Number of Weak Characters in the Game"): lambda: ([[R(1, 5), R(1, 5)] for _ in range(R(1, 8))],),
+    ("greedy", "Remove Colored Pieces if Both Neighbors are the Same Color"): _gr_pieces,
+    ("greedy", "Destroying Asteroids"): lambda: (R(1, 10), ints(6, 1, 20, 1)),
+    ("greedy", "Maximum Bags With Full Capacity of Rocks"): _gr_bags,
+    ("greedy", "Partition Array Such That Maximum Difference Is K"): lambda: (ints(7, 1, 9, 1), R(0, 4)),
+    ("greedy", "Optimal Partition of String"): lambda: ("".join(random.choice("abcd") for _ in range(R(1, 10))),),
+}
+
+GX.update(GX38)
