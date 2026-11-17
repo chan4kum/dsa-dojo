@@ -152,6 +152,19 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/58` | Medium | Greatest Sum Divisible by Three | [#1262](https://leetcode.com/problems/greatest-sum-divisible-by-three/) | DP over remainders (a tiny state space) |
 | `dynamic_programming/59` | Medium | Count Numbers with Unique Digits | [#357](https://leetcode.com/problems/count-numbers-with-unique-digits/) | Counting with decreasing choices (permutation counting) |
 | `dynamic_programming/60` | Medium | Out of Boundary Paths | [#576](https://leetcode.com/problems/out-of-boundary-paths/) | Grid DP over (cell, remaining moves) |
+| `dynamic_programming/62` | Medium | Unique Substrings in Wraparound String | [#467](https://leetcode.com/problems/unique-substrings-in-wraparound-string/) | DP: longest valid run ending at each letter |
+| `dynamic_programming/66` | Medium | 2 Keys Keyboard | [#650](https://leetcode.com/problems/2-keys-keyboard/) | Prime factorisation as a cost |
+| `dynamic_programming/67` | Medium | Minimum ASCII Delete Sum for Two Strings | [#712](https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/) | Weighted LCS |
+| `dynamic_programming/68` | Medium | Champagne Tower | [#799](https://leetcode.com/problems/champagne-tower/) | Row-by-row simulation (overflow DP) |
+| `dynamic_programming/70` | Medium | Soup Servings | [#808](https://leetcode.com/problems/soup-servings/) | Memoised probability DP, with a large-n shortcut |
+| `dynamic_programming/71` | Medium | Largest Sum of Averages | [#813](https://leetcode.com/problems/largest-sum-of-averages/) | Partition DP with prefix sums |
+| `dynamic_programming/72` | Medium | Binary Trees With Factors | [#823](https://leetcode.com/problems/binary-trees-with-factors/) | DP over values in increasing order |
+| `dynamic_programming/73` | Medium | New 21 Game | [#837](https://leetcode.com/problems/new-21-game/) | Probability DP with a sliding-window sum |
+| `dynamic_programming/74` | Medium | Flip String to Monotone Increasing | [#926](https://leetcode.com/problems/flip-string-to-monotone-increasing/) | Split-point DP in one pass |
+| `dynamic_programming/75` | Medium | Knight Dialer | [#935](https://leetcode.com/problems/knight-dialer/) | Graph-walk counting DP (rolling array) |
+| `dynamic_programming/77` | Medium | Last Stone Weight II | [#1049](https://leetcode.com/problems/last-stone-weight-ii/) | Subset-sum knapsack (partition into two near-equal halves) |
+| `dynamic_programming/78` | Medium | Filling Bookcase Shelves | [#1105](https://leetcode.com/problems/filling-bookcase-shelves/) | Partition DP (where does the last shelf start?) |
+| `dynamic_programming/80` | Medium | Count Sorted Vowel Strings | [#1641](https://leetcode.com/problems/count-sorted-vowel-strings/) | Prefix-sum DP / stars and bars |
 | `dynamic_programming/9` | Hard | Burst Balloons | [#312](https://leetcode.com/problems/burst-balloons/) | Interval DP: split an interval on the LAST action |
 | `dynamic_programming/23` | Hard | Regular Expression Matching | [#10](https://leetcode.com/problems/regular-expression-matching/) | 2-D DP on two string positions (with branching for '*') |
 | `dynamic_programming/32` | Hard | Russian Doll Envelopes | [#354](https://leetcode.com/problems/russian-doll-envelopes/) | Sort one dimension, then LIS on the other (patience sorting) |
@@ -162,6 +175,13 @@ Top-down version of any DP: `@lru_cache(None) def go(state): ...` - write this f
 | `dynamic_programming/49` | Hard | Longest Valid Parentheses | [#32](https://leetcode.com/problems/longest-valid-parentheses/) | Stack of indices as 'last unmatched position' markers |
 | `dynamic_programming/50` | Hard | Wildcard Matching | [#44](https://leetcode.com/problems/wildcard-matching/) | 2-D string-matching DP (the simpler cousin of Regular Expression Matching) |
 | `dynamic_programming/51` | Hard | Best Time to Buy and Sell Stock III | [#123](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/) | State-machine DP (one variable per stage of the process) |
+| `dynamic_programming/61` | Hard | Frog Jump | [#403](https://leetcode.com/problems/frog-jump/) | DP over (position, last jump) as a set per stone |
+| `dynamic_programming/63` | Hard | Student Attendance Record II | [#552](https://leetcode.com/problems/student-attendance-record-ii/) | Counting DP over a small state (absences, trailing lates) |
+| `dynamic_programming/64` | Hard | Non-negative Integers without Consecutive Ones | [#600](https://leetcode.com/problems/non-negative-integers-without-consecutive-ones/) | Digit DP with Fibonacci counts |
+| `dynamic_programming/65` | Hard | K Inverse Pairs Array | [#629](https://leetcode.com/problems/k-inverse-pairs-array/) | DP with a sliding-window sum (insertion into permutations) |
+| `dynamic_programming/69` | Hard | Minimum Swaps To Make Sequences Increasing | [#801](https://leetcode.com/problems/minimum-swaps-to-make-sequences-increasing/) | Two-state DP (keep / swap) per index |
+| `dynamic_programming/76` | Hard | Distinct Subsequences II | [#940](https://leetcode.com/problems/distinct-subsequences-ii/) | DP: count distinct subsequences by last letter |
+| `dynamic_programming/79` | Hard | Count Vowels Permutation | [#1220](https://leetcode.com/problems/count-vowels-permutation/) | State-machine counting DP |
 
 Start one with `python dsa.py start dynamic_programming/1`.
 

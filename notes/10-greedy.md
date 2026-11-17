@@ -85,6 +85,7 @@ def can_jump(nums):
 | `greedy/28` | Easy | Minimum Subsequence in Non-Increasing Order | [#1403](https://leetcode.com/problems/minimum-subsequence-in-non-increasing-order/) | Greedy: take the largest values first until the target is beaten |
 | `greedy/29` | Easy | Minimum Cost of Buying Candies With Discount | [#2144](https://leetcode.com/problems/minimum-cost-of-buying-candies-with-discount/) | Greedy: group the most expensive items together |
 | `greedy/30` | Easy | Minimum Sum of Four Digit Number After Splitting Digits | [#2160](https://leetcode.com/problems/minimum-sum-of-four-digit-number-after-splitting-digits/) | Greedy: smallest digits get the biggest place values |
+| `greedy/33` | Easy | Delete Columns to Make Sorted | [#944](https://leetcode.com/problems/delete-columns-to-make-sorted/) | Independent per-column check |
 | `greedy/1` | Medium | Jump Game | [#55](https://leetcode.com/problems/jump-game/) | Greedy: maintain the farthest reachable frontier |
 | `greedy/2` | Medium | Gas Station | [#134](https://leetcode.com/problems/gas-station/) | Greedy with a 'discard the failed prefix' argument |
 | `greedy/3` | Medium | Partition Labels | [#763](https://leetcode.com/problems/partition-labels/) | Greedy interval extension using last occurrences |
@@ -102,6 +103,25 @@ def can_jump(nums):
 | `greedy/25` | Medium | Minimum Time to Make Rope Colorful | [#1578](https://leetcode.com/problems/minimum-time-to-make-rope-colorful/) | Greedy: in each group keep the most expensive item |
 | `greedy/26` | Medium | Broken Calculator | [#991](https://leetcode.com/problems/broken-calculator/) | Greedy on the reversed process |
 | `greedy/27` | Medium | Maximum Number of Coins You Can Get | [#1561](https://leetcode.com/problems/maximum-number-of-coins-you-can-get/) | Greedy after sorting: pair the best with the next best |
+| `greedy/31` | Medium | Dota2 Senate | [#649](https://leetcode.com/problems/dota2-senate/) | Greedy with two queues (earliest voter bans) |
+| `greedy/32` | Medium | Advantage Shuffle | [#870](https://leetcode.com/problems/advantage-shuffle/) | Sort both sides, match smallest winner to smallest target |
+| `greedy/34` | Medium | String Without AAA or BBB | [#984](https://leetcode.com/problems/string-without-aaa-or-bbb/) | Greedy: spend the majority letter, obey the run limit |
+| `greedy/35` | Medium | Previous Permutation With One Swap | [#1053](https://leetcode.com/problems/previous-permutation-with-one-swap/) | Greedy swap at the rightmost descent |
+| `greedy/36` | Medium | Break a Palindrome | [#1328](https://leetcode.com/problems/break-a-palindrome/) | Greedy: earliest improvement, else smallest damage at the end |
+| `greedy/37` | Medium | Max Difference You Can Get From Changing an Integer | [#1432](https://leetcode.com/problems/max-difference-you-can-get-from-changing-an-integer/) | Greedy on the most significant digit |
+| `greedy/38` | Medium | Least Number of Unique Integers after K Removals | [#1481](https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/) | Greedy on frequencies: remove rarest values first |
+| `greedy/39` | Medium | Smallest String With A Given Numeric Value | [#1663](https://leetcode.com/problems/smallest-string-with-a-given-numeric-value/) | Greedy: fill from the back |
+| `greedy/40` | Medium | Partitioning Into Minimum Number Of Deci-Binary Numbers | [#1689](https://leetcode.com/problems/partitioning-into-minimum-number-of-deci-binary-numbers/) | Max digit (lower bound that is achievable) |
+| `greedy/41` | Medium | Maximum Element After Decreasing and Rearranging | [#1846](https://leetcode.com/problems/maximum-element-after-decreasing-and-rearranging/) | Sort + greedy cap by the previous element |
+| `greedy/42` | Medium | Merge Triplets to Form Target Triplet | [#1899](https://leetcode.com/problems/merge-triplets-to-form-target-triplet/) | Filter unusable items, then check coverage |
+| `greedy/43` | Medium | Maximum Number of Weeks for Which You Can Work | [#1953](https://leetcode.com/problems/maximum-number-of-weeks-for-which-you-can-work/) | Largest pile vs everything else |
+| `greedy/44` | Medium | Minimum Number of Swaps to Make the String Balanced | [#1963](https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/) | Count unmatched closers; one swap fixes two |
+| `greedy/45` | Medium | The Number of Weak Characters in the Game | [#1996](https://leetcode.com/problems/the-number-of-weak-characters-in-the-game/) | Sort one dimension, sweep the other |
+| `greedy/46` | Medium | Remove Colored Pieces if Both Neighbors are the Same Color | [#2038](https://leetcode.com/problems/remove-colored-pieces-if-both-neighbors-are-the-same-color/) | Independent move counts decide a game |
+| `greedy/47` | Medium | Destroying Asteroids | [#2126](https://leetcode.com/problems/destroying-asteroids/) | Sort ascending, grow as you go |
+| `greedy/48` | Medium | Maximum Bags With Full Capacity of Rocks | [#2279](https://leetcode.com/problems/maximum-bags-with-full-capacity-of-rocks/) | Sort costs, take the cheapest first |
+| `greedy/49` | Medium | Partition Array Such That Maximum Difference Is K | [#2294](https://leetcode.com/problems/partition-array-such-that-maximum-difference-is-k/) | Sort + greedy interval cover |
+| `greedy/50` | Medium | Optimal Partition of String | [#2405](https://leetcode.com/problems/optimal-partition-of-string/) | Greedy: extend until a repeat forces a cut |
 | `greedy/9` | Hard | Candy | [#135](https://leetcode.com/problems/candy/) | Two-pass greedy (satisfy left constraints, then right constraints) |
 
 Start one with `python dsa.py start greedy/1`.

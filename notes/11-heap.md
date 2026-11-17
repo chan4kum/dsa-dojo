@@ -84,6 +84,9 @@ def find_kth_largest(nums, k):
 | `heap/17` | Easy | Relative Ranks | [#506](https://leetcode.com/problems/relative-ranks/) | Sort (or heap-pop) indices by score |
 | `heap/18` | Easy | Maximum Product of Two Elements in an Array | [#1464](https://leetcode.com/problems/maximum-product-of-two-elements-in-an-array/) | Top-2 selection |
 | `heap/31` | Easy | Find Subsequence of Length K With the Largest Sum | [#2099](https://leetcode.com/problems/find-subsequence-of-length-k-with-the-largest-sum/) | Top-k selection by value, restore original order by index |
+| `heap/47` | Easy | Minimum Amount of Time to Fill Cups | [#2335](https://leetcode.com/problems/minimum-amount-of-time-to-fill-cups/) | Greedy on the two largest, closed-form bound |
+| `heap/49` | Easy | Take Gifts From the Richest Pile | [#2558](https://leetcode.com/problems/take-gifts-from-the-richest-pile/) | Max-heap simulation |
+| `heap/53` | Easy | Final Array State After K Multiplication Operations I | [#3264](https://leetcode.com/problems/final-array-state-after-k-multiplication-operations-i/) | Min-heap of (value, index) |
 | `heap/1` | Medium | Kth Largest Element in an Array | [#215](https://leetcode.com/problems/kth-largest-element-in-an-array/) | Top-K with a size-k min-heap |
 | `heap/2` | Medium | Top K Frequent Elements | [#347](https://leetcode.com/problems/top-k-frequent-elements/) | Frequency map + heap (O(n log k)) or bucket sort (O(n)) |
 | `heap/3` | Medium | Task Scheduler | [#621](https://leetcode.com/problems/task-scheduler/) | Greedy / counting argument on the most frequent task (a heap simulation also works) |
@@ -112,12 +115,29 @@ def find_kth_largest(nums, k):
 | `heap/34` | Medium | Number of Orders in the Backlog | [#1801](https://leetcode.com/problems/number-of-orders-in-the-backlog/) | Order-book simulation with two priority queues |
 | `heap/35` | Medium | Distant Barcodes | [#1054](https://leetcode.com/problems/distant-barcodes/) | Greedy with a max-heap, never repeat the last value (cf. Reorganize String) |
 | `heap/38` | Medium | Split Array into Consecutive Subsequences | [#659](https://leetcode.com/problems/split-array-into-consecutive-subsequences/) | Greedy chain extension with per-end min-heaps |
+| `heap/41` | Medium | Maximum Number of Eaten Apples | [#1705](https://leetcode.com/problems/maximum-number-of-eaten-apples/) | Greedy with a min-heap on expiry date |
+| `heap/42` | Medium | Maximum Score From Removing Stones | [#1753](https://leetcode.com/problems/maximum-score-from-removing-stones/) | Greedy simulation turned into a closed formula |
+| `heap/43` | Medium | Process Tasks Using Servers | [#1882](https://leetcode.com/problems/process-tasks-using-servers/) | Event simulation with two heaps (free and busy) |
+| `heap/44` | Medium | The Number of the Smallest Unoccupied Chair | [#1942](https://leetcode.com/problems/the-number-of-the-smallest-unoccupied-chair/) | Two heaps: free resources and release times |
+| `heap/45` | Medium | K Highest Ranked Items Within a Price Range | [#2146](https://leetcode.com/problems/k-highest-ranked-items-within-a-price-range/) | BFS distances + top-k by a composite key |
+| `heap/46` | Medium | Maximum Total Importance of Roads | [#2285](https://leetcode.com/problems/maximum-total-importance-of-roads/) | Sort by degree, assign largest values to largest degrees |
+| `heap/51` | Medium | Minimum Operations to Exceed Threshold Value II | [#3066](https://leetcode.com/problems/minimum-operations-to-exceed-threshold-value-ii/) | Min-heap simulation |
+| `heap/52` | Medium | Most Frequent IDs | [#3092](https://leetcode.com/problems/most-frequent-ids/) | Max-heap with lazy deletion |
+| `heap/54` | Medium | K-th Nearest Obstacle Queries | [#3275](https://leetcode.com/problems/k-th-nearest-obstacle-queries/) | Bounded max-heap for the k-th smallest of a stream |
+| `heap/55` | Medium | Choose K Elements With Maximum Sum | [#3478](https://leetcode.com/problems/choose-k-elements-with-maximum-sum/) | Sort + sliding top-k with a min-heap (batch equal keys) |
+| `heap/57` | Medium | Construct String With Repeat Limit | [#2182](https://leetcode.com/problems/construct-string-with-repeat-limit/) | Greedy with letter counts (largest first, minimal separator) |
+| `heap/59` | Medium | Mark Elements on Array by Performing Queries | [#3080](https://leetcode.com/problems/mark-elements-on-array-by-performing-queries/) | Min-heap with a 'marked' array (skip stale entries) |
 | `heap/11` | Hard | IPO | [#502](https://leetcode.com/problems/ipo/) | Two structures: sorted list for 'unlocking', max-heap for 'best now' |
 | `heap/20` | Hard | Minimum Number of Refueling Stops | [#871](https://leetcode.com/problems/minimum-number-of-refueling-stops/) | Greedy with a max-heap of passed options |
 | `heap/30` | Hard | Maximum Performance of a Team | [#1383](https://leetcode.com/problems/maximum-performance-of-a-team/) | Sort by efficiency desc + min-heap of the top-k speeds |
 | `heap/36` | Hard | Minimum Cost to Hire K Workers | [#857](https://leetcode.com/problems/minimum-cost-to-hire-k-workers/) | Sort by ratio, max-heap to keep the k smallest qualities |
 | `heap/37` | Hard | Minimize Deviation in Array | [#1675](https://leetcode.com/problems/minimize-deviation-in-array/) | Normalise to the maximal form, then shrink the maximum with a max-heap |
 | `heap/39` | Hard | Trapping Rain Water II | [#407](https://leetcode.com/problems/trapping-rain-water-ii/) | Dijkstra-style flood from the border with a min-heap |
+| `heap/40` | Hard | Smallest Range Covering Elements from K Lists | [#632](https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/) | K-way merge with a min-heap and a running maximum |
+| `heap/48` | Hard | Put Marbles in Bags | [#2551](https://leetcode.com/problems/put-marbles-in-bags/) | Independent cut costs: top-k minus bottom-k |
+| `heap/50` | Hard | Maximum Elegance of a K-Length Subsequence | [#2813](https://leetcode.com/problems/maximum-elegance-of-a-k-length-subsequence/) | Greedy swap with a stack of removable duplicates |
+| `heap/56` | Hard | Maximum Spending After Buying Items | [#2931](https://leetcode.com/problems/maximum-spending-after-buying-items/) | Rearrangement inequality: smallest first, largest last |
+| `heap/58` | Hard | Find the K-Sum of an Array | [#2386](https://leetcode.com/problems/find-the-k-sum-of-an-array/) | Heap enumeration of the k smallest subset sums |
 
 Start one with `python dsa.py start heap/1`.
 

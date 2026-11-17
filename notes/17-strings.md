@@ -99,6 +99,10 @@ def str_str(haystack, needle):
 | `strings/37` | Easy | Find Common Characters | [#1002](https://leetcode.com/problems/find-common-characters/) | Multiset intersection (min of counts) |
 | `strings/50` | Easy | Buddy Strings | [#859](https://leetcode.com/problems/buddy-strings/) | Compare mismatch positions (+ duplicate-letter special case) |
 | `strings/53` | Easy | Remove Letter To Equalize Frequency | [#2423](https://leetcode.com/problems/remove-letter-to-equalize-frequency/) | Frequency map + simulate each possible removal |
+| `strings/65` | Easy | Most Common Word | [#819](https://leetcode.com/problems/most-common-word/) | Normalise, filter with a set, count with a hash map |
+| `strings/67` | Easy | Verifying an Alien Dictionary | [#953](https://leetcode.com/problems/verifying-an-alien-dictionary/) | Re-map the alphabet, then compare adjacent items |
+| `strings/72` | Easy | Maximum Repeating Substring | [#1668](https://leetcode.com/problems/maximum-repeating-substring/) | DP over end positions: chain consecutive matches |
+| `strings/74` | Easy | Count Vowel Substrings of a String | [#2062](https://leetcode.com/problems/count-vowel-substrings-of-a-string/) | Last-occurrence tracking per right end |
 | `strings/4` | Medium | Reverse Words in a String | [#151](https://leetcode.com/problems/reverse-words-in-a-string/) | Split, reverse, join (in-place version: reverse all then each word) |
 | `strings/5` | Medium | String to Integer (atoi) | [#8](https://leetcode.com/problems/string-to-integer-atoi/) | Careful state-by-state parsing (finite automaton) |
 | `strings/8` | Medium | Multiply Strings | [#43](https://leetcode.com/problems/multiply-strings/) | Schoolbook multiplication with a position array |
@@ -123,12 +127,28 @@ def str_str(haystack, needle):
 | `strings/52` | Medium | Reorder Data in Log Files | [#937](https://leetcode.com/problems/reorder-data-in-log-files/) | Sort with a composite key (stable sort keeps digit-logs in order) |
 | `strings/54` | Medium | Using a Robot to Print the Lexicographically Smallest String | [#2434](https://leetcode.com/problems/using-a-robot-to-print-the-lexicographically-smallest-string/) | Greedy stack + suffix minimum |
 | `strings/57` | Medium | Compare Strings by Frequency of the Smallest Character | [#1170](https://leetcode.com/problems/compare-strings-by-frequency-of-the-smallest-character/) | Precompute a value per item, then sorted array + binary search |
+| `strings/58` | Medium | Maximum Product of Word Lengths | [#318](https://leetcode.com/problems/maximum-product-of-word-lengths/) | Bitmask as a set of letters |
+| `strings/60` | Medium | Sort Characters By Frequency | [#451](https://leetcode.com/problems/sort-characters-by-frequency/) | Counting + bucket sort by frequency |
+| `strings/61` | Medium | Validate IP Address | [#468](https://leetcode.com/problems/validate-ip-address/) | Split by separator, then validate each field with explicit rules |
+| `strings/63` | Medium | Find Duplicate File in System | [#609](https://leetcode.com/problems/find-duplicate-file-in-system/) | Group by key with a hash map |
+| `strings/64` | Medium | Repeated String Match | [#686](https://leetcode.com/problems/repeated-string-match/) | Length bound: only q and q + 1 repetitions need testing |
+| `strings/66` | Medium | Groups of Special-Equivalent Strings | [#893](https://leetcode.com/problems/groups-of-special-equivalent-strings/) | Canonical form (signature) for an equivalence class |
+| `strings/68` | Medium | Check If Word Is Valid After Substitutions | [#1003](https://leetcode.com/problems/check-if-word-is-valid-after-substitutions/) | Stack reduction (undo the insertions as you scan) |
+| `strings/69` | Medium | Camelcase Matching | [#1023](https://leetcode.com/problems/camelcase-matching/) | Two pointers: greedy subsequence match with an uppercase constraint |
+| `strings/71` | Medium | Count Substrings That Differ by One Character | [#1638](https://leetcode.com/problems/count-substrings-that-differ-by-one-character/) | Count by the unique mismatch; precompute equal-run lengths on diagonals |
+| `strings/73` | Medium | Remove All Occurrences of a Substring | [#1910](https://leetcode.com/problems/remove-all-occurrences-of-a-substring/) | Stack that eagerly cancels a pattern |
+| `strings/75` | Medium | Check if a Parentheses String Can Be Valid | [#2116](https://leetcode.com/problems/check-if-a-parentheses-string-can-be-valid/) | Two greedy passes (best case from each side) |
+| `strings/77` | Medium | Decode the Slanted Ciphertext | [#2075](https://leetcode.com/problems/decode-the-slanted-ciphertext/) | Matrix reconstruction and diagonal traversal with index arithmetic |
 | `strings/2` | Hard | Longest Happy Prefix | [#1392](https://leetcode.com/problems/longest-happy-prefix/) | Prefix function (border of a string) |
 | `strings/23` | Hard | Shortest Palindrome | [#214](https://leetcode.com/problems/shortest-palindrome/) | KMP failure function to find the longest palindromic prefix |
 | `strings/38` | Hard | Text Justification | [#68](https://leetcode.com/problems/text-justification/) | Greedy line packing + arithmetic space distribution |
 | `strings/41` | Hard | Integer to English Words | [#273](https://leetcode.com/problems/integer-to-english-words/) | Chunking into 3-digit groups with lookup tables |
 | `strings/55` | Hard | Match Substring After Replacement | [#2301](https://leetcode.com/problems/match-substring-after-replacement/) | Sliding comparison with a set of allowed substitutions |
 | `strings/56` | Hard | Three Equal Parts | [#927](https://leetcode.com/problems/three-equal-parts/) | Count the ones, then compare three aligned slices |
+| `strings/59` | Hard | Palindrome Pairs | [#336](https://leetcode.com/problems/palindrome-pairs/) | Split each word at every cut and look up the reversed half in a hash map |
+| `strings/62` | Hard | Find the Closest Palindrome | [#564](https://leetcode.com/problems/find-the-closest-palindrome/) | Generate a handful of candidate palindromes from the prefix, then pick the best |
+| `strings/70` | Hard | Last Substring in Lexicographical Order | [#1163](https://leetcode.com/problems/last-substring-in-lexicographical-order/) | Two-candidate scan (largest suffix, linear time) |
+| `strings/76` | Hard | Find Substring With Given Hash Value | [#2156](https://leetcode.com/problems/find-substring-with-given-hash-value/) | Rolling hash scanned right-to-left (the highest power leaves first) |
 
 Start one with `python dsa.py start strings/1`.
 

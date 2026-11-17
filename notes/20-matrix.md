@@ -75,6 +75,12 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 | `matrix/38` | Easy | Largest Local Values in a Matrix | [#2373](https://leetcode.com/problems/largest-local-values-in-a-matrix/) | Separable sliding-window maximum (rows, then columns) |
 | `matrix/39` | Easy | Matrix Similarity After Cyclic Shifts | [#2946](https://leetcode.com/problems/matrix-similarity-after-cyclic-shifts/) | Cyclic shift equals identity iff the row is periodic with that shift |
 | `matrix/40` | Easy | Find Missing and Repeated Values | [#2965](https://leetcode.com/problems/find-missing-and-repeated-values/) | Sum arithmetic with a set (no sorting, no counting dictionary) |
+| `matrix/42` | Easy | Range Addition II | [#598](https://leetcode.com/problems/range-addition-ii/) | Intersection of rectangles that share a corner |
+| `matrix/43` | Easy | Image Smoother | [#661](https://leetcode.com/problems/image-smoother/) | 2D prefix sums for window totals |
+| `matrix/50` | Easy | Convert 1D Array Into 2D Array | [#2022](https://leetcode.com/problems/convert-1d-array-into-2d-array/) | Row-major index arithmetic (cell k -> row k // n, column k % n) |
+| `matrix/53` | Easy | Delete Greatest Value in Each Row | [#2500](https://leetcode.com/problems/delete-greatest-value-in-each-row/) | Sort rows, then take column-wise maxima |
+| `matrix/57` | Easy | Check if Grid Satisfies Conditions | [#3142](https://leetcode.com/problems/check-if-grid-satisfies-conditions/) | Collapse a local rule into a global invariant (constant columns) |
+| `matrix/61` | Easy | Snake in Matrix | [#3248](https://leetcode.com/problems/snake-in-matrix/) | Simulate with coordinates; map back with row * n + col |
 | `matrix/1` | Medium | Rotate Image | [#48](https://leetcode.com/problems/rotate-image/) | Matrix transform = composition of simple transforms (transpose + reverse) |
 | `matrix/2` | Medium | Spiral Matrix | [#54](https://leetcode.com/problems/spiral-matrix/) | Boundary shrinking simulation |
 | `matrix/3` | Medium | Set Matrix Zeroes | [#73](https://leetcode.com/problems/set-matrix-zeroes/) | Two-pass marking (use the input as its own bookkeeping) |
@@ -98,6 +104,20 @@ While scanning, read a neighbour's OLD state with `value % 2` (or `& 1`) - it is
 | `matrix/35` | Medium | Find All Groups of Farmland | [#1992](https://leetcode.com/problems/find-all-groups-of-farmland/) | Find rectangle corners by scanning (no flood fill needed) |
 | `matrix/37` | Medium | Count Unguarded Cells in the Grid | [#2257](https://leetcode.com/problems/count-unguarded-cells-in-the-grid/) | Four directional sweeps with a 'visible' flag |
 | `matrix/41` | Medium | Sum of Matrix After Queries | [#2718](https://leetcode.com/problems/sum-of-matrix-after-queries/) | Process in reverse: the last write wins |
+| `matrix/44` | Medium | Max Increase to Keep City Skyline | [#807](https://leetcode.com/problems/max-increase-to-keep-city-skyline/) | Precompute row/column maxima, then a per-cell bound |
+| `matrix/45` | Medium | Magic Squares In Grid | [#840](https://leetcode.com/problems/magic-squares-in-grid/) | Prune with a mathematical invariant, then verify the window |
+| `matrix/46` | Medium | Spiral Matrix III | [#885](https://leetcode.com/problems/spiral-matrix-iii/) | Spiral walk with growing leg lengths; filter by bounds |
+| `matrix/47` | Medium | Diagonal Traverse II | [#1424](https://leetcode.com/problems/diagonal-traverse-ii/) | Group by diagonal index i + j |
+| `matrix/49` | Medium | Cyclically Rotating a Grid | [#1914](https://leetcode.com/problems/cyclically-rotating-a-grid/) | Flatten each ring into a list, rotate by k mod length, write back |
+| `matrix/51` | Medium | Minimum Cost Homecoming of a Robot in a Grid | [#2087](https://leetcode.com/problems/minimum-cost-homecoming-of-a-robot-in-a-grid/) | Costs depend only on the entered line - the Manhattan path is optimal |
+| `matrix/52` | Medium | Count Artifacts That Can Be Extracted | [#2201](https://leetcode.com/problems/count-artifacts-that-can-be-extracted/) | Hash set membership instead of an n x n board |
+| `matrix/54` | Medium | Check Knight Tour Configuration | [#2596](https://leetcode.com/problems/check-knight-tour-configuration/) | Invert the grid into step -> position, then validate neighbours in the sequence |
+| `matrix/55` | Medium | Difference of Number of Distinct Values on Diagonals | [#2711](https://leetcode.com/problems/difference-of-number-of-distinct-values-on-diagonals/) | Prefix / suffix distinct counts along each diagonal |
+| `matrix/56` | Medium | Construct Product Matrix | [#2906](https://leetcode.com/problems/construct-product-matrix/) | Prefix * suffix products (product of array except self) under a modulus |
+| `matrix/58` | Medium | Maximum Difference Score in a Grid | [#3148](https://leetcode.com/problems/maximum-difference-score-in-a-grid/) | Telescoping sum, then a 2D running minimum DP |
+| `matrix/59` | Medium | Find the Minimum Area to Cover All Ones I | [#3195](https://leetcode.com/problems/find-the-minimum-area-to-cover-all-ones-i/) | Bounding box of the points |
+| `matrix/60` | Medium | Count Submatrices With Equal Frequency of X and Y | [#3212](https://leetcode.com/problems/count-submatrices-with-equal-frequency-of-x-and-y/) | 2D prefix counts anchored at the origin |
+| `matrix/48` | Hard | Cherry Pickup II | [#1463](https://leetcode.com/problems/cherry-pickup-ii/) | DP over rows with the pair of column positions as state |
 
 Start one with `python dsa.py start matrix/1`.
 

@@ -98,6 +98,16 @@ def my_pow(x, n):
 | `bits_math/32` | Easy | Add Digits | [#258](https://leetcode.com/problems/add-digits/) | Digital root via modulo 9 |
 | `bits_math/33` | Easy | Minimum Bit Flips to Convert Number | [#2220](https://leetcode.com/problems/minimum-bit-flips-to-convert-number/) | XOR + popcount (Hamming distance) |
 | `bits_math/35` | Easy | XOR Operation in an Array | [#1486](https://leetcode.com/problems/xor-operation-in-an-array/) | XOR prefix patterns (period 4) |
+| `bits_math/39` | Easy | Perfect Number | [#507](https://leetcode.com/problems/perfect-number/) | Divisor pairs up to the square root |
+| `bits_math/42` | Easy | Complement of Base 10 Integer | [#1009](https://leetcode.com/problems/complement-of-base-10-integer/) | XOR with an all-ones mask |
+| `bits_math/45` | Easy | Distribute Candies to People | [#1103](https://leetcode.com/problems/distribute-candies-to-people/) | Arithmetic series instead of simulation |
+| `bits_math/46` | Easy | Day of the Year | [#1154](https://leetcode.com/problems/day-of-the-year/) | Calendar arithmetic with the leap-year rule |
+| `bits_math/47` | Easy | Day of the Week | [#1185](https://leetcode.com/problems/day-of-the-week/) | Zeller's congruence (calendar formula) |
+| `bits_math/48` | Easy | Minimum Cost to Move Chips to The Same Position | [#1217](https://leetcode.com/problems/minimum-cost-to-move-chips-to-the-same-position/) | Parity classes |
+| `bits_math/50` | Easy | Convert Integer to the Sum of Two No-Zero Integers | [#1317](https://leetcode.com/problems/convert-integer-to-the-sum-of-two-no-zero-integers/) | Search with an easy early exit |
+| `bits_math/52` | Easy | Sort Integers by The Number of 1 Bits | [#1356](https://leetcode.com/problems/sort-integers-by-the-number-of-1-bits/) | Sort with a composite key |
+| `bits_math/53` | Easy | Number of Days Between Two Dates | [#1360](https://leetcode.com/problems/number-of-days-between-two-dates/) | Convert to an absolute day count |
+| `bits_math/55` | Easy | Count Square Sum Triples | [#1925](https://leetcode.com/problems/count-square-sum-triples/) | Remove a loop by computing the dependent value |
 | `bits_math/3` | Medium | Sum of Two Integers | [#371](https://leetcode.com/problems/sum-of-two-integers/) | Bit manipulation: XOR = sum without carry, (AND << 1) = carry |
 | `bits_math/4` | Medium | Pow(x, n) | [#50](https://leetcode.com/problems/powx-n/) | Exponentiation by squaring (binary decomposition of the exponent) |
 | `bits_math/8` | Medium | Reverse Integer | [#7](https://leetcode.com/problems/reverse-integer/) | Digit extraction with divmod |
@@ -108,6 +118,16 @@ def my_pow(x, n):
 | `bits_math/16` | Medium | Factorial Trailing Zeroes | [#172](https://leetcode.com/problems/factorial-trailing-zeroes/) | Count prime factors (the scarcer prime, 5, decides) |
 | `bits_math/22` | Medium | Integer to Roman | [#12](https://leetcode.com/problems/integer-to-roman/) | Greedy over a descending value table |
 | `bits_math/34` | Medium | Divide Two Integers | [#29](https://leetcode.com/problems/divide-two-integers/) | Binary long division with shifts |
+| `bits_math/36` | Medium | UTF-8 Validation | [#393](https://leetcode.com/problems/utf-8-validation/) | Bit masks / shifts with a state counter |
+| `bits_math/38` | Medium | Total Hamming Distance | [#477](https://leetcode.com/problems/total-hamming-distance/) | Count per bit instead of per pair |
+| `bits_math/40` | Medium | Maximum Swap | [#670](https://leetcode.com/problems/maximum-swap/) | Greedy with last-occurrence table |
+| `bits_math/41` | Medium | Reordered Power of 2 | [#869](https://leetcode.com/problems/reordered-power-of-2/) | Canonical form (sorted digits) comparison |
+| `bits_math/43` | Medium | Convert to Base -2 | [#1017](https://leetcode.com/problems/convert-to-base-2/) | Repeated division by a negative base |
+| `bits_math/44` | Medium | Adding Two Negabinary Numbers | [#1073](https://leetcode.com/problems/adding-two-negabinary-numbers/) | Digit-wise addition with a sign-flipping carry |
+| `bits_math/49` | Medium | Sequential Digits | [#1291](https://leetcode.com/problems/sequential-digits/) | Generate candidates instead of testing the range |
+| `bits_math/51` | Medium | Angle Between Hands of a Clock | [#1344](https://leetcode.com/problems/angle-between-hands-of-a-clock/) | Angle arithmetic (rates of the two hands) |
+| `bits_math/54` | Medium | Concatenation of Consecutive Binary Numbers | [#1680](https://leetcode.com/problems/concatenation-of-consecutive-binary-numbers/) | Shift-and-add with modular arithmetic |
+| `bits_math/37` | Hard | Poor Pigs | [#458](https://leetcode.com/problems/poor-pigs/) | Information counting (base-(rounds+1) digits) |
 
 Start one with `python dsa.py start bits_math/1`.
 

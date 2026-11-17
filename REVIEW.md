@@ -24,7 +24,7 @@ The spine is strong: concept-first notes, a pattern finder, hint ladders that es
 - Local, dependency-free execution with timeouts, so brute force visibly times out where it should.
 
 ## Honest limits (do not hide these from students)
-1. **Count**: 808 problems are taught in depth (the target is 1000; 192 still to add). The coverage map shows what is covered; for further practice use the "More:" lists at the end of each note *after* finishing the ladder.
+1. **Count**: 1000 problems are taught in depth (the 1000-problem target is reached). The coverage map shows what is covered; for further practice use the "More:" lists at the end of each note *after* finishing the ladder.
 2. **Statements are paraphrases**, not LeetCode's text; always read the official statement via the link before submitting there.
 3. **Tests are small and hand-picked** plus random cross-checks; they do not replace a judge's large hidden tests. Complexity claims should be argued by the student, not trusted.
 4. **Not covered in depth yet**: segment trees (only Fenwick), Tarjan/Kosaraju SCC, Manacher, advanced geometry, SQL and concurrency questions.

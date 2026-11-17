@@ -168,9 +168,29 @@ The other skeletons: `graphs/1` iterative DFS flood fill, `graphs/2` BFS with a 
 | `graphs/41` | Medium | Time Needed to Inform All Employees | [#1376](https://leetcode.com/problems/time-needed-to-inform-all-employees/) | Longest root-to-node path sum in a tree |
 | `graphs/42` | Medium | Reorder Routes to Make All Paths Lead to the City Zero | [#1466](https://leetcode.com/problems/reorder-routes-to-make-all-paths-lead-to-the-city-zero/) | Traverse an undirected tree, remembering the original direction |
 | `graphs/43` | Medium | Number of Enclaves | [#1020](https://leetcode.com/problems/number-of-enclaves/) | Flood fill from the boundary inwards |
+| `graphs/45` | Medium | Regions Cut By Slashes | [#959](https://leetcode.com/problems/regions-cut-by-slashes/) | Union-find on sub-cell pieces |
+| `graphs/46` | Medium | Shortest Path with Alternating Colors | [#1129](https://leetcode.com/problems/shortest-path-with-alternating-colors/) | BFS on an expanded state graph (node, last colour) |
+| `graphs/47` | Medium | Minimum Number of Vertices to Reach All Nodes | [#1557](https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes/) | In-degree zero = sources of a DAG |
+| `graphs/48` | Medium | Number of Restricted Paths From First to Last Node | [#1786](https://leetcode.com/problems/number-of-restricted-paths-from-first-to-last-node/) | Dijkstra distances + DP in increasing distance order |
+| `graphs/50` | Medium | Detonate the Maximum Bombs | [#2101](https://leetcode.com/problems/detonate-the-maximum-bombs/) | Reachability in an implicit directed graph |
+| `graphs/51` | Medium | Count Unreachable Pairs of Nodes in an Undirected Graph | [#2316](https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/) | Connected components + counting pairs across them |
+| `graphs/53` | Medium | Minimum Score of a Path Between Two Cities | [#2492](https://leetcode.com/problems/minimum-score-of-a-path-between-two-cities/) | Connected component + minimum edge |
+| `graphs/54` | Medium | Minimum Fuel Cost to Report to the Capital | [#2477](https://leetcode.com/problems/minimum-fuel-cost-to-report-to-the-capital/) | Tree: per-edge cost from subtree sizes |
+| `graphs/55` | Medium | Maximum Star Sum of a Graph | [#2497](https://leetcode.com/problems/maximum-star-sum-of-a-graph/) | Per-node greedy: top-k positive neighbours |
+| `graphs/56` | Medium | Reachable Nodes With Restrictions | [#2368](https://leetcode.com/problems/reachable-nodes-with-restrictions/) | Graph traversal that avoids forbidden nodes |
+| `graphs/57` | Medium | Count the Number of Complete Components | [#2685](https://leetcode.com/problems/count-the-number-of-complete-components/) | Components + edge-count test for cliques |
+| `graphs/58` | Medium | Minimum Time to Visit Disappearing Nodes | [#3112](https://leetcode.com/problems/minimum-time-to-visit-disappearing-nodes/) | Dijkstra with a deadline per node |
+| `graphs/59` | Medium | Shortest Distance After Road Addition Queries I | [#3243](https://leetcode.com/problems/shortest-distance-after-road-addition-queries-i/) | BFS repeated after each graph update |
+| `graphs/60` | Medium | Minimum Time to Collect All Apples in a Tree | [#1443](https://leetcode.com/problems/minimum-time-to-collect-all-apples-in-a-tree/) | Tree DP: 'does my subtree contain a target?' |
+| `graphs/61` | Medium | Number of Ways to Arrive at Destination | [#1976](https://leetcode.com/problems/number-of-ways-to-arrive-at-destination/) | Dijkstra that also counts shortest paths |
+| `graphs/62` | Medium | Find the Safest Path in a Grid | [#2812](https://leetcode.com/problems/find-the-safest-path-in-a-grid/) | Multi-source BFS + maximin path (Dijkstra / binary search) |
 | `graphs/6` | Hard | Word Ladder | [#127](https://leetcode.com/problems/word-ladder/) | BFS on an implicit graph (shortest path, unweighted) |
 | `graphs/18` | Hard | Alien Dictionary | [#269](https://leetcode.com/problems/alien-dictionary/) | Derive a graph from the data, then topological sort |
 | `graphs/19` | Hard | Word Search II | [#212](https://leetcode.com/problems/word-search-ii/) | Trie + grid DFS (search many words in one pass) |
+| `graphs/44` | Hard | Swim in Rising Water | [#778](https://leetcode.com/problems/swim-in-rising-water/) | Minimax path: Dijkstra with max instead of sum |
+| `graphs/49` | Hard | Find All People With Secret | [#2092](https://leetcode.com/problems/find-all-people-with-secret/) | Time-ordered union-find with rollback of useless unions |
+| `graphs/52` | Hard | Number of Good Paths | [#2421](https://leetcode.com/problems/number-of-good-paths/) | Offline union-find by increasing threshold (Kruskal-style) |
+| `graphs/63` | Hard | Shortest Cycle in a Graph | [#2608](https://leetcode.com/problems/shortest-cycle-in-a-graph/) | BFS from every vertex, detect non-tree edges |
 
 Start one with `python dsa.py start graphs/1`.
 

@@ -153,7 +153,7 @@ flowchart TD
 ## H. Pattern index (where to learn each)
 | # | Topic | Practice ids |
 |---|---|---|
-| 01 | [hashing](01-hashing.md) | `hashing/1` ... `hashing/42` |
+| 01 | [hashing](01-hashing.md) | `hashing/1` ... `hashing/74` |
 | 02 | [prefix_sums](02-prefix_sums.md) | `prefix_sums/1` ... `prefix_sums/36` |
 | 03 | [two_pointers](03-two_pointers.md) | `two_pointers/1` ... `two_pointers/45` |
 | 04 | [sliding_window](04-sliding_window.md) | `sliding_window/1` ... `sliding_window/46` |
@@ -162,14 +162,14 @@ flowchart TD
 | 07 | [stack_monotonic](07-stack_monotonic.md) | `stack_monotonic/1` ... `stack_monotonic/47` |
 | 08 | [linked_list](08-linked_list.md) | `linked_list/1` ... `linked_list/34` |
 | 09 | [intervals](09-intervals.md) | `intervals/1` ... `intervals/33` |
-| 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/30` |
-| 11 | [heap](11-heap.md) | `heap/1` ... `heap/39` |
-| 12 | [trees](12-trees.md) | `trees/1` ... `trees/57` |
+| 10 | [greedy](10-greedy.md) | `greedy/1` ... `greedy/50` |
+| 11 | [heap](11-heap.md) | `heap/1` ... `heap/59` |
+| 12 | [trees](12-trees.md) | `trees/1` ... `trees/77` |
 | 13 | [backtracking](13-backtracking.md) | `backtracking/1` ... `backtracking/47` |
-| 14 | [graphs](14-graphs.md) | `graphs/1` ... `graphs/43` |
-| 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/60` |
-| 16 | [bits_math](16-bits_math.md) | `bits_math/1` ... `bits_math/35` |
-| 17 | [strings](17-strings.md) | `strings/1` ... `strings/57` |
+| 14 | [graphs](14-graphs.md) | `graphs/1` ... `graphs/63` |
+| 15 | [dynamic_programming](15-dynamic_programming.md) | `dynamic_programming/1` ... `dynamic_programming/80` |
+| 16 | [bits_math](16-bits_math.md) | `bits_math/1` ... `bits_math/55` |
+| 17 | [strings](17-strings.md) | `strings/1` ... `strings/77` |
 | 18 | [design](18-design.md) | `design/1` ... `design/30` |
 | 19 | [divide_conquer](19-divide_conquer.md) | `divide_conquer/1` ... `divide_conquer/15` |
-| 20 | [matrix](20-matrix.md) | `matrix/1` ... `matrix/41` |
+| 20 | [matrix](20-matrix.md) | `matrix/1` ... `matrix/61` |

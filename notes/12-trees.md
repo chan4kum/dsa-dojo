@@ -104,6 +104,9 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/49` | Easy | Univalued Binary Tree | [#965](https://leetcode.com/problems/univalued-binary-tree/) | DFS with early exit |
 | `trees/50` | Easy | Cousins in Binary Tree | [#993](https://leetcode.com/problems/cousins-in-binary-tree/) | BFS level scan with a sibling check |
 | `trees/57` | Easy | Increasing Order Search Tree | [#897](https://leetcode.com/problems/increasing-order-search-tree/) | Inorder traversal with relinking |
+| `trees/58` | Easy | Second Minimum Node In a Binary Tree | [#671](https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/) | Tree traversal with pruning using the heap-like property |
+| `trees/59` | Easy | Minimum Distance Between BST Nodes | [#783](https://leetcode.com/problems/minimum-distance-between-bst-nodes/) | Inorder traversal gives sorted order; compare neighbours |
+| `trees/62` | Easy | Sum of Root To Leaf Binary Numbers | [#1022](https://leetcode.com/problems/sum-of-root-to-leaf-binary-numbers/) | DFS carrying a running value (Horner's rule) |
 | `trees/2` | Medium | Binary Tree Level Order Traversal | [#102](https://leetcode.com/problems/binary-tree-level-order-traversal/) | BFS with a queue, one level per round (snapshot len(queue)) |
 | `trees/3` | Medium | Validate Binary Search Tree | [#98](https://leetcode.com/problems/validate-binary-search-tree/) | Tree recursion passing constraints DOWN (top-down), or in-order traversal must be increasing |
 | `trees/4` | Medium | Lowest Common Ancestor of a Binary Tree | [#236](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/) | Post-order tree recursion returning 'what I found below me' |
@@ -131,9 +134,26 @@ BFS skeleton: see `trees/2` (`for _ in range(len(q))` = one level).
 | `trees/54` | Medium | Maximum Level Sum of a Binary Tree | [#1161](https://leetcode.com/problems/maximum-level-sum-of-a-binary-tree/) | BFS with per-level aggregation |
 | `trees/55` | Medium | Construct Binary Search Tree from Preorder Traversal | [#1008](https://leetcode.com/problems/construct-binary-search-tree-from-preorder-traversal/) | Recursive build with upper bounds (one pass) |
 | `trees/56` | Medium | Add One Row to Tree | [#623](https://leetcode.com/problems/add-one-row-to-tree/) | Level-targeted tree surgery (BFS or DFS with a depth counter) |
+| `trees/60` | Medium | Binary Tree Pruning | [#814](https://leetcode.com/problems/binary-tree-pruning/) | Postorder recursion (decide after the children are done) |
+| `trees/61` | Medium | Distribute Coins in Binary Tree | [#979](https://leetcode.com/problems/distribute-coins-in-binary-tree/) | Postorder excess / flow across each edge |
+| `trees/63` | Medium | Binary Search Tree to Greater Sum Tree | [#1038](https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/) | Reverse inorder traversal with a running sum |
+| `trees/64` | Medium | Delete Leaves With a Given Value | [#1325](https://leetcode.com/problems/delete-leaves-with-a-given-value/) | Postorder recursion that returns the (possibly deleted) subtree |
+| `trees/65` | Medium | Maximum Product of Splitted Binary Tree | [#1339](https://leetcode.com/problems/maximum-product-of-splitted-binary-tree/) | Subtree sums via postorder, then maximise over cut points |
+| `trees/66` | Medium | Longest ZigZag Path in a Binary Tree | [#1372](https://leetcode.com/problems/longest-zigzag-path-in-a-binary-tree/) | Tree DP returning two values per node |
+| `trees/67` | Medium | Pseudo-Palindromic Paths in a Binary Tree | [#1457](https://leetcode.com/problems/pseudo-palindromic-paths-in-a-binary-tree/) | DFS with a parity bitmask |
+| `trees/68` | Medium | Number of Good Leaf Nodes Pairs | [#1530](https://leetcode.com/problems/number-of-good-leaf-nodes-pairs/) | Postorder with distance histograms of leaves |
+| `trees/69` | Medium | Even Odd Tree | [#1609](https://leetcode.com/problems/even-odd-tree/) | BFS level by level with a running 'previous' value |
+| `trees/70` | Medium | Kth Largest Sum in a Binary Tree | [#2583](https://leetcode.com/problems/kth-largest-sum-in-a-binary-tree/) | BFS level sums + size-k min-heap |
+| `trees/71` | Medium | Reverse Odd Levels of Binary Tree | [#2415](https://leetcode.com/problems/reverse-odd-levels-of-binary-tree/) | Mirror-pair recursion on a perfect tree |
+| `trees/72` | Medium | Cousins in Binary Tree II | [#2641](https://leetcode.com/problems/cousins-in-binary-tree-ii/) | BFS with level totals and sibling sums |
+| `trees/73` | Medium | Minimum Number of Operations to Sort a Binary Tree by Level | [#2471](https://leetcode.com/problems/minimum-number-of-operations-to-sort-a-binary-tree-by-level/) | Level order + minimum swaps to sort (permutation cycles) |
+| `trees/74` | Medium | Binary Tree Coloring Game | [#1145](https://leetcode.com/problems/binary-tree-coloring-game/) | Subtree sizes: the biggest of three regions |
+| `trees/75` | Medium | Construct String from Binary Tree | [#606](https://leetcode.com/problems/construct-string-from-binary-tree/) | Preorder recursion with a conditional formatting rule |
 | `trees/5` | Hard | Binary Tree Maximum Path Sum | [#124](https://leetcode.com/problems/binary-tree-maximum-path-sum/) | Tree DP: return one value upward, record a different value (the bend) in a global |
 | `trees/19` | Hard | Serialize and Deserialize Binary Tree | [#297](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/) | Preorder with null markers (a traversal that is uniquely decodable) |
 | `trees/39` | Hard | Binary Tree Cameras | [#968](https://leetcode.com/problems/binary-tree-cameras/) | Tree DP / greedy bottom-up with 3 states |
+| `trees/76` | Hard | Maximum Sum BST in Binary Tree | [#1373](https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/) | Postorder returning (is_bst, min, max, sum) per subtree |
+| `trees/77` | Hard | Vertical Order Traversal of a Binary Tree | [#987](https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/) | Coordinates + sort + group |
 
 Start one with `python dsa.py start trees/1`.
 

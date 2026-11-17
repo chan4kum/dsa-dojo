@@ -77,6 +77,23 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/19` | Easy | Check If N and Its Double Exist | [#1346](https://leetcode.com/problems/check-if-n-and-its-double-exist/) | Set of seen values (two-sum style) |
 | `hashing/25` | Easy | Uncommon Words from Two Sentences | [#884](https://leetcode.com/problems/uncommon-words-from-two-sentences/) | Count words over the combined text |
 | `hashing/27` | Easy | Set Mismatch | [#645](https://leetcode.com/problems/set-mismatch/) | Set difference / sum arithmetic |
+| `hashing/46` | Easy | Unique Number of Occurrences | [#1207](https://leetcode.com/problems/unique-number-of-occurrences/) | Count, then compare the number of distinct counts with the number of values |
+| `hashing/47` | Easy | How Many Numbers Are Smaller Than the Current Number | [#1365](https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/) | Sort once; first-occurrence index = count of smaller values |
+| `hashing/55` | Easy | Most Frequent Number Following Key In an Array | [#2190](https://leetcode.com/problems/most-frequent-number-following-key-in-an-array/) | Single pass with a frequency map |
+| `hashing/60` | Easy | Odd String Difference | [#2451](https://leetcode.com/problems/odd-string-difference/) | Canonical key (shape signature) + frequency map |
+| `hashing/61` | Easy | Number of Beautiful Pairs | [#2748](https://leetcode.com/problems/number-of-beautiful-pairs/) | Count by a tiny key (a digit) instead of comparing pairs |
+| `hashing/63` | Easy | Distribute Candies | [#575](https://leetcode.com/problems/distribute-candies/) | Upper bound from two limits; a set counts distinct values |
+| `hashing/64` | Easy | Minimum Index Sum of Two Lists | [#599](https://leetcode.com/problems/minimum-index-sum-of-two-lists/) | Hash map of positions + running minimum |
+| `hashing/65` | Easy | Number of Good Pairs | [#1512](https://leetcode.com/problems/number-of-good-pairs/) | Count equal values; pairs = c * (c - 1) / 2 |
+| `hashing/66` | Easy | Check if All Characters Have Equal Number of Occurrences | [#1941](https://leetcode.com/problems/check-if-all-characters-have-equal-number-of-occurrences/) | Count, then test that the set of counts has size one |
+| `hashing/67` | Easy | Kth Distinct String in an Array | [#2053](https://leetcode.com/problems/kth-distinct-string-in-an-array/) | Frequency map, then an ordered second pass |
+| `hashing/68` | Easy | Count Common Words With One Occurrence | [#2085](https://leetcode.com/problems/count-common-words-with-one-occurrence/) | Two frequency maps and an intersection test |
+| `hashing/69` | Easy | Intersection of Multiple Arrays | [#2248](https://leetcode.com/problems/intersection-of-multiple-arrays/) | Count occurrences across arrays; keep those present in all |
+| `hashing/70` | Easy | Most Frequent Even Element | [#2404](https://leetcode.com/problems/most-frequent-even-element/) | Filtered frequency map with a composite tie-break key |
+| `hashing/71` | Easy | Largest Positive Integer That Exists With Its Negative | [#2441](https://leetcode.com/problems/largest-positive-integer-that-exists-with-its-negative/) | Set membership instead of a nested scan |
+| `hashing/72` | Easy | Merge Two 2D Arrays by Summing Values | [#2570](https://leetcode.com/problems/merge-two-2d-arrays-by-summing-values/) | Two-pointer merge of sorted lists (or hash map + sort) |
+| `hashing/73` | Easy | Find the Distinct Difference Array | [#2670](https://leetcode.com/problems/find-the-distinct-difference-array/) | Prefix and suffix distinct counts with running sets |
+| `hashing/74` | Easy | Sort Array by Increasing Frequency | [#1636](https://leetcode.com/problems/sort-array-by-increasing-frequency/) | Frequency map + sort with a composite key |
 | `hashing/2` | Medium | Group Anagrams | [#49](https://leetcode.com/problems/group-anagrams/) | Hash map with a canonical-form key (group by signature) |
 | `hashing/3` | Medium | Longest Consecutive Sequence | [#128](https://leetcode.com/problems/longest-consecutive-sequence/) | Hash set + 'only expand from the start of a sequence' (amortised O(n)) |
 | `hashing/10` | Medium | 4Sum II | [#454](https://leetcode.com/problems/4sum-ii/) | Meet in the middle with a hash map of pair sums |
@@ -102,6 +119,21 @@ Canonical-key grouping: `groups[tuple(sorted(w))].append(w)`. Run-start trick fo
 | `hashing/40` | Medium | Node With Highest Edge Score | [#2374](https://leetcode.com/problems/node-with-highest-edge-score/) | Accumulate into a hash map / array by target |
 | `hashing/41` | Medium | Most Popular Video Creator | [#2456](https://leetcode.com/problems/most-popular-video-creator/) | Group-by with a running aggregate and a tie-breaking best |
 | `hashing/42` | Medium | Subdomain Visit Count | [#811](https://leetcode.com/problems/subdomain-visit-count/) | Accumulate counts for every dot-suffix in a hash map |
+| `hashing/43` | Medium | Bulls and Cows | [#299](https://leetcode.com/problems/bulls-and-cows/) | Frequency counting: common elements = sum of minimum counts |
+| `hashing/44` | Medium | Prison Cells After N Days | [#957](https://leetcode.com/problems/prison-cells-after-n-days/) | Cycle detection with a visited-state hash map |
+| `hashing/45` | Medium | Largest Values From Labels | [#1090](https://leetcode.com/problems/largest-values-from-labels/) | Greedy by value with a per-label counter |
+| `hashing/48` | Medium | Check If Array Pairs Are Divisible by k | [#1497](https://leetcode.com/problems/check-if-array-pairs-are-divisible-by-k/) | Remainder buckets that must be paired off |
+| `hashing/49` | Medium | Count Good Meals | [#1711](https://leetcode.com/problems/count-good-meals/) | Two-sum with a small fixed set of targets |
+| `hashing/50` | Medium | Tuple with Same Product | [#1726](https://leetcode.com/problems/tuple-with-same-product/) | Group by product; count combinations within each group |
+| `hashing/51` | Medium | Finding the Users Active Minutes | [#1817](https://leetcode.com/problems/finding-the-users-active-minutes/) | Map of sets, then a histogram of set sizes |
+| `hashing/52` | Medium | Find Original Array From Doubled Array | [#2007](https://leetcode.com/problems/find-original-array-from-doubled-array/) | Greedy smallest-first matching with a frequency map |
+| `hashing/53` | Medium | Number of Pairs of Strings With Concatenation Equal to Target | [#2023](https://leetcode.com/problems/number-of-pairs-of-strings-with-concatenation-equal-to-target/) | Split the target and look up both halves in a frequency map |
+| `hashing/54` | Medium | Find All Possible Recipes from Given Supplies | [#2115](https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/) | Topological sort over a dependency graph |
+| `hashing/56` | Medium | Replace Elements in an Array | [#2295](https://leetcode.com/problems/replace-elements-in-an-array/) | Value -> index hash map for O(1) updates |
+| `hashing/57` | Medium | Make Number of Distinct Characters Equal | [#2531](https://leetcode.com/problems/make-number-of-distinct-characters-equal/) | Frequency tables; try all alphabet pairs instead of all index pairs |
+| `hashing/58` | Medium | Sum of Distances | [#2615](https://leetcode.com/problems/sum-of-distances/) | Group by value + prefix sums of positions |
+| `hashing/59` | Medium | Divide Players Into Teams of Equal Skill | [#2491](https://leetcode.com/problems/divide-players-into-teams-of-equal-skill/) | Forced pairing: smallest with largest (or a complement frequency map) |
+| `hashing/62` | Medium | High-Access Employees | [#2933](https://leetcode.com/problems/high-access-employees/) | Group by key, sort, sliding window of fixed size 3 |
 
 Start one with `python dsa.py start hashing/1`.
 
