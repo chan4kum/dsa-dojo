@@ -3384,3 +3384,52 @@ GX44 = {
 }
 
 GX.update(GX44)
+
+
+def _hx7_lists():
+    pool = ["p", "q", "r", "s", "t"]
+    while True:
+        a = random.sample(pool, R(1, 4))
+        b = random.sample(pool, R(1, 4))
+        if set(a) & set(b):
+            return (a, b)
+
+
+def _hx7_arrays():
+    return ([random.sample(range(1, 7), R(1, 5)) for _ in range(R(1, 4))],)
+
+
+def _hx7_merge():
+    def one():
+        ids = sorted(random.sample(range(1, 8), R(1, 4)))
+        return [[i, R(1, 9)] for i in ids]
+
+    return (one(), one())
+
+
+GX45 = {
+    ("hashing", "Distribute Candies"): lambda: ([R(1, 4) for _ in range(2 * R(1, 4))],),
+    ("hashing", "Minimum Index Sum of Two Lists"): _hx7_lists,
+    ("hashing", "Number of Good Pairs"): lambda: ([R(1, 4) for _ in range(R(1, 9))],),
+    ("hashing", "Check if All Characters Have Equal Number of Occurrences"): lambda: (
+        "".join(random.choice("abc") for _ in range(R(1, 8))),
+    ),
+    ("hashing", "Kth Distinct String in an Array"): lambda: (
+        [random.choice("abcd") for _ in range(R(1, 8))],
+        R(1, 4),
+    ),
+    ("hashing", "Count Common Words With One Occurrence"): lambda: (
+        [random.choice("abc") for _ in range(R(1, 6))],
+        [random.choice("abc") for _ in range(R(1, 6))],
+    ),
+    ("hashing", "Intersection of Multiple Arrays"): _hx7_arrays,
+    ("hashing", "Most Frequent Even Element"): lambda: ([R(0, 9) for _ in range(R(1, 9))],),
+    ("hashing", "Largest Positive Integer That Exists With Its Negative"): lambda: (
+        [random.choice([x for x in range(-6, 7) if x]) for _ in range(R(1, 8))],
+    ),
+    ("hashing", "Merge Two 2D Arrays by Summing Values"): _hx7_merge,
+    ("hashing", "Find the Distinct Difference Array"): lambda: ([R(1, 4) for _ in range(R(1, 8))],),
+    ("hashing", "Sort Array by Increasing Frequency"): lambda: ([R(-3, 3) for _ in range(R(1, 9))],),
+}
+
+GX.update(GX45)
