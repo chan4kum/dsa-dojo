@@ -2426,3 +2426,134 @@ GX36 = {
 }
 
 GX.update(GX36)
+
+
+def _g_pairs(n, k):
+    """Up to k distinct unordered node pairs (as lists) from nodes 0..n-1."""
+    pairs = [[i, j] for i in range(n) for j in range(i + 1, n)]
+    random.shuffle(pairs)
+    return pairs[: R(0, k)]
+
+
+def _g_tree(n):
+    return [[i, R(0, i - 1)] for i in range(1, n)]
+
+
+def _g_connected(n, offset=0, hi=5, extra=3):
+    """A connected weighted graph: random tree plus a few extra distinct edges, nodes offset..offset+n-1."""
+    pairs = {tuple(sorted(e)) for e in _g_tree(n)}
+    pairs |= {tuple(p) for p in _g_pairs(n, extra)}
+    return [[u + offset, v + offset, R(1, hi)] for u, v in sorted(pairs)]
+
+
+def _g_water():
+    n = R(1, 4)
+    values = list(range(n * n))
+    random.shuffle(values)
+    return ([values[i * n : (i + 1) * n] for i in range(n)],)
+
+
+def _g_alt():
+    n = R(1, 5)
+    return (
+        n,
+        [[R(0, n - 1), R(0, n - 1)] for _ in range(R(0, 5))],
+        [[R(0, n - 1), R(0, n - 1)] for _ in range(R(0, 5))],
+    )
+
+
+def _g_dag():
+    n = R(1, 7)
+    return (n, [p for p in _g_pairs(n, 10)])
+
+
+def _g_secret():
+    n = R(2, 6)
+    meetings = []
+    for _ in range(R(0, 6)):
+        x, y = random.sample(range(n), 2)
+        meetings.append([x, y, R(1, 4)])
+    return (n, meetings, R(1, n - 1))
+
+
+def _g_goodpaths():
+    n = R(1, 7)
+    return ([R(1, 3) for _ in range(n)], _g_tree(n))
+
+
+def _g_restricted():
+    n = R(2, 7)
+    return (n, _g_tree(n), random.sample(range(1, n), R(0, n - 1)))
+
+
+def _g_disappear():
+    n = R(1, 5)
+    edges = [p + [R(1, 5)] for p in _g_pairs(n, 6)]
+    return (n, edges, [R(1, 10) for _ in range(n)])
+
+
+def _g_roads_queries():
+    n = R(3, 7)
+    queries = []
+    for _ in range(R(1, 4)):
+        u = R(0, n - 3)
+        queries.append([u, R(u + 2, n - 1)])
+    return (n, queries)
+
+
+def _g_apples():
+    n = R(1, 8)
+    return (n, _g_tree(n), [random.random() < 0.5 for _ in range(n)])
+
+
+def _g_safest():
+    n = R(1, 4)
+    grid = [[R(0, 1) for _ in range(n)] for _ in range(n)]
+    grid[R(0, n - 1)][R(0, n - 1)] = 1
+    return (grid,)
+
+
+def _g_slashes():
+    n = R(1, 4)
+    return (["".join(random.choice(" /\\") for _ in range(n)) for _ in range(n)],)
+
+
+def _g_nc(lo, hi, offset=0, weight=5):
+    n = R(lo, hi)
+    return (n, _g_connected(n, offset, weight))
+
+
+def _g_graph(lo, hi, k):
+    n = R(lo, hi)
+    return (n, _g_pairs(n, k))
+
+
+def _g_star():
+    n = R(1, 6)
+    return ([R(-5, 9) for _ in range(n)], _g_pairs(n, 6), R(0, 4))
+
+
+GX37 = {
+    ("graphs", "Swim in Rising Water"): _g_water,
+    ("graphs", "Regions Cut By Slashes"): _g_slashes,
+    ("graphs", "Shortest Path with Alternating Colors"): _g_alt,
+    ("graphs", "Minimum Number of Vertices to Reach All Nodes"): _g_dag,
+    ("graphs", "Number of Restricted Paths From First to Last Node"): lambda: _g_nc(2, 6, 1),
+    ("graphs", "Find All People With Secret"): _g_secret,
+    ("graphs", "Detonate the Maximum Bombs"): lambda: ([[R(0, 8), R(0, 8), R(1, 4)] for _ in range(R(1, 6))],),
+    ("graphs", "Count Unreachable Pairs of Nodes in an Undirected Graph"): lambda: _g_graph(1, 7, 6),
+    ("graphs", "Number of Good Paths"): _g_goodpaths,
+    ("graphs", "Minimum Score of a Path Between Two Cities"): lambda: _g_nc(2, 6, 1, 9),
+    ("graphs", "Minimum Fuel Cost to Report to the Capital"): lambda: (_g_tree(R(1, 8)), R(1, 5)),
+    ("graphs", "Maximum Star Sum of a Graph"): _g_star,
+    ("graphs", "Reachable Nodes With Restrictions"): _g_restricted,
+    ("graphs", "Count the Number of Complete Components"): lambda: _g_graph(1, 6, 8),
+    ("graphs", "Find Minimum Time to Visit Disappearing Nodes"): _g_disappear,
+    ("graphs", "Shortest Distance After Road Addition Queries I"): _g_roads_queries,
+    ("graphs", "Minimum Time to Collect All Apples in a Tree"): _g_apples,
+    ("graphs", "Number of Ways to Arrive at Destination"): lambda: _g_nc(2, 6, 0),
+    ("graphs", "Find the Safest Path in a Grid"): _g_safest,
+    ("graphs", "Shortest Cycle in a Graph"): lambda: _g_graph(1, 7, 9),
+}
+
+GX.update(GX37)
