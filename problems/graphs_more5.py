@@ -1175,9 +1175,9 @@ def count_complete_components(n, edges):
     return sum(1 for root, v in nodes.items() if links[root] == v * (v - 1) // 2)
 """,
     ),
-    # ---- Find Minimum Time to Visit Disappearing Nodes (LeetCode 3112) ----
+    # ---- Minimum Time to Visit Disappearing Nodes (LeetCode 3112) ----
     dict(
-        title="Find Minimum Time to Visit Disappearing Nodes",
+        title="Minimum Time to Visit Disappearing Nodes",
         diff="M",
         lc=3112,
         slug="minimum-time-to-visit-disappearing-nodes",

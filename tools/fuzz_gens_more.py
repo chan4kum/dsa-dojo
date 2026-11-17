@@ -2548,7 +2548,7 @@ GX37 = {
     ("graphs", "Maximum Star Sum of a Graph"): _g_star,
     ("graphs", "Reachable Nodes With Restrictions"): _g_restricted,
     ("graphs", "Count the Number of Complete Components"): lambda: _g_graph(1, 6, 8),
-    ("graphs", "Find Minimum Time to Visit Disappearing Nodes"): _g_disappear,
+    ("graphs", "Minimum Time to Visit Disappearing Nodes"): _g_disappear,
     ("graphs", "Shortest Distance After Road Addition Queries I"): _g_roads_queries,
     ("graphs", "Minimum Time to Collect All Apples in a Tree"): _g_apples,
     ("graphs", "Number of Ways to Arrive at Destination"): lambda: _g_nc(2, 6, 0),
@@ -2731,3 +2731,75 @@ GX39 = {
 }
 
 GX.update(GX39)
+
+
+def _nozero_norm(args, got):
+    """True if got is two positive no-zero integers summing to n."""
+    (n,) = args
+    return (
+        isinstance(got, list)
+        and len(got) == 2
+        and all(isinstance(x, int) and x > 0 and "0" not in str(x) for x in got)
+        and sum(got) == n
+    )
+
+
+def _bm_leap(y):
+    return y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)
+
+
+def _bm_date(lo=1971, hi=2100):
+    """A random valid calendar date (year, month, day)."""
+    y, m = R(lo, hi), R(1, 12)
+    lengths = [31, 29 if _bm_leap(y) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    return y, m, R(1, lengths[m - 1])
+
+
+def _bm_utf8():
+    return ([random.choice([0, 100, 197, 130, 145, 224, 240, 128, 191, 248]) for _ in range(R(1, 6))],)
+
+
+def _bm_pigs():
+    die = R(1, 5)
+    rounds = R(1, 4)
+    return (R(1, 60), die, die * rounds + R(0, die - 1))
+
+
+def _bm_negabinary():
+    if random.random() < 0.2:
+        return [0]
+    return [1] + [R(0, 1) for _ in range(R(0, 4))]
+
+
+def _bm_date_text(lo, hi):
+    y, m, d = _bm_date(lo, hi)
+    return "%04d-%02d-%02d" % (y, m, d)
+
+
+GX40 = {
+    ("bits_math", "UTF-8 Validation"): _bm_utf8,
+    ("bits_math", "Poor Pigs"): _bm_pigs,
+    ("bits_math", "Total Hamming Distance"): lambda: (ints(8, 0, 40, 1),),
+    ("bits_math", "Perfect Number"): lambda: (R(1, 500),),
+    ("bits_math", "Maximum Swap"): lambda: (R(0, 99999),),
+    ("bits_math", "Reordered Power of 2"): lambda: (R(1, 2000),),
+    ("bits_math", "Complement of Base 10 Integer"): lambda: (R(0, 1000),),
+    ("bits_math", "Convert to Base -2"): lambda: (R(0, 40),),
+    ("bits_math", "Adding Two Negabinary Numbers"): lambda: (_bm_negabinary(), _bm_negabinary()),
+    ("bits_math", "Distribute Candies to People"): lambda: (R(1, 60), R(1, 6)),
+    ("bits_math", "Day of the Year"): lambda: (_bm_date_text(1900, 2100),),
+    ("bits_math", "Day of the Week"): lambda: tuple(reversed(_bm_date())),
+    ("bits_math", "Minimum Cost to Move Chips to The Same Position"): lambda: (ints(8, 1, 12, 1),),
+    ("bits_math", "Sequential Digits"): lambda: (lambda low: (low, low + R(0, 3000)))(R(10, 2000)),
+    ("bits_math", "Convert Integer to the Sum of Two No-Zero Integers"): (
+        lambda: (R(2, 300),),
+        _nozero_norm,
+    ),
+    ("bits_math", "Angle Between Hands of a Clock"): lambda: (R(1, 12), R(0, 59)),
+    ("bits_math", "Sort Integers by The Number of 1 Bits"): lambda: (ints(10, 0, 500, 1),),
+    ("bits_math", "Number of Days Between Two Dates"): lambda: (_bm_date_text(1990, 2010), _bm_date_text(1990, 2010)),
+    ("bits_math", "Concatenation of Consecutive Binary Numbers"): lambda: (R(1, 40),),
+    ("bits_math", "Count Square Sum Triples"): lambda: (R(1, 30),),
+}
+
+GX.update(GX40)
