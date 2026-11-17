@@ -2658,3 +2658,76 @@ GX38 = {
 }
 
 GX.update(GX38)
+
+
+def _dp_frog():
+    return ([0] + sorted(random.sample(range(1, 14), R(1, 7))),)
+
+
+def _dp_wrap():
+    return ("".join(random.choice("abcz") for _ in range(R(1, 10))),)
+
+
+def _dp_inverse():
+    n = R(1, 6)
+    return (n, R(0, n * (n - 1) // 2 + 1))
+
+
+def _dp_strings():
+    return (
+        "".join(random.choice("abc") for _ in range(R(1, 6))),
+        "".join(random.choice("abc") for _ in range(R(1, 6))),
+    )
+
+
+def _dp_swap():
+    n = R(1, 7)
+    x = sorted(random.sample(range(20), n))
+    y = sorted(random.sample(range(20), n))
+    for i in range(n):
+        if random.random() < 0.5:
+            x[i], y[i] = y[i], x[i]
+    return (x, y)
+
+
+def _dp_averages():
+    return ([R(1, 9) for _ in range(R(1, 6))], R(1, 4))
+
+
+def _dp_game():
+    k = R(0, 6)
+    return (R(0, 10), k, R(1, 4))
+
+
+def _dp_books():
+    return ([[R(1, 4), R(1, 5)] for _ in range(R(1, 6))], R(4, 8))
+
+
+GX39 = {
+    ("dynamic_programming", "Frog Jump"): _dp_frog,
+    ("dynamic_programming", "Unique Substrings in Wraparound String"): _dp_wrap,
+    ("dynamic_programming", "Student Attendance Record II"): lambda: (R(1, 8),),
+    ("dynamic_programming", "Non-negative Integers without Consecutive Ones"): lambda: (R(1, 300),),
+    ("dynamic_programming", "K Inverse Pairs Array"): _dp_inverse,
+    ("dynamic_programming", "2 Keys Keyboard"): lambda: (R(1, 30),),
+    ("dynamic_programming", "Minimum ASCII Delete Sum for Two Strings"): _dp_strings,
+    ("dynamic_programming", "Champagne Tower"): lambda: (lambda row: (R(0, 20), row, R(0, row)))(R(0, 5)),
+    ("dynamic_programming", "Minimum Swaps To Make Sequences Increasing"): _dp_swap,
+    ("dynamic_programming", "Soup Servings"): lambda: (R(1, 150),),
+    ("dynamic_programming", "Largest Sum of Averages"): _dp_averages,
+    ("dynamic_programming", "Binary Trees With Factors"): lambda: (random.sample(range(2, 25), R(1, 6)),),
+    ("dynamic_programming", "New 21 Game"): _dp_game,
+    ("dynamic_programming", "Flip String to Monotone Increasing"): lambda: (
+        "".join(random.choice("01") for _ in range(R(1, 10))),
+    ),
+    ("dynamic_programming", "Knight Dialer"): lambda: (R(1, 8),),
+    ("dynamic_programming", "Distinct Subsequences II"): lambda: (
+        "".join(random.choice("abc") for _ in range(R(1, 9))),
+    ),
+    ("dynamic_programming", "Last Stone Weight II"): lambda: (ints(8, 1, 12, 1),),
+    ("dynamic_programming", "Filling Bookcase Shelves"): _dp_books,
+    ("dynamic_programming", "Count Vowels Permutation"): lambda: (R(1, 7),),
+    ("dynamic_programming", "Count Sorted Vowel Strings"): lambda: (R(1, 10),),
+}
+
+GX.update(GX39)
