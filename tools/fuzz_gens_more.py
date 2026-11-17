@@ -3230,3 +3230,157 @@ GX43 = {
 }
 
 GX.update(GX43)
+
+
+def _hx_hint():
+    n = R(1, 6)
+    return ("".join(random.choice("0123") for _ in range(n)), "".join(random.choice("0123") for _ in range(n)))
+
+
+def _hx_labels():
+    n = R(1, 8)
+    return ([R(0, 9) for _ in range(n)], [R(0, 3) for _ in range(n)], R(1, n), R(1, 3))
+
+
+def _hx_arrange():
+    return ([R(-9, 9) for _ in range(2 * R(1, 4))], R(1, 6))
+
+
+def _hx_logs():
+    logs = [[R(1, 3), R(1, 4)] for _ in range(R(1, 8))]
+    per_user = {}
+    for user, minute in logs:
+        per_user.setdefault(user, set()).add(minute)
+    return (logs, max(len(s) for s in per_user.values()) + R(0, 2))
+
+
+def _hx_doubled():
+    if random.random() < 0.5:
+        original = [R(0, 6) for _ in range(R(1, 4))]
+        changed = original + [2 * x for x in original]
+        random.shuffle(changed)
+        if random.random() < 0.3:
+            changed[R(0, len(changed) - 1)] += 1
+        return (changed,)
+    return ([R(0, 8) for _ in range(R(1, 8))],)
+
+
+def _hx_concat():
+    nums = ["".join(random.choice("12") for _ in range(R(1, 3))) for _ in range(R(1, 6))]
+    return (nums, "".join(random.choice("12") for _ in range(R(2, 5))))
+
+
+def _hx_recipes():
+    names = ["r%d" % i for i in range(R(1, 4))]
+    base = ["x", "y", "z"]
+    pool = names + base
+    ingredients = [random.sample(pool, R(1, min(3, len(pool)))) for _ in names]
+    return (names, ingredients, random.sample(base, R(0, 3)))
+
+
+def _hx_follow():
+    while True:
+        nums = [R(1, 3) for _ in range(R(2, 9))]
+        key = random.choice(nums[:-1])
+        counts = {}
+        for i in range(len(nums) - 1):
+            if nums[i] == key:
+                counts[nums[i + 1]] = counts.get(nums[i + 1], 0) + 1
+        top = sorted(counts.values(), reverse=True)
+        if len(top) == 1 or top[0] != top[1]:
+            return (nums, key)
+
+
+def _hx_replace():
+    nums = random.sample(range(1, 12), R(1, 5))
+    current = set(nums)
+    ops = []
+    for _ in range(R(0, 5)):
+        a = random.choice(sorted(current))
+        b = random.choice([v for v in range(1, 15) if v not in current])
+        ops.append([a, b])
+        current.discard(a)
+        current.add(b)
+    return (nums, ops)
+
+
+def _hx_skill():
+    n = R(1, 4)
+    if random.random() < 0.5:
+        total = R(2, 10)
+        skill = []
+        for _ in range(n):
+            a = R(1, total - 1)
+            skill += [a, total - a]
+        random.shuffle(skill)
+        return (skill,)
+    return ([R(1, 6) for _ in range(2 * n)],)
+
+
+def _hx_shapes():
+    length = R(2, 4)
+    while True:
+        base = [R(-2, 2) for _ in range(length - 1)]
+        odd = [R(-2, 2) for _ in range(length - 1)]
+        if base != odd:
+            break
+
+    def word(diffs):
+        for _ in range(50):
+            start = R(0, 9)
+            letters = [start]
+            for d in diffs:
+                letters.append(letters[-1] + d)
+            if all(0 <= v <= 9 for v in letters):
+                return "".join(chr(97 + v) for v in letters)
+        return None
+
+    words = [word(base) for _ in range(R(2, 5))]
+    odd_word = word(odd)
+    if odd_word is None or None in words:
+        return (["ab", "ab", "ac"],)
+    words.insert(R(0, len(words)), odd_word)
+    return (words,)
+
+
+def _hx_beautiful():
+    nums = []
+    for _ in range(R(2, 8)):
+        x = R(1, 999)
+        while x % 10 == 0:
+            x = R(1, 999)
+        nums.append(x)
+    return (nums,)
+
+
+def _hx_access():
+    return ([[random.choice("abc"), "%02d%02d" % (R(0, 3), R(0, 59))] for _ in range(R(1, 9))],)
+
+
+GX44 = {
+    ("hashing", "Bulls and Cows"): _hx_hint,
+    ("hashing", "Prison Cells After N Days"): lambda: ([R(0, 1) for _ in range(8)], R(1, 40)),
+    ("hashing", "Largest Values From Labels"): _hx_labels,
+    ("hashing", "Unique Number of Occurrences"): lambda: ([R(-3, 3) for _ in range(R(1, 10))],),
+    ("hashing", "How Many Numbers Are Smaller Than the Current Number"): lambda: ([R(0, 10) for _ in range(R(1, 8))],),
+    ("hashing", "Check If Array Pairs Are Divisible by k"): _hx_arrange,
+    ("hashing", "Count Good Meals"): lambda: ([R(0, 40) for _ in range(R(1, 8))],),
+    ("hashing", "Tuple with Same Product"): lambda: (random.sample(range(1, 13), R(1, 7)),),
+    ("hashing", "Finding the Users Active Minutes"): _hx_logs,
+    ("hashing", "Find Original Array From Doubled Array"): _hx_doubled,
+    ("hashing", "Number of Pairs of Strings With Concatenation Equal to Target"): _hx_concat,
+    ("hashing", "Find All Possible Recipes from Given Supplies"): _hx_recipes,
+    ("hashing", "Most Frequent Number Following Key In an Array"): _hx_follow,
+    ("hashing", "Replace Elements in an Array"): _hx_replace,
+    ("hashing", "Make Number of Distinct Characters Equal"): lambda: (
+        "".join(random.choice("abc") for _ in range(R(1, 5))),
+        "".join(random.choice("abc") for _ in range(R(1, 5))),
+    ),
+    ("hashing", "Sum of Distances"): lambda: ([R(0, 3) for _ in range(R(1, 9))],),
+    ("hashing", "Divide Players Into Teams of Equal Skill"): _hx_skill,
+    ("hashing", "Odd String Difference"): _hx_shapes,
+    ("hashing", "Number of Beautiful Pairs"): _hx_beautiful,
+    ("hashing", "High-Access Employees"): _hx_access,
+}
+
+GX.update(GX44)
