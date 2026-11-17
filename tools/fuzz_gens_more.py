@@ -2930,3 +2930,178 @@ GX41 = {
 }
 
 GX.update(GX41)
+
+
+def _mx_magic_variants():
+    cur = [[4, 9, 2], [3, 5, 7], [8, 1, 6]]
+    variants = []
+    for _ in range(4):
+        cur = [list(r) for r in zip(*cur[::-1])]
+        variants.append(cur)
+        variants.append([row[::-1] for row in cur])
+    return variants
+
+
+_MX_MAGIC = _mx_magic_variants()
+_MX_TOUR = [
+    [0, 11, 16, 5, 20],
+    [17, 4, 19, 10, 15],
+    [12, 1, 8, 21, 6],
+    [3, 18, 23, 14, 9],
+    [24, 13, 2, 7, 22],
+]
+
+
+def _mx_ops():
+    m, n = R(1, 6), R(1, 6)
+    return (m, n, [[R(1, m), R(1, n)] for _ in range(R(0, 4))])
+
+
+def _mx_grid(hi, lo=0, rows=(1, 4), cols=(1, 4)):
+    r, c = R(*rows), R(*cols)
+    return [[R(lo, hi) for _ in range(c)] for _ in range(r)]
+
+
+def _mx_square():
+    n = R(1, 4)
+    return [[R(0, 9) for _ in range(n)] for _ in range(n)]
+
+
+def _mx_magic():
+    rows, cols = R(3, 5), R(3, 5)
+    grid = [[R(0, 15) for _ in range(cols)] for _ in range(rows)]
+    for _ in range(R(0, 2)):
+        sq = random.choice(_MX_MAGIC)
+        r0, c0 = R(0, rows - 3), R(0, cols - 3)
+        for a in range(3):
+            for b in range(3):
+                grid[r0 + a][c0 + b] = sq[a][b]
+    return (grid,)
+
+
+def _mx_spiral():
+    rows, cols = R(1, 5), R(1, 5)
+    return (rows, cols, R(0, rows - 1), R(0, cols - 1))
+
+
+def _mx_jagged():
+    return ([[R(1, 9) for _ in range(R(1, 4))] for _ in range(R(1, 4))],)
+
+
+def _mx_cherry():
+    return (_mx_grid(5, rows=(1, 4), cols=(2, 4)),)
+
+
+def _mx_rotate():
+    rows, cols = 2 * R(1, 3), 2 * R(1, 3)
+    return ([[R(1, 99) for _ in range(cols)] for _ in range(rows)], R(1, 20))
+
+
+def _mx_1d():
+    m, n = R(1, 4), R(1, 4)
+    size = m * n if random.random() < 0.6 else R(1, 8)
+    return ([R(1, 9) for _ in range(size)], m, n)
+
+
+def _mx_home():
+    rows, cols = R(1, 4), R(1, 4)
+    return (
+        [R(0, rows - 1), R(0, cols - 1)],
+        [R(0, rows - 1), R(0, cols - 1)],
+        [R(0, 9) for _ in range(rows)],
+        [R(0, 9) for _ in range(cols)],
+    )
+
+
+def _mx_artifacts():
+    n = R(1, 5)
+    artifacts = []
+    for _ in range(R(1, 4)):
+        r1, c1 = R(0, n - 1), R(0, n - 1)
+        artifacts.append([r1, c1, min(n - 1, r1 + R(0, 1)), min(n - 1, c1 + R(0, 1))])
+    cells = [[r, c] for r in range(n) for c in range(n)]
+    return (n, artifacts, random.sample(cells, R(0, len(cells))))
+
+
+def _mx_knight():
+    if random.random() < 0.5:
+        grid = [row[:] for row in _MX_TOUR]
+        if random.random() < 0.5:
+            a, b, c, d = R(0, 4), R(0, 4), R(0, 4), R(0, 4)
+            grid[a][b], grid[c][d] = grid[c][d], grid[a][b]
+        return (grid,)
+    n = R(1, 4)
+    vals = list(range(n * n))
+    random.shuffle(vals)
+    return ([vals[i * n : (i + 1) * n] for i in range(n)],)
+
+
+def _mx_conditions():
+    m, n = R(1, 3), R(1, 4)
+    if random.random() < 0.5:
+        return ([[R(0, 3) for _ in range(n)] for _ in range(m)],)
+    top = [R(0, 3)]
+    while len(top) < n:
+        top.append(random.choice([v for v in range(4) if v != top[-1]]))
+    grid = [top[:] for _ in range(m)]
+    if random.random() < 0.4:
+        grid[R(0, m - 1)][R(0, n - 1)] = R(0, 3)
+    return (grid,)
+
+
+def _mx_ones():
+    grid = _mx_grid(1)
+    grid[R(0, len(grid) - 1)][R(0, len(grid[0]) - 1)] = 1
+    return (grid,)
+
+
+def _mx_xy():
+    m, n = R(1, 4), R(1, 4)
+    return ([[random.choice("XY.") for _ in range(n)] for _ in range(m)],)
+
+
+def _mx_snake():
+    n = R(2, 4)
+    r = c = 0
+    commands = []
+    for _ in range(R(1, 8)):
+        moves = []
+        if r > 0:
+            moves.append(("UP", -1, 0))
+        if r < n - 1:
+            moves.append(("DOWN", 1, 0))
+        if c > 0:
+            moves.append(("LEFT", 0, -1))
+        if c < n - 1:
+            moves.append(("RIGHT", 0, 1))
+        name, dr, dc = random.choice(moves)
+        commands.append(name)
+        r += dr
+        c += dc
+    return (n, commands)
+
+
+GX42 = {
+    ("matrix", "Range Addition II"): _mx_ops,
+    ("matrix", "Image Smoother"): lambda: (_mx_grid(20),),
+    ("matrix", "Max Increase to Keep City Skyline"): lambda: (_mx_square(),),
+    ("matrix", "Magic Squares In Grid"): _mx_magic,
+    ("matrix", "Spiral Matrix III"): _mx_spiral,
+    ("matrix", "Diagonal Traverse II"): _mx_jagged,
+    ("matrix", "Cherry Pickup II"): _mx_cherry,
+    ("matrix", "Cyclically Rotating a Grid"): _mx_rotate,
+    ("matrix", "Convert 1D Array Into 2D Array"): _mx_1d,
+    ("matrix", "Minimum Cost Homecoming of a Robot in a Grid"): _mx_home,
+    ("matrix", "Count Artifacts That Can Be Extracted"): _mx_artifacts,
+    ("matrix", "Delete Greatest Value in Each Row"): lambda: (_mx_grid(9, lo=1),),
+    ("matrix", "Check Knight Tour Configuration"): _mx_knight,
+    ("matrix", "Difference of Number of Distinct Values on Diagonals"): lambda: (_mx_grid(4, lo=1),),
+    ("matrix", "Construct Product Matrix"): lambda: (_mx_grid(30000, lo=1, rows=(1, 3), cols=(1, 3)),),
+    ("matrix", "Check if Grid Satisfies Conditions"): _mx_conditions,
+    ("matrix", "Maximum Difference Score in a Grid"): lambda: (_mx_grid(9, lo=1, cols=(2, 4)),),
+    ("matrix", "Find the Minimum Area to Cover All Ones I"): _mx_ones,
+    ("matrix", "Count Submatrices With Equal Frequency of X and Y"): _mx_xy,
+    ("matrix", "Snake in Matrix"): _mx_snake,
+}
+
+GX.update(GX42)
