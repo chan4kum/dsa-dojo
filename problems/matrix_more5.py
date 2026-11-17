@@ -105,6 +105,7 @@ def matrix_reshape(mat, r, c):
 def largest_overlap(img1, img2):
     n = len(img1)
     best = 0
+
     for dx in range(-n + 1, n):
         for dy in range(-n + 1, n):
             count = 0
@@ -113,6 +114,7 @@ def largest_overlap(img1, img2):
                     if 0 <= i + dx < n and 0 <= j + dy < n and img1[i][j] and img2[i + dx][j + dy]:
                         count += 1
             best = max(best, count)
+
     return best
 """,
         solution=r"""
@@ -234,6 +236,7 @@ def surface_area(grid):
 def surface_area(grid):
     n = len(grid)
     total = 0
+
     for i in range(n):
         for j in range(n):
             v = grid[i][j]
@@ -243,6 +246,7 @@ def surface_area(grid):
                     total -= 2 * min(v, grid[i - 1][j])
                 if j > 0:
                     total -= 2 * min(v, grid[i][j - 1])
+
     return total
 """,
     ),
@@ -299,14 +303,18 @@ def max_distance(grid):
     n = len(grid)
     dist = [[-1] * n for _ in range(n)]
     queue = deque()
+
     for i in range(n):
         for j in range(n):
             if grid[i][j]:
                 dist[i][j] = 0
                 queue.append((i, j))
+
     if len(queue) in (0, n * n):
         return -1
+
     farthest = 0
+
     while queue:
         i, j = queue.popleft()
         for a, b in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
@@ -314,6 +322,7 @@ def max_distance(grid):
                 dist[a][b] = dist[i][j] + 1
                 farthest = dist[a][b]
                 queue.append((a, b))
+
     return farthest
 """,
     ),
@@ -361,11 +370,13 @@ def tictactoe(moves):
         + [[(i, j) for i in range(3)] for j in range(3)]
         + [[(i, i) for i in range(3)], [(i, 2 - i) for i in range(3)]]
     )
+
     for t, (r, c) in enumerate(moves):
         mark = "AB"[t % 2]
         board[r][c] = mark
         if any(all(board[i][j] == mark for i, j in line) for line in lines):
             return mark
+
     return "Draw" if len(moves) == 9 else "Pending"
 """,
         solution=r"""
@@ -373,6 +384,7 @@ def tictactoe(moves):
 # Idea: Per-line counters instead of rescanning the grid
 def tictactoe(moves):
     score = [[0] * 8 for _ in range(2)]
+
     for t, (r, c) in enumerate(moves):
         player = t % 2
         lines = (r, 3 + c) + ((6,) if r == c else ()) + ((7,) if r + c == 2 else ())
@@ -380,6 +392,7 @@ def tictactoe(moves):
             score[player][line] += 1
             if score[player][line] == 3:
                 return "AB"[player]
+
     return "Draw" if len(moves) == 9 else "Pending"
 """,
     ),
@@ -437,6 +450,7 @@ def diagonal_sort(mat):
     out = [row[:] for row in mat]
     m, n = len(out), len(out[0])
     changed = True
+
     while changed:
         changed = False
         for i in range(m - 1):
@@ -444,6 +458,7 @@ def diagonal_sort(mat):
                 if out[i][j] > out[i + 1][j + 1]:
                     out[i][j], out[i + 1][j + 1] = out[i + 1][j + 1], out[i][j]
                     changed = True
+
     return out
 """,
         solution=r"""
@@ -452,15 +467,20 @@ def diagonal_sort(mat):
 def diagonal_sort(mat):
     m, n = len(mat), len(mat[0])
     groups = defaultdict(list)
+
     for i in range(m):
         for j in range(n):
             groups[i - j].append(mat[i][j])
+
     for values in groups.values():
         values.sort(reverse=True)
+
     out = [[0] * n for _ in range(m)]
+
     for i in range(m):
         for j in range(n):
             out[i][j] = groups[i - j].pop()
+
     return out
 """,
     ),
@@ -527,15 +547,19 @@ def find_ball(grid):
 def find_ball(grid):
     n = len(grid[0])
     pos = list(range(n))
+
     for row in grid:
         nxt = []
+
         for c in pos:
             if c < 0:
                 nxt.append(-1)
                 continue
             target = c + row[c]
             nxt.append(target if 0 <= target < n and row[target] == row[c] else -1)
+
         pos = nxt
+
     return pos
 """,
     ),
@@ -598,6 +622,7 @@ def find_ball(grid):
 def rotate_the_box(box):
     rows = [list(row) for row in box]
     moved = True
+
     while moved:
         moved = False
         for row in rows:
@@ -605,6 +630,7 @@ def rotate_the_box(box):
                 if row[j] == "#" and row[j + 1] == ".":
                     row[j], row[j + 1] = ".", "#"
                     moved = True
+
     return [list(col) for col in zip(*rows[::-1])]
 """,
         solution=r"""
@@ -613,9 +639,11 @@ def rotate_the_box(box):
 def rotate_the_box(box):
     m, n = len(box), len(box[0])
     out = [["."] * m for _ in range(n)]
+
     for i, original in enumerate(box):
         row = list(original)
         write = n - 1
+
         for j in range(n - 1, -1, -1):
             if row[j] == "*":
                 write = j - 1
@@ -623,8 +651,10 @@ def rotate_the_box(box):
                 row[j] = "."
                 row[write] = "#"
                 write -= 1
+
         for j in range(n):
             out[j][m - 1 - i] = row[j]
+
     return out
 """,
     ),
@@ -664,6 +694,7 @@ def rotate_the_box(box):
 def find_rotation(mat, target):
     n = len(mat)
     current = [row[:] for row in mat]
+
     for _ in range(4):
         if current == target:
             return True
@@ -672,6 +703,7 @@ def find_rotation(mat, target):
             for j in range(n):
                 rotated[j][n - 1 - i] = current[i][j]
         current = rotated
+
     return False
 """,
         solution=r"""
@@ -725,12 +757,14 @@ def find_farmland(land):
     m, n = len(land), len(land[0])
     seen = set()
     groups = []
+
     for i in range(m):
         for j in range(n):
             if land[i][j] and (i, j) not in seen:
                 stack = [(i, j)]
                 seen.add((i, j))
                 cells = []
+
                 while stack:
                     a, b = stack.pop()
                     cells.append((a, b))
@@ -738,9 +772,11 @@ def find_farmland(land):
                         if 0 <= x < m and 0 <= y < n and land[x][y] and (x, y) not in seen:
                             seen.add((x, y))
                             stack.append((x, y))
+
                 rows = [a for a, _ in cells]
                 cols = [b for _, b in cells]
                 groups.append([min(rows), min(cols), max(rows), max(cols)])
+
     return groups
 """,
         solution=r"""
@@ -749,6 +785,7 @@ def find_farmland(land):
 def find_farmland(land):
     m, n = len(land), len(land[0])
     groups = []
+
     for i in range(m):
         for j in range(n):
             if land[i][j] and (i == 0 or not land[i - 1][j]) and (j == 0 or not land[i][j - 1]):
@@ -758,6 +795,7 @@ def find_farmland(land):
                 while c + 1 < n and land[i][c + 1]:
                     c += 1
                 groups.append([i, j, r, c])
+
     return groups
 """,
     ),
@@ -852,12 +890,14 @@ def check_valid(matrix):
 def count_unguarded(m, n, guards, walls):
     blocked = {(r, c) for r, c in walls} | {(r, c) for r, c in guards}
     seen = set()
+
     for r, c in guards:
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             a, b = r + dr, c + dc
             while 0 <= a < m and 0 <= b < n and (a, b) not in blocked:
                 seen.add((a, b))
                 a, b = a + dr, b + dc
+
     return m * n - len(blocked) - len(seen)
 """,
         solution=r"""
@@ -865,14 +905,18 @@ def count_unguarded(m, n, guards, walls):
 # Idea: Four directional sweeps with a 'visible' flag
 def count_unguarded(m, n, guards, walls):
     grid = [[0] * n for _ in range(m)]
+
     for r, c in guards:
         grid[r][c] = 1
+
     for r, c in walls:
         grid[r][c] = 2
+
     seen = [[False] * n for _ in range(m)]
 
     def sweep(cells):
         watching = False
+
         for r, c in cells:
             if grid[r][c] == 1:
                 watching = True
@@ -884,9 +928,11 @@ def count_unguarded(m, n, guards, walls):
     for r in range(m):
         sweep((r, c) for c in range(n))
         sweep((r, c) for c in range(n - 1, -1, -1))
+
     for c in range(n):
         sweep((r, c) for r in range(m))
         sweep((r, c) for r in range(m - 1, -1, -1))
+
     return sum(1 for r in range(m) for c in range(n) if grid[r][c] == 0 and not seen[r][c])
 """,
     ),
@@ -985,13 +1031,16 @@ def largest_local(grid):
 def are_similar(mat, k):
     for i, row in enumerate(mat):
         shifted = list(row)
+
         for _ in range(k):
             if i % 2 == 0:
                 shifted = shifted[1:] + shifted[:1]
             else:
                 shifted = shifted[-1:] + shifted[:-1]
+
         if shifted != row:
             return False
+
     return True
 """,
         solution=r"""
@@ -1037,12 +1086,14 @@ def are_similar(mat, k):
 def find_missing_and_repeated_values(grid):
     flat = [x for row in grid for x in row]
     repeated = missing = 0
+
     for v in range(1, len(flat) + 1):
         c = flat.count(v)
         if c == 2:
             repeated = v
         elif c == 0:
             missing = v
+
     return [repeated, missing]
 """,
         solution=r"""
@@ -1094,12 +1145,14 @@ def find_missing_and_repeated_values(grid):
 # BRUTE FORCE: O(q * n + n^2) time - actually paint the matrix and add it up
 def matrix_sum_queries(n, queries):
     matrix = [[0] * n for _ in range(n)]
+
     for kind, index, value in queries:
         for k in range(n):
             if kind == 0:
                 matrix[index][k] = value
             else:
                 matrix[k][index] = value
+
     return sum(map(sum, matrix))
 """,
         solution=r"""
@@ -1108,6 +1161,7 @@ def matrix_sum_queries(n, queries):
 def matrix_sum_queries(n, queries):
     rows, cols = set(), set()
     total = 0
+
     for kind, index, value in reversed(queries):
         if kind == 0:
             if index not in rows:
@@ -1116,6 +1170,7 @@ def matrix_sum_queries(n, queries):
         elif index not in cols:
             total += value * (n - len(rows))
             cols.add(index)
+
     return total
 """,
     ),

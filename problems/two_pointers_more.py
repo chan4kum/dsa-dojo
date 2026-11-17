@@ -58,6 +58,7 @@ def two_sum_sorted(numbers, target):
 # Idea: Two pointers on a sorted array (converge from both ends)
 def two_sum_sorted(numbers, target):
     left, right = 0, len(numbers) - 1
+
     while left < right:
         s = numbers[left] + numbers[right]
         if s == target:
@@ -110,6 +111,7 @@ def sorted_squares(nums):
     n = len(nums)
     out = [0] * n
     left, right = 0, n - 1
+
     for i in range(n - 1, -1, -1):
         if abs(nums[left]) > abs(nums[right]):
             out[i] = nums[left] ** 2
@@ -117,6 +119,7 @@ def sorted_squares(nums):
         else:
             out[i] = nums[right] ** 2
             right -= 1
+
     return out
 """,
     ),
@@ -211,6 +214,7 @@ def sort_colors(nums):
 # Idea: Three-way partition (Dutch national flag) with an invariant
 def sort_colors(nums):
     lo, i, hi = 0, 0, len(nums) - 1
+
     while i <= hi:
         if nums[i] == 0:
             nums[lo], nums[i] = nums[i], nums[lo]
@@ -266,6 +270,7 @@ def merge(nums1, m, nums2, n):
 # Idea: Merge from the back (use the free space as a buffer)
 def merge(nums1, m, nums2, n):
     i, j, k = m - 1, n - 1, m + n - 1
+
     while j >= 0:
         if i >= 0 and nums1[i] > nums2[j]:
             nums1[k] = nums1[i]
@@ -332,10 +337,12 @@ def valid_palindrome(s):
         return True
 
     left, right = 0, len(s) - 1
+
     while left < right:
         if s[left] != s[right]:
             return pal(left + 1, right) or pal(left, right - 1)
         left, right = left + 1, right - 1
+
     return True
 """,
     ),

@@ -63,12 +63,14 @@ def is_valid(s):
 def is_valid(s):
     pair = {")": "(", "]": "[", "}": "{"}
     stack = []
+
     for ch in s:
         if ch in pair:
             if not stack or stack.pop() != pair[ch]:
                 return False
         else:
             stack.append(ch)
+
     return not stack
 """,
     ),
@@ -110,6 +112,7 @@ def is_valid(s):
 # BRUTE FORCE: O(n^2) - scan ahead from every day
 def daily_temperatures(temperatures):
     out = []
+
     for i, t in enumerate(temperatures):
         d = 0
         for j in range(i + 1, len(temperatures)):
@@ -117,6 +120,7 @@ def daily_temperatures(temperatures):
                 d = j - i
                 break
         out.append(d)
+
     return out
 """,
         solution=r"""
@@ -125,11 +129,13 @@ def daily_temperatures(temperatures):
 def daily_temperatures(temperatures):
     ans = [0] * len(temperatures)
     stack = []  # indices, temperatures decreasing
+
     for i, t in enumerate(temperatures):
         while stack and temperatures[stack[-1]] < t:
             j = stack.pop()
             ans[j] = i - j
         stack.append(i)
+
     return ans
 """,
     ),
@@ -184,12 +190,14 @@ def largest_rectangle_area(heights):
 def largest_rectangle_area(heights):
     stack = []  # indices with increasing heights
     best = 0
+
     for i, h in enumerate(heights + [0]):  # sentinel flushes the stack
         while stack and heights[stack[-1]] >= h:
             height = heights[stack.pop()]
             left = stack[-1] if stack else -1
             best = max(best, height * (i - left - 1))
         stack.append(i)
+
     return best
 """,
     ),
@@ -236,6 +244,7 @@ def max_sliding_window(nums, k):
 def max_sliding_window(nums, k):
     dq = deque()  # indices; nums[dq] decreasing
     out = []
+
     for i, x in enumerate(nums):
         while dq and nums[dq[-1]] <= x:
             dq.pop()
@@ -244,6 +253,7 @@ def max_sliding_window(nums, k):
             dq.popleft()
         if i >= k - 1:
             out.append(nums[dq[0]])
+
     return out
 """,
     ),

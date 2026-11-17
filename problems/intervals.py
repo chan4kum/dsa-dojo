@@ -53,8 +53,10 @@ PROBLEMS = [
 def merge(intervals):
     iv = [list(x) for x in intervals]
     changed = True
+
     while changed:
         changed = False
+
         for i in range(len(iv)):
             for j in range(i + 1, len(iv)):
                 if iv[i][0] <= iv[j][1] and iv[j][0] <= iv[i][1]:
@@ -62,8 +64,10 @@ def merge(intervals):
                     del iv[j]
                     changed = True
                     break
+
             if changed:
                 break
+
     return sorted(iv)
 """,
         solution=r"""
@@ -116,11 +120,13 @@ def merge(intervals):
 def insert(intervals, new_interval):
     iv = sorted([list(x) for x in intervals] + [list(new_interval)])
     out = []
+
     for s, e in iv:
         if out and s <= out[-1][1]:
             out[-1][1] = max(out[-1][1], e)
         else:
             out.append([s, e])
+
     return out
 """,
         solution=r"""
@@ -129,15 +135,19 @@ def insert(intervals, new_interval):
 def insert(intervals, new_interval):
     out, i, n = [], 0, len(intervals)
     s, e = new_interval
+
     while i < n and intervals[i][1] < s:  # entirely before
         out.append(intervals[i])
         i += 1
+
     while i < n and intervals[i][0] <= e:  # overlapping -> absorb
         s = min(s, intervals[i][0])
         e = max(e, intervals[i][1])
         i += 1
+
     out.append([s, e])
     out.extend(intervals[i:])  # entirely after
+
     return out
 """,
     ),
@@ -179,10 +189,12 @@ def erase_overlap_intervals(intervals):
     iv = sorted(intervals)
     n = len(iv)
     dp = [1] * n  # longest chain of non-overlapping intervals ending at i
+
     for i in range(n):
         for j in range(i):
             if iv[j][1] <= iv[i][0]:
                 dp[i] = max(dp[i], dp[j] + 1)
+
     return n - max(dp, default=0)
 """,
         solution=r"""
@@ -192,11 +204,13 @@ def erase_overlap_intervals(intervals):
     intervals = sorted(intervals, key=lambda x: x[1])
     end = float("-inf")
     removed = 0
+
     for s, e in intervals:
         if s >= end:
             end = e  # keep it
         else:
             removed += 1  # overlaps the interval we kept -> drop
+
     return removed
 """,
     ),

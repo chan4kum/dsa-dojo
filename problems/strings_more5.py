@@ -126,29 +126,40 @@ def full_justify(words, max_width):
     lines = []
     current = []
     length = 0
+
     for word in words:
         if current and length + len(current) + len(word) > max_width:
             lines.append(current)
             current, length = [], 0
         current.append(word)
         length += len(word)
+
     if current:
         lines.append(current)
+
     result = []
+
     for index, line in enumerate(lines):
         gaps = len(line) - 1
+
         if index == len(lines) - 1 or gaps == 0:
             text = " ".join(line)
             result.append(text + " " * (max_width - len(text)))
             continue
+
         spaces = [1] * gaps
         extra = max_width - (sum(len(w) for w in line) + gaps)
+
         for step in range(extra):
             spaces[step % gaps] += 1
+
         text = ""
+
         for position, word in enumerate(line[:-1]):
             text += word + " " * spaces[position]
+
         result.append(text + line[-1])
+
     return result
 """,
         solution=r"""
@@ -157,13 +168,17 @@ def full_justify(words, max_width):
 def full_justify(words, max_width):
     lines = []
     i, n = 0, len(words)
+
     while i < n:
         j = i
         length = len(words[i])
+
         while j + 1 < n and length + 1 + len(words[j + 1]) <= max_width:
             j += 1
             length += 1 + len(words[j])
+
         group = words[i : j + 1]
+
         if j == n - 1 or len(group) == 1:
             line = " ".join(group)
             line += " " * (max_width - len(line))
@@ -174,8 +189,10 @@ def full_justify(words, max_width):
             for k, word in enumerate(group[:-1]):
                 line += word + " " * (base + (1 if k < extra else 0))
             line += group[-1]
+
         lines.append(line)
         i = j + 1
+
     return lines
 """,
     ),
@@ -224,29 +241,40 @@ def full_justify(words, max_width):
 def fraction_to_decimal(numerator, denominator):
     if numerator == 0:
         return "0"
+
     sign = "-" if (numerator < 0) != (denominator < 0) else ""
     whole, rem = divmod(abs(numerator), abs(denominator))
+
     if rem == 0:
         return sign + str(whole)
+
     d = abs(denominator)
     g = math.gcd(rem, d)
     rem //= g
     d //= g
     twos = fives = 0
     m = d
+
     while m % 2 == 0:
         m //= 2
         twos += 1
+
     while m % 5 == 0:
         m //= 5
         fives += 1
+
     pre = max(twos, fives)
+
     if m == 1:
         return f"{sign}{whole}." + str(rem * 10**pre // d).zfill(pre)
+
     period = 1
+
     while pow(10, period, m) != 1:
         period += 1
+
     digits = str(rem * 10 ** (pre + period) // d).zfill(pre + period)
+
     return f"{sign}{whole}.{digits[:pre]}({digits[pre:]})"
 """,
         solution=r"""
@@ -255,22 +283,28 @@ def fraction_to_decimal(numerator, denominator):
 def fraction_to_decimal(numerator, denominator):
     if numerator == 0:
         return "0"
+
     sign = "-" if (numerator < 0) != (denominator < 0) else ""
     n, d = abs(numerator), abs(denominator)
     whole, rem = divmod(n, d)
     out = [sign + str(whole)]
+
     if rem == 0:
         return out[0]
+
     out.append(".")
     seen = {}
+
     while rem and rem not in seen:
         seen[rem] = len(out)
         rem *= 10
         out.append(str(rem // d))
         rem %= d
+
     if rem:
         out.insert(seen[rem], "(")
         out.append(")")
+
     return "".join(out)
 """,
     ),
@@ -400,10 +434,13 @@ def number_to_words(num):
     def words(n):
         if n < 20:
             return [small[n]] if n else []
+
         if n < 100:
             return [tens[n // 10]] + words(n % 10)
+
         if n < 1000:
             return [small[n // 100], "Hundred"] + words(n % 100)
+
         for size, name in ((10**9, "Billion"), (10**6, "Million"), (10**3, "Thousand")):
             if n >= size:
                 return words(n // size) + [name] + words(n % size)
@@ -416,6 +453,7 @@ def number_to_words(num):
 def number_to_words(num):
     if num == 0:
         return "Zero"
+
     ones = [
         "",
         "One",
@@ -443,26 +481,34 @@ def number_to_words(num):
 
     def below_thousand(n):
         parts = []
+
         if n >= 100:
             parts += [ones[n // 100], "Hundred"]
             n %= 100
+
         if n >= 20:
             parts.append(tens[n // 10])
             n %= 10
+
         if n:
             parts.append(ones[n])
+
         return parts
 
     groups = []
+
     while num:
         groups.append(num % 1000)
         num //= 1000
+
     words = []
+
     for index in range(len(groups) - 1, -1, -1):
         if groups[index]:
             words += below_thousand(groups[index])
             if index:
                 words.append(scales[index])
+
     return " ".join(words)
 """,
     ),
@@ -510,8 +556,10 @@ def original_digits(s):
     def solve(digit, remaining):
         if digit == 10:
             return "" if sum(remaining.values()) == 0 else None
+
         need = Counter(names[digit])
         most = min(remaining[c] // v for c, v in need.items())
+
         for copies in range(most, -1, -1):
             rest = remaining.copy()
             for c, v in need.items():
@@ -519,6 +567,7 @@ def original_digits(s):
             tail = solve(digit + 1, rest)
             if tail is not None:
                 return str(digit) * copies + tail
+
         return None
 
     return solve(0, Counter(s))
@@ -539,6 +588,7 @@ def original_digits(s):
     digits[7] = count["s"] - digits[6]
     digits[1] = count["o"] - digits[0] - digits[2] - digits[4]
     digits[9] = count["i"] - digits[5] - digits[6] - digits[8]
+
     return "".join(str(d) * digits[d] for d in range(10))
 """,
     ),
@@ -586,12 +636,14 @@ def find_lus_length(strs):
         return all(c in it for c in small)
 
     best = -1
+
     for i, s in enumerate(strs):
         for size in range(1, len(s) + 1):
             for chosen in itertools.combinations(range(len(s)), size):
                 sub = "".join(s[k] for k in chosen)
                 if not any(is_subsequence(sub, t) for j, t in enumerate(strs) if j != i):
                     best = max(best, size)
+
     return best
 """,
         solution=r"""
@@ -605,6 +657,7 @@ def find_lus_length(strs):
     for i, s in sorted(enumerate(strs), key=lambda item: -len(item[1])):
         if not any(is_subsequence(s, t) for j, t in enumerate(strs) if j != i):
             return len(s)
+
     return -1
 """,
     ),
@@ -657,12 +710,15 @@ def optimal_division(nums):
     def trees(lo, hi):
         if lo == hi:
             return [(Fraction(nums[lo]), str(nums[lo]))]
+
         options = []
+
         for mid in range(lo, hi):
             for left_value, left_text in trees(lo, mid):
                 for right_value, right_text in trees(mid + 1, hi):
                     text = left_text + "/" + (f"({right_text})" if mid + 1 < hi else right_text)
                     options.append((left_value / right_value, text))
+
         return options
 
     return max(trees(0, len(nums) - 1), key=lambda item: item[0])[1]
@@ -732,19 +788,26 @@ def fraction_addition(expression):
 def fraction_addition(expression):
     num, den = 0, 1
     i, n = 0, len(expression)
+
     while i < n:
         sign = 1
+
         if expression[i] in "+-":
             sign = -1 if expression[i] == "-" else 1
             i += 1
+
         j = i
+
         while expression[j].isdigit():
             j += 1
+
         a = int(expression[i:j])
         i = j + 1
         j = i
+
         while j < n and expression[j].isdigit():
             j += 1
+
         b = int(expression[i:j])
         i = j
         num = num * b + sign * a * den
@@ -752,6 +815,7 @@ def fraction_addition(expression):
         g = math.gcd(abs(num), den)
         num //= g
         den //= g
+
     return f"{num}/{den}"
 """,
     ),
@@ -816,6 +880,7 @@ def remove_comments(source):
     text = "\n".join(source)
     out = ""
     i = 0
+
     while i < len(text):
         if text.startswith("//", i):
             j = text.find("\n", i)
@@ -826,6 +891,7 @@ def remove_comments(source):
         else:
             out += text[i]
             i += 1
+
     return [line for line in out.split("\n") if line]
 """,
         solution=r"""
@@ -835,10 +901,13 @@ def remove_comments(source):
     result = []
     in_block = False
     buffer = []
+
     for line in source:
         i = 0
+
         if not in_block:
             buffer = []
+
         while i < len(line):
             if in_block:
                 if line[i : i + 2] == "*/":
@@ -854,8 +923,10 @@ def remove_comments(source):
             else:
                 buffer.append(line[i])
                 i += 1
+
         if not in_block and buffer:
             result.append("".join(buffer))
+
     return result
 """,
     ),
@@ -907,12 +978,14 @@ def remove_comments(source):
 # BRUTE FORCE: O(n * digits) time - test every number
 def rotated_digits(n):
     count = 0
+
     for value in range(1, n + 1):
         digits = str(value)
         if any(d in "347" for d in digits):
             continue
         if any(d in "2569" for d in digits):
             count += 1
+
     return count
 """,
         solution=r"""
@@ -922,11 +995,13 @@ def rotated_digits(n):
     def count_allowed(limit, allowed):
         text = str(limit)
         total = 0
+
         for i, ch in enumerate(text):
             digit = int(ch)
             total += sum(1 for a in allowed if a < digit) * len(allowed) ** (len(text) - i - 1)
             if digit not in allowed:
                 return total
+
         return total + 1
 
     return count_allowed(n, {0, 1, 2, 5, 6, 8, 9}) - count_allowed(n, {0, 1, 8})
@@ -1040,12 +1115,15 @@ def find_replace_string(s, indices, sources, targets):
 def find_replace_string(s, indices, sources, targets):
     out = []
     pos = 0
+
     for index, source, target in sorted(zip(indices, sources, targets)):
         if s.startswith(source, index):
             out.append(s[pos:index])
             out.append(target)
             pos = index + len(source)
+
     out.append(s[pos:])
+
     return "".join(out)
 """,
     ),
@@ -1089,13 +1167,16 @@ def find_replace_string(s, indices, sources, targets):
 def buddy_strings(s, goal):
     if len(s) != len(goal):
         return False
+
     chars = list(s)
+
     for i in range(len(chars)):
         for j in range(i + 1, len(chars)):
             chars[i], chars[j] = chars[j], chars[i]
             if "".join(chars) == goal:
                 return True
             chars[i], chars[j] = chars[j], chars[i]
+
     return False
 """,
         solution=r"""
@@ -1154,6 +1235,7 @@ def buddy_strings(s, goal):
 # BRUTE FORCE: O(k + len(s)) time - build the decoded tape until it reaches k characters
 def decode_at_index(s, k):
     tape = ""
+
     for ch in s:
         if ch.isdigit():
             tape *= int(ch)
@@ -1161,6 +1243,7 @@ def decode_at_index(s, k):
             tape += ch
         if len(tape) >= k:
             break
+
     return tape[k - 1]
 """,
         solution=r"""
@@ -1168,8 +1251,10 @@ def decode_at_index(s, k):
 # Idea: Reverse traversal with modular reduction of the index
 def decode_at_index(s, k):
     size = 0
+
     for ch in s:
         size = size * int(ch) if ch.isdigit() else size + 1
+
     for ch in reversed(s):
         k %= size
         if k == 0 and ch.isalpha():
@@ -1223,13 +1308,16 @@ def decode_at_index(s, k):
 # BRUTE FORCE: O(n^2 * L) time - insertion sort of the letter-logs
 def reorder_log_files(logs):
     letters, digits = [], []
+
     for log in logs:
         identifier, rest = log.split(" ", 1)
         if rest[0].isdigit():
             digits.append(log)
         else:
             letters.append((rest, identifier, log))
+
     ordered = []
+
     for item in letters:
         position = len(ordered)
         while position > 0 and (item[0], item[1]) < (
@@ -1238,6 +1326,7 @@ def reorder_log_files(logs):
         ):
             position -= 1
         ordered.insert(position, item)
+
     return [item[2] for item in ordered] + digits
 """,
         solution=r"""
@@ -1300,12 +1389,14 @@ def equal_frequency(word):
 # Idea: Frequency map + simulate each possible removal
 def equal_frequency(word):
     count = Counter(word)
+
     for letter in list(count):
         count[letter] -= 1
         remaining = {v for v in count.values() if v > 0}
         count[letter] += 1
         if len(remaining) <= 1:
             return True
+
     return False
 """,
     ),
@@ -1355,16 +1446,20 @@ def robot_with_string(s):
 
     def go(i, stack, out):
         nonlocal best
+
         if i == len(s) and not stack:
             if best is None or out < best:
                 best = out
             return
+
         if i < len(s):
             go(i + 1, stack + s[i], out)
+
         if stack:
             go(i, stack[:-1], out + stack[-1])
 
     go(0, "", "")
+
     return best
 """,
         solution=r"""
@@ -1373,16 +1468,21 @@ def robot_with_string(s):
 def robot_with_string(s):
     n = len(s)
     smallest = ["{"] * (n + 1)
+
     for i in range(n - 1, -1, -1):
         smallest[i] = min(s[i], smallest[i + 1])
+
     stack = []
     out = []
+
     for i, ch in enumerate(s):
         stack.append(ch)
         while stack and stack[-1] <= smallest[i + 1]:
             out.append(stack.pop())
+
     while stack:
         out.append(stack.pop())
+
     return "".join(out)
 """,
     ),
@@ -1427,15 +1527,18 @@ def robot_with_string(s):
 # BRUTE FORCE: O(options^len(sub) * len(s)) time - build every possible variant of sub
 def match_replacement(s, sub, mappings):
     options = []
+
     for c in sub:
         choices = {c}
         for old, new in mappings:
             if old == c:
                 choices.add(new)
         options.append(sorted(choices))
+
     for variant in itertools.product(*options):
         if "".join(variant) in s:
             return True
+
     return False
 """,
         solution=r"""
@@ -1507,6 +1610,7 @@ def three_equal_parts(arr):
         for j in range(i + 2, n):
             if value(arr[: i + 1]) == value(arr[i + 1 : j]) == value(arr[j:]):
                 return [i, j]
+
     return [-1, -1]
 """,
         solution=r"""
@@ -1515,18 +1619,24 @@ def three_equal_parts(arr):
 def three_equal_parts(arr):
     n = len(arr)
     total = sum(arr)
+
     if total == 0:
         return [0, n - 1]
+
     if total % 3:
         return [-1, -1]
+
     k = total // 3
     ones = [i for i, v in enumerate(arr) if v]
     a, b, c = ones[0], ones[k], ones[2 * k]
     length = n - c
+
     if a + length > b or b + length > c:
         return [-1, -1]
+
     if arr[a : a + length] == arr[b : b + length] == arr[c:]:
         return [a + length - 1, b + length]
+
     return [-1, -1]
 """,
     ),

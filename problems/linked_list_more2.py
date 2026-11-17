@@ -63,15 +63,20 @@ PROBLEMS = [
 # BRUTE FORCE: O(n) time, O(n) space - copy the values out and rebuild
 def swap_pairs(head):
     values = []
+
     while head:  # copy the values into a list
         values.append(head.val)
         head = head.next
+
     for i in range(0, len(values) - 1, 2):  # swap each adjacent pair of values
         values[i], values[i + 1] = values[i + 1], values[i]
+
     dummy = tail = ListNode()
+
     for v in values:  # build a brand-new list
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -80,12 +85,14 @@ def swap_pairs(head):
 def swap_pairs(head):
     dummy = ListNode(0, head)
     prev = dummy  # the node just before the pair being swapped
+
     while prev.next and prev.next.next:
         first, second = prev.next, prev.next.next
         first.next = second.next  # first now skips over second
         second.next = first  # second points back at first
         prev.next = second  # the node before the pair now points at second
         prev = first  # first is the last node of the swapped pair
+
     return dummy.next
 """,
     ),
@@ -124,6 +131,7 @@ def swap_pairs(head):
 def rotate_right(head, k):
     if not head or not head.next:
         return head
+
     for _ in range(k):  # rotate by one place, k times
         prev, cur = None, head
         while cur.next:  # find the last node and the one before it
@@ -131,6 +139,7 @@ def rotate_right(head, k):
         prev.next = None  # detach the last node...
         cur.next = head  # ...and put it in front
         head = cur
+
     return head
 """,
         solution=r"""
@@ -139,19 +148,27 @@ def rotate_right(head, k):
 def rotate_right(head, k):
     if not head or not head.next or k == 0:
         return head
+
     tail, n = head, 1
+
     while tail.next:  # find the tail and the length
         tail = tail.next
         n += 1
+
     k %= n
+
     if k == 0:
         return head
+
     tail.next = head  # close the list into a ring
     new_tail = head
+
     for _ in range(n - k - 1):  # walk to the node that will become the tail
         new_tail = new_tail.next
+
     new_head = new_tail.next
     new_tail.next = None  # cut the ring
+
     return new_head
 """,
     ),
@@ -196,16 +213,20 @@ def rotate_right(head, k):
 def delete_duplicates(head):
     counts = {}
     node = head
+
     while node:  # how many times does each value occur?
         counts[node.val] = counts.get(node.val, 0) + 1
         node = node.next
+
     dummy = tail = ListNode()
     node = head
+
     while node:
         if counts[node.val] == 1:  # keep only values that occur once
             tail.next = ListNode(node.val)
             tail = tail.next
         node = node.next
+
     return dummy.next
 """,
         solution=r"""
@@ -215,6 +236,7 @@ def delete_duplicates(head):
     dummy = ListNode(0, head)
     prev = dummy  # last node we are sure to keep
     cur = head
+
     while cur:
         if cur.next and cur.next.val == cur.val:
             dup = cur.val
@@ -224,6 +246,7 @@ def delete_duplicates(head):
         else:
             prev = cur  # cur is unique: keep it
             cur = cur.next
+
     return dummy.next
 """,
     ),
@@ -265,14 +288,18 @@ def delete_duplicates(head):
 # BRUTE FORCE: O(n) time, O(n) space - collect values, rebuild
 def partition(head, x):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     ordered = [v for v in values if v < x] + [v for v in values if v >= x]  # stable partition
     dummy = tail = ListNode()
+
     for v in ordered:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -281,6 +308,7 @@ def partition(head, x):
 def partition(head, x):
     small_head = small = ListNode()  # nodes with value < x
     large_head = large = ListNode()  # nodes with value >= x
+
     while head:
         if head.val < x:
             small.next = head
@@ -289,8 +317,10 @@ def partition(head, x):
             large.next = head
             large = large.next
         head = head.next
+
     large.next = None  # cut off the tail so the list cannot loop back
     small.next = large_head.next  # glue: small list, then large list
+
     return small_head.next
 """,
     ),
@@ -335,14 +365,18 @@ def partition(head, x):
 # BRUTE FORCE: O(n) time, O(n) space - copy values by position
 def odd_even_list(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     ordered = values[0::2] + values[1::2]  # odd positions (index 0, 2, ...) then even positions
     dummy = tail = ListNode()
+
     for v in ordered:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -351,14 +385,18 @@ def odd_even_list(head):
 def odd_even_list(head):
     if not head or not head.next:
         return head
+
     odd, even = head, head.next
     even_head = even  # remember where the even chain starts
+
     while even and even.next:
         odd.next = even.next  # odd skips over the even node
         odd = odd.next
         even.next = odd.next  # even skips over the odd node
         even = even.next
+
     odd.next = even_head  # attach the even chain after the odd chain
+
     return head
 """,
     ),
@@ -395,14 +433,18 @@ def odd_even_list(head):
 # BRUTE FORCE: O(n) time, O(n) space - rebuild from a filtered list of values
 def remove_elements(head, val):
     kept = []
+
     while head:
         if head.val != val:
             kept.append(head.val)
         head = head.next
+
     dummy = tail = ListNode()
+
     for v in kept:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -411,11 +453,13 @@ def remove_elements(head, val):
 def remove_elements(head, val):
     dummy = ListNode(0, head)
     prev = dummy
+
     while prev.next:
         if prev.next.val == val:
             prev.next = prev.next.next  # unlink the node
         else:
             prev = prev.next  # keep it and move on
+
     return dummy.next
 """,
     ),
@@ -467,9 +511,11 @@ def add_two_numbers(l1, l2):
 
     total = to_int(l1) + to_int(l2)
     dummy = tail = ListNode()
+
     for digit in str(total):  # write the digits back out
         tail.next = ListNode(int(digit))
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -477,17 +523,22 @@ def add_two_numbers(l1, l2):
 # Idea: Stacks to read a list backwards; build the answer by prepending
 def add_two_numbers(l1, l2):
     a, b = [], []
+
     while l1:  # stacks hold the digits so we can pop the LEAST significant first
         a.append(l1.val)
         l1 = l1.next
+
     while l2:
         b.append(l2.val)
         l2 = l2.next
+
     head, carry = None, 0
+
     while a or b or carry:
         total = carry + (a.pop() if a else 0) + (b.pop() if b else 0)
         carry, digit = divmod(total, 10)
         head = ListNode(digit, head)  # prepend: new digit goes in FRONT of what we built
+
     return head
 """,
     ),
@@ -532,14 +583,18 @@ def add_two_numbers(l1, l2):
 # BRUTE FORCE: O(n log n) time, O(n) space - copy to a Python list and sort
 def sort_list(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     values.sort()  # let Python do the sorting
     dummy = tail = ListNode()
+
     for v in values:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -548,20 +603,26 @@ def sort_list(head):
 def sort_list(head):
     if not head or not head.next:
         return head
+
     slow, fast = head, head.next  # find the end of the first half
+
     while fast and fast.next:
         slow = slow.next
         fast = fast.next.next
+
     second, slow.next = slow.next, None  # cut the list into two halves
     left, right = sort_list(head), sort_list(second)
     dummy = tail = ListNode()
+
     while left and right:  # merge two sorted lists
         if left.val <= right.val:
             tail.next, left = left, left.next
         else:
             tail.next, right = right, right.next
         tail = tail.next
+
     tail.next = left or right  # attach the leftover
+
     return dummy.next
 """,
     ),

@@ -49,14 +49,17 @@ PROBLEMS = [
 def shortest_bridge(grid):
     rows, cols = len(grid), len(grid[0])
     seen, islands = set(), []
+
     for r in range(rows):
         for c in range(cols):
             if grid[r][c] == 1 and (r, c) not in seen:
                 island, stack = [], [(r, c)]
                 seen.add((r, c))
+
                 while stack:  # collect one whole island
                     cr, cc = stack.pop()
                     island.append((cr, cc))
+
                     for nr, nc in ((cr + 1, cc), (cr - 1, cc), (cr, cc + 1), (cr, cc - 1)):
                         if (
                             0 <= nr < rows
@@ -66,8 +69,11 @@ def shortest_bridge(grid):
                         ):
                             seen.add((nr, nc))
                             stack.append((nr, nc))
+
                 islands.append(island)
+
     first, second = islands
+
     # only water and the two islands exist, so a shortest path is a Manhattan path; flips = distance - 1
     return min(abs(a - c) + abs(b - d) for a, b in first for c, d in second) - 1
 """,
@@ -78,11 +84,13 @@ def shortest_bridge(grid):
     rows, cols = len(grid), len(grid[0])
     grid = [row[:] for row in grid]
     frontier = []
+
     for r in range(rows):
         for c in range(cols):
             if grid[r][c] == 1 and not frontier:  # flood the first island found and mark it 2
                 stack = [(r, c)]
                 grid[r][c] = 2
+
                 while stack:
                     cr, cc = stack.pop()
                     frontier.append((cr, cc))
@@ -90,9 +98,12 @@ def shortest_bridge(grid):
                         if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:
                             grid[nr][nc] = 2
                             stack.append((nr, nc))
+
     flips = 0
+
     while frontier:  # grow the island one ring of water at a time
         nxt = []
+
         for cr, cc in frontier:
             for nr, nc in ((cr + 1, cc), (cr - 1, cc), (cr, cc + 1), (cr, cc - 1)):
                 if 0 <= nr < rows and 0 <= nc < cols:
@@ -101,8 +112,10 @@ def shortest_bridge(grid):
                     if grid[nr][nc] == 0:
                         grid[nr][nc] = 2
                         nxt.append((nr, nc))
+
         frontier = nxt
         flips += 1
+
     return flips
 """,
     ),
@@ -143,9 +156,11 @@ def shortest_bridge(grid):
 # BRUTE FORCE: O(n! * P) time - BFS over every string reachable by swaps
 def smallest_string_with_swaps(s, pairs):
     best, seen, queue = s, {s}, deque([s])
+
     while queue:  # explore every string reachable through the allowed swaps
         cur = queue.popleft()
         best = min(best, cur)
+
         for a, b in pairs:
             chars = list(cur)
             chars[a], chars[b] = chars[b], chars[a]
@@ -153,6 +168,7 @@ def smallest_string_with_swaps(s, pairs):
             if nxt not in seen:
                 seen.add(nxt)
                 queue.append(nxt)
+
     return best
 """,
         solution=r"""
@@ -169,14 +185,19 @@ def smallest_string_with_swaps(s, pairs):
 
     for a, b in pairs:
         parent[find(a)] = find(b)
+
     groups = defaultdict(list)
+
     for i in range(len(s)):
         groups[find(i)].append(i)  # indices are appended in increasing order
+
     result = list(s)
+
     for indices in groups.values():
         letters = sorted(s[i] for i in indices)
         for i, ch in zip(indices, letters):
             result[i] = ch  # smallest letter to the smallest index
+
     return "".join(result)
 """,
     ),
@@ -215,23 +236,30 @@ def smallest_string_with_swaps(s, pairs):
 def make_connected(n, connections):
     if len(connections) < n - 1:
         return -1
+
     adj = [[] for _ in range(n)]
+
     for a, b in connections:
         adj[a].append(b)
         adj[b].append(a)
+
     seen, components = set(), 0
+
     for start in range(n):
         if start in seen:
             continue
+
         components += 1  # a new component: explore all of it
         seen.add(start)
         stack = [start]
+
         while stack:
             node = stack.pop()
             for nxt in adj[node]:
                 if nxt not in seen:
                     seen.add(nxt)
                     stack.append(nxt)
+
     return components - 1
 """,
         solution=r"""
@@ -240,6 +268,7 @@ def make_connected(n, connections):
 def make_connected(n, connections):
     if len(connections) < n - 1:
         return -1
+
     parent = list(range(n))
 
     def find(x):
@@ -249,11 +278,13 @@ def make_connected(n, connections):
         return x
 
     components = n
+
     for a, b in connections:
         ra, rb = find(a), find(b)
         if ra != rb:
             parent[ra] = rb
             components -= 1  # two components merged
+
     return components - 1
 """,
     ),
@@ -297,15 +328,20 @@ def possible_bipartition(n, dislikes):
 # Idea: Graph 2-colouring (bipartite check)
 def possible_bipartition(n, dislikes):
     adj = defaultdict(list)
+
     for a, b in dislikes:
         adj[a].append(b)
         adj[b].append(a)
+
     colour = {}
+
     for start in range(1, n + 1):
         if start in colour:
             continue
+
         colour[start] = 0
         queue = deque([start])
+
         while queue:
             node = queue.popleft()
             for nxt in adj[node]:
@@ -314,6 +350,7 @@ def possible_bipartition(n, dislikes):
                     queue.append(nxt)
                 elif colour[nxt] == colour[node]:
                     return False
+
     return True
 """,
     ),
@@ -353,21 +390,26 @@ def possible_bipartition(n, dislikes):
 # BRUTE FORCE: O(Q * (n + E)) time - a DFS for every query
 def check_if_prerequisite(num_courses, prerequisites, queries):
     adj = defaultdict(list)
+
     for a, b in prerequisites:
         adj[a].append(b)
 
     def reaches(src, dst):
         seen, stack = {src}, [src]
+
         while stack:
             node = stack.pop()
+
             if node == dst and node != src:
                 return True
+
             for nxt in adj[node]:
                 if nxt == dst:
                     return True
                 if nxt not in seen:
                     seen.add(nxt)
                     stack.append(nxt)
+
         return False
 
     return [reaches(u, v) for u, v in queries]
@@ -378,14 +420,17 @@ def check_if_prerequisite(num_courses, prerequisites, queries):
 def check_if_prerequisite(num_courses, prerequisites, queries):
     n = num_courses
     reach = [[False] * n for _ in range(n)]
+
     for a, b in prerequisites:
         reach[a][b] = True
+
     for k in range(n):  # allow k as an intermediate course
         for i in range(n):
             if reach[i][k]:
                 for j in range(n):
                     if reach[k][j]:
                         reach[i][j] = True
+
     return [reach[u][v] for u, v in queries]
 """,
     ),
@@ -424,12 +469,14 @@ def check_if_prerequisite(num_courses, prerequisites, queries):
 # BRUTE FORCE: O(n * depth) time - climb to the head from every employee
 def num_of_minutes(n, head_id, manager, inform_time):
     best = 0
+
     for employee in range(n):
         total, boss = 0, manager[employee]
         while boss != -1:  # add up every manager above this employee
             total += inform_time[boss]
             boss = manager[boss]
         best = max(best, total)
+
     return best
 """,
         solution=r"""
@@ -437,15 +484,19 @@ def num_of_minutes(n, head_id, manager, inform_time):
 # Idea: Longest root-to-node path sum in a tree
 def num_of_minutes(n, head_id, manager, inform_time):
     reports = defaultdict(list)
+
     for employee, boss in enumerate(manager):
         if boss != -1:
             reports[boss].append(employee)
+
     best, stack = 0, [(head_id, 0)]  # (employee, time at which they learn the news)
+
     while stack:
         employee, t = stack.pop()
         best = max(best, t)
         for report in reports[employee]:
             stack.append((report, t + inform_time[employee]))
+
     return best
 """,
     ),
@@ -486,16 +537,20 @@ def num_of_minutes(n, head_id, manager, inform_time):
 # BRUTE FORCE: O(n) time - build parents with BFS, then compare every edge with its parent link
 def min_reorder(n, connections):
     neighbours = defaultdict(list)
+
     for a, b in connections:
         neighbours[a].append(b)
         neighbours[b].append(a)
+
     parent, queue = {0: None}, deque([0])
+
     while queue:  # BFS records the parent of every city
         node = queue.popleft()
         for nxt in neighbours[node]:
             if nxt not in parent:
                 parent[nxt] = node
                 queue.append(nxt)
+
     # an edge a -> b is correct if b is the parent of a; otherwise it must be reversed
     return sum(1 for a, b in connections if parent[b] == a)
 """,
@@ -504,12 +559,15 @@ def min_reorder(n, connections):
 # Idea: Traverse an undirected tree, remembering the original direction
 def min_reorder(n, connections):
     adj = defaultdict(list)
+
     for a, b in connections:
         adj[a].append(
             (b, 1)
         )  # travelling a -> b follows the road: it points away from 0, so it needs reversing
         adj[b].append((a, 0))
+
     seen, stack, flips = {0}, [0], 0
+
     while stack:
         node = stack.pop()
         for nxt, wrong_way in adj[node]:
@@ -517,6 +575,7 @@ def min_reorder(n, connections):
                 seen.add(nxt)
                 flips += wrong_way
                 stack.append(nxt)
+
     return flips
 """,
     ),
@@ -557,6 +616,7 @@ def num_enclaves(grid):
 
     def can_escape(r, c):
         seen, stack = {(r, c)}, [(r, c)]
+
         while stack:
             cr, cc = stack.pop()
             if cr in (0, rows - 1) or cc in (0, cols - 1):
@@ -565,6 +625,7 @@ def num_enclaves(grid):
                 if grid[nr][nc] == 1 and (nr, nc) not in seen:
                     seen.add((nr, nc))
                     stack.append((nr, nc))
+
         return False
 
     return sum(
@@ -583,14 +644,17 @@ def num_enclaves(grid):
         for c in range(cols)
         if (r in (0, rows - 1) or c in (0, cols - 1)) and grid[r][c]
     ]
+
     for r, c in stack:
         grid[r][c] = 0  # land that can escape
+
     while stack:
         cr, cc = stack.pop()
         for nr, nc in ((cr + 1, cc), (cr - 1, cc), (cr, cc + 1), (cr, cc - 1)):
             if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:
                 grid[nr][nc] = 0
                 stack.append((nr, nc))
+
     return sum(map(sum, grid))  # whatever land remains is enclosed
 """,
     ),

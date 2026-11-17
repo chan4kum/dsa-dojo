@@ -161,6 +161,7 @@ def coin_change(coins, amount):
         return best
 
     r = go(amount)
+
     return -1 if r == float("inf") else r
 """,
         solution=r"""
@@ -228,12 +229,14 @@ def length_of_lis(nums):
 # Idea: DP -> patience sorting with binary search (tails array)
 def length_of_lis(nums):
     tails = []
+
     for x in nums:
         i = bisect.bisect_left(tails, x)
         if i == len(tails):
             tails.append(x)
         else:
             tails[i] = x
+
     return len(tails)
 """,
     ),
@@ -286,12 +289,14 @@ def longest_common_subsequence(text1, text2):
 def longest_common_subsequence(text1, text2):
     m, n = len(text1), len(text2)
     dp = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if text1[i - 1] == text2[j - 1]:
                 dp[i][j] = dp[i - 1][j - 1] + 1
             else:
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
     return dp[m][n]
 """,
     ),
@@ -351,16 +356,20 @@ def min_distance(word1, word2):
 def min_distance(word1, word2):
     m, n = len(word1), len(word2)
     dp = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(m + 1):
         dp[i][0] = i
+
     for j in range(n + 1):
         dp[0][j] = j
+
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if word1[i - 1] == word2[j - 1]:
                 dp[i][j] = dp[i - 1][j - 1]
             else:
                 dp[i][j] = 1 + min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1])
+
     return dp[m][n]
 """,
     ),
@@ -397,6 +406,7 @@ def min_distance(word1, word2):
 # BRUTE FORCE: O(2^n) - try every subset
 def can_partition(nums):
     total = sum(nums)
+
     if total % 2:
         return False
 
@@ -414,14 +424,18 @@ def can_partition(nums):
 # Idea: 0/1 knapsack (subset sum) - iterate the capacity BACKWARDS
 def can_partition(nums):
     total = sum(nums)
+
     if total % 2:
         return False
+
     target = total // 2
     reachable = [True] + [False] * target
+
     for x in nums:
         for s in range(target, x - 1, -1):  # backwards: each item used once
             if reachable[s - x]:
                 reachable[s] = True
+
     return reachable[target]
 """,
     ),
@@ -476,11 +490,13 @@ def word_break(s, word_dict):
 def word_break(s, word_dict):
     words = set(word_dict)
     dp = [True] + [False] * len(s)
+
     for i in range(1, len(s) + 1):
         for j in range(i):
             if dp[j] and s[j:i] in words:
                 dp[i] = True
                 break
+
     return dp[len(s)]
 """,
     ),
@@ -522,11 +538,14 @@ def max_coins(nums):
     def go(arr):
         if not arr:
             return 0
+
         best = 0
+
         for i in range(len(arr)):
             left = arr[i - 1] if i else 1
             right = arr[i + 1] if i + 1 < len(arr) else 1
             best = max(best, left * arr[i] * right + go(arr[:i] + arr[i + 1 :]))
+
         return best
 
     return go(nums)
@@ -538,6 +557,7 @@ def max_coins(nums):
     a = [1] + nums + [1]
     n = len(a)
     dp = [[0] * n for _ in range(n)]
+
     for length in range(2, n):  # window (l, r) exclusive of both ends
         for left in range(n - length):
             right = left + length
@@ -545,6 +565,7 @@ def max_coins(nums):
                 dp[left][right] = max(
                     dp[left][right], dp[left][k] + dp[k][right] + a[left] * a[k] * a[right]
                 )
+
     return dp[0][n - 1]
 """,
     ),

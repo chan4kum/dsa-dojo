@@ -28,6 +28,21 @@ from core import run_problem  # noqa: E402
 PROGRESS = ROOT / ".progress.json"
 WORKSPACE = ROOT / "workspace"
 
+# Every problem must define these keys (`selftest` checks it).
+REQUIRED_FIELDS = (
+    "title",
+    "diff",
+    "lc",
+    "slug",
+    "prompt",
+    "sig",
+    "tests",
+    "hints",
+    "pattern",
+    "explain",
+    "solution",
+)
+
 # Concept order: each topic only needs ideas from the ones before it.
 TOPICS = [
     "hashing",
@@ -74,6 +89,7 @@ def by_difficulty(probs):
 
 
 def get(pid):
+    """Resolve an id like 'two_pointers/3' to (topic, number, problem) or exit with a helpful message."""
     m = re.fullmatch(r"([a-z_]+)/(\d+)", pid)
     if not m or m.group(1) not in TOPICS:
         sys.exit(f"Unknown id '{pid}'. Use <topic>/<n>, e.g. two_pointers/3  (see: python dsa.py list)")
@@ -85,14 +101,17 @@ def get(pid):
 
 
 def progress():
+    """Load your saved progress from .progress.json ({} if the file does not exist yet)."""
     return json.loads(PROGRESS.read_text()) if PROGRESS.exists() else {}
 
 
 def save(pr):
+    """Write your progress back to .progress.json."""
     PROGRESS.write_text(json.dumps(pr, indent=1))
 
 
 def icon(rec):
+    """Status marker for a progress record: [ ] new, [.] tried, [?] peeked, [~] solved after peeking, [x] solved."""
     if not rec:
         return "[ ]"
     if rec.get("solved") and not rec.get("peeked"):
@@ -105,15 +124,18 @@ def icon(rec):
 
 
 def slug(title):
+    """Turn a title into a file-name-safe word list, e.g. 'Two Sum' -> 'two_sum'."""
     return re.sub(r"[^a-z0-9]+", "_", title.lower()).strip("_")
 
 
 def url(p):
+    """The LeetCode page of problem `p`."""
     return f"https://leetcode.com/problems/{p['slug']}/"
 
 
 # ------------------------------------------------------------------ commands
 def cmd_list(args):
+    """`list`: show every topic with your progress, or every problem of one topic (easy to hard)."""
     pr = progress()
     if not args.topic:
         print("\nTOPICS (in learning order)   legend: [x] solved  [~] solved after peeking  [?] peeked  [.] tried\n")
@@ -136,6 +158,7 @@ def cmd_list(args):
 
 
 def cmd_notes(args):
+    """`notes`: print the hand-written notes of a topic."""
     if args.topic not in TOPICS:
         sys.exit("Unknown topic. See: python dsa.py list")
     f = ROOT / "notes" / f"{TOPICS.index(args.topic) + 1:02d}-{args.topic}.md"
@@ -143,6 +166,7 @@ def cmd_notes(args):
 
 
 def cmd_start(args):
+    """`start`: create a stub file in workspace/ with the problem written as comments plus an empty function."""
     topic, n, p = get(args.id)
     WORKSPACE.mkdir(exist_ok=True)
     path = WORKSPACE / f"{topic}_{n:02d}_{slug(p['title'])}.py"
@@ -159,13 +183,16 @@ def cmd_start(args):
 # ON PAPER FIRST (see notes/{TOPICS.index(topic) + 1:02d}-{topic}.md):
 #   1 restate in your words   2 solve 2-3 examples by hand   3 brute force + its cost
 #   4 which pattern & why     5 the invariant                6 dry-run your idea   7 complexity
-import sys, pathlib
+
+import pathlib
+import sys
+
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
-from core import *   # List, Optional, ListNode, TreeNode, heapq, deque, Counter, ...
+from core import *  # noqa: E402,F403  (gives you List, Optional, ListNode, TreeNode, heapq, deque, Counter, ...)
 
 
 {sig}
-    pass   # <- your code
+    pass  # <- your code
 
 
 if __name__ == "__main__":
@@ -183,6 +210,7 @@ if __name__ == "__main__":
 
 
 def run_file(file):
+    """Test a workspace file; the '# PROBLEM: topic/n' header at its top says which problem it solves."""
     src = Path(file).read_text(encoding="utf-8")
     m = re.search(r"# PROBLEM: ([a-z_]+/\d+)", src)
     if not m:
@@ -191,6 +219,7 @@ def run_file(file):
 
 
 def check(pid, src):
+    """Run the tests of problem `pid` against `src`, update your progress and print what to do next."""
     topic, n, p = get(pid)
     print(f"\n{p['title']}  ({DIFF[p['diff']]})  [{pid}]")
     passed, total = run_problem(p, src)
@@ -210,6 +239,7 @@ def check(pid, src):
 
 
 def cmd_test(args):
+    """`test`: run a workspace file, or the workspace file of a problem id, against the tests."""
     t = args.target
     if t.endswith(".py") or Path(t).exists():
         return run_file(t)
@@ -221,6 +251,7 @@ def cmd_test(args):
 
 
 def cmd_hint(args):
+    """`hint`: reveal the next of the three hints, then the pattern name once they are used up."""
     topic, n, p = get(args.id)
     pr = progress()
     rec = pr.setdefault(args.id, {})
@@ -237,6 +268,7 @@ def cmd_hint(args):
 
 
 def cmd_solution(args):
+    """`solution`: print the explanation, brute force and optimised code; marks the problem for review."""
     topic, n, p = get(args.id)
     print(f"\n{p['title']}  ({DIFF[p['diff']]})  {url(p)}\n\nPattern: {p['pattern']}\n")
     print(textwrap.dedent(p["explain"]).strip(), "\n")
@@ -256,6 +288,7 @@ def cmd_solution(args):
 
 
 def cmd_review(args):
+    """`review`: list problems you peeked at or tried without solving, to redo from a blank file."""
     pr = progress()
     rows = [k for k, v in pr.items() if v.get("peeked") or (v.get("attempts") and not v.get("solved"))]
     if not rows:
@@ -317,6 +350,7 @@ def cmd_quiz(args):
 
 
 def cmd_coverage(args):
+    """`coverage`: print how much of the Blind 75 and the frequent-questions list this repo covers."""
     sys.path.insert(0, str(ROOT / "tools"))
     import coverage
 
@@ -324,6 +358,7 @@ def cmd_coverage(args):
 
 
 def cmd_selftest(args):
+    """`selftest`: check every problem's fields and run all reference solutions and brute forces (CI runs this)."""
     bad = 0
     count = 0
     brutes = 0
@@ -331,23 +366,7 @@ def cmd_selftest(args):
     for t in TOPICS:
         for n, p in enumerate(load(t), 1):
             count += 1
-            problems = [
-                f
-                for f in (
-                    "title",
-                    "diff",
-                    "lc",
-                    "slug",
-                    "prompt",
-                    "sig",
-                    "tests",
-                    "hints",
-                    "pattern",
-                    "explain",
-                    "solution",
-                )
-                if f not in p
-            ]
+            problems = [f for f in REQUIRED_FIELDS if f not in p]
             if problems:
                 print(f"{t}/{n}: missing fields {problems}")
                 bad += 1
@@ -382,6 +401,7 @@ def cmd_selftest(args):
 
 
 def main():
+    """Parse the command line and run the chosen sub-command."""
     ap = argparse.ArgumentParser(
         prog="dsa.py", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
     )

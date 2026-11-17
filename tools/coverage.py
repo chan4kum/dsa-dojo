@@ -12,6 +12,7 @@ from dsa import TOPICS, load  # noqa: E402
 
 
 def have():
+    """Map each LeetCode number taught in the repo to its id (topic/n)."""
     out = {}
     for t in TOPICS:
         for n, p in enumerate(load(t), 1):
@@ -20,6 +21,7 @@ def have():
 
 
 def table(groups, h):
+    """Markdown table of one list; returns (table, covered, total, missing numbers)."""
     rows, tot, got, missing = [], 0, 0, []
     for g, nums in groups.items():
         cells = []
@@ -36,6 +38,7 @@ def table(groups, h):
 
 
 def render():
+    """Markdown text of the whole coverage report (notes/B3-coverage.md)."""
     h = have()
     t1, g1, n1, m1 = table(BLIND75, h)
     t2, g2, n2, m2 = table(FREQUENT, h)

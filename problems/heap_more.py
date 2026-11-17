@@ -180,16 +180,21 @@ def reorganize_string(s):
     heap = [(-c, ch) for ch, c in Counter(s).items()]
     heapq.heapify(heap)
     out, prev = [], None  # prev = (neg_count, char) held back one step
+
     while heap or prev:
         if not heap:
             return ""  # only the previous letter is left -> would be adjacent
+
         c, ch = heapq.heappop(heap)
         out.append(ch)
+
         if prev:
             heapq.heappush(heap, prev)
             prev = None
+
         if c + 1 < 0:
             prev = (c + 1, ch)
+
     return "".join(out)
 """,
     ),
@@ -280,14 +285,17 @@ def k_smallest_pairs(nums1, nums2, k):
 def k_smallest_pairs(nums1, nums2, k):
     if not nums1 or not nums2:
         return []
+
     heap = [(nums1[i] + nums2[0], i, 0) for i in range(min(k, len(nums1)))]
     heapq.heapify(heap)
     out = []
+
     while heap and len(out) < k:
         _, i, j = heapq.heappop(heap)
         out.append([nums1[i], nums2[j]])
         if j + 1 < len(nums2):
             heapq.heappush(heap, (nums1[i] + nums2[j + 1], i, j + 1))
+
     return out
 """,
     ),

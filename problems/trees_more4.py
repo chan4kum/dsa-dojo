@@ -65,6 +65,7 @@ def preorder_traversal(root):
 # Idea: Iterative DFS with an explicit stack
 def preorder_traversal(root):
     out, stack = [], [root] if root else []
+
     while stack:
         node = stack.pop()
         out.append(node.val)  # visit before the children
@@ -72,6 +73,7 @@ def preorder_traversal(root):
             stack.append(node.right)  # pushed first, so popped last
         if node.left:
             stack.append(node.left)
+
     return out
 """,
     ),
@@ -118,6 +120,7 @@ def get_minimum_difference(root):
             collect(node.right)
 
     collect(root)
+
     return min(abs(a - b) for a, b in itertools.combinations(values, 2))
 """,
         solution=r"""
@@ -126,15 +129,20 @@ def get_minimum_difference(root):
 def get_minimum_difference(root):
     best, prev = float("inf"), None
     stack, node = [], root
+
     while node or stack:  # iterative inorder: values come out sorted
         while node:
             stack.append(node)
             node = node.left
+
         node = stack.pop()
+
         if prev is not None:
             best = min(best, node.val - prev)  # only neighbours in sorted order matter
+
         prev = node.val
         node = node.right
+
     return best
 """,
     ),
@@ -197,6 +205,7 @@ def find_tilt(root):
         return left + right + node.val  # what the parent needs
 
     subtree_sum(root)
+
     return tilt_sum
 """,
     ),
@@ -237,6 +246,7 @@ def find_target(root, k):
             collect(node.right)
 
     collect(root)
+
     return any(a + b == k for a, b in itertools.combinations(values, 2))
 """,
         solution=r"""
@@ -245,12 +255,14 @@ def find_target(root, k):
 def find_target(root, k):
     seen = set()
     stack = [root] if root else []
+
     while stack:
         node = stack.pop()
         if k - node.val in seen:
             return True  # the partner was visited earlier
         seen.add(node.val)
         stack += [child for child in (node.left, node.right) if child]
+
     return False
 """,
     ),
@@ -299,18 +311,22 @@ def trim_bst(root, low, high):
 
     walk(root)
     new_root = None
+
     for v in preorder:
         if low <= v <= high:  # inserting in preorder rebuilds the same shape
             if not new_root:
                 new_root = TreeNode(v)
                 continue
+
             cur = new_root
+
             while True:
                 side = "left" if v < cur.val else "right"
                 if getattr(cur, side) is None:
                     setattr(cur, side, TreeNode(v))
                     break
                 cur = getattr(cur, side)
+
     return new_root
 """,
         solution=r"""
@@ -319,12 +335,16 @@ def trim_bst(root, low, high):
 def trim_bst(root, low, high):
     if not root:
         return None
+
     if root.val < low:
         return trim_bst(root.right, low, high)  # this node and its left subtree are too small
+
     if root.val > high:
         return trim_bst(root.left, low, high)  # this node and its right subtree are too big
+
     root.left = trim_bst(root.left, low, high)
     root.right = trim_bst(root.right, low, high)
+
     return root
 """,
     ),
@@ -383,6 +403,7 @@ def leaf_similar(root1, root2):
 def leaf_similar(root1, root2):
     def leaf_iter(root):
         stack = [root] if root else []
+
         while stack:
             node = stack.pop()
             if not node.left and not node.right:
@@ -393,6 +414,7 @@ def leaf_similar(root1, root2):
                 stack.append(node.left)  # popped first, so leaves come out left to right
 
     end = object()
+
     return all(
         a == b for a, b in itertools.zip_longest(leaf_iter(root1), leaf_iter(root2), fillvalue=end)
     )
@@ -436,6 +458,7 @@ def range_sum_bst(root, low, high):
 # Idea: DFS with BST pruning
 def range_sum_bst(root, low, high):
     total, stack = 0, [root] if root else []
+
     while stack:
         node = stack.pop()
         if low <= node.val <= high:
@@ -444,6 +467,7 @@ def range_sum_bst(root, low, high):
             stack.append(node.left)
         if node.right and node.val < high:  # bigger values may still be in range
             stack.append(node.right)
+
     return total
 """,
     ),
@@ -484,6 +508,7 @@ def is_unival_tree(root):
             collect(node.right)
 
     collect(root)
+
     return len(values) == 1
 """,
         solution=r"""
@@ -545,6 +570,7 @@ def is_cousins(root, x, y):
 
     walk(root, 0, None)
     (dx, px), (dy, py) = info[x], info[y]
+
     return dx == dy and px != py
 """,
         solution=r"""
@@ -552,17 +578,23 @@ def is_cousins(root, x, y):
 # Idea: BFS level scan with a sibling check
 def is_cousins(root, x, y):
     level = [root]
+
     while level:
         for node in level:
             kids = {c.val for c in (node.left, node.right) if c}
             if x in kids and y in kids:
                 return False  # siblings share a parent
+
         values = {n.val for n in level}
+
         if x in values and y in values:
             return True  # same depth, different parents
+
         if x in values or y in values:
             return False  # found at different depths
+
         level = [c for n in level for c in (n.left, n.right) if c]
+
     return False
 """,
     ),
@@ -609,6 +641,7 @@ def max_ancestor_diff(root):
         walk(node.right, ancestors + [node.val])
 
     walk(root, [])
+
     return best
 """,
         solution=r"""
@@ -617,6 +650,7 @@ def max_ancestor_diff(root):
 def max_ancestor_diff(root):
     best = 0
     stack = [(root, root.val, root.val)] if root else []  # (node, min on path, max on path)
+
     while stack:
         node, lo, hi = stack.pop()
         best = max(best, abs(node.val - lo), abs(node.val - hi))
@@ -624,6 +658,7 @@ def max_ancestor_diff(root):
         for child in (node.left, node.right):
             if child:
                 stack.append((child, lo, hi))
+
     return best
 """,
     ),
@@ -664,6 +699,7 @@ def deepest_leaves_sum(root):
             walk(node.right, depth + 1)
 
     walk(root, 0)
+
     return sums[max(sums)]
 """,
         solution=r"""
@@ -718,11 +754,13 @@ def sum_even_grandparent(root):
 
     walk(root, None)
     total = 0
+
     for node in nodes:
         p = parent[node]
         g = parent[p] if p else None
         if g and g.val % 2 == 0:
             total += node.val
+
     return total
 """,
         solution=r"""
@@ -731,6 +769,7 @@ def sum_even_grandparent(root):
 def sum_even_grandparent(root):
     total = 0
     stack = [(root, None, None)] if root else []  # (node, parent, grandparent)
+
     while stack:
         node, parent, grand = stack.pop()
         if grand and grand.val % 2 == 0:
@@ -738,6 +777,7 @@ def sum_even_grandparent(root):
         for child in (node.left, node.right):
             if child:
                 stack.append((child, node, parent))
+
     return total
 """,
     ),
@@ -782,6 +822,7 @@ def max_level_sum(root):
             walk(node.right, depth + 1)
 
     walk(root, 0)
+
     return sums.index(max(sums)) + 1  # index() returns the first (smallest) level
 """,
         solution=r"""
@@ -790,12 +831,14 @@ def max_level_sum(root):
 def max_level_sum(root):
     best_sum, best_level, level_no = float("-inf"), 1, 0
     level = [root] if root else []
+
     while level:
         level_no += 1
         total = sum(node.val for node in level)
         if total > best_sum:  # strictly greater: ties keep the earlier level
             best_sum, best_level = total, level_no
         level = [child for node in level for child in (node.left, node.right) if child]
+
     return best_level
 """,
     ),
@@ -834,12 +877,16 @@ def max_level_sum(root):
 # BRUTE FORCE: O(n^2) time - insert every value starting from the root
 def bst_from_preorder(preorder):
     root = None
+
     for v in preorder:
         node = TreeNode(v)
+
         if not root:
             root = node
             continue
+
         cur = root
+
         while True:  # walk down from the root for every insertion
             if v < cur.val:
                 if cur.left is None:
@@ -851,6 +898,7 @@ def bst_from_preorder(preorder):
                     cur.right = node
                     break
                 cur = cur.right
+
     return root
 """,
         solution=r"""
@@ -861,12 +909,15 @@ def bst_from_preorder(preorder):
 
     def build(bound):  # build the subtree whose values are all < bound
         nonlocal i
+
         if i == len(preorder) or preorder[i] > bound:
             return None
+
         node = TreeNode(preorder[i])
         i += 1
         node.left = build(node.val)  # left values are smaller than this node
         node.right = build(bound)  # right values are smaller than the inherited bound
+
         return node
 
     return build(float("inf"))
@@ -910,12 +961,16 @@ def bst_from_preorder(preorder):
 def add_one_row(root, val, depth):
     if depth == 1:
         return TreeNode(val, left=root)
+
     level = [root]
+
     for _ in range(depth - 2):  # walk down to depth - 1
         level = [c for n in level for c in (n.left, n.right) if c]
+
     for node in level:
         node.left = TreeNode(val, left=node.left)
         node.right = TreeNode(val, right=node.right)
+
     return root
 """,
         solution=r"""
@@ -928,14 +983,17 @@ def add_one_row(root, val, depth):
     def insert(node, level):
         if not node:
             return
+
         if level == depth - 1:
             node.left = TreeNode(val, left=node.left)  # old children move under the new nodes
             node.right = TreeNode(val, right=node.right)
             return
+
         insert(node.left, level + 1)
         insert(node.right, level + 1)
 
     insert(root, 1)
+
     return root
 """,
     ),
@@ -990,9 +1048,11 @@ def increasing_bst(root):
 
     inorder(root)
     dummy = tail = TreeNode(0)
+
     for v in values:
         tail.right = TreeNode(v)
         tail = tail.right
+
     return dummy.right
 """,
         solution=r"""
@@ -1001,16 +1061,19 @@ def increasing_bst(root):
 def increasing_bst(root):
     dummy = tail = TreeNode(0)
     stack, node = [], root
+
     while node or stack:
         while node:
             stack.append(node)
             node = node.left
+
         node = stack.pop()
         right = node.right  # remember it before relinking
         node.left = None
         tail.right = node  # append to the chain
         tail = node
         node = right
+
     return dummy.right
 """,
     ),

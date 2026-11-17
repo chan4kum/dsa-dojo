@@ -99,12 +99,14 @@ def pivot_index(nums):
 # BRUTE FORCE: O(n^2) - multiplies everything else for each index
 def product_except_self(nums):
     out = []
+
     for i in range(len(nums)):
         p = 1
         for j in range(len(nums)):
             if j != i:
                 p *= nums[j]
         out.append(p)
+
     return out
 """,
         solution=r"""
@@ -114,13 +116,17 @@ def product_except_self(nums):
     n = len(nums)
     out = [1] * n
     left = 1
+
     for i in range(n):  # out[i] = product of nums[:i]
         out[i] = left
         left *= nums[i]
+
     right = 1
+
     for i in range(n - 1, -1, -1):  # multiply by product of nums[i+1:]
         out[i] *= right
         right *= nums[i]
+
     return out
 """,
     ),
@@ -160,12 +166,14 @@ def product_except_self(nums):
 # BRUTE FORCE: O(n^2) - every (start, end) pair with a running sum
 def subarray_sum(nums, k):
     count = 0
+
     for i in range(len(nums)):
         total = 0
         for j in range(i, len(nums)):
             total += nums[j]
             if total == k:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -175,10 +183,12 @@ def subarray_sum(nums, k):
     seen = defaultdict(int)
     seen[0] = 1  # empty prefix
     pref = ans = 0
+
     for x in nums:
         pref += x
         ans += seen[pref - k]  # earlier prefixes that make a subarray of sum k ending here
         seen[pref] += 1
+
     return ans
 """,
     ),

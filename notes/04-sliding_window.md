@@ -46,11 +46,13 @@
 def length_of_longest_substring(s):
     last = {}
     left = best = 0
+
     for r, c in enumerate(s):
         if c in last and last[c] >= left:  # duplicate inside the window
             left = last[c] + 1
         last[c] = r
         best = max(best, r - left + 1)
+
     return best
 ```
 

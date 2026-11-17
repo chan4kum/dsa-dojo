@@ -48,11 +48,13 @@ def reverse_vowels(s):
     found = [ch for ch in s if ch in vowels]  # every vowel, in reading order
     found.reverse()  # the order they should appear in now
     result = []
+
     for ch in s:
         if ch in vowels:
             result.append(found.pop(0))  # next reversed vowel
         else:
             result.append(ch)
+
     return "".join(result)
 """,
         solution=r"""
@@ -62,6 +64,7 @@ def reverse_vowels(s):
     vowels = set("aeiouAEIOU")
     chars = list(s)
     left, right = 0, len(chars) - 1
+
     while left < right:
         while left < right and chars[left] not in vowels:  # skip consonants on the left
             left += 1
@@ -70,6 +73,7 @@ def reverse_vowels(s):
         chars[left], chars[right] = chars[right], chars[left]
         left += 1
         right -= 1
+
     return "".join(chars)
 """,
     ),
@@ -159,12 +163,14 @@ def repeated_substring_pattern(s):
 # BRUTE FORCE: O(n^2) time - expand every starting point
 def count_binary_substrings(s):
     count = 0
+
     for i in range(len(s)):
         for j in range(i + 2, len(s) + 1, 2):  # only even lengths can be balanced
             half = (j - i) // 2
             other = "1" if s[i] == "0" else "0"
             if s[i:j] == s[i] * half + other * half:  # e.g. 000111
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -172,12 +178,14 @@ def count_binary_substrings(s):
 # Idea: Run-length groups: add min(previous run, current run)
 def count_binary_substrings(s):
     prev_run, cur_run, total = 0, 1, 0
+
     for i in range(1, len(s)):
         if s[i] == s[i - 1]:
             cur_run += 1  # the current run keeps growing
         else:
             total += min(prev_run, cur_run)  # the finished run pairs with the one before it
             prev_run, cur_run = cur_run, 1
+
     return total + min(prev_run, cur_run)  # the last boundary
 """,
     ),
@@ -217,15 +225,18 @@ def count_binary_substrings(s):
 def count_and_say(n):
     if n == 1:
         return "1"
+
     previous = count_and_say(n - 1)  # the term we have to read aloud
     result = ""
     i = 0
+
     while i < len(previous):
         j = i
         while j < len(previous) and previous[j] == previous[i]:  # find where this run ends
             j += 1
         result += str(j - i) + previous[i]  # "<how many><which digit>"
         i = j
+
     return result
 """,
         solution=r"""
@@ -278,11 +289,14 @@ def count_and_say(n):
 def convert(s, num_rows):
     if num_rows == 1 or num_rows >= len(s):
         return s
+
     grid = [[""] * len(s) for _ in range(num_rows)]  # one column per character is always enough
     r = c = 0
     going_down = True
+
     for ch in s:
         grid[r][c] = ch
+
         if going_down:
             if r == num_rows - 1:  # bottom reached: turn and move diagonally up-right
                 going_down = False
@@ -297,6 +311,7 @@ def convert(s, num_rows):
             else:
                 r -= 1
                 c += 1
+
     return "".join(ch for row in grid for ch in row)  # read row by row
 """,
         solution=r"""
@@ -305,8 +320,10 @@ def convert(s, num_rows):
 def convert(s, num_rows):
     if num_rows == 1 or num_rows >= len(s):
         return s
+
     rows = [""] * num_rows
     row, step = 0, 1  # step = +1 going down, -1 going up
+
     for ch in s:
         rows[row] += ch
         if row == 0:
@@ -314,6 +331,7 @@ def convert(s, num_rows):
         elif row == num_rows - 1:
             step = -1  # at the bottom: head up
         row += step
+
     return "".join(rows)
 """,
     ),
@@ -354,6 +372,7 @@ def convert(s, num_rows):
 def longest_palindrome(s):
     letters = list(s)
     pairs = leftover = 0
+
     while letters:
         ch = letters.pop()
         if ch in letters:  # found a partner: remove it and count one mirrored pair
@@ -361,6 +380,7 @@ def longest_palindrome(s):
             pairs += 1
         else:
             leftover += 1  # an unmatched letter (could be the centre)
+
     return pairs * 2 + (1 if leftover else 0)
 """,
         solution=r"""
@@ -411,6 +431,7 @@ def longest_palindrome(s):
 # BRUTE FORCE: O(n^2) time - compare every window with every later window
 def find_repeated_dna_sequences(s):
     found = []
+
     for i in range(len(s) - 9):
         window = s[i : i + 10]
         if window in found:
@@ -418,6 +439,7 @@ def find_repeated_dna_sequences(s):
         # does the same 10 letters start somewhere later?
         if any(s[j : j + 10] == window for j in range(i + 1, len(s) - 9)):
             found.append(window)
+
     return found
 """,
         solution=r"""

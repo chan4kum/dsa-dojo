@@ -146,6 +146,7 @@ def find_circle_num(is_connected):
     n = len(is_connected)
     label = list(range(n))
     changed = True
+
     while changed:
         changed = False
         for i in range(n):
@@ -154,6 +155,7 @@ def find_circle_num(is_connected):
                     m = min(label[i], label[j])
                     label[i] = label[j] = m
                     changed = True
+
     return len(set(label))
 """,
         solution=r"""
@@ -172,6 +174,7 @@ def find_circle_num(is_connected):
         if i not in seen:
             count += 1
             dfs(i)
+
     return count
 """,
     ),
@@ -208,14 +211,18 @@ def find_circle_num(is_connected):
 def max_area_of_island(grid):
     R, C = len(grid), len(grid[0])
     best = 0
+
     for r in range(R):
         for c in range(C):
             if grid[r][c] == 1:
                 seen, stack = {(r, c)}, [(r, c)]
+
                 while stack:
                     x, y = stack.pop()
+
                     for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                         nx, ny = x + dx, y + dy
+
                         if (
                             0 <= nx < R
                             and 0 <= ny < C
@@ -224,7 +231,9 @@ def max_area_of_island(grid):
                         ):
                             seen.add((nx, ny))
                             stack.append((nx, ny))
+
                 best = max(best, len(seen))
+
     return best
 """,
         solution=r"""
@@ -281,17 +290,23 @@ def max_area_of_island(grid):
 def pacific_atlantic(heights):
     R, C = len(heights), len(heights[0])
     out = []
+
     for r in range(R):
         for c in range(C):
             seen, stack, pac, atl = {(r, c)}, [(r, c)], False, False
+
             while stack:
                 x, y = stack.pop()
+
                 if x == 0 or y == 0:
                     pac = True
+
                 if x == R - 1 or y == C - 1:
                     atl = True
+
                 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                     nx, ny = x + dx, y + dy
+
                     if (
                         0 <= nx < R
                         and 0 <= ny < C
@@ -300,8 +315,10 @@ def pacific_atlantic(heights):
                     ):
                         seen.add((nx, ny))
                         stack.append((nx, ny))
+
             if pac and atl:
                 out.append([r, c])
+
     return out
 """,
         solution=r"""
@@ -312,10 +329,13 @@ def pacific_atlantic(heights):
 
     def reach(starts):
         seen, q = set(starts), deque(starts)
+
         while q:
             r, c = q.popleft()
+
             for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nr, nc = r + dr, c + dc
+
                 if (
                     0 <= nr < R
                     and 0 <= nc < C
@@ -324,10 +344,12 @@ def pacific_atlantic(heights):
                 ):
                     seen.add((nr, nc))
                     q.append((nr, nc))
+
         return seen
 
     pac = reach([(0, c) for c in range(C)] + [(r, 0) for r in range(1, R)])
     atl = reach([(R - 1, c) for c in range(C)] + [(r, C - 1) for r in range(R - 1)])
+
     return [list(p) for p in pac & atl]
 """,
     ),
@@ -376,16 +398,21 @@ def pacific_atlantic(heights):
 def solve(board):
     R, C = len(board), len(board[0])
     flip = []
+
     for r in range(R):
         for c in range(C):
             if board[r][c] == "O":
                 seen, stack, escapes = {(r, c)}, [(r, c)], False
+
                 while stack:
                     x, y = stack.pop()
+
                     if x in (0, R - 1) or y in (0, C - 1):
                         escapes = True
+
                     for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                         nx, ny = x + dx, y + dy
+
                         if (
                             0 <= nx < R
                             and 0 <= ny < C
@@ -394,8 +421,10 @@ def solve(board):
                         ):
                             seen.add((nx, ny))
                             stack.append((nx, ny))
+
                 if not escapes:
                     flip.append((r, c))
+
     for r, c in flip:
         board[r][c] = "X"
 """,
@@ -414,9 +443,11 @@ def solve(board):
     for r in range(R):
         mark(r, 0)
         mark(r, C - 1)
+
     for c in range(C):
         mark(0, c)
         mark(R - 1, c)
+
     for r in range(R):
         for c in range(C):
             board[r][c] = "O" if board[r][c] == "S" else "X"
@@ -471,11 +502,13 @@ def update_matrix(mat):
     R, C = len(mat), len(mat[0])
     dist = [[-1] * C for _ in range(R)]
     q = deque()
+
     for r in range(R):
         for c in range(C):
             if mat[r][c] == 0:
                 dist[r][c] = 0
                 q.append((r, c))
+
     while q:
         r, c = q.popleft()
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
@@ -483,6 +516,7 @@ def update_matrix(mat):
             if 0 <= nr < R and 0 <= nc < C and dist[nr][nc] == -1:
                 dist[nr][nc] = dist[r][c] + 1
                 q.append((nr, nc))
+
     return dist
 """,
     ),
@@ -525,6 +559,7 @@ def update_matrix(mat):
 # BRUTE FORCE: O(V^2 + V*E) time - repeatedly scan for a course whose prerequisites are all taken
 def find_order(num_courses, prerequisites):
     taken, order = set(), []
+
     while len(order) < num_courses:
         for c in range(num_courses):
             if c not in taken and all(b in taken for a, b in prerequisites if a == c):
@@ -533,6 +568,7 @@ def find_order(num_courses, prerequisites):
                 break
         else:
             return []
+
     return order
 """,
         solution=r"""
@@ -540,11 +576,14 @@ def find_order(num_courses, prerequisites):
 # Idea: Topological sort (Kahn's BFS on in-degrees)
 def find_order(num_courses, prerequisites):
     adj, indeg = defaultdict(list), [0] * num_courses
+
     for a, b in prerequisites:
         adj[b].append(a)
         indeg[a] += 1
+
     q = deque(i for i in range(num_courses) if indeg[i] == 0)
     order = []
+
     while q:
         u = q.popleft()
         order.append(u)
@@ -552,6 +591,7 @@ def find_order(num_courses, prerequisites):
             indeg[v] -= 1
             if indeg[v] == 0:
                 q.append(v)
+
     return order if len(order) == num_courses else []
 """,
     ),
@@ -606,11 +646,13 @@ def count_components(n, edges):
         return x
 
     comps = n
+
     for a, b in edges:
         ra, rb = find(a), find(b)
         if ra != rb:
             parent[ra] = rb
             comps -= 1
+
     return comps
 """,
     ),
@@ -649,9 +691,11 @@ def count_components(n, edges):
 # BRUTE FORCE: O(n + E) time - DFS with parent tracking for cycles plus a connectivity count
 def valid_tree(n, edges):
     adj = defaultdict(list)
+
     for a, b in edges:
         adj[a].append(b)
         adj[b].append(a)
+
     seen = set()
 
     def dfs(u, parent):
@@ -671,6 +715,7 @@ def valid_tree(n, edges):
 def valid_tree(n, edges):
     if len(edges) != n - 1:
         return False
+
     parent = list(range(n))
 
     def find(x):
@@ -684,6 +729,7 @@ def valid_tree(n, edges):
         if ra == rb:
             return False
         parent[ra] = rb
+
     return True
 """,
     ),
@@ -725,8 +771,10 @@ def valid_tree(n, edges):
 # BRUTE FORCE: exponential - DFS over every path with at most k+1 flights
 def find_cheapest_price(n, flights, src, dst, k):
     adj = defaultdict(list)
+
     for a, b, p in flights:
         adj[a].append((b, p))
+
     best = [float("inf")]
 
     def go(u, flights_left, cost):
@@ -739,6 +787,7 @@ def find_cheapest_price(n, flights, src, dst, k):
             go(v, flights_left - 1, cost + p)
 
     go(src, k + 1, 0)
+
     return -1 if best[0] == float("inf") else best[0]
 """,
         solution=r"""
@@ -748,12 +797,14 @@ def find_cheapest_price(n, flights, src, dst, k):
     INF = float("inf")
     dist = [INF] * n
     dist[src] = 0
+
     for _ in range(k + 1):
         nxt = dist[:]
         for a, b, p in flights:
             if dist[a] + p < nxt[b]:
                 nxt[b] = dist[a] + p
         dist = nxt
+
     return -1 if dist[dst] == INF else dist[dst]
 """,
     ),
@@ -791,6 +842,7 @@ def find_cheapest_price(n, flights, src, dst, k):
 def can_visit_all_rooms(rooms):
     opened = {0}
     changed = True
+
     while changed:
         changed = False
         for r in list(opened):
@@ -798,6 +850,7 @@ def can_visit_all_rooms(rooms):
                 if key not in opened:
                     opened.add(key)
                     changed = True
+
     return len(opened) == len(rooms)
 """,
         solution=r"""

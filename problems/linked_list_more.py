@@ -69,14 +69,18 @@ PROBLEMS = [
 # BRUTE FORCE: O((m+n) log(m+n)) time, O(m+n) space - dump values, sort, rebuild
 def merge_two_lists(list1, list2):
     vals = []
+
     for h in (list1, list2):
         while h:
             vals.append(h.val)
             h = h.next
+
     dummy = tail = ListNode()
+
     for v in sorted(vals):
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -84,13 +88,16 @@ def merge_two_lists(list1, list2):
 # Idea: Dummy head + tail pointer (merge two sorted sequences)
 def merge_two_lists(list1, list2):
     dummy = tail = ListNode()
+
     while list1 and list2:
         if list1.val <= list2.val:
             tail.next, list1 = list1, list1.next
         else:
             tail.next, list2 = list2, list2.next
         tail = tail.next
+
     tail.next = list1 or list2
+
     return dummy.next
 """,
     ),
@@ -201,16 +208,22 @@ def is_palindrome(head):
 # Idea: Fast/slow to find the middle + in-place reverse + two-pointer compare
 def is_palindrome(head):
     slow = fast = head
+
     while fast and fast.next:
         slow, fast = slow.next, fast.next.next
+
     prev = None
+
     while slow:  # reverse second half
         slow.next, prev, slow = prev, slow, slow.next
+
     left, right = head, prev
+
     while right:
         if left.val != right.val:
             return False
         left, right = left.next, right.next
+
     return True
 """,
     ),
@@ -262,9 +275,11 @@ def add_two_numbers(l1, l2):
 
     total = str(to_int(l1) + to_int(l2))
     dummy = tail = ListNode()
+
     for ch in reversed(total):
         tail.next = ListNode(int(ch))
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -273,6 +288,7 @@ def add_two_numbers(l1, l2):
 def add_two_numbers(l1, l2):
     dummy = tail = ListNode()
     carry = 0
+
     while l1 or l2 or carry:
         s = carry + (l1.val if l1 else 0) + (l2.val if l2 else 0)
         carry, digit = divmod(s, 10)
@@ -280,6 +296,7 @@ def add_two_numbers(l1, l2):
         tail = tail.next
         l1 = l1.next if l1 else None
         l2 = l2.next if l2 else None
+
     return dummy.next
 """,
     ),
@@ -321,11 +338,14 @@ def add_two_numbers(l1, l2):
 def reorder_list(head):
     nodes = []
     cur = head
+
     while cur:
         nodes.append(cur)
         cur = cur.next
+
     left, right = 0, len(nodes) - 1
     tail = ListNode()
+
     while left <= right:
         tail.next = nodes[left]
         tail = tail.next
@@ -333,6 +353,7 @@ def reorder_list(head):
             tail.next = nodes[right]
             tail = tail.next
         left, right = left + 1, right - 1
+
     tail.next = None
 """,
         solution=r"""
@@ -341,14 +362,20 @@ def reorder_list(head):
 def reorder_list(head):
     if not head or not head.next:
         return
+
     slow, fast = head, head
+
     while fast.next and fast.next.next:
         slow, fast = slow.next, fast.next.next
+
     second, slow.next = slow.next, None
     prev = None
+
     while second:  # reverse second half
         second.next, prev, second = prev, second, second.next
+
     first, second = head, prev
+
     while second:
         n1, n2 = first.next, second.next
         first.next, second.next = second, n1
@@ -390,14 +417,18 @@ def reorder_list(head):
 # BRUTE FORCE: O(N log N) time, O(N) space - collect every value, sort, rebuild
 def merge_k_lists(lists):
     vals = []
+
     for h in lists:
         while h:
             vals.append(h.val)
             h = h.next
+
     dummy = tail = ListNode()
+
     for v in sorted(vals):
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -407,12 +438,14 @@ def merge_k_lists(lists):
     heap = [(h.val, i, h) for i, h in enumerate(lists) if h]
     heapq.heapify(heap)
     dummy = tail = ListNode()
+
     while heap:
         _, i, node = heapq.heappop(heap)
         tail.next = node
         tail = node
         if node.next:
             heapq.heappush(heap, (node.next.val, i, node.next))
+
     return dummy.next
 """,
     ),
@@ -447,14 +480,18 @@ def merge_k_lists(lists):
 # BRUTE FORCE: O(n) time, O(n) space - dedupe values in a Python list, rebuild nodes
 def delete_duplicates(head):
     vals = []
+
     while head:
         if not vals or vals[-1] != head.val:
             vals.append(head.val)
         head = head.next
+
     dummy = tail = ListNode()
+
     for v in vals:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""

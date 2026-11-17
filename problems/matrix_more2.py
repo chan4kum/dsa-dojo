@@ -79,6 +79,7 @@ def search_matrix(matrix, target):
 # Idea: Staircase search from the top-right corner
 def search_matrix(matrix, target):
     row, col = 0, len(matrix[0]) - 1  # start at the top-right corner
+
     while row < len(matrix) and col >= 0:
         value = matrix[row][col]
         if value == target:
@@ -87,6 +88,7 @@ def search_matrix(matrix, target):
             col -= 1  # everything below in this column is even larger: drop the column
         else:
             row += 1  # everything to the left in this row is even smaller: drop the row
+
     return False
 """,
     ),
@@ -127,6 +129,7 @@ def generate_matrix(n):
     grid = [[0] * n for _ in range(n)]  # 0 means "not written yet"
     row = col = 0
     d_row, d_col = 0, 1  # start by moving right
+
     for value in range(1, n * n + 1):
         grid[row][col] = value
         next_row, next_col = row + d_row, col + d_col
@@ -135,6 +138,7 @@ def generate_matrix(n):
             d_row, d_col = d_col, -d_row  # turn clockwise: right -> down -> left -> up
             next_row, next_col = row + d_row, col + d_col
         row, col = next_row, next_col
+
     return grid
 """,
         solution=r"""
@@ -144,25 +148,32 @@ def generate_matrix(n):
     grid = [[0] * n for _ in range(n)]
     top, bottom, left, right = 0, n - 1, 0, n - 1  # the still-empty rectangle
     value = 1
+
     while top <= bottom and left <= right:
         for c in range(left, right + 1):  # top row, left -> right
             grid[top][c] = value
             value += 1
+
         top += 1
+
         for r in range(top, bottom + 1):  # right column, top -> bottom
             grid[r][right] = value
             value += 1
+
         right -= 1
+
         if top <= bottom:
             for c in range(right, left - 1, -1):  # bottom row, right -> left
                 grid[bottom][c] = value
                 value += 1
             bottom -= 1
+
         if left <= right:
             for r in range(bottom, top - 1, -1):  # left column, bottom -> top
                 grid[r][left] = value
                 value += 1
             left += 1
+
     return grid
 """,
     ),
@@ -247,12 +258,14 @@ def transpose(matrix):
 def diagonal_sum(mat):
     n = len(mat)
     total = 0
+
     for i in range(n):
         for j in range(n):
             if (
                 i == j or i + j == n - 1
             ):  # on either diagonal (an 'or', so the centre is counted once)
                 total += mat[i][j]
+
     return total
 """,
         solution=r"""

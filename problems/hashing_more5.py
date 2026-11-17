@@ -69,6 +69,7 @@ PROBLEMS = [
 def length_longest_path(input):
     path = []
     best = 0
+
     for line in input.split("\n"):
         depth = len(line) - len(line.lstrip("\t"))
         name = line.lstrip("\t")
@@ -76,6 +77,7 @@ def length_longest_path(input):
         path.append(name)
         if "." in name:
             best = max(best, len("/".join(path)))
+
     return best
 """,
         solution=r"""
@@ -84,12 +86,14 @@ def length_longest_path(input):
 def length_longest_path(input):
     lengths = {-1: -1}
     best = 0
+
     for line in input.split("\n"):
         name = line.lstrip("\t")
         depth = len(line) - len(name)
         lengths[depth] = lengths[depth - 1] + 1 + len(name)
         if "." in name:
             best = max(best, lengths[depth])
+
     return best
 """,
     ),
@@ -131,12 +135,14 @@ def length_longest_path(input):
 # BRUTE FORCE: O(n^2) time - count every number 1..n by scanning the list
 def find_error_nums(nums):
     duplicate = missing = 0
+
     for v in range(1, len(nums) + 1):
         count = nums.count(v)
         if count == 2:
             duplicate = v
         elif count == 0:
             missing = v
+
     return [duplicate, missing]
 """,
         solution=r"""
@@ -250,14 +256,17 @@ def can_reorder_doubled(arr):
     def match(rest):
         if not rest:
             return True
+
         x = rest[0]
         others = rest[1:]
+
         for target in {2 * x, x / 2}:
             if target in others:
                 trial = list(others)
                 trial.remove(target)
                 if match(trial):
                     return True
+
         return False
 
     return match(list(arr))
@@ -267,12 +276,14 @@ def can_reorder_doubled(arr):
 # Idea: Greedy matching on a frequency map, smallest magnitude first
 def can_reorder_doubled(arr):
     count = Counter(arr)
+
     for x in sorted(count, key=abs):
         if count[x] > count[2 * x]:
             return False
         if x == 0 and count[0] % 2:
             return False
         count[2 * x] -= count[x]
+
     return True
 """,
     ),
@@ -315,12 +326,14 @@ def can_reorder_doubled(arr):
 # BRUTE FORCE: O(n^2) time - repeatedly find the minimum and remove its run from the list
 def is_possible_divide(nums, k):
     rest = sorted(nums)
+
     while rest:
         start = rest[0]
         for x in range(start, start + k):
             if x not in rest:
                 return False
             rest.remove(x)
+
     return True
 """,
         solution=r"""
@@ -329,7 +342,9 @@ def is_possible_divide(nums, k):
 def is_possible_divide(nums, k):
     if len(nums) % k:
         return False
+
     count = Counter(nums)
+
     for x in sorted(count):
         c = count[x]
         if c:
@@ -337,6 +352,7 @@ def is_possible_divide(nums, k):
                 if count[y] < c:
                     return False
                 count[y] -= c
+
     return True
 """,
     ),
@@ -405,11 +421,13 @@ def display_table(orders):
     foods = sorted({food for _, _, food in orders})
     tables = sorted({int(table) for _, table, _ in orders})
     rows = [["Table"] + foods]
+
     for table in tables:
         row = [str(table)]
         for food in foods:
             row.append(str(sum(1 for _, t, f in orders if int(t) == table and f == food)))
         rows.append(row)
+
     return rows
 """,
         solution=r"""
@@ -418,13 +436,17 @@ def display_table(orders):
 def display_table(orders):
     per_table = defaultdict(Counter)
     foods = set()
+
     for _, table, food in orders:
         per_table[int(table)][food] += 1
         foods.add(food)
+
     foods = sorted(foods)
     rows = [["Table"] + foods]
+
     for table in sorted(per_table):
         rows.append([str(table)] + [str(per_table[table][food]) for food in foods])
+
     return rows
 """,
     ),
@@ -473,6 +495,7 @@ def display_table(orders):
 def get_folder_names(names):
     used = set()
     out = []
+
     for name in names:
         candidate = name
         k = 0
@@ -481,6 +504,7 @@ def get_folder_names(names):
             candidate = f"{name}({k})"
         used.add(candidate)
         out.append(candidate)
+
     return out
 """,
         solution=r"""
@@ -490,15 +514,19 @@ def get_folder_names(names):
     used = set()
     next_suffix = defaultdict(int)
     out = []
+
     for name in names:
         candidate = name
         k = next_suffix[name]
+
         while candidate in used:
             k += 1
             candidate = f"{name}({k})"
+
         next_suffix[name] = k
         used.add(candidate)
         out.append(candidate)
+
     return out
 """,
     ),
@@ -551,17 +579,21 @@ def restore_array(adjacent_pairs):
 # Idea: Adjacency map; walk a path from an endpoint
 def restore_array(adjacent_pairs):
     neighbours = defaultdict(list)
+
     for u, v in adjacent_pairs:
         neighbours[u].append(v)
         neighbours[v].append(u)
+
     start = next(x for x, nb in neighbours.items() if len(nb) == 1)
     out = [start]
     previous = None
     current = start
+
     while len(out) < len(adjacent_pairs) + 1:
         step = [x for x in neighbours[current] if x != previous][0]
         out.append(step)
         previous, current = current, step
+
     return out
 """,
     ),
@@ -608,11 +640,14 @@ def restore_array(adjacent_pairs):
 def evaluate(s, knowledge):
     for key, value in knowledge:
         s = s.replace(f"({key})", value)
+
     parts = s.split("(")
     out = parts[0]
+
     for part in parts[1:]:
         _, _, rest = part.partition(")")
         out += "?" + rest
+
     return out
 """,
         solution=r"""
@@ -622,6 +657,7 @@ def evaluate(s, knowledge):
     mapping = dict(knowledge)
     out = []
     i = 0
+
     while i < len(s):
         if s[i] == "(":
             j = s.index(")", i)
@@ -630,6 +666,7 @@ def evaluate(s, knowledge):
         else:
             out.append(s[i])
             i += 1
+
     return "".join(out)
 """,
     ),
@@ -674,10 +711,12 @@ def count_nice_pairs(nums):
         return int(str(x)[::-1])
 
     count = 0
+
     for i in range(len(nums)):
         for j in range(i + 1, len(nums)):
             if nums[i] + rev(nums[j]) == nums[j] + rev(nums[i]):
                 count += 1
+
     return count % (10**9 + 7)
 """,
         solution=r"""
@@ -743,11 +782,13 @@ def interchangeable_rectangles(rectangles):
 def interchangeable_rectangles(rectangles):
     seen = Counter()
     total = 0
+
     for w, h in rectangles:
         g = math.gcd(w, h)
         key = (w // g, h // g)
         total += seen[key]
         seen[key] += 1
+
     return total
 """,
     ),
@@ -808,6 +849,7 @@ def longest_palindrome(words):
     count = Counter(words)
     total = 0
     centre = False
+
     for word, c in count.items():
         mirror = word[::-1]
         if word == mirror:
@@ -816,6 +858,7 @@ def longest_palindrome(words):
                 centre = True
         elif word < mirror:
             total += min(c, count[mirror]) * 4
+
     return total + (2 if centre else 0)
 """,
     ),
@@ -906,12 +949,14 @@ def find_lonely(nums):
 # BRUTE FORCE: O(n^2) time - for each card search forward for its next copy
 def minimum_card_pickup(cards):
     best = None
+
     for i in range(len(cards)):
         for j in range(i + 1, len(cards)):
             if cards[i] == cards[j]:
                 length = j - i + 1
                 best = length if best is None else min(best, length)
                 break
+
     return -1 if best is None else best
 """,
         solution=r"""
@@ -978,12 +1023,16 @@ def edge_score(edges):
 # Idea: Accumulate into a hash map / array by target
 def edge_score(edges):
     score = [0] * len(edges)
+
     for i, target in enumerate(edges):
         score[target] += i
+
     best = 0
+
     for node in range(1, len(edges)):
         if score[node] > score[best]:
             best = node
+
     return best
 """,
     ),
@@ -1031,10 +1080,12 @@ def most_popular_creator(creators, ids, views):
     totals = {c: sum(v for cc, v in zip(creators, views) if cc == c) for c in set(creators)}
     top = max(totals.values())
     out = []
+
     for creator, total in totals.items():
         if total == top:
             videos = [(-v, i) for c, i, v in zip(creators, ids, views) if c == creator]
             out.append([creator, min(videos)[1]])
+
     return out
 """,
         solution=r"""
@@ -1043,12 +1094,15 @@ def most_popular_creator(creators, ids, views):
 def most_popular_creator(creators, ids, views):
     total = defaultdict(int)
     best = {}
+
     for creator, video, count in zip(creators, ids, views):
         total[creator] += count
         key = (-count, video)
         if creator not in best or key < best[creator]:
             best[creator] = key
+
     top = max(total.values())
+
     return [[creator, best[creator][1]] for creator in total if total[creator] == top]
 """,
     ),
@@ -1103,14 +1157,18 @@ def most_popular_creator(creators, ids, views):
 def subdomain_visits(cpdomains):
     entries = [(int(c), d) for c, d in (item.split() for item in cpdomains)]
     subdomains = set()
+
     for _, domain in entries:
         labels = domain.split(".")
         for i in range(len(labels)):
             subdomains.add(".".join(labels[i:]))
+
     out = []
+
     for sub in subdomains:
         total = sum(c for c, d in entries if d == sub or d.endswith("." + sub))
         out.append(f"{total} {sub}")
+
     return out
 """,
         solution=r"""

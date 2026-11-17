@@ -55,15 +55,20 @@ def is_palindrome(s):
 # Idea: Two pointers, opposite ends, converging
 def is_palindrome(s):
     left, right = 0, len(s) - 1
+
     while left < right:
         while left < right and not s[left].isalnum():
             left += 1
+
         while left < right and not s[right].isalnum():
             right -= 1
+
         if s[left].lower() != s[right].lower():
             return False
+
         left += 1
         right -= 1
+
     return True
 """,
     ),
@@ -112,11 +117,13 @@ def is_palindrome(s):
 def three_sum(nums):
     res = set()
     n = len(nums)
+
     for i in range(n):
         for j in range(i + 1, n):
             for k in range(j + 1, n):
                 if nums[i] + nums[j] + nums[k] == 0:
                     res.add(tuple(sorted((nums[i], nums[j], nums[k]))))
+
     return [list(t) for t in res]
 """,
         solution=r"""
@@ -126,12 +133,16 @@ def three_sum(nums):
     nums.sort()
     res = []
     n = len(nums)
+
     for i in range(n - 2):
         if i and nums[i] == nums[i - 1]:  # skip duplicate anchors
             continue
+
         left, right = i + 1, n - 1
+
         while left < right:
             s = nums[i] + nums[left] + nums[right]
+
             if s < 0:
                 left += 1
             elif s > 0:
@@ -142,6 +153,7 @@ def three_sum(nums):
                 right -= 1
                 while left < right and nums[left] == nums[left - 1]:
                     left += 1
+
     return res
 """,
     ),
@@ -192,12 +204,14 @@ def max_area(height):
 def max_area(height):
     left, right = 0, len(height) - 1
     best = 0
+
     while left < right:
         best = max(best, (right - left) * min(height[left], height[right]))
         if height[left] < height[right]:
             left += 1
         else:
             right -= 1
+
     return best
 """,
     ),
@@ -250,6 +264,7 @@ def trap(height):
 def trap(height):
     left, right = 0, len(height) - 1
     lmax = rmax = water = 0
+
     while left < right:
         if height[left] < height[right]:
             lmax = max(lmax, height[left])
@@ -259,6 +274,7 @@ def trap(height):
             rmax = max(rmax, height[right])
             water += rmax - height[right]
             right -= 1
+
     return water
 """,
     ),

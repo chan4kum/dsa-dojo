@@ -89,12 +89,14 @@ def reverse_string(s):
 def three_sum_closest(nums, target):
     best = None
     n = len(nums)
+
     for i in range(n):
         for j in range(i + 1, n):
             for k in range(j + 1, n):
                 s = nums[i] + nums[j] + nums[k]
                 if best is None or abs(s - target) < abs(best - target):
                     best = s
+
     return best
 """,
         solution=r"""
@@ -103,18 +105,23 @@ def three_sum_closest(nums, target):
 def three_sum_closest(nums, target):
     nums = sorted(nums)
     best = nums[0] + nums[1] + nums[2]
+
     for i in range(len(nums) - 2):
         left, right = i + 1, len(nums) - 1
+
         while left < right:
             s = nums[i] + nums[left] + nums[right]
+
             if abs(s - target) < abs(best - target):
                 best = s
+
             if s < target:
                 left += 1
             elif s > target:
                 right -= 1
             else:
                 return s
+
     return best
 """,
     ),
@@ -154,12 +161,14 @@ def three_sum_closest(nums, target):
 # BRUTE FORCE: O(n^4) time (set of sorted tuples)
 def four_sum(nums, target):
     n, seen = len(nums), set()
+
     for a in range(n):
         for b in range(a + 1, n):
             for c in range(b + 1, n):
                 for d in range(c + 1, n):
                     if nums[a] + nums[b] + nums[c] + nums[d] == target:
                         seen.add(tuple(sorted((nums[a], nums[b], nums[c], nums[d]))))
+
     return [list(t) for t in seen]
 """,
         solution=r"""
@@ -168,15 +177,20 @@ def four_sum(nums, target):
 def four_sum(nums, target):
     nums.sort()
     n, out = len(nums), []
+
     for i in range(n - 3):
         if i and nums[i] == nums[i - 1]:
             continue
+
         for j in range(i + 1, n - 2):
             if j > i + 1 and nums[j] == nums[j - 1]:
                 continue
+
             left, right = j + 1, n - 1
+
             while left < right:
                 s = nums[i] + nums[j] + nums[left] + nums[right]
+
                 if s < target:
                     left += 1
                 elif s > target:
@@ -187,6 +201,7 @@ def four_sum(nums, target):
                     right -= 1
                     while left < right and nums[left] == nums[left - 1]:
                         left += 1
+
     return out
 """,
     ),

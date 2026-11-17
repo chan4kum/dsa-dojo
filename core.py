@@ -54,6 +54,8 @@ __all__ = [
 
 # ----------------------------------------------------------------- data structures
 class ListNode:
+    """Singly linked list node: `val` and a pointer to the `next` node (None at the tail)."""
+
     def __init__(self, val=0, next=None):
         self.val = val
         self.next = next
@@ -68,6 +70,8 @@ class Node:
 
 
 class TreeNode:
+    """Binary tree node: `val` plus `left` and `right` children (None when missing)."""
+
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
@@ -75,6 +79,7 @@ class TreeNode:
 
 
 def list_to_ll(values):
+    """Build a linked list from a Python list and return its head (None for an empty list)."""
     dummy = tail = ListNode()
     for v in values:
         tail.next = ListNode(v)
@@ -83,6 +88,7 @@ def list_to_ll(values):
 
 
 def ll_to_list(head):
+    """Read a linked list from `head` onwards into a Python list."""
     out = []
     while head:
         out.append(head.val)
@@ -111,6 +117,7 @@ def list_to_tree(vals):
 
 
 def tree_to_list(root):
+    """Inverse of list_to_tree: level-order list with None for gaps, trailing Nones trimmed."""
     if not root:
         return []
     out, q = [], deque([root])
@@ -128,6 +135,7 @@ def tree_to_list(root):
 
 
 def find_node(root, val):
+    """Return the first node whose value is `val` (depth-first search), or None if absent."""
     stack = [root]
     while stack:
         n = stack.pop()
@@ -141,10 +149,13 @@ def find_node(root, val):
 
 # ----------------------------------------------------------------- test engine
 class Timeout(Exception):
+    """Raised inside a solution that runs longer than the per-test time limit."""
+
     pass
 
 
 def _arm(seconds):
+    """Start a countdown that raises Timeout after `seconds`. Does nothing on Windows (no SIGALRM)."""
     if hasattr(signal, "SIGALRM"):  # not available on Windows -> no timeout there
 
         def handler(*_):
@@ -155,11 +166,13 @@ def _arm(seconds):
 
 
 def _disarm():
+    """Cancel the countdown started by _arm."""
     if hasattr(signal, "SIGALRM"):
         signal.setitimer(signal.ITIMER_REAL, 0)
 
 
 def base_namespace():
+    """Names a solution may use without importing them: the helpers listed in __all__."""
     ns = {name: globals()[name] for name in __all__}
     ns["__name__"] = "solution"  # so a stub's `if __name__ == "__main__"` block is skipped
     ns["__file__"] = __file__
@@ -167,12 +180,14 @@ def base_namespace():
 
 
 def compile_solution(source):
+    """Run `source` in a fresh namespace and return it, so the caller can pick out the function."""
     ns = base_namespace()
     exec(compile(source, "<solution>", "exec"), ns)
     return ns
 
 
 def _normalize(x, mode):
+    """Sort an answer according to `mode` so that equally valid orderings compare equal."""
     if mode == "unordered":  # outer order free, inner order matters
         return sorted(x, key=repr)
     if mode == "nested_unordered":  # both outer and inner order free
@@ -181,6 +196,7 @@ def _normalize(x, mode):
 
 
 def equal(got, exp, mode="exact"):
+    """True if `got` matches `exp` under `mode` (exact, unordered, nested_unordered or float)."""
     if mode == "float":
         return abs(got - exp) <= 1e-5
     try:
@@ -190,6 +206,7 @@ def equal(got, exp, mode="exact"):
 
 
 def _short(x, n=110):
+    """repr(x) cut to at most `n` characters, for readable failure messages."""
     s = repr(x)
     return s if len(s) <= n else s[: n - 3] + "..."
 

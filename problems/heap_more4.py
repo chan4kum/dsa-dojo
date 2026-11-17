@@ -55,12 +55,14 @@ def k_weakest_rows(mat, k):
 def k_weakest_rows(mat, k):
     def soldiers(row):  # 1s come first, so binary search for the first 0
         lo, hi = 0, len(row)
+
         while lo < hi:
             mid = (lo + hi) // 2
             if row[mid] == 1:
                 lo = mid + 1
             else:
                 hi = mid
+
         return lo
 
     return heapq.nsmallest(k, range(len(mat)), key=lambda i: (soldiers(mat[i]), i))
@@ -105,16 +107,19 @@ def k_weakest_rows(mat, k):
 # BRUTE FORCE: O(n^2 log n) time - for each target, sort the climbs and test feasibility
 def furthest_building(heights, bricks, ladders):
     furthest = 0
+
     for target in range(1, len(heights)):
         climbs = sorted(
             (heights[j + 1] - heights[j] for j in range(target) if heights[j + 1] > heights[j]),
             reverse=True,
         )
         needed = sum(climbs[ladders:])  # ladders cover the biggest climbs
+
         if needed <= bricks:
             furthest = target
         else:
             break
+
     return furthest
 """,
         solution=r"""
@@ -122,15 +127,20 @@ def furthest_building(heights, bricks, ladders):
 # Idea: Greedy with a min-heap (regret / undo the cheapest ladder)
 def furthest_building(heights, bricks, ladders):
     heap = []  # climbs currently covered by ladders (min-heap)
+
     for i in range(len(heights) - 1):
         climb = heights[i + 1] - heights[i]
+
         if climb <= 0:
             continue
+
         heapq.heappush(heap, climb)
+
         if len(heap) > ladders:
             bricks -= heapq.heappop(heap)  # swap the smallest ladder climb for bricks
             if bricks < 0:
                 return i
+
     return len(heights) - 1
 """,
     ),
@@ -172,11 +182,13 @@ def furthest_building(heights, bricks, ladders):
 def halve_array(nums):
     values = [float(x) for x in nums]
     total, remaining, ops = sum(values), sum(values), 0
+
     while remaining * 2 > total:
         i = values.index(max(values))  # linear scan for the largest
         values[i] /= 2
         remaining -= values[i]  # the other half is what was removed
         ops += 1
+
     return ops
 """,
         solution=r"""
@@ -187,11 +199,13 @@ def halve_array(nums):
     heapq.heapify(heap)
     total = remaining = float(sum(nums))
     ops = 0
+
     while remaining * 2 > total:
         biggest = -heapq.heappop(heap)
         remaining -= biggest / 2
         heapq.heappush(heap, -biggest / 2)
         ops += 1
+
     return ops
 """,
     ),
@@ -242,10 +256,12 @@ def max_kelements(nums, k):
     heap = [-x for x in nums]
     heapq.heapify(heap)
     score = 0
+
     for _ in range(k):
         biggest = -heapq.heappop(heap)
         score += biggest
         heapq.heappush(heap, -((biggest + 2) // 3))  # ceil(biggest / 3)
+
     return score
 """,
     ),
@@ -431,6 +447,7 @@ def max_product(nums):
 def max_events(events):
     last_day = max(end for _, end in events)
     done, attended = set(), 0
+
     for day in range(1, last_day + 1):
         best = None
         for i, (start, end) in enumerate(events):
@@ -439,6 +456,7 @@ def max_events(events):
         if best is not None:
             done.add(best)
             attended += 1
+
     return attended
 """,
         solution=r"""
@@ -447,18 +465,24 @@ def max_events(events):
 def max_events(events):
     events = sorted(events)
     heap, i, attended, day = [], 0, 0, 0
+
     while i < len(events) or heap:
         if not heap:
             day = max(day, events[i][0])  # jump over idle days
+
         while i < len(events) and events[i][0] <= day:
             heapq.heappush(heap, events[i][1])
             i += 1
+
         while heap and heap[0] < day:
             heapq.heappop(heap)  # expired
+
         if heap:
             heapq.heappop(heap)  # attend the event that ends soonest
             attended += 1
+
         day += 1
+
     return attended
 """,
     ),
@@ -502,13 +526,16 @@ def max_events(events):
 def min_refuel_stops(target, start_fuel, stations):
     n = len(stations)
     reach = [start_fuel] + [0] * n  # reach[t] = furthest position with t stops
+
     for i, (pos, fuel) in enumerate(stations):
         for t in range(i, -1, -1):
             if reach[t] >= pos:
                 reach[t + 1] = max(reach[t + 1], reach[t] + fuel)
+
     for t in range(n + 1):
         if reach[t] >= target:
             return t
+
     return -1
 """,
         solution=r"""
@@ -516,6 +543,7 @@ def min_refuel_stops(target, start_fuel, stations):
 # Idea: Greedy with a max-heap of passed options
 def min_refuel_stops(target, start_fuel, stations):
     heap, stops, reach, i = [], 0, start_fuel, 0  # heap: fuel of stations already passed (max-heap)
+
     while reach < target:
         while i < len(stations) and stations[i][0] <= reach:
             heapq.heappush(heap, -stations[i][1])
@@ -524,6 +552,7 @@ def min_refuel_stops(target, start_fuel, stations):
             return -1  # stranded
         reach += -heapq.heappop(heap)  # refuel at the best passed station
         stops += 1
+
     return stops
 """,
     ),
@@ -566,15 +595,19 @@ def min_refuel_stops(target, start_fuel, stations):
 # BRUTE FORCE: O(n^2) time - scan all tasks for the best available one each time
 def get_order(tasks):
     n, done, order, now = len(tasks), set(), [], 0
+
     while len(order) < n:
         ready = [(tasks[i][1], i) for i in range(n) if i not in done and tasks[i][0] <= now]
+
         if not ready:
             now = min(tasks[i][0] for i in range(n) if i not in done)  # idle until the next arrival
             continue
+
         _, i = min(ready)
         done.add(i)
         order.append(i)
         now += tasks[i][1]
+
     return order
 """,
         solution=r"""
@@ -583,15 +616,19 @@ def get_order(tasks):
 def get_order(tasks):
     arrivals = sorted(range(len(tasks)), key=lambda i: tasks[i][0])
     heap, order, now, k = [], [], 0, 0
+
     while k < len(arrivals) or heap:
         if not heap and now < tasks[arrivals[k]][0]:
             now = tasks[arrivals[k]][0]  # idle: jump to the next arrival
+
         while k < len(arrivals) and tasks[arrivals[k]][0] <= now:
             heapq.heappush(heap, (tasks[arrivals[k]][1], arrivals[k]))
             k += 1
+
         duration, i = heapq.heappop(heap)
         order.append(i)
         now += duration
+
     return order
 """,
     ),
@@ -698,11 +735,14 @@ def kth_smallest_prime_fraction(arr, k):
     n = len(arr)
     heap = [(arr[0] / arr[j], 0, j) for j in range(1, n)]  # smallest fraction for each denominator
     heapq.heapify(heap)
+
     for _ in range(k - 1):
         _, i, j = heapq.heappop(heap)
         if i + 1 < j:  # the next numerator for the same denominator
             heapq.heappush(heap, (arr[i + 1] / arr[j], i + 1, j))
+
     _, i, j = heap[0]
+
     return [arr[i], arr[j]]
 """,
     ),

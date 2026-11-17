@@ -585,6 +585,7 @@ A["matrix"] = dict(
 
 
 def render(topic):
+    """Markdown for the 'teacher's anchors' section of one topic's notes ('' if it has none)."""
     a = A.get(topic)
     if not a:
         return ""

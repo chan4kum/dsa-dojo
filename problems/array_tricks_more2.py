@@ -53,6 +53,7 @@ def majority_element(nums):
 def majority_element(nums):
     cand1 = cand2 = None
     count1 = count2 = 0
+
     for x in nums:
         if x == cand1:
             count1 += 1
@@ -65,6 +66,7 @@ def majority_element(nums):
         else:
             count1 -= 1  # three different values cancel each other
             count2 -= 1
+
     return [c for c in (cand1, cand2) if c is not None and nums.count(c) > len(nums) // 3]
 """,
     ),
@@ -298,15 +300,18 @@ def third_max(nums):
 # Idea: Track the top-k with k variables
 def third_max(nums):
     first = second = third = None
+
     for x in nums:
         if x in (first, second, third):
             continue  # only distinct values count
+
         if first is None or x > first:
             first, second, third = x, first, second
         elif second is None or x > second:
             second, third = x, second
         elif third is None or x > third:
             third = x
+
     return third if third is not None else first
 """,
     ),
@@ -393,6 +398,7 @@ def check_possibility(nums):
 
     if sorted_ok(nums):
         return True
+
     for i in range(len(nums)):
         for neighbour in (i - 1, i + 1):  # change nums[i] to a neighbour's value
             if 0 <= neighbour < len(nums):
@@ -400,6 +406,7 @@ def check_possibility(nums):
                 trial[i] = nums[neighbour]
                 if sorted_ok(trial):
                     return True
+
     return False
 """,
         solution=r"""
@@ -407,6 +414,7 @@ def check_possibility(nums):
 # Idea: One-pass greedy with a single allowed repair
 def check_possibility(nums):
     nums, repairs = list(nums), 0
+
     for i in range(len(nums) - 1):
         if nums[i] > nums[i + 1]:
             repairs += 1
@@ -416,6 +424,7 @@ def check_possibility(nums):
                 nums[i] = nums[i + 1]  # lower the earlier value
             else:
                 nums[i + 1] = nums[i]  # otherwise raise the later value
+
     return True
 """,
     ),

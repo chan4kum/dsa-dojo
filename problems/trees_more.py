@@ -197,6 +197,7 @@ def is_symmetric(root):
 def is_subtree(root, sub_root):
     target = tree_to_list(sub_root)
     stack = [root]
+
     while stack:
         n = stack.pop()
         if not n:
@@ -204,6 +205,7 @@ def is_subtree(root, sub_root):
         if tree_to_list(n) == target:
             return True
         stack += [n.left, n.right]
+
     return sub_root is None
 """,
         solution=r"""
@@ -219,8 +221,10 @@ def is_subtree(root, sub_root):
 
     if not sub_root:
         return True
+
     if not root:
         return False
+
     return (
         same(root, sub_root) or is_subtree(root.left, sub_root) or is_subtree(root.right, sub_root)
     )
@@ -266,6 +270,7 @@ def is_balanced(root):
 
     if not root:
         return True
+
     return (
         abs(height(root.left) - height(root.right)) <= 1
         and is_balanced(root.left)
@@ -279,12 +284,17 @@ def is_balanced(root):
     def h(n):
         if not n:
             return 0
+
         left = h(n.left)
+
         if left < 0:
             return -1
+
         right = h(n.right)
+
         if right < 0 or abs(left - right) > 1:
             return -1
+
         return 1 + max(left, right)
 
     return h(root) >= 0
@@ -348,6 +358,7 @@ def diameter_of_binary_tree(root):
         return 1 + max(left, right)
 
     depth(root)
+
     return best
 """,
     ),
@@ -407,6 +418,7 @@ def right_side_view(root):
         dfs(n.left, depth + 1)
 
     dfs(root, 0)
+
     return out
 """,
     ),
@@ -454,6 +466,7 @@ def kth_smallest(root, k):
             inorder(n.right)
 
     inorder(root)
+
     return vals[k - 1]
 """,
         solution=r"""
@@ -461,14 +474,18 @@ def kth_smallest(root, k):
 # Idea: BST inorder = sorted order (with early stop)
 def kth_smallest(root, k):
     stack, cur = [], root
+
     while stack or cur:
         while cur:
             stack.append(cur)
             cur = cur.left
+
         cur = stack.pop()
         k -= 1
+
         if k == 0:
             return cur.val
+
         cur = cur.right
 """,
     ),
@@ -652,11 +669,13 @@ def path_sum(root, target_sum):
     def dfs(n, prefix):
         if not n:
             return 0
+
         prefix += n.val
         res = count[prefix - target_sum]
         count[prefix] += 1
         res += dfs(n.left, prefix) + dfs(n.right, prefix)
         count[prefix] -= 1  # backtrack
+
         return res
 
     return dfs(root, 0)
@@ -704,18 +723,23 @@ def lowest_common_ancestor(root, p, q):
     def path(n, target):
         if not n:
             return None
+
         if n is target:
             return [n]
+
         for ch in (n.left, n.right):
             r = path(ch, target)
             if r:
                 return [n] + r
+
         return None
 
     a, b, lca = path(root, p), path(root, q), None
+
     for x, y in zip(a, b):
         if x is y:
             lca = x
+
     return lca
 """,
         solution=r"""
@@ -723,6 +747,7 @@ def lowest_common_ancestor(root, p, q):
 # Idea: BST property turns a search into a single downward walk
 def lowest_common_ancestor(root, p, q):
     cur = root
+
     while cur:
         if p.val < cur.val and q.val < cur.val:
             cur = cur.left
@@ -775,11 +800,15 @@ def lowest_common_ancestor(root, p, q):
 def rob(root):
     if not root:
         return 0
+
     take = root.val
+
     if root.left:
         take += rob(root.left.left) + rob(root.left.right)
+
     if root.right:
         take += rob(root.right.left) + rob(root.right.right)
+
     return max(take, rob(root.left) + rob(root.right))
 """,
         solution=r"""
@@ -844,6 +873,7 @@ def rob(root):
 # BRUTE FORCE: O(n) - level-order (BFS) encoding with null markers
 def serialize(root):
     out, q = [], deque([root])
+
     while q:
         n = q.popleft()
         if n is None:
@@ -852,25 +882,34 @@ def serialize(root):
             out.append(str(n.val))
             q.append(n.left)
             q.append(n.right)
+
     return ",".join(out)
 
 
 def deserialize(data):
     toks = data.split(",")
+
     if toks[0] == "#":
         return None
+
     root = TreeNode(int(toks[0]))
     q, i = deque([root]), 1
+
     while q:
         n = q.popleft()
+
         if toks[i] != "#":
             n.left = TreeNode(int(toks[i]))
             q.append(n.left)
+
         i += 1
+
         if toks[i] != "#":
             n.right = TreeNode(int(toks[i]))
             q.append(n.right)
+
         i += 1
+
     return root
 
 
@@ -892,6 +931,7 @@ def serialize(root):
         go(n.right)
 
     go(root)
+
     return ",".join(out)
 
 

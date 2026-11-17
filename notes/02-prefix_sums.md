@@ -41,10 +41,12 @@ def subarray_sum(nums, k):
     seen = defaultdict(int)
     seen[0] = 1  # empty prefix
     pref = ans = 0
+
     for x in nums:
         pref += x
         ans += seen[pref - k]  # earlier prefixes that make a subarray of sum k ending here
         seen[pref] += 1
+
     return ans
 ```
 

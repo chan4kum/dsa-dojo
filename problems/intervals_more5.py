@@ -164,11 +164,14 @@ class MyCalendarTwo:
         for s, e in self.doubles:
             if startTime < e and s < endTime:
                 return False
+
         for s, e in self.booked:
             lo, hi = max(s, startTime), min(e, endTime)
             if lo < hi:
                 self.doubles.append((lo, hi))
+
         self.booked.append((startTime, endTime))
+
         return True
 """,
     ),
@@ -252,10 +255,12 @@ class MyCalendarThree:
     def _add(self, start, end, lo, hi, node):
         if start > hi or end < lo:
             return
+
         if start <= lo and hi <= end:
             self.best[node] += 1
             self.tag[node] += 1
             return
+
         mid = (lo + hi) // 2
         self._add(start, end, lo, mid, 2 * node)
         self._add(start, end, mid + 1, hi, 2 * node + 1)
@@ -327,6 +332,7 @@ def intersection_size_two(intervals):
     intervals = sorted(intervals, key=lambda iv: (iv[1], -iv[0]))
     a = b = -1
     total = 0
+
     for start, end in intervals:
         if start > b:
             total += 2
@@ -334,6 +340,7 @@ def intersection_size_two(intervals):
         elif start > a:
             total += 1
             a, b = (b, end) if end != b else (end - 1, end)
+
     return total
 """,
     ),
@@ -385,6 +392,7 @@ def rectangle_area(rectangles):
     xs = sorted({x for r in rectangles for x in (r[0], r[2])})
     ys = sorted({y for r in rectangles for y in (r[1], r[3])})
     area = 0
+
     for i in range(len(xs) - 1):
         for j in range(len(ys) - 1):
             if any(
@@ -392,6 +400,7 @@ def rectangle_area(rectangles):
                 for r in rectangles
             ):
                 area += (xs[i + 1] - xs[i]) * (ys[j + 1] - ys[j])
+
     return area % (10**9 + 7)
 """,
         solution=r"""
@@ -399,26 +408,33 @@ def rectangle_area(rectangles):
 # Idea: Sweep line over x; union length of the active y-intervals
 def rectangle_area(rectangles):
     events = []
+
     for x1, y1, x2, y2 in rectangles:
         events.append((x1, 1, y1, y2))
         events.append((x2, -1, y1, y2))
+
     events.sort()
     active = []
     area = 0
     prev_x = events[0][0]
+
     for x, kind, y1, y2 in events:
         covered, reach = 0, float("-inf")
+
         for lo, hi in sorted(active):
             lo = max(lo, reach)
             if hi > lo:
                 covered += hi - lo
                 reach = hi
+
         area += covered * (x - prev_x)
         prev_x = x
+
         if kind == 1:
             active.append((y1, y2))
         else:
             active.remove((y1, y2))
+
     return area % (10**9 + 7)
 """,
     ),
@@ -477,6 +493,7 @@ def min_interval(intervals, queries):
     answers = {}
     heap = []
     i = 0
+
     for q in sorted(set(queries)):
         while i < len(intervals) and intervals[i][0] <= q:
             left, right = intervals[i]
@@ -485,6 +502,7 @@ def min_interval(intervals, queries):
         while heap and heap[0][1] < q:
             heapq.heappop(heap)
         answers[q] = heap[0][0] if heap else -1
+
     return [answers[q] for q in queries]
 """,
     ),
@@ -527,6 +545,7 @@ def min_interval(intervals, queries):
 def count_ways(ranges):
     n = len(ranges)
     total = 0
+
     for mask in range(1 << n):
         ok = True
         for i in range(n):
@@ -535,6 +554,7 @@ def count_ways(ranges):
                 if overlap and (mask >> i & 1) != (mask >> j & 1):
                     ok = False
         total += ok
+
     return total % (10**9 + 7)
 """,
         solution=r"""
@@ -597,11 +617,13 @@ def number_of_points(nums):
 def number_of_points(nums):
     total = 0
     reach = 0
+
     for start, end in sorted(nums):
         new_from = max(start - 1, reach)
         if end > new_from:
             total += end - new_from
             reach = end
+
     return total
 """,
     ),
@@ -786,10 +808,12 @@ def video_stitching(clips, time):
     inf = float("inf")
     dp = [inf] * (time + 1)
     dp[0] = 0
+
     for t in range(1, time + 1):
         for a, b in clips:
             if a < t <= b:
                 dp[t] = min(dp[t], dp[a] + 1)
+
     return dp[time] if dp[time] != inf else -1
 """,
         solution=r"""
@@ -799,6 +823,7 @@ def video_stitching(clips, time):
     clips = sorted(clips)
     count = reach = furthest = 0
     i = 0
+
     while reach < time:
         while i < len(clips) and clips[i][0] <= reach:
             furthest = max(furthest, clips[i][1])
@@ -807,6 +832,7 @@ def video_stitching(clips, time):
             return -1
         reach = furthest
         count += 1
+
     return count
 """,
     ),
@@ -850,15 +876,19 @@ def video_stitching(clips, time):
 # BRUTE FORCE: O(2^n) time - try every subset of taps and test whether it covers [0, n]
 def min_taps(n, ranges):
     best = None
+
     for mask in range(1 << (n + 1)):
         spans = sorted((max(0, i - r), i + r) for i, r in enumerate(ranges) if mask >> i & 1)
         reach = 0
+
         for left, right in spans:
             if left <= reach:
                 reach = max(reach, right)
+
         if reach >= n:
             count = bin(mask).count("1")
             best = count if best is None else min(best, count)
+
     return -1 if best is None else best
 """,
         solution=r"""
@@ -866,10 +896,13 @@ def min_taps(n, ranges):
 # Idea: Interval covering reduced to Jump Game II
 def min_taps(n, ranges):
     reach_from = [0] * (n + 1)
+
     for i, r in enumerate(ranges):
         left = max(0, i - r)
         reach_from[left] = max(reach_from[left], min(n, i + r))
+
     taps = cur_end = furthest = 0
+
     for i in range(n):
         furthest = max(furthest, reach_from[i])
         if i == cur_end:
@@ -877,6 +910,7 @@ def min_taps(n, ranges):
                 return -1
             taps += 1
             cur_end = furthest
+
     return taps
 """,
     ),
@@ -934,13 +968,17 @@ def max_two_events(events):
     ends = [e for _, e, _ in events]
     prefix_best = []
     top = 0
+
     for _, _, value in events:
         top = max(top, value)
         prefix_best.append(top)
+
     best = 0
+
     for start, _, value in events:
         j = bisect.bisect_left(ends, start) - 1
         best = max(best, value + (prefix_best[j] if j >= 0 else 0))
+
     return best
 """,
     ),
@@ -994,15 +1032,19 @@ def shifting_letters(s, shifts):
 # Idea: Difference array (range add) + prefix sum
 def shifting_letters(s, shifts):
     diff = [0] * (len(s) + 1)
+
     for start, end, direction in shifts:
         step = 1 if direction else -1
         diff[start] += step
         diff[end + 1] -= step
+
     out = []
     running = 0
+
     for i, ch in enumerate(s):
         running += diff[i]
         out.append(chr((ord(ch) - 97 + running) % 26 + 97))
+
     return "".join(out)
 """,
     ),

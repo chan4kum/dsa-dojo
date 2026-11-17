@@ -47,12 +47,14 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2) time (re-scan forward from each start)
 def summary_ranges(nums):
     out, i = [], 0
+
     while i < len(nums):
         j = i
         while j + 1 < len(nums) and nums[j + 1] == nums[j] + 1:
             j += 1
         out.append(str(nums[i]) if i == j else f"{nums[i]}->{nums[j]}")
         i = j + 1
+
     return out
 """,
         solution=r"""
@@ -61,12 +63,14 @@ def summary_ranges(nums):
 def summary_ranges(nums):
     out = []
     start = None
+
     for i, x in enumerate(nums):
         if start is None:
             start = x
         if i + 1 == len(nums) or nums[i + 1] != x + 1:
             out.append(str(start) if start == x else f"{start}->{x}")
             start = None
+
     return out
 """,
     ),

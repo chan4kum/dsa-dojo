@@ -103,8 +103,10 @@ def can_jump(nums):
 # BRUTE FORCE: O(n^2) - simulate the trip from every start
 def can_complete_circuit(gas, cost):
     n = len(gas)
+
     for s in range(n):
         tank = 0
+
         for k in range(n):
             i = (s + k) % n
             tank += gas[i] - cost[i]
@@ -112,6 +114,7 @@ def can_complete_circuit(gas, cost):
                 break
         else:
             return s
+
     return -1
 """,
         solution=r"""
@@ -120,12 +123,15 @@ def can_complete_circuit(gas, cost):
 def can_complete_circuit(gas, cost):
     if sum(gas) < sum(cost):
         return -1
+
     tank = start = 0
+
     for i in range(len(gas)):
         tank += gas[i] - cost[i]
         if tank < 0:  # cannot get past i from `start`
             start = i + 1
             tank = 0
+
     return start
 """,
     ),
@@ -179,11 +185,13 @@ def partition_labels(s):
     last = {c: i for i, c in enumerate(s)}
     sizes = []
     start = end = 0
+
     for i, c in enumerate(s):
         end = max(end, last[c])
         if i == end:  # everything seen so far closes here
             sizes.append(end - start + 1)
             start = i + 1
+
     return sizes
 """,
     ),

@@ -43,12 +43,14 @@ def is_toeplitz_matrix(matrix):
     starts = [(0, c) for c in range(cols)] + [
         (r, 0) for r in range(1, rows)
     ]  # the first cell of each diagonal
+
     for r, c in starts:
         value = matrix[r][c]
         while r < rows and c < cols:  # walk the whole diagonal
             if matrix[r][c] != value:
                 return False
             r, c = r + 1, c + 1
+
     return True
 """,
         solution=r"""
@@ -105,8 +107,10 @@ def flip_and_invert_image(image):
 # Idea: Fuse two passes into one with two pointers
 def flip_and_invert_image(image):
     result = [list(row) for row in image]
+
     for row in result:
         lo, hi = 0, len(row) - 1
+
         while lo <= hi:
             row[lo], row[hi] = (
                 1 - row[hi],
@@ -114,6 +118,7 @@ def flip_and_invert_image(image):
             )  # swap and invert in one step (works when lo == hi too)
             lo += 1
             hi -= 1
+
     return result
 """,
     ),
@@ -166,10 +171,13 @@ def odd_cells(m, n, indices):
 # Idea: Track parities instead of simulating
 def odd_cells(m, n, indices):
     row_odd, col_odd = [0] * m, [0] * n
+
     for r, c in indices:
         row_odd[r] ^= 1  # flip the parity of this row
         col_odd[c] ^= 1
+
     rows, cols = sum(row_odd), sum(col_odd)
+
     return rows * (n - cols) + cols * (
         m - rows
     )  # a cell is odd when exactly one of row/column is odd
@@ -206,6 +214,7 @@ def odd_cells(m, n, indices):
 # BRUTE FORCE: O(m*n*(m + n)) time - scan the row and column of every 1
 def num_special(mat):
     rows, cols, count = len(mat), len(mat[0]), 0
+
     for r in range(rows):
         for c in range(cols):
             if mat[r][c] == 1:
@@ -214,6 +223,7 @@ def num_special(mat):
                 )
                 if others == 0:
                     count += 1
+
     return count
 """,
         solution=r"""
@@ -222,6 +232,7 @@ def num_special(mat):
 def num_special(mat):
     row_sum = [sum(row) for row in mat]
     col_sum = [sum(col) for col in zip(*mat)]
+
     return sum(
         1
         for r, row in enumerate(mat)

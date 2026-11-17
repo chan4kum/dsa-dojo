@@ -104,11 +104,13 @@ def length_of_longest_substring(s):
 def length_of_longest_substring(s):
     last = {}
     left = best = 0
+
     for r, c in enumerate(s):
         if c in last and last[c] >= left:  # duplicate inside the window
             left = last[c] + 1
         last[c] = r
         best = max(best, r - left + 1)
+
     return best
 """,
     ),
@@ -151,6 +153,7 @@ def length_of_longest_substring(s):
 # BRUTE FORCE: O(n^2) - every start, extend until the sum is reached
 def min_subarray_len(target, nums):
     best = float("inf")
+
     for i in range(len(nums)):
         total = 0
         for j in range(i, len(nums)):
@@ -158,6 +161,7 @@ def min_subarray_len(target, nums):
             if total >= target:
                 best = min(best, j - i + 1)
                 break
+
     return 0 if best == float("inf") else best
 """,
         solution=r"""
@@ -166,12 +170,14 @@ def min_subarray_len(target, nums):
 def min_subarray_len(target, nums):
     left = total = 0
     best = float("inf")
+
     for right, x in enumerate(nums):
         total += x
         while total >= target:  # shrink while still valid
             best = min(best, right - left + 1)
             total -= nums[left]
             left += 1
+
     return 0 if best == float("inf") else best
 """,
     ),
@@ -227,19 +233,25 @@ def min_window(s, t):
     missing = len(t)
     left = 0
     best = (float("inf"), 0, 0)
+
     for r, c in enumerate(s):
         if need[c] > 0:
             missing -= 1
+
         need[c] -= 1
+
         if missing == 0:  # window s[l..r] covers t
             while need[s[left]] < 0:  # drop surplus chars on the left
                 need[s[left]] += 1
                 left += 1
+
             if r - left + 1 < best[0]:
                 best = (r - left + 1, left, r + 1)
+
             need[s[left]] += 1  # give up one needed char -> invalid again
             missing += 1
             left += 1
+
     return "" if best[0] == float("inf") else s[best[1] : best[2]]
 """,
     ),

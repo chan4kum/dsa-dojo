@@ -118,14 +118,18 @@ def get_decimal_value(head):
 # BRUTE FORCE: O(n) time, O(n) space - copy to a list, delete the index, rebuild
 def delete_middle(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     del values[len(values) // 2]
     dummy = tail = ListNode()
+
     for v in values:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -186,15 +190,21 @@ def pair_sum(head):
 # Idea: Find middle + reverse second half
 def pair_sum(head):
     slow = fast = head
+
     while fast and fast.next:
         slow, fast = slow.next, fast.next.next  # slow ends at the start of the second half
+
     prev = None
+
     while slow:  # reverse the second half in place
         slow.next, prev, slow = prev, slow, slow.next
+
     best, a, b = 0, head, prev
+
     while b:
         best = max(best, a.val + b.val)
         a, b = a.next, b.next
+
     return best
 """,
     ),
@@ -237,11 +247,14 @@ def pair_sum(head):
 # BRUTE FORCE: O(n + k) time, O(n) space - copy the values out and rebuild each part
 def split_list_to_parts(head, k):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     size, extra = divmod(len(values), k)
     parts, pos = [], 0
+
     for i in range(k):
         length = size + (1 if i < extra else 0)
         dummy = tail = ListNode()
@@ -250,6 +263,7 @@ def split_list_to_parts(head, k):
             tail = tail.next
         parts.append(dummy.next)
         pos += length
+
     return parts
 """,
         solution=r"""
@@ -257,11 +271,14 @@ def split_list_to_parts(head, k):
 # Idea: Measure first, then cut the list in place
 def split_list_to_parts(head, k):
     n, node = 0, head
+
     while node:
         n += 1
         node = node.next
+
     size, extra = divmod(n, k)
     parts, node = [], head
+
     for i in range(k):
         length = size + (1 if i < extra else 0)
         part_head = node
@@ -270,6 +287,7 @@ def split_list_to_parts(head, k):
         if node:  # cut the part off from the rest
             node.next, node = None, node.next
         parts.append(part_head)
+
     return parts
 """,
     ),
@@ -310,12 +328,16 @@ def split_list_to_parts(head, k):
 # BRUTE FORCE: O(n^2) time - scan to the right for each node
 def next_larger_nodes(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     answer = []
+
     for i, v in enumerate(values):
         answer.append(next((w for w in values[i + 1 :] if w > v), 0))
+
     return answer
 """,
         solution=r"""
@@ -323,14 +345,18 @@ def next_larger_nodes(head):
 # Idea: Monotonic stack
 def next_larger_nodes(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     answer, stack = [0] * len(values), []  # stack holds indices still waiting for a bigger value
+
     for i, v in enumerate(values):
         while stack and values[stack[-1]] < v:
             answer[stack.pop()] = v
         stack.append(i)
+
     return answer
 """,
     ),
@@ -374,14 +400,18 @@ def next_larger_nodes(head):
 # BRUTE FORCE: O(n) time, O(n) space - copy to a list, swap two indices, rebuild
 def swap_nodes(head, k):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     values[k - 1], values[-k] = values[-k], values[k - 1]
     dummy = tail = ListNode()
+
     for v in values:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -389,13 +419,18 @@ def swap_nodes(head, k):
 # Idea: Two pointers with a fixed gap (one pass)
 def swap_nodes(head, k):
     first = head
+
     for _ in range(k - 1):
         first = first.next  # k-th node from the start
+
     second, probe = head, first
+
     while probe.next:  # when probe is on the last node, second is k-th from the end
         probe = probe.next
         second = second.next
+
     first.val, second.val = second.val, first.val
+
     return head
 """,
     ),
@@ -435,20 +470,26 @@ def swap_nodes(head, k):
 # BRUTE FORCE: O(n) time, O(n) space - split values into groups and rebuild
 def merge_nodes(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     sums, total = [], 0
+
     for v in values[1:]:
         if v == 0:
             sums.append(total)
             total = 0
         else:
             total += v
+
     dummy = tail = ListNode()
+
     for s in sums:
         tail.next = ListNode(s)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -457,6 +498,7 @@ def merge_nodes(head):
 def merge_nodes(head):
     write = head  # the node currently collecting a sum (it starts as a zero node)
     node = head.next
+
     while node:
         if node.val == 0:
             if node.next:
@@ -466,7 +508,9 @@ def merge_nodes(head):
                 write.next = None  # the final zero ends the list
         else:
             write.val += node.val
+
         node = node.next
+
     return head
 """,
     ),
@@ -503,12 +547,14 @@ def merge_nodes(head):
 # BRUTE FORCE: O(n * m) time - membership tests in a list
 def num_components(head, nums):
     count = 0
+
     while head:
         in_set = head.val in nums  # linear search in a list
         next_in_set = head.next is not None and head.next.val in nums
         if in_set and not next_in_set:
             count += 1  # this node ends a component
         head = head.next
+
     return count
 """,
         solution=r"""
@@ -517,6 +563,7 @@ def num_components(head, nums):
 def num_components(head, nums):
     wanted = set(nums)
     count, in_run = 0, False
+
     while head:
         if head.val in wanted:
             if not in_run:
@@ -525,6 +572,7 @@ def num_components(head, nums):
         else:
             in_run = False
         head = head.next
+
     return count
 """,
     ),
@@ -566,17 +614,22 @@ def num_components(head, nums):
 # BRUTE FORCE: O(n + m) time, O(n + m) space - copy to Python lists, slice and rebuild
 def merge_in_between(list1, a, b, list2):
     one, two = [], []
+
     while list1:
         one.append(list1.val)
         list1 = list1.next
+
     while list2:
         two.append(list2.val)
         list2 = list2.next
+
     merged = one[:a] + two + one[b + 1 :]
     dummy = tail = ListNode()
+
     for v in merged:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -584,16 +637,23 @@ def merge_in_between(list1, a, b, list2):
 # Idea: Splice a list between two anchor nodes
 def merge_in_between(list1, a, b, list2):
     before = list1
+
     for _ in range(a - 1):
         before = before.next  # node at index a - 1
+
     after = before
+
     for _ in range(b - a + 2):
         after = after.next  # node at index b + 1
+
     before.next = list2
     tail = list2
+
     while tail.next:
         tail = tail.next
+
     tail.next = after
+
     return list1
 """,
     ),
@@ -636,22 +696,27 @@ def merge_in_between(list1, a, b, list2):
 # BRUTE FORCE: O(n + k^2) time, O(n) space - collect critical positions and compare every pair
 def nodes_between_critical_points(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     positions = [
         i
         for i in range(1, len(values) - 1)
         if (values[i] > values[i - 1] and values[i] > values[i + 1])
         or (values[i] < values[i - 1] and values[i] < values[i + 1])
     ]
+
     if len(positions) < 2:
         return [-1, -1]
+
     gaps = [
         positions[j] - positions[i]
         for i in range(len(positions))
         for j in range(i + 1, len(positions))
     ]
+
     return [min(gaps), max(gaps)]
 """,
         solution=r"""
@@ -661,8 +726,10 @@ def nodes_between_critical_points(head):
     first = last = -1
     best_min = float("inf")
     prev, node, i = head, head.next, 1
+
     while node and node.next:
         nxt = node.next
+
         if (node.val > prev.val and node.val > nxt.val) or (
             node.val < prev.val and node.val < nxt.val
         ):
@@ -671,9 +738,12 @@ def nodes_between_critical_points(head):
             else:
                 best_min = min(best_min, i - last)  # gap to the previous critical point
             last = i
+
         prev, node, i = node, nxt, i + 1
+
     if first == last:  # zero or one critical point
         return [-1, -1]
+
     return [best_min, last - first]
 """,
     ),
@@ -715,14 +785,18 @@ def nodes_between_critical_points(head):
 # BRUTE FORCE: O(n^2) time - for each node scan everything to its right
 def remove_nodes(head):
     values = []
+
     while head:
         values.append(head.val)
         head = head.next
+
     keep = [v for i, v in enumerate(values) if all(w <= v for w in values[i + 1 :])]
     dummy = tail = ListNode()
+
     for v in keep:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -730,15 +804,19 @@ def remove_nodes(head):
 # Idea: Monotonic (non-increasing) stack
 def remove_nodes(head):
     stack, node = [], head
+
     while node:
         while stack and stack[-1].val < node.val:
             stack.pop()  # a bigger node to the right removes these
         stack.append(node)
         node = node.next
+
     for left, right in zip(stack, stack[1:]):
         left.next = right
+
     if stack:
         stack[-1].next = None
+
     return stack[0] if stack else None
 """,
     ),

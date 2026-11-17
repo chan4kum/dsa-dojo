@@ -61,8 +61,10 @@ def find_diagonal_order(mat):
     r = c = 0
     up = True
     order = []
+
     for _ in range(m * n):
         order.append(mat[r][c])
+
         if up:
             if c == n - 1:  # hit the right wall: drop down a row
                 r += 1
@@ -81,6 +83,7 @@ def find_diagonal_order(mat):
                 up = True
             else:
                 r, c = r + 1, c - 1
+
     return order
 """,
     ),
@@ -122,6 +125,7 @@ def find_diagonal_order(mat):
 def matrix_score(grid):
     m, n = len(grid), len(grid[0])
     best = 0
+
     for mask in range(1 << m):
         rows = [[b ^ (mask >> i & 1) for b in grid[i]] for i in range(m)]
         score = 0
@@ -129,6 +133,7 @@ def matrix_score(grid):
             ones = sum(rows[i][j] for i in range(m))
             score += max(ones, m - ones) << (n - 1 - j)  # flip the column if that gives more ones
         best = max(best, score)
+
     return best
 """,
         solution=r"""
@@ -180,8 +185,10 @@ def matrix_score(grid):
 def shift_grid(grid, k):
     m, n = len(grid), len(grid[0])
     grid = [row[:] for row in grid]
+
     for _ in range(k):
         new = [[0] * n for _ in range(m)]
+
         for i in range(m):
             for j in range(n):
                 if j + 1 < n:
@@ -190,7 +197,9 @@ def shift_grid(grid, k):
                     new[i + 1][0] = grid[i][j]  # wrap to the next row
                 else:
                     new[0][0] = grid[i][j]  # wrap to the top-left
+
         grid = new
+
     return grid
 """,
         solution=r"""
@@ -243,11 +252,13 @@ def shift_grid(grid, k):
 def count_squares(matrix):
     m, n = len(matrix), len(matrix[0])
     count = 0
+
     for i in range(m):
         for j in range(n):
             for size in range(1, min(m - i, n - j) + 1):
                 if all(matrix[r][c] for r in range(i, i + size) for c in range(j, j + size)):
                     count += 1
+
     return count
 """,
         solution=r"""
@@ -257,11 +268,13 @@ def count_squares(matrix):
     m, n = len(matrix), len(matrix[0])
     f = [row[:] for row in matrix]  # f[i][j]: biggest square ending at (i, j)
     total = 0
+
     for i in range(m):
         for j in range(n):
             if f[i][j] and i and j:
                 f[i][j] = 1 + min(f[i - 1][j], f[i][j - 1], f[i - 1][j - 1])
             total += f[i][j]
+
     return total
 """,
     ),
@@ -306,12 +319,14 @@ def count_negatives(grid):
 def count_negatives(grid):
     m, n = len(grid), len(grid[0])
     r, c, count = 0, n - 1, 0
+
     while r < m and c >= 0:
         if grid[r][c] < 0:
             count += m - r  # everything below in this column is negative too
             c -= 1
         else:
             r += 1
+
     return count
 """,
     ),
@@ -359,6 +374,7 @@ def lucky_numbers(matrix):
 def lucky_numbers(matrix):
     row_min = [min(row) for row in matrix]
     col_max = [max(col) for col in zip(*matrix)]
+
     return [
         x
         for i, row in enumerate(matrix)
@@ -402,10 +418,13 @@ def lucky_numbers(matrix):
 def num_submat(mat):
     m, n = len(mat), len(mat[0])
     prefix = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(m):
         for j in range(n):
             prefix[i + 1][j + 1] = mat[i][j] + prefix[i][j + 1] + prefix[i + 1][j] - prefix[i][j]
+
     count = 0
+
     for r1 in range(m):
         for r2 in range(r1, m):
             for c1 in range(n):
@@ -416,8 +435,10 @@ def num_submat(mat):
                         - prefix[r2 + 1][c1]
                         + prefix[r1][c1]
                     )
+
                     if ones == (r2 - r1 + 1) * (c2 - c1 + 1):  # every cell is a 1
                         count += 1
+
     return count
 """,
         solution=r"""
@@ -427,9 +448,11 @@ def num_submat(mat):
     m, n = len(mat), len(mat[0])
     height = [0] * n
     total = 0
+
     for i in range(m):
         for j in range(n):
             height[j] = height[j] + 1 if mat[i][j] else 0
+
         for j in range(n):
             low = height[j]
             for k in range(j, -1, -1):  # widen the rectangle leftwards
@@ -437,6 +460,7 @@ def num_submat(mat):
                 if low == 0:
                     break
                 total += low
+
     return total
 """,
     ),
@@ -478,6 +502,7 @@ def num_submat(mat):
 def largest1_bordered_square(grid):
     m, n = len(grid), len(grid[0])
     best = 0
+
     for i in range(m):
         for j in range(n):
             for side in range(1, min(m - i, n - j) + 1):
@@ -486,6 +511,7 @@ def largest1_bordered_square(grid):
                 ) and all(grid[i + k][j] and grid[i + k][j + side - 1] for k in range(side))
                 if border:
                     best = max(best, side * side)
+
     return best
 """,
         solution=r"""
@@ -495,12 +521,15 @@ def largest1_bordered_square(grid):
     m, n = len(grid), len(grid[0])
     left = [[0] * n for _ in range(m)]  # consecutive ones ending here, going left
     up = [[0] * n for _ in range(m)]  # consecutive ones ending here, going up
+
     for i in range(m):
         for j in range(n):
             if grid[i][j]:
                 left[i][j] = (left[i][j - 1] if j else 0) + 1
                 up[i][j] = (up[i - 1][j] if i else 0) + 1
+
     best = 0
+
     for i in range(m):
         for j in range(n):
             side = min(left[i][j], up[i][j])  # largest side the bottom-right corner could support
@@ -509,6 +538,7 @@ def largest1_bordered_square(grid):
                     best = side
                     break
                 side -= 1
+
     return best * best
 """,
     ),
@@ -555,10 +585,13 @@ def min_swaps(grid):
 
     start = tuple(tuple(r) for r in grid)
     seen, queue = {start}, deque([(start, 0)])
+
     while queue:
         rows, moves = queue.popleft()
+
         if valid(rows):
             return moves
+
         for i in range(n - 1):
             nxt = list(rows)
             nxt[i], nxt[i + 1] = nxt[i + 1], nxt[i]
@@ -566,6 +599,7 @@ def min_swaps(grid):
             if state not in seen:
                 seen.add(state)
                 queue.append((state, moves + 1))
+
     return -1
 """,
         solution=r"""
@@ -574,21 +608,28 @@ def min_swaps(grid):
 def min_swaps(grid):
     n = len(grid)
     trailing = []
+
     for row in grid:
         zeros = 0
         while zeros < n and row[n - 1 - zeros] == 0:
             zeros += 1
         trailing.append(zeros)
+
     swaps = 0
+
     for i in range(n):
         need = n - 1 - i
         j = i
+
         while j < n and trailing[j] < need:  # nearest row that qualifies
             j += 1
+
         if j == n:
             return -1
+
         swaps += j - i
         trailing.insert(i, trailing.pop(j))  # bubble it up to position i
+
     return swaps
 """,
     ),
@@ -630,6 +671,7 @@ def min_swaps(grid):
 def first_complete_index(arr, mat):
     m, n = len(mat), len(mat[0])
     painted = set()
+
     for i, value in enumerate(arr):
         painted.add(value)
         rows_done = any(all(mat[r][c] in painted for c in range(n)) for r in range(m))
@@ -644,6 +686,7 @@ def first_complete_index(arr, mat):
     m, n = len(mat), len(mat[0])
     where = {mat[r][c]: (r, c) for r in range(m) for c in range(n)}
     row_count, col_count = [0] * m, [0] * n
+
     for i, value in enumerate(arr):
         r, c = where[value]
         row_count[r] += 1
@@ -686,6 +729,7 @@ def first_complete_index(arr, mat):
 def ones_minus_zeros(grid):
     m, n = len(grid), len(grid[0])
     result = []
+
     for i in range(m):
         row = []
         for j in range(n):
@@ -693,6 +737,7 @@ def ones_minus_zeros(grid):
             ones_c = sum(grid[r][j] for r in range(m))
             row.append(ones_r + ones_c - (n - ones_r) - (m - ones_c))
         result.append(row)
+
     return result
 """,
         solution=r"""

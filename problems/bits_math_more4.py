@@ -67,20 +67,26 @@ PROBLEMS = [
 def valid_utf8(data):
     bits = ["{:08b}".format(x & 255) for x in data]
     i = 0
+
     while i < len(bits):
         ones = len(bits[i]) - len(bits[i].lstrip("1"))
+
         if ones == 0:
             size = 1
         elif 2 <= ones <= 4:
             size = ones
         else:
             return False
+
         if i + size > len(bits):
             return False
+
         for k in range(1, size):
             if not bits[i + k].startswith("10"):
                 return False
+
         i += size
+
     return True
 """,
         solution=r"""
@@ -88,8 +94,10 @@ def valid_utf8(data):
 # Idea: Bit masks / shifts with a state counter
 def valid_utf8(data):
     owed = 0
+
     for x in data:
         x &= 255
+
         if owed == 0:
             if x >> 7 == 0:
                 owed = 0
@@ -105,6 +113,7 @@ def valid_utf8(data):
             if x >> 6 != 0b10:
                 return False
             owed -= 1
+
     return owed == 0
 """,
     ),
@@ -161,8 +170,10 @@ def poor_pigs(buckets, minutes_to_die, minutes_to_test):
         return sum(math.comb(pigs, k) * can_separate(pigs - k, left - 1) for k in range(pigs + 1))
 
     pigs = 0
+
     while can_separate(pigs, rounds) < buckets:
         pigs += 1
+
     return pigs
 """,
         solution=r"""
@@ -274,14 +285,17 @@ def check_perfect_number(num):
 def check_perfect_number(num):
     if num <= 1:
         return False
+
     total = 1
     d = 2
+
     while d * d <= num:
         if num % d == 0:
             total += d
             if d != num // d:
                 total += num // d
         d += 1
+
     return total == num
 """,
     ),
@@ -327,11 +341,13 @@ def check_perfect_number(num):
 def maximum_swap(num):
     digits = str(num)
     best = num
+
     for i in range(len(digits)):
         for j in range(i + 1, len(digits)):
             chars = list(digits)
             chars[i], chars[j] = chars[j], chars[i]
             best = max(best, int("".join(chars)))
+
     return best
 """,
         solution=r"""
@@ -340,12 +356,14 @@ def maximum_swap(num):
 def maximum_swap(num):
     digits = list(str(num))
     last = {int(c): i for i, c in enumerate(digits)}
+
     for i, c in enumerate(digits):
         for d in range(9, int(c), -1):
             if last.get(d, -1) > i:
                 j = last[d]
                 digits[i], digits[j] = digits[j], digits[i]
                 return int("".join(digits))
+
     return num
 """,
     ),
@@ -493,6 +511,7 @@ def bitwise_complement(n):
 def base_neg2(n):
     if n == 0:
         return "0"
+
     for length in range(1, 12):
         for digits in itertools.product("01", repeat=length):
             if digits[0] == "0":
@@ -507,11 +526,14 @@ def base_neg2(n):
 def base_neg2(n):
     if n == 0:
         return "0"
+
     digits = []
+
     while n:
         r = n & 1
         digits.append(str(r))
         n = -((n - r) // 2)
+
     return "".join(reversed(digits))
 """,
     ),
@@ -564,13 +586,17 @@ def add_negabinary(arr1, arr2):
         return value
 
     total = to_int(arr1) + to_int(arr2)
+
     if total == 0:
         return [0]
+
     out = []
+
     while total:
         r = total & 1
         out.append(r)
         total = -((total - r) // 2)
+
     return out[::-1]
 """,
         solution=r"""
@@ -580,18 +606,24 @@ def add_negabinary(arr1, arr2):
     i, j = len(arr1) - 1, len(arr2) - 1
     carry = 0
     out = []
+
     while i >= 0 or j >= 0 or carry:
         total = carry
+
         if i >= 0:
             total += arr1[i]
             i -= 1
+
         if j >= 0:
             total += arr2[j]
             j -= 1
+
         out.append(total & 1)
         carry = -(total >> 1)
+
     while len(out) > 1 and out[-1] == 0:
         out.pop()
+
     return out[::-1]
 """,
     ),
@@ -644,12 +676,14 @@ def distribute_candies(candies, num_people):
     result = [0] * num_people
     gift = 1
     i = 0
+
     while candies > 0:
         take = min(gift, candies)
         result[i % num_people] += take
         candies -= take
         gift += 1
         i += 1
+
     return result
 """,
         solution=r"""
@@ -659,10 +693,13 @@ def distribute_candies(candies, num_people):
     k = (math.isqrt(8 * candies + 1) - 1) // 2
     rounds, extra = divmod(k, num_people)
     result = []
+
     for i in range(num_people):
         count = rounds + (1 if i < extra else 0)
         result.append(count * (i + 1) + num_people * count * (count - 1) // 2)
+
     result[extra] += candies - k * (k + 1) // 2
+
     return result
 """,
     ),
@@ -707,12 +744,14 @@ def day_of_year(date):
     leap = year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
     lengths = [31, 29 if leap else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     m, d, count = 1, 1, 1
+
     while (m, d) != (month, day):
         d += 1
         if d > lengths[m - 1]:
             d = 1
             m += 1
         count += 1
+
     return count
 """,
         solution=r"""
@@ -774,16 +813,20 @@ def day_of_the_week(day, month, year):
 
     weekday = 5
     y, m, d = 1971, 1, 1
+
     while (y, m, d) != (year, month, day):
         lengths = [31, 29 if leap(y) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         d += 1
+
         if d > lengths[m - 1]:
             d = 1
             m += 1
             if m > 12:
                 m = 1
                 y += 1
+
         weekday = (weekday + 1) % 7
+
     return names[weekday]
 """,
         solution=r"""
@@ -904,11 +947,13 @@ def sequential_digits(low, high):
 def sequential_digits(low, high):
     digits = "123456789"
     result = []
+
     for length in range(len(str(low)), len(str(high)) + 1):
         for start in range(0, 10 - length):
             value = int(digits[start : start + length])
             if low <= value <= high:
                 result.append(value)
+
     return result
 """,
     ),
@@ -1069,6 +1114,7 @@ def sort_by_bits(arr):
         return count
 
     result = list(arr)
+
     for i in range(1, len(result)):
         item = result[i]
         j = i - 1
@@ -1076,6 +1122,7 @@ def sort_by_bits(arr):
             result[j + 1] = result[j]
             j -= 1
         result[j + 1] = item
+
     return result
 """,
         solution=r"""
@@ -1132,20 +1179,26 @@ def days_between_dates(date1, date2):
 
     a = tuple(int(x) for x in date1.split("-"))
     b = tuple(int(x) for x in date2.split("-"))
+
     if a > b:
         a, b = b, a
+
     y, m, d = a
     steps = 0
+
     while (y, m, d) != b:
         lengths = [31, 29 if leap(y) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         d += 1
+
         if d > lengths[m - 1]:
             d = 1
             m += 1
             if m > 12:
                 m = 1
                 y += 1
+
         steps += 1
+
     return steps
 """,
         solution=r"""
@@ -1261,12 +1314,14 @@ def count_triples(n):
 # Idea: Remove a loop by computing the dependent value
 def count_triples(n):
     count = 0
+
     for a in range(1, n + 1):
         for b in range(1, n + 1):
             s = a * a + b * b
             c = math.isqrt(s)
             if c <= n and c * c == s:
                 count += 1
+
     return count
 """,
     ),

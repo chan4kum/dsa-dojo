@@ -112,6 +112,7 @@ def spiral_order(matrix):
     dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     r = c = d = 0
     out = []
+
     for _ in range(R * C):
         out.append(matrix[r][c])
         seen[r][c] = True
@@ -120,6 +121,7 @@ def spiral_order(matrix):
             d = (d + 1) % 4
             nr, nc = r + dirs[d][0], c + dirs[d][1]
         r, c = nr, nc
+
     return out
 """,
         solution=r"""
@@ -128,21 +130,28 @@ def spiral_order(matrix):
 def spiral_order(matrix):
     out = []
     top, bottom, left, right = 0, len(matrix) - 1, 0, len(matrix[0]) - 1
+
     while top <= bottom and left <= right:
         for c in range(left, right + 1):
             out.append(matrix[top][c])
+
         top += 1
+
         for r in range(top, bottom + 1):
             out.append(matrix[r][right])
+
         right -= 1
+
         if top <= bottom:
             for c in range(right, left - 1, -1):
                 out.append(matrix[bottom][c])
             bottom -= 1
+
         if left <= right:
             for r in range(bottom, top - 1, -1):
                 out.append(matrix[r][left])
             left += 1
+
     return out
 """,
     ),
@@ -184,6 +193,7 @@ def spiral_order(matrix):
 def set_zeroes(matrix):
     orig = [row[:] for row in matrix]
     R, C = len(matrix), len(matrix[0])
+
     for r in range(R):
         for c in range(C):
             if orig[r][c] == 0:
@@ -248,6 +258,7 @@ def set_zeroes(matrix):
 def game_of_life(board):
     old = [row[:] for row in board]
     R, C = len(old), len(old[0])
+
     for r in range(R):
         for c in range(C):
             live = sum(
@@ -263,6 +274,7 @@ def game_of_life(board):
 # Idea: Simulation with simultaneous update (copy, or encode old+new state in the cell)
 def game_of_life(board):
     R, C = len(board), len(board[0])
+
     for r in range(R):
         for c in range(C):
             live = sum(
@@ -271,10 +283,12 @@ def game_of_life(board):
                 for dc in (-1, 0, 1)
                 if (dr or dc) and 0 <= r + dr < R and 0 <= c + dc < C
             )
+
             if board[r][c] == 1 and live in (2, 3):
                 board[r][c] = 3  # alive -> alive (bit 1 = next state)
             elif board[r][c] == 0 and live == 3:
                 board[r][c] = 2  # dead -> alive
+
     for r in range(R):
         for c in range(C):
             board[r][c] >>= 1  # next state lives in the second bit
@@ -372,6 +386,7 @@ def is_valid_sudoku(board):
         for br in (0, 3, 6)
         for bc in (0, 3, 6)
     ]
+
     return all(ok(g) for g in rows + cols + boxes)
 """,
         solution=r"""
@@ -381,17 +396,23 @@ def is_valid_sudoku(board):
     rows = [set() for _ in range(9)]
     cols = [set() for _ in range(9)]
     boxes = [set() for _ in range(9)]
+
     for r in range(9):
         for c in range(9):
             d = board[r][c]
+
             if d == ".":
                 continue
+
             b = (r // 3) * 3 + c // 3
+
             if d in rows[r] or d in cols[c] or d in boxes[b]:
                 return False
+
             rows[r].add(d)
             cols[c].add(d)
             boxes[b].add(d)
+
     return True
 """,
     ),

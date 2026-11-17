@@ -65,13 +65,16 @@ PROBLEMS = [
 def find_second_minimum_value(root):
     values = set()
     stack = [root]
+
     while stack:
         node = stack.pop()
         if node:
             values.add(node.val)
             stack.append(node.left)
             stack.append(node.right)
+
     ordered = sorted(values)
+
     return ordered[1] if len(ordered) > 1 else -1
 """,
         solution=r"""
@@ -81,16 +84,21 @@ def find_second_minimum_value(root):
     smallest = root.val
     best = -1
     stack = [root]
+
     while stack:
         node = stack.pop()
+
         if node is None:
             continue
+
         if node.val > smallest:
             if best == -1 or node.val < best:
                 best = node.val
             continue
+
         stack.append(node.left)
         stack.append(node.right)
+
     return best
 """,
     ),
@@ -134,16 +142,20 @@ def find_second_minimum_value(root):
 def min_diff_in_bst(root):
     values = []
     stack = [root]
+
     while stack:
         node = stack.pop()
         if node:
             values.append(node.val)
             stack.append(node.left)
             stack.append(node.right)
+
     best = float("inf")
+
     for i in range(len(values)):
         for j in range(i + 1, len(values)):
             best = min(best, abs(values[i] - values[j]))
+
     return best
 """,
         solution=r"""
@@ -154,15 +166,20 @@ def min_diff_in_bst(root):
     prev = None
     stack = []
     node = root
+
     while stack or node:
         while node:
             stack.append(node)
             node = node.left
+
         node = stack.pop()
+
         if prev is not None:
             best = min(best, node.val - prev)
+
         prev = node.val
         node = node.right
+
     return best
 """,
     ),
@@ -282,6 +299,7 @@ def distribute_coins(root):
     def totals(node):
         coins = size = 0
         stack = [node]
+
         while stack:
             current = stack.pop()
             coins += current.val
@@ -289,10 +307,12 @@ def distribute_coins(root):
             for child in (current.left, current.right):
                 if child:
                     stack.append(child)
+
         return coins, size
 
     moves = 0
     stack = [root]
+
     while stack:
         node = stack.pop()
         for child in (node.left, node.right):
@@ -300,6 +320,7 @@ def distribute_coins(root):
                 coins, size = totals(child)
                 moves += abs(coins - size)
                 stack.append(child)
+
     return moves
 """,
         solution=r"""
@@ -318,6 +339,7 @@ def distribute_coins(root):
         return node.val + left + right - 1
 
     excess(root)
+
     return moves
 """,
     ),
@@ -358,6 +380,7 @@ def distribute_coins(root):
 def sum_root_to_leaf(root):
     total = 0
     stack = [(root, "")]
+
     while stack:
         node, path = stack.pop()
         path += str(node.val)
@@ -366,6 +389,7 @@ def sum_root_to_leaf(root):
         for child in (node.left, node.right):
             if child:
                 stack.append((child, path))
+
     return total
 """,
         solution=r"""
@@ -374,9 +398,11 @@ def sum_root_to_leaf(root):
 def sum_root_to_leaf(root):
     total = 0
     stack = [(root, 0)]
+
     while stack:
         node, value = stack.pop()
         value = value * 2 + node.val
+
         if not node.left and not node.right:
             total += value
         else:
@@ -384,6 +410,7 @@ def sum_root_to_leaf(root):
                 stack.append((node.left, value))
             if node.right:
                 stack.append((node.right, value))
+
     return total
 """,
     ),
@@ -430,15 +457,19 @@ def sum_root_to_leaf(root):
 def bst_to_gst(root):
     nodes = []
     stack = [root]
+
     while stack:
         node = stack.pop()
         if node:
             nodes.append(node)
             stack.append(node.left)
             stack.append(node.right)
+
     originals = [node.val for node in nodes]
+
     for node, value in zip(nodes, originals):
         node.val = sum(other for other in originals if other >= value)
+
     return root
 """,
         solution=r"""
@@ -448,6 +479,7 @@ def bst_to_gst(root):
     total = 0
     stack = []
     node = root
+
     while stack or node:
         while node:
             stack.append(node)
@@ -456,6 +488,7 @@ def bst_to_gst(root):
         total += node.val
         node.val = total
         node = node.left
+
     return root
 """,
     ),
@@ -501,13 +534,18 @@ def bst_to_gst(root):
 # BRUTE FORCE: O(n * h) time - repeat full scans until nothing changes
 def remove_leaf_nodes(root, target):
     changed = True
+
     while changed:
         changed = False
+
         if root and not root.left and not root.right and root.val == target:
             return None
+
         stack = [root] if root else []
+
         while stack:
             node = stack.pop()
+
             for side in ("left", "right"):
                 child = getattr(node, side)
                 if child:
@@ -516,6 +554,7 @@ def remove_leaf_nodes(root, target):
                         changed = True
                     else:
                         stack.append(child)
+
     return root
 """,
         solution=r"""
@@ -577,17 +616,20 @@ def max_product(root):
     def subtree_sum(node):
         total = 0
         stack = [node]
+
         while stack:
             current = stack.pop()
             total += current.val
             for child in (current.left, current.right):
                 if child:
                     stack.append(child)
+
         return total
 
     whole = subtree_sum(root)
     best = 0
     stack = [root]
+
     while stack:
         node = stack.pop()
         for child in (node.left, node.right):
@@ -595,6 +637,7 @@ def max_product(root):
                 part = subtree_sum(child)
                 best = max(best, part * (whole - part))
                 stack.append(child)
+
     return best % (10**9 + 7)
 """,
         solution=r"""
@@ -611,6 +654,7 @@ def max_product(root):
         return s
 
     whole = total(root)
+
     return max(s * (whole - s) for s in sums) % (10**9 + 7)
 """,
     ),
@@ -662,11 +706,14 @@ def max_product(root):
 def longest_zig_zag(root):
     best = 0
     stack = [root]
+
     while stack:
         node = stack.pop()
+
         for child in (node.left, node.right):
             if child:
                 stack.append(child)
+
         for first in ("left", "right"):
             current, direction, steps = node, first, 0
             while getattr(current, direction):
@@ -674,6 +721,7 @@ def longest_zig_zag(root):
                 steps += 1
                 direction = "right" if direction == "left" else "left"
             best = max(best, steps)
+
     return best
 """,
         solution=r"""
@@ -684,16 +732,20 @@ def longest_zig_zag(root):
 
     def go(node):
         nonlocal best
+
         if not node:
             return -1, -1
+
         left_child = go(node.left)
         right_child = go(node.right)
         left_first = left_child[1] + 1
         right_first = right_child[0] + 1
         best = max(best, left_first, right_first)
+
         return left_first, right_first
 
     go(root)
+
     return best
 """,
     ),
@@ -741,16 +793,20 @@ def longest_zig_zag(root):
 def pseudo_palindromic_paths(root):
     count = 0
     stack = [(root, [])]
+
     while stack:
         node, path = stack.pop()
         path = path + [node.val]
+
         if not node.left and not node.right:
             odd = sum(1 for c in Counter(path).values() if c % 2)
             if odd <= 1:
                 count += 1
+
         for child in (node.left, node.right):
             if child:
                 stack.append((child, path))
+
     return count
 """,
         solution=r"""
@@ -759,9 +815,11 @@ def pseudo_palindromic_paths(root):
 def pseudo_palindromic_paths(root):
     count = 0
     stack = [(root, 0)]
+
     while stack:
         node, mask = stack.pop()
         mask ^= 1 << node.val
+
         if not node.left and not node.right:
             if mask & (mask - 1) == 0:
                 count += 1
@@ -770,6 +828,7 @@ def pseudo_palindromic_paths(root):
                 stack.append((node.left, mask))
             if node.right:
                 stack.append((node.right, mask))
+
     return count
 """,
     ),
@@ -817,6 +876,7 @@ def pseudo_palindromic_paths(root):
 def count_pairs(root, distance):
     paths = []
     stack = [(root, [root])]
+
     while stack:
         node, path = stack.pop()
         if not node.left and not node.right:
@@ -824,7 +884,9 @@ def count_pairs(root, distance):
         for child in (node.left, node.right):
             if child:
                 stack.append((child, path + [child]))
+
     total = 0
+
     for i in range(len(paths)):
         for j in range(i + 1, len(paths)):
             a, b = paths[i], paths[j]
@@ -833,6 +895,7 @@ def count_pairs(root, distance):
                 shared += 1
             if (len(a) - shared) + (len(b) - shared) <= distance:
                 total += 1
+
     return total
 """,
         solution=r"""
@@ -843,24 +906,32 @@ def count_pairs(root, distance):
 
     def go(node):
         nonlocal total
+
         if not node:
             return [0] * (distance + 1)
+
         if not node.left and not node.right:
             leaf = [0] * (distance + 1)
             leaf[0] = 1
             return leaf
+
         left = go(node.left)
         right = go(node.right)
+
         for i in range(distance + 1):
             for j in range(distance + 1):
                 if i + j + 2 <= distance:
                     total += left[i] * right[j]
+
         merged = [0] * (distance + 1)
+
         for i in range(distance):
             merged[i + 1] = left[i] + right[i]
+
         return merged
 
     go(root)
+
     return total
 """,
     ),
@@ -914,6 +985,7 @@ def is_even_odd_tree(root):
         walk(node.right, depth + 1)
 
     walk(root, 0)
+
     for depth, values in levels.items():
         if depth % 2 == 0:
             if any(v % 2 == 0 for v in values):
@@ -925,6 +997,7 @@ def is_even_odd_tree(root):
                 return False
             if any(values[i] <= values[i + 1] for i in range(len(values) - 1)):
                 return False
+
     return True
 """,
         solution=r"""
@@ -933,23 +1006,31 @@ def is_even_odd_tree(root):
 def is_even_odd_tree(root):
     queue = deque([root])
     level = 0
+
     while queue:
         prev = None
+
         for _ in range(len(queue)):
             node = queue.popleft()
             v = node.val
+
             if level % 2 == 0:
                 if v % 2 == 0 or (prev is not None and v <= prev):
                     return False
             else:
                 if v % 2 == 1 or (prev is not None and v >= prev):
                     return False
+
             prev = v
+
             if node.left:
                 queue.append(node.left)
+
             if node.right:
                 queue.append(node.right)
+
         level += 1
+
     return True
 """,
     ),
@@ -1002,6 +1083,7 @@ def kth_largest_level_sum(root, k):
 
     walk(root, 0)
     ordered = sorted(sums.values(), reverse=True)
+
     return ordered[k - 1] if len(ordered) >= k else -1
 """,
         solution=r"""
@@ -1010,8 +1092,10 @@ def kth_largest_level_sum(root, k):
 def kth_largest_level_sum(root, k):
     heap = []
     queue = deque([root])
+
     while queue:
         level_sum = 0
+
         for _ in range(len(queue)):
             node = queue.popleft()
             level_sum += node.val
@@ -1019,9 +1103,12 @@ def kth_largest_level_sum(root, k):
                 queue.append(node.left)
             if node.right:
                 queue.append(node.right)
+
         heapq.heappush(heap, level_sum)
+
         if len(heap) > k:
             heapq.heappop(heap)
+
     return heap[0] if len(heap) == k else -1
 """,
     ),
@@ -1070,19 +1157,24 @@ def kth_largest_level_sum(root, k):
 def reverse_odd_levels(root):
     level = [root]
     depth = 0
+
     while level and level[0] is not None:
         if depth % 2 == 1:
             values = [node.val for node in level][::-1]
             for node, value in zip(level, values):
                 node.val = value
+
         nxt = []
+
         for node in level:
             if node.left:
                 nxt.append(node.left)
             if node.right:
                 nxt.append(node.right)
+
         level = nxt
         depth += 1
+
     return root
 """,
         solution=r"""
@@ -1098,6 +1190,7 @@ def reverse_odd_levels(root):
         swap(a.right, b.left, level + 1)
 
     swap(root.left, root.right, 1)
+
     return root
 """,
     ),
@@ -1146,25 +1239,33 @@ def reverse_odd_levels(root):
 def replace_value_in_tree(root):
     level = [(root, None)]
     new_values = {}
+
     while level:
         total = sum(node.val for node, _ in level)
+
         for node, parent in level:
             siblings = sum(other.val for other, p in level if p is parent)
             new_values[id(node)] = total - siblings
+
         nxt = []
         nodes = [node for node, _ in level]
+
         for node in nodes:
             for child in (node.left, node.right):
                 if child:
                     nxt.append((child, node))
+
         level = nxt
+
     stack = [root]
+
     while stack:
         node = stack.pop()
         node.val = new_values[id(node)]
         for child in (node.left, node.right):
             if child:
                 stack.append(child)
+
     return root
 """,
         solution=r"""
@@ -1173,19 +1274,25 @@ def replace_value_in_tree(root):
 def replace_value_in_tree(root):
     root.val = 0
     level = [root]
+
     while level:
         nxt = []
+
         for node in level:
             for child in (node.left, node.right):
                 if child:
                     nxt.append(child)
+
         total = sum(child.val for child in nxt)
+
         for node in level:
             children = [c for c in (node.left, node.right) if c]
             siblings = sum(c.val for c in children)
             for c in children:
                 c.val = total - siblings
+
         level = nxt
+
     return root
 """,
     ),
@@ -1231,19 +1338,25 @@ def replace_value_in_tree(root):
 def minimum_operations(root):
     swaps = 0
     level = [root]
+
     while level:
         values = [node.val for node in level]
+
         for i in range(len(values)):
             j = min(range(i, len(values)), key=lambda k: values[k])
             if j != i:
                 values[i], values[j] = values[j], values[i]
                 swaps += 1
+
         nxt = []
+
         for node in level:
             for child in (node.left, node.right):
                 if child:
                     nxt.append(child)
+
         level = nxt
+
     return swaps
 """,
         solution=r"""
@@ -1252,26 +1365,35 @@ def minimum_operations(root):
 def minimum_operations(root):
     swaps = 0
     level = [root]
+
     while level:
         values = [node.val for node in level]
         order = sorted(range(len(values)), key=lambda i: values[i])
         seen = [False] * len(values)
+
         for start in range(len(values)):
             if seen[start] or order[start] == start:
                 continue
+
             length = 0
             i = start
+
             while not seen[i]:
                 seen[i] = True
                 i = order[i]
                 length += 1
+
             swaps += length - 1
+
         nxt = []
+
         for node in level:
             for child in (node.left, node.right):
                 if child:
                     nxt.append(child)
+
         level = nxt
+
     return swaps
 """,
     ),
@@ -1325,6 +1447,7 @@ def minimum_operations(root):
 def btree_game_winning_move(root, n, x):
     graph = defaultdict(list)
     stack = [root]
+
     while stack:
         node = stack.pop()
         for child in (node.left, node.right):
@@ -1336,15 +1459,18 @@ def btree_game_winning_move(root, n, x):
     def distances(start):
         dist = {start: 0}
         queue = deque([start])
+
         while queue:
             u = queue.popleft()
             for v in graph[u]:
                 if v not in dist:
                     dist[v] = dist[u] + 1
                     queue.append(v)
+
         return dist
 
     from_x = distances(x)
+
     for y in range(1, n + 1):
         if y == x:
             continue
@@ -1352,6 +1478,7 @@ def btree_game_winning_move(root, n, x):
         mine = sum(1 for v in range(1, n + 1) if from_y[v] < from_x[v])
         if 2 * mine > n:
             return True
+
     return False
 """,
         solution=r"""
@@ -1371,6 +1498,7 @@ def btree_game_winning_move(root, n, x):
 
     count(root)
     biggest = max(sizes[0], sizes[1], n - sizes[0] - sizes[1] - 1)
+
     return 2 * biggest > n
 """,
     ),
@@ -1417,18 +1545,24 @@ def btree_game_winning_move(root, n, x):
 def tree2str(root):
     out = []
     stack = [root]
+
     while stack:
         item = stack.pop()
+
         if isinstance(item, str):
             out.append(item)
             continue
+
         if item is None:
             continue
+
         out.append(str(item.val))
+
         if item.right:
             stack.append(")")
             stack.append(item.right)
             stack.append("(")
+
         if item.left:
             stack.append(")")
             stack.append(item.left)
@@ -1436,6 +1570,7 @@ def tree2str(root):
         elif item.right:
             stack.append(")")
             stack.append("(")
+
     return "".join(out)
 """,
         solution=r"""
@@ -1445,11 +1580,15 @@ def tree2str(root):
     def go(node):
         if not node:
             return ""
+
         text = str(node.val)
+
         if node.left or node.right:
             text += "(" + go(node.left) + ")"
+
         if node.right:
             text += "(" + go(node.right) + ")"
+
         return text
 
     return go(root)
@@ -1504,16 +1643,19 @@ def max_sum_bst(root):
     best = 0
     nodes = []
     stack = [root]
+
     while stack:
         node = stack.pop()
         if node:
             nodes.append(node)
             stack.append(node.left)
             stack.append(node.right)
+
     for top in nodes:
         values = []
         walk = []
         current = top
+
         while walk or current:
             while current:
                 walk.append(current)
@@ -1521,8 +1663,10 @@ def max_sum_bst(root):
             current = walk.pop()
             values.append(current.val)
             current = current.right
+
         if all(values[i] < values[i + 1] for i in range(len(values) - 1)):
             best = max(best, sum(values))
+
     return best
 """,
         solution=r"""
@@ -1534,17 +1678,22 @@ def max_sum_bst(root):
 
     def go(node):
         nonlocal best
+
         if not node:
             return True, inf, -inf, 0
+
         left_ok, left_min, left_max, left_sum = go(node.left)
         right_ok, right_min, right_max, right_sum = go(node.right)
+
         if left_ok and right_ok and left_max < node.val < right_min:
             total = left_sum + right_sum + node.val
             best = max(best, total)
             return True, min(left_min, node.val), max(right_max, node.val), total
+
         return False, 0, 0, 0
 
     go(root)
+
     return best
 """,
     ),
@@ -1591,6 +1740,7 @@ def max_sum_bst(root):
 def vertical_traversal(root):
     items = []
     stack = [(root, 0, 0)]
+
     while stack:
         node, row, col = stack.pop()
         items.append((row, col, node.val))
@@ -1598,12 +1748,15 @@ def vertical_traversal(root):
             stack.append((node.left, row + 1, col - 1))
         if node.right:
             stack.append((node.right, row + 1, col + 1))
+
     low = min(col for _, col, _ in items)
     high = max(col for _, col, _ in items)
     result = []
+
     for col in range(low, high + 1):
         in_column = sorted((row, value) for row, c, value in items if c == col)
         result.append([value for _, value in in_column])
+
     return result
 """,
         solution=r"""
@@ -1612,6 +1765,7 @@ def vertical_traversal(root):
 def vertical_traversal(root):
     items = []
     queue = deque([(root, 0, 0)])
+
     while queue:
         node, row, col = queue.popleft()
         items.append((col, row, node.val))
@@ -1619,14 +1773,17 @@ def vertical_traversal(root):
             queue.append((node.left, row + 1, col - 1))
         if node.right:
             queue.append((node.right, row + 1, col + 1))
+
     items.sort()
     result = []
     last_col = None
+
     for col, _, value in items:
         if col != last_col:
             result.append([])
             last_col = col
         result[-1].append(value)
+
     return result
 """,
     ),

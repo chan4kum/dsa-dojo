@@ -69,6 +69,7 @@ def subsets(nums):
         go(i + 1)  # skip nums[i]
 
     go(0)
+
     return res
 ```
 

@@ -60,6 +60,7 @@ def min_falling_path_sum(matrix):
 def min_falling_path_sum(matrix):
     n = len(matrix)
     prev = matrix[0][:]  # prev[c] = cheapest cost to arrive at column c of the row above
+
     for r in range(1, n):
         cur = []
         for c in range(n):
@@ -67,6 +68,7 @@ def min_falling_path_sum(matrix):
             best_above = min(prev[max(0, c - 1) : min(n, c + 2)])
             cur.append(matrix[r][c] + best_above)
         prev = cur
+
     return min(prev)
 """,
     ),
@@ -116,9 +118,11 @@ def min_falling_path_sum(matrix):
 def maximal_square(matrix):
     rows, cols = len(matrix), len(matrix[0])
     best = 0
+
     for r in range(rows):
         for c in range(cols):
             side = 1
+
             # keep growing the square whose top-left corner is (r, c) while it stays all '1'
             while r + side <= rows and c + side <= cols:
                 if all(matrix[i][j] == "1" for i in range(r, r + side) for j in range(c, c + side)):
@@ -126,6 +130,7 @@ def maximal_square(matrix):
                     side += 1
                 else:
                     break
+
     return best * best
 """,
         solution=r"""
@@ -135,6 +140,7 @@ def maximal_square(matrix):
     cols = len(matrix[0])
     prev = [0] * (cols + 1)  # prev[c+1] = side of best square ending at (row above, column c)
     best = 0
+
     for row in matrix:
         cur = [0] * (cols + 1)
         for c in range(cols):
@@ -143,6 +149,7 @@ def maximal_square(matrix):
                 cur[c + 1] = 1 + min(cur[c], prev[c + 1], prev[c])
                 best = max(best, cur[c + 1])
         prev = cur
+
     return best * best
 """,
     ),
@@ -187,11 +194,14 @@ def delete_and_earn(nums):
     def best(remaining):  # best score from the numbers still in the array
         if not remaining:
             return 0
+
         top = 0
+
         for v in set(remaining):
             earned = v * remaining.count(v)
             left = tuple(x for x in remaining if x not in (v - 1, v, v + 1))
             top = max(top, earned + best(left))
+
         return top
 
     return best(tuple(nums))
@@ -202,12 +212,17 @@ def delete_and_earn(nums):
 def delete_and_earn(nums):
     if not nums:
         return 0
+
     points = [0] * (max(nums) + 1)
+
     for x in nums:
         points[x] += x  # all copies of value x together are worth x * count
+
     take, skip = 0, 0  # best total if we take / skip the previous value
+
     for p in points:
         take, skip = skip + p, max(take, skip)  # taking v is only allowed after skipping v-1
+
     return max(take, skip)
 """,
     ),
@@ -251,12 +266,16 @@ def is_interleave(s1, s2, s3):
 
     def go(i, j):  # can s1[i:] and s2[j:] be interleaved into s3[i + j:]?
         k = i + j
+
         if k == len(s3):
             return True
+
         if i < len(s1) and s1[i] == s3[k] and go(i + 1, j):
             return True
+
         if j < len(s2) and s2[j] == s3[k] and go(i, j + 1):
             return True
+
         return False
 
     return go(0, 0)
@@ -266,18 +285,23 @@ def is_interleave(s1, s2, s3):
 # Idea: 2-D DP over (chars used of s1, chars used of s2)
 def is_interleave(s1, s2, s3):
     m, n = len(s1), len(s2)
+
     if m + n != len(s3):
         return False
+
     ok = [False] * (n + 1)  # ok[j] = s1[:i] and s2[:j] can form s3[:i + j]
     ok[0] = True
+
     for j in range(1, n + 1):  # row i = 0: only s2 is used
         ok[j] = ok[j - 1] and s2[j - 1] == s3[j - 1]
+
     for i in range(1, m + 1):
         ok[0] = ok[0] and s1[i - 1] == s3[i - 1]  # column j = 0: only s1 is used
         for j in range(1, n + 1):
             from_s1 = ok[j] and s1[i - 1] == s3[i + j - 1]  # last char came from s1
             from_s2 = ok[j - 1] and s2[j - 1] == s3[i + j - 1]  # last char came from s2
             ok[j] = from_s1 or from_s2
+
     return ok[n]
 """,
     ),
@@ -333,12 +357,14 @@ def unique_paths_with_obstacles(grid):
     cols = len(grid[0])
     ways = [0] * cols  # ways[c] = number of paths into column c of the current row
     ways[0] = 1  # one way to stand on the start (if it is not blocked, handled below)
+
     for row in grid:
         for c in range(cols):
             if row[c] == 1:
                 ways[c] = 0  # an obstacle cannot be entered
             elif c > 0:
                 ways[c] += ways[c - 1]  # from above (already in ways[c]) + from the left
+
     return ways[-1]
 """,
     ),
@@ -381,12 +407,15 @@ def mincost_tickets(days, costs):
     def go(i):  # cheapest way to cover days[i:]
         if i == len(days):
             return 0
+
         best = float("inf")
+
         for span, price in zip((1, 7, 30), costs):
             j = i
             while j < len(days) and days[j] < days[i] + span:  # first day this pass does not cover
                 j += 1
             best = min(best, price + go(j))
+
         return best
 
     return go(0)
@@ -398,15 +427,18 @@ def mincost_tickets(days, costs):
     travel = set(days)
     last = days[-1]
     cost = [0] * (last + 1)  # cost[d] = cheapest way to cover all travel days up to day d
+
     for d in range(1, last + 1):
         if d not in travel:
             cost[d] = cost[d - 1]  # nothing to pay for a day we do not travel
             continue
+
         cost[d] = min(
             cost[d - 1] + costs[0],  # 1-day pass today
             cost[max(0, d - 7)] + costs[1],  # a 7-day pass ending today
             cost[max(0, d - 30)] + costs[2],  # a 30-day pass ending today
         )
+
     return cost[last]
 """,
     ),
@@ -521,12 +553,14 @@ def max_envelopes(envelopes):
     # width ascending; for equal widths, height DESCENDING so they cannot extend each other
     envelopes = sorted(envelopes, key=lambda e: (e[0], -e[1]))
     tails = []  # tails[k] = smallest possible last height of an increasing run of length k + 1
+
     for _, h in envelopes:
         i = bisect.bisect_left(tails, h)  # first run we can replace / extend
         if i == len(tails):
             tails.append(h)
         else:
             tails[i] = h
+
     return len(tails)
 """,
     ),
@@ -572,11 +606,15 @@ def num_distinct(s, t):
     def go(i, j):  # ways to build t[j:] from s[i:]
         if j == len(t):
             return 1  # nothing left to build: the empty choice works
+
         if i == len(s):
             return 0
+
         ways = go(i + 1, j)  # skip s[i]
+
         if s[i] == t[j]:
             ways += go(i + 1, j + 1)  # use s[i] for t[j]
+
         return ways
 
     return go(0, 0)
@@ -627,6 +665,7 @@ def num_distinct(s, t):
 def find_number_of_lis(nums):
     n = len(nums)
     best_len, count = 0, 0
+
     for mask in range(1, 1 << n):  # every non-empty subsequence
         sub = [nums[i] for i in range(n) if mask >> i & 1]
         if all(sub[k] < sub[k + 1] for k in range(len(sub) - 1)):  # strictly increasing?
@@ -634,6 +673,7 @@ def find_number_of_lis(nums):
                 best_len, count = len(sub), 1
             elif len(sub) == best_len:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -643,6 +683,7 @@ def find_number_of_lis(nums):
     n = len(nums)
     length = [1] * n  # length[i] = LIS length ending exactly at i
     count = [1] * n  # count[i]  = how many LIS of that length end at i
+
     for i in range(n):
         for j in range(i):
             if nums[j] < nums[i]:
@@ -650,7 +691,9 @@ def find_number_of_lis(nums):
                     length[i], count[i] = length[j] + 1, count[j]
                 elif length[j] + 1 == length[i]:  # another chain of the same length: add them
                     count[i] += count[j]
+
     longest = max(length, default=0)
+
     return sum(c for l_, c in zip(length, count) if l_ == longest)
 """,
     ),
@@ -709,11 +752,13 @@ def find_max_form(strs, m, n):
     dp = [
         [0] * (n + 1) for _ in range(m + 1)
     ]  # dp[z][o] = best subset size with budget z zeros, o ones
+
     for s in strs:
         zeros, ones = s.count("0"), s.count("1")
         for z in range(m, zeros - 1, -1):  # descending: each string is used at most once
             for o in range(n, ones - 1, -1):
                 dp[z][o] = max(dp[z][o], dp[z - zeros][o - ones] + 1)
+
     return dp[m][n]
 """,
     ),
@@ -762,13 +807,16 @@ def max_profit(k, prices):
     def go(day, left, holding):  # best future profit; `left` = buys still allowed
         if day == len(prices) or (left == 0 and not holding):
             return 0
+
         best = go(day + 1, left, holding)  # do nothing today
+
         if holding:
             best = max(best, prices[day] + go(day + 1, left, False))  # sell
         elif left > 0:
             best = max(
                 best, -prices[day] + go(day + 1, left - 1, True)
             )  # buy (uses one transaction)
+
         return best
 
     return go(0, k, False)
@@ -778,14 +826,18 @@ def max_profit(k, prices):
 # Idea: State-machine DP: (transactions used, holding or not)
 def max_profit(k, prices):
     k = min(k, len(prices) // 2)  # more transactions than n // 2 can never help
+
     if k == 0:
         return 0
+
     buy = [float("-inf")] * (k + 1)  # buy[t]  = best balance while holding a share in transaction t
     sell = [0] * (k + 1)  # sell[t] = best balance after finishing t transactions
+
     for price in prices:
         for t in range(1, k + 1):
             buy[t] = max(buy[t], sell[t - 1] - price)  # open transaction t
             sell[t] = max(sell[t], buy[t] + price)  # close transaction t
+
     return sell[k]
 """,
     ),
@@ -826,11 +878,14 @@ def max_profit(prices, fee):
     def go(day, holding):  # best profit from `day` onwards
         if day == len(prices):
             return 0
+
         best = go(day + 1, holding)  # wait
+
         if holding:
             best = max(best, prices[day] - fee + go(day + 1, False))  # sell and pay the fee
         else:
             best = max(best, -prices[day] + go(day + 1, True))  # buy
+
         return best
 
     return go(0, False)

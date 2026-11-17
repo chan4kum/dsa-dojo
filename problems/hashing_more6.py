@@ -55,10 +55,12 @@ def get_hint(secret, guess):
     n = len(secret)
     used = [False] * n
     bulls = cows = 0
+
     for i in range(n):
         if secret[i] == guess[i]:
             bulls += 1
             used[i] = True
+
     for i in range(n):
         if secret[i] != guess[i]:
             for j in range(n):
@@ -66,6 +68,7 @@ def get_hint(secret, guess):
                     used[j] = True
                     cows += 1
                     break
+
     return "%dA%dB" % (bulls, cows)
 """,
         solution=r"""
@@ -134,6 +137,7 @@ def prison_after_n_days(cells, n):
     state = tuple(cells)
     seen = {}
     day = 0
+
     while day < n:
         if state in seen:
             cycle = day - seen[state]
@@ -141,11 +145,13 @@ def prison_after_n_days(cells, n):
             seen = {}
             if day == n:
                 break
+
         seen[state] = day
         state = tuple(
             0 if i in (0, size - 1) else int(state[i - 1] == state[i + 1]) for i in range(size)
         )
         day += 1
+
     return list(state)
 """,
     ),
@@ -193,11 +199,13 @@ def prison_after_n_days(cells, n):
 def largest_vals_from_labels(values, labels, num_wanted, use_limit):
     n = len(values)
     best = 0
+
     for size in range(1, min(n, num_wanted) + 1):
         for combo in itertools.combinations(range(n), size):
             counts = Counter(labels[i] for i in combo)
             if max(counts.values()) <= use_limit:
                 best = max(best, sum(values[i] for i in combo))
+
     return best
 """,
         solution=r"""
@@ -206,6 +214,7 @@ def largest_vals_from_labels(values, labels, num_wanted, use_limit):
 def largest_vals_from_labels(values, labels, num_wanted, use_limit):
     used = Counter()
     total = taken = 0
+
     for v, lab in sorted(zip(values, labels), reverse=True):
         if taken == num_wanted:
             break
@@ -213,6 +222,7 @@ def largest_vals_from_labels(values, labels, num_wanted, use_limit):
             used[lab] += 1
             total += v
             taken += 1
+
     return total
 """,
     ),
@@ -366,14 +376,17 @@ def can_arrange(arr, k):
 # Idea: Remainder buckets that must be paired off
 def can_arrange(arr, k):
     cnt = Counter(x % k for x in arr)
+
     if cnt[0] % 2:
         return False
+
     for r in range(1, k):
         if r == k - r:
             if cnt[r] % 2:
                 return False
         elif cnt[r] != cnt[k - r]:
             return False
+
     return True
 """,
     ),
@@ -418,11 +431,13 @@ def can_arrange(arr, k):
 def count_pairs(deliciousness):
     total = 0
     n = len(deliciousness)
+
     for i in range(n):
         for j in range(i + 1, n):
             s = deliciousness[i] + deliciousness[j]
             if s > 0 and s & (s - 1) == 0:
                 total += 1
+
     return total % (10**9 + 7)
 """,
         solution=r"""
@@ -483,12 +498,14 @@ def count_pairs(deliciousness):
 def tuple_same_product(nums):
     n = len(nums)
     total = 0
+
     for a in range(n):
         for b in range(n):
             for c in range(n):
                 for d in range(n):
                     if len({a, b, c, d}) == 4 and nums[a] * nums[b] == nums[c] * nums[d]:
                         total += 1
+
     return total
 """,
         solution=r"""
@@ -598,13 +615,17 @@ def finding_users_active_minutes(logs, k):
 # BRUTE FORCE: O(C(n, n/2) * n log n) time - try every choice of n/2 positions as the original
 def find_original_array(changed):
     n = len(changed)
+
     if n % 2:
         return []
+
     target = sorted(changed)
+
     for combo in itertools.combinations(range(n), n // 2):
         original = [changed[i] for i in combo]
         if sorted(original + [2 * x for x in original]) == target:
             return original
+
     return []
 """,
         solution=r"""
@@ -613,8 +634,10 @@ def find_original_array(changed):
 def find_original_array(changed):
     if len(changed) % 2:
         return []
+
     cnt = Counter(changed)
     original = []
+
     for x in sorted(cnt):
         while cnt[x] > 0:
             cnt[x] -= 1
@@ -622,6 +645,7 @@ def find_original_array(changed):
                 return []
             cnt[2 * x] -= 1
             original.append(x)
+
     return original
 """,
     ),
@@ -676,12 +700,14 @@ def num_of_pairs(nums, target):
 def num_of_pairs(nums, target):
     cnt = Counter(nums)
     total = 0
+
     for cut in range(1, len(target)):
         p, s = target[:cut], target[cut:]
         if p == s:
             total += cnt[p] * (cnt[p] - 1)
         else:
             total += cnt[p] * cnt[s]
+
     return total
 """,
     ),
@@ -741,6 +767,7 @@ def find_all_recipes(recipes, ingredients, supplies):
     have = set(supplies)
     made = []
     changed = True
+
     while changed:
         changed = False
         for r, ing in zip(recipes, ingredients):
@@ -748,6 +775,7 @@ def find_all_recipes(recipes, ingredients, supplies):
                 have.add(r)
                 made.append(r)
                 changed = True
+
     return made
 """,
         solution=r"""
@@ -757,6 +785,7 @@ def find_all_recipes(recipes, ingredients, supplies):
     have = set(supplies)
     indegree = {}
     users = defaultdict(list)
+
     for r, ing in zip(recipes, ingredients):
         need = 0
         for x in ing:
@@ -764,8 +793,10 @@ def find_all_recipes(recipes, ingredients, supplies):
                 need += 1
                 users[x].append(r)
         indegree[r] = need
+
     queue = deque(r for r in recipes if indegree[r] == 0)
     made = []
+
     while queue:
         r = queue.popleft()
         made.append(r)
@@ -773,6 +804,7 @@ def find_all_recipes(recipes, ingredients, supplies):
             indegree[nxt] -= 1
             if indegree[nxt] == 0:
                 queue.append(nxt)
+
     return made
 """,
     ),
@@ -930,6 +962,7 @@ def is_it_possible(word1, word2):
 # Idea: Frequency tables; try all alphabet pairs instead of all index pairs
 def is_it_possible(word1, word2):
     c1, c2 = Counter(word1), Counter(word2)
+
     for a in c1:
         for b in c2:
             if a == b:
@@ -939,6 +972,7 @@ def is_it_possible(word1, word2):
                 d2 = len(c2) - (c2[b] == 1) + (a not in c2)
             if d1 == d2:
                 return True
+
     return False
 """,
     ),
@@ -988,18 +1022,23 @@ def distance(nums):
 # Idea: Group by value + prefix sums of positions
 def distance(nums):
     groups = defaultdict(list)
+
     for i, v in enumerate(nums):
         groups[v].append(i)
+
     out = [0] * len(nums)
+
     for pos in groups.values():
         total = sum(pos)
         m = len(pos)
         pre = 0
+
         for k, p in enumerate(pos):
             left = k * p - pre
             right = (total - pre - p) - (m - 1 - k) * p
             out[p] = left + right
             pre += p
+
     return out
 """,
     ),
@@ -1054,6 +1093,7 @@ def divide_players(skill):
     for pairs in matchings(list(skill)):
         if len({a + b for a, b in pairs}) == 1:
             return sum(a * b for a, b in pairs)
+
     return -1
 """,
         solution=r"""
@@ -1063,10 +1103,12 @@ def divide_players(skill):
     skill = sorted(skill)
     target = skill[0] + skill[-1]
     total = 0
+
     for i in range(len(skill) // 2):
         if skill[i] + skill[-1 - i] != target:
             return -1
         total += skill[i] * skill[-1 - i]
+
     return total
 """,
     ),
@@ -1172,12 +1214,14 @@ def count_beautiful_pairs(nums):
 def count_beautiful_pairs(nums):
     cnt = [0] * 10
     total = 0
+
     for x in nums:
         last = x % 10
         for d in range(1, 10):
             if cnt[d] and math.gcd(d, last) == 1:
                 total += cnt[d]
         cnt[int(str(x)[0])] += 1
+
     return total
 """,
     ),
@@ -1236,14 +1280,18 @@ def count_beautiful_pairs(nums):
 # BRUTE FORCE: O(n + sum k^3) time - test every triple of accesses per employee
 def find_high_access_employees(access_times):
     by_name = defaultdict(list)
+
     for name, t in access_times:
         by_name[name].append(int(t[:2]) * 60 + int(t[2:]))
+
     out = []
+
     for name, times in by_name.items():
         for trio in itertools.combinations(times, 3):
             if max(trio) - min(trio) < 60:
                 out.append(name)
                 break
+
     return out
 """,
         solution=r"""
@@ -1251,13 +1299,17 @@ def find_high_access_employees(access_times):
 # Idea: Group by key, sort, sliding window of fixed size 3
 def find_high_access_employees(access_times):
     by_name = defaultdict(list)
+
     for name, t in access_times:
         by_name[name].append(int(t[:2]) * 60 + int(t[2:]))
+
     out = []
+
     for name, times in by_name.items():
         times.sort()
         if any(times[i + 2] - times[i] < 60 for i in range(len(times) - 2)):
             out.append(name)
+
     return out
 """,
     ),

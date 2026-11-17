@@ -105,6 +105,7 @@ def longest_common_prefix(strs):
 # BRUTE FORCE: O(n) - manual scan collecting words
 def reverse_words(s):
     words, cur = [], ""
+
     for ch in s:
         if ch == " ":
             if cur:
@@ -112,11 +113,15 @@ def reverse_words(s):
                 cur = ""
         else:
             cur += ch
+
     if cur:
         words.append(cur)
+
     out = ""
+
     for w in reversed(words):
         out = out + (" " if out else "") + w
+
     return out
 """,
         solution=r"""
@@ -176,16 +181,22 @@ def my_atoi(s):
 # Idea: Careful state-by-state parsing (finite automaton)
 def my_atoi(s):
     i, n = 0, len(s)
+
     while i < n and s[i] == " ":
         i += 1
+
     sign = 1
+
     if i < n and s[i] in "+-":
         sign = -1 if s[i] == "-" else 1
         i += 1
+
     res = 0
+
     while i < n and s[i].isdigit():
         res = res * 10 + int(s[i])
         i += 1
+
     return max(-(2**31), min(2**31 - 1, sign * res))
 """,
     ),
@@ -237,6 +248,7 @@ def roman_to_int(s):
         "I": 1,
     }
     i, total = 0, 0
+
     while i < len(s):
         if s[i : i + 2] in vals:
             total += vals[s[i : i + 2]]
@@ -244,6 +256,7 @@ def roman_to_int(s):
         else:
             total += vals[s[i]]
             i += 1
+
     return total
 """,
         solution=r"""
@@ -252,11 +265,13 @@ def roman_to_int(s):
 def roman_to_int(s):
     v = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
     total = 0
+
     for i, ch in enumerate(s):
         if i + 1 < len(s) and v[ch] < v[s[i + 1]]:
             total -= v[ch]
         else:
             total += v[ch]
+
     return total
 """,
     ),
@@ -297,12 +312,14 @@ def add_strings(num1, num2):
 # Idea: Digit-by-digit arithmetic with carry (two pointers from the right)
 def add_strings(num1, num2):
     i, j, carry, out = len(num1) - 1, len(num2) - 1, 0, []
+
     while i >= 0 or j >= 0 or carry:
         a = int(num1[i]) if i >= 0 else 0
         b = int(num2[j]) if j >= 0 else 0
         carry, d = divmod(a + b + carry, 10)
         out.append(str(d))
         i, j = i - 1, j - 1
+
     return "".join(reversed(out))
 """,
     ),
@@ -345,20 +362,24 @@ def multiply(num1, num2):
 
     def add(a, b):
         i, j, carry, out = len(a) - 1, len(b) - 1, 0, []
+
         while i >= 0 or j >= 0 or carry:
             x = int(a[i]) if i >= 0 else 0
             y = int(b[j]) if j >= 0 else 0
             carry, d = divmod(x + y + carry, 10)
             out.append(str(d))
             i, j = i - 1, j - 1
+
         return "".join(reversed(out))
 
     total = "0"
+
     for k, d in enumerate(reversed(num2)):
         partial = "0"
         for _ in range(int(d)):
             partial = add(partial, num1)
         total = add(total, partial + "0" * k)
+
     return total
 """,
         solution=r"""
@@ -367,13 +388,16 @@ def multiply(num1, num2):
 def multiply(num1, num2):
     if num1 == "0" or num2 == "0":
         return "0"
+
     m, n = len(num1), len(num2)
     res = [0] * (m + n)
+
     for i in range(m - 1, -1, -1):
         for j in range(n - 1, -1, -1):
             total = res[i + j + 1] + int(num1[i]) * int(num2[j])
             res[i + j + 1] = total % 10
             res[i + j] += total // 10
+
     return "".join(map(str, res)).lstrip("0")
 """,
     ),

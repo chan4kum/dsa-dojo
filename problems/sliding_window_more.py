@@ -103,12 +103,14 @@ def max_profit(prices):
 # BRUTE FORCE: O(n^2 * 26) time - check every substring
 def character_replacement(s, k):
     best = 0
+
     for i in range(len(s)):
         cnt = Counter()
         for j in range(i, len(s)):
             cnt[s[j]] += 1
             if (j - i + 1) - max(cnt.values()) <= k:
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -117,6 +119,7 @@ def character_replacement(s, k):
 def character_replacement(s, k):
     count = Counter()
     left = best = max_f = 0
+
     for right, ch in enumerate(s):
         count[ch] += 1
         max_f = max(max_f, count[ch])
@@ -124,6 +127,7 @@ def character_replacement(s, k):
             count[s[left]] -= 1
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -170,11 +174,15 @@ def check_inclusion(s1, s2):
 # Idea: Fixed-size sliding window + frequency map comparison
 def check_inclusion(s1, s2):
     m = len(s1)
+
     if m > len(s2):
         return False
+
     need, win = Counter(s1), Counter(s2[:m])
+
     if win == need:
         return True
+
     for i in range(m, len(s2)):
         win[s2[i]] += 1
         out = s2[i - m]
@@ -183,6 +191,7 @@ def check_inclusion(s1, s2):
             del win[out]
         if win == need:
             return True
+
     return False
 """,
     ),
@@ -223,11 +232,15 @@ def find_anagrams(s, p):
 # Idea: Fixed-size sliding window + frequency map
 def find_anagrams(s, p):
     m, out = len(p), []
+
     if m > len(s):
         return out
+
     need, win = Counter(p), Counter(s[:m])
+
     if win == need:
         out.append(0)
+
     for i in range(m, len(s)):
         win[s[i]] += 1
         left = s[i - m]
@@ -236,6 +249,7 @@ def find_anagrams(s, p):
             del win[left]
         if win == need:
             out.append(i - m + 1)
+
     return out
 """,
     ),
@@ -270,6 +284,7 @@ def find_anagrams(s, p):
 # BRUTE FORCE: O(n^2) time - every start, extend until k+1 zeros
 def longest_ones(nums, k):
     best = 0
+
     for i in range(len(nums)):
         zeros = 0
         for j in range(i, len(nums)):
@@ -277,6 +292,7 @@ def longest_ones(nums, k):
             if zeros > k:
                 break
             best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -284,12 +300,14 @@ def longest_ones(nums, k):
 # Idea: Sliding window: 'at most k bad items'
 def longest_ones(nums, k):
     left = zeros = best = 0
+
     for right, x in enumerate(nums):
         zeros += x == 0
         while zeros > k:
             zeros -= nums[left] == 0
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),

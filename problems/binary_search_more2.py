@@ -51,15 +51,19 @@ def is_perfect_square(num):
 # Idea: Binary search on the answer (monotone predicate r*r vs num)
 def is_perfect_square(num):
     lo, hi = 1, num
+
     while lo <= hi:
         mid = (lo + hi) // 2
         sq = mid * mid
+
         if sq == num:
             return True
+
         if sq < num:
             lo = mid + 1
         else:
             hi = mid - 1
+
     return False
 """,
     ),
@@ -95,15 +99,19 @@ def is_perfect_square(num):
 # BRUTE FORCE: O(n * sum) time
 def ship_within_days(weights, days):
     cap = max(weights)
+
     while True:
         d, load = 1, 0
+
         for w in weights:
             if load + w > cap:
                 d += 1
                 load = 0
             load += w
+
         if d <= days:
             return cap
+
         cap += 1
 """,
         solution=r"""
@@ -120,12 +128,14 @@ def ship_within_days(weights, days):
         return d
 
     lo, hi = max(weights), sum(weights)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if need(mid) <= days:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -176,6 +186,7 @@ def single_non_duplicate(nums):
 # Idea: Binary search on a structural invariant (pair parity)
 def single_non_duplicate(nums):
     lo, hi = 0, len(nums) - 1
+
     while lo < hi:
         mid = (lo + hi) // 2
         mid -= mid % 2
@@ -183,6 +194,7 @@ def single_non_duplicate(nums):
             lo = mid + 2
         else:
             hi = mid
+
     return nums[lo]
 """,
     ),
@@ -227,12 +239,14 @@ def find_closest_elements(arr, k, x):
 # Idea: Binary search for a window start (compare the two boundary elements)
 def find_closest_elements(arr, k, x):
     lo, hi = 0, len(arr) - k
+
     while lo < hi:
         mid = (lo + hi) // 2
         if x - arr[mid] > arr[mid + k] - x:
             lo = mid + 1
         else:
             hi = mid
+
     return arr[lo : lo + k]
 """,
     ),
@@ -277,12 +291,14 @@ def next_greatest_letter(letters, target):
 # Idea: Upper-bound binary search (first element strictly greater)
 def next_greatest_letter(letters, target):
     lo, hi = 0, len(letters)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if letters[mid] <= target:
             lo = mid + 1
         else:
             hi = mid
+
     return letters[lo % len(letters)]
 """,
     ),

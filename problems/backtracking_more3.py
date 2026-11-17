@@ -118,7 +118,9 @@ def find_subsequences(nums):
     def dfs(start):
         if len(path) >= 2:
             result.append(list(path))
+
         used = set()  # values already tried as the next element at THIS level
+
         for i in range(start, len(nums)):
             x = nums[i]
             if x in used or (path and x < path[-1]):
@@ -129,6 +131,7 @@ def find_subsequences(nums):
             path.pop()
 
     dfs(0)
+
     return result
 """,
     ),
@@ -185,10 +188,13 @@ def total_n_queens(n):
     def place(row):
         if row == n:
             return 1
+
         total = 0
+
         for col in range(n):
             if col in cols or row - col in diag or row + col in anti:
                 continue  # attacked
+
             cols.add(col)
             diag.add(row - col)
             anti.add(row + col)
@@ -196,6 +202,7 @@ def total_n_queens(n):
             cols.remove(col)  # backtrack
             diag.remove(row - col)
             anti.remove(row + col)
+
         return total
 
     return place(0)

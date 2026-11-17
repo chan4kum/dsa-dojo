@@ -103,11 +103,14 @@ def is_anagram(s, t):
 def is_anagram(s, t):
     if len(s) != len(t):
         return False
+
     count = Counter(s)
+
     for ch in t:
         count[ch] -= 1
         if count[ch] < 0:
             return False
+
     return True
 """,
     ),

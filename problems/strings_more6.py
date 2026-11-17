@@ -78,17 +78,21 @@ def max_product(words):
 # Idea: Bitmask as a set of letters
 def max_product(words):
     longest = {}
+
     for w in words:
         mask = 0
         for ch in w:
             mask |= 1 << (ord(ch) - 97)
         longest[mask] = max(longest.get(mask, 0), len(w))
+
     items = list(longest.items())
     best = 0
+
     for i in range(len(items)):
         for j in range(i + 1, len(items)):
             if items[i][0] & items[j][0] == 0:
                 best = max(best, items[i][1] * items[j][1])
+
     return best
 """,
     ),
@@ -141,12 +145,14 @@ def max_product(words):
 # BRUTE FORCE: O(n^2 * L) time - concatenate and test every ordered pair
 def palindrome_pairs(words):
     out = []
+
     for i in range(len(words)):
         for j in range(len(words)):
             if i != j:
                 s = words[i] + words[j]
                 if s == s[::-1]:
                     out.append([i, j])
+
     return out
 """,
         solution=r"""
@@ -155,17 +161,21 @@ def palindrome_pairs(words):
 def palindrome_pairs(words):
     index = {w: i for i, w in enumerate(words)}
     out = []
+
     for i, w in enumerate(words):
         for cut in range(len(w) + 1):
             left, right = w[:cut], w[cut:]
+
             if left == left[::-1]:
                 j = index.get(right[::-1])
                 if j is not None and j != i:
                     out.append([j, i])
+
             if cut != len(w) and right == right[::-1]:
                 j = index.get(left[::-1])
                 if j is not None and j != i:
                     out.append([i, j])
+
     return out
 """,
     ),
@@ -270,6 +280,7 @@ def valid_ip_address(query_ip):
             if not any(part == str(v) for v in range(256)):
                 return "Neither"
         return "IPv4"
+
     if query_ip.count(":") == 7:
         for part in query_ip.split(":"):
             if not 1 <= len(part) <= 4:
@@ -278,6 +289,7 @@ def valid_ip_address(query_ip):
                 if ch not in "0123456789abcdefABCDEF":
                     return "Neither"
         return "IPv6"
+
     return "Neither"
 """,
         solution=r"""
@@ -288,13 +300,18 @@ def valid_ip_address(query_ip):
         for part in query_ip.split("."):
             if not part or len(part) > 3:
                 return "Neither"
+
             if any(ch not in "0123456789" for ch in part):
                 return "Neither"
+
             if len(part) > 1 and part[0] == "0":
                 return "Neither"
+
             if int(part) > 255:
                 return "Neither"
+
         return "IPv4"
+
     if query_ip.count(":") == 7:
         for part in query_ip.split(":"):
             if not 1 <= len(part) <= 4:
@@ -302,6 +319,7 @@ def valid_ip_address(query_ip):
             if any(ch not in "0123456789abcdefABCDEF" for ch in part):
                 return "Neither"
         return "IPv6"
+
     return "Neither"
 """,
     ),
@@ -354,6 +372,7 @@ def valid_ip_address(query_ip):
 def nearest_palindromic(n):
     num = int(n)
     d = 1
+
     while True:
         lo = num - d
         if lo >= 0 and str(lo) == str(lo)[::-1]:
@@ -371,11 +390,14 @@ def nearest_palindromic(n):
     num = int(n)
     cands = {10 ** (length - 1) - 1, 10**length + 1}
     prefix = int(n[: (length + 1) // 2])
+
     for p in (prefix - 1, prefix, prefix + 1):
         s = str(p)
         tail = s[:-1] if length % 2 else s
         cands.add(int(s + tail[::-1]))
+
     cands.discard(num)
+
     return str(min(cands, key=lambda x: (abs(x - num), x)))
 """,
     ),
@@ -424,12 +446,15 @@ def nearest_palindromic(n):
 # BRUTE FORCE: O(F^2) comparisons for F files - rescan every file for each new content
 def find_duplicate(paths):
     files = []
+
     for entry in paths:
         parts = entry.split(" ")
         for item in parts[1:]:
             name, content = item[:-1].split("(")
             files.append((content, parts[0] + "/" + name))
+
     out, done = [], set()
+
     for content, _ in files:
         if content in done:
             continue
@@ -437,6 +462,7 @@ def find_duplicate(paths):
         group = [p for c, p in files if c == content]
         if len(group) > 1:
             out.append(group)
+
     return out
 """,
         solution=r"""
@@ -544,10 +570,12 @@ def most_common_word(paragraph, banned):
     cleaned = "".join(ch.lower() if ch.isalpha() else " " for ch in paragraph)
     words = [w for w in cleaned.split() if w not in banned]
     best, best_count = "", 0
+
     for w in words:
         c = words.count(w)
         if c > best_count:
             best, best_count = w, c
+
     return best
 """,
         solution=r"""
@@ -599,12 +627,14 @@ def most_common_word(paragraph, banned):
 # BRUTE FORCE: O(n * groups * L log L) time - compare every word with each group's representative
 def num_special_equiv_groups(words):
     reps = []
+
     for w in words:
         for r in reps:
             if sorted(w[::2]) == sorted(r[::2]) and sorted(w[1::2]) == sorted(r[1::2]):
                 break
         else:
             reps.append(w)
+
     return len(reps)
 """,
         solution=r"""
@@ -788,16 +818,20 @@ def camel_match(queries, pattern):
 # Idea: Two pointers: greedy subsequence match with an uppercase constraint
 def camel_match(queries, pattern):
     out = []
+
     for q in queries:
         i = 0
         good = True
+
         for ch in q:
             if i < len(pattern) and ch == pattern[i]:
                 i += 1
             elif ch.isupper():
                 good = False
                 break
+
         out.append(good and i == len(pattern))
+
     return out
 """,
     ),
@@ -847,6 +881,7 @@ def last_substring(s):
 def last_substring(s):
     n = len(s)
     i, j, k = 0, 1, 0
+
     while j + k < n:
         if s[i + k] == s[j + k]:
             k += 1
@@ -857,6 +892,7 @@ def last_substring(s):
         else:
             j += k + 1
             k = 0
+
     return s[i:]
 """,
     ),
@@ -901,10 +937,12 @@ def last_substring(s):
 # BRUTE FORCE: O(|s| * |t| * min(|s|, |t|)^2) time - enumerate pairs of substrings and count differences
 def count_substrings(s, t):
     total = 0
+
     for i in range(len(s)):
         for j in range(len(t)):
             diff = 0
             k = 0
+
             while i + k < len(s) and j + k < len(t):
                 if s[i + k] != t[j + k]:
                     diff += 1
@@ -913,6 +951,7 @@ def count_substrings(s, t):
                 elif diff > 1:
                     break
                 k += 1
+
     return total
 """,
         solution=r"""
@@ -921,20 +960,26 @@ def count_substrings(s, t):
 def count_substrings(s, t):
     m, n = len(s), len(t)
     left = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(1, m + 1):
         for j in range(1, n + 1):
             if s[i - 1] == t[j - 1]:
                 left[i][j] = left[i - 1][j - 1] + 1
+
     right = [[0] * (n + 2) for _ in range(m + 2)]
+
     for i in range(m - 1, -1, -1):
         for j in range(n - 1, -1, -1):
             if s[i] == t[j]:
                 right[i][j] = right[i + 1][j + 1] + 1
+
     total = 0
+
     for i in range(m):
         for j in range(n):
             if s[i] != t[j]:
                 total += (left[i][j] + 1) * (right[i + 1][j + 1] + 1)
+
     return total
 """,
     ),
@@ -985,10 +1030,12 @@ def max_repeating(sequence, word):
     n, w = len(sequence), len(word)
     dp = [0] * (n + 1)
     best = 0
+
     for i in range(w, n + 1):
         if sequence[i - w : i] == word:
             dp[i] = dp[i - w] + 1
             best = max(best, dp[i])
+
     return best
 """,
     ),
@@ -1084,11 +1131,13 @@ def remove_occurrences(s, part):
 def count_vowel_substrings(word):
     vowels = set("aeiou")
     count = 0
+
     for i in range(len(word)):
         for j in range(i + 1, len(word) + 1):
             sub = set(word[i:j])
             if sub == vowels:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -1099,15 +1148,19 @@ def count_vowel_substrings(word):
     last = {v: -1 for v in vowels}
     start = 0
     total = 0
+
     for i, ch in enumerate(word):
         if ch not in vowels:
             last = {v: -1 for v in vowels}
             start = i + 1
             continue
+
         last[ch] = i
         low = min(last.values())
+
         if low >= start:
             total += low - start + 1
+
     return total
 """,
     ),
@@ -1154,11 +1207,15 @@ def count_vowel_substrings(word):
 # BRUTE FORCE: O(2^f * n) time - try every way to fill the f changeable positions
 def can_be_valid(s, locked):
     free = [i for i in range(len(s)) if locked[i] == "0"]
+
     for combo in itertools.product("()", repeat=len(free)):
         chars = list(s)
+
         for i, ch in zip(free, combo):
             chars[i] = ch
+
         bal = 0
+
         for ch in chars:
             bal += 1 if ch == "(" else -1
             if bal < 0:
@@ -1166,6 +1223,7 @@ def can_be_valid(s, locked):
         else:
             if bal == 0:
                 return True
+
     return False
 """,
         solution=r"""
@@ -1173,18 +1231,24 @@ def can_be_valid(s, locked):
 # Idea: Two greedy passes (best case from each side)
 def can_be_valid(s, locked):
     n = len(s)
+
     if n % 2:
         return False
+
     bal = 0
+
     for i in range(n):
         bal += 1 if locked[i] == "0" or s[i] == "(" else -1
         if bal < 0:
             return False
+
     bal = 0
+
     for i in range(n - 1, -1, -1):
         bal += 1 if locked[i] == "0" or s[i] == ")" else -1
         if bal < 0:
             return False
+
     return True
 """,
     ),
@@ -1245,13 +1309,17 @@ def sub_str_hash(s, power, modulo, k, hash_value):
     n = len(s)
     top = pow(power, k - 1, modulo)
     h = 0
+
     for i in range(n - 1, n - k - 1, -1):
         h = (h * power + (ord(s[i]) - 96)) % modulo
+
     ans = n - k if h == hash_value else -1
+
     for i in range(n - k - 1, -1, -1):
         h = ((h - (ord(s[i + k]) - 96) * top) * power + (ord(s[i]) - 96)) % modulo
         if h == hash_value:
             ans = i
+
     return s[ans : ans + k]
 """,
     ),
@@ -1296,11 +1364,13 @@ def decode_ciphertext(encoded_text, rows):
     cols = len(encoded_text) // rows
     grid = [encoded_text[r * cols : (r + 1) * cols] for r in range(rows)]
     out = []
+
     for c in range(cols):
         r = 0
         while r < rows and c + r < cols:
             out.append(grid[r][c + r])
             r += 1
+
     return "".join(out).rstrip()
 """,
         solution=r"""

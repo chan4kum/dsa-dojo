@@ -21,6 +21,7 @@ from dsa import TOPICS, load  # noqa: E402
 
 
 def main():
+    """Lint every embedded brute-force and optimised solution with ruff; exit 1 on any finding."""
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         origin = {}  # temp file name -> "topic/n title (brute|optimised)"

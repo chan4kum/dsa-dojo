@@ -58,12 +58,14 @@ def arrange_coins(n):
 # Idea: Binary search on the answer
 def arrange_coins(n):
     lo, hi = 0, n
+
     while lo < hi:
         mid = (lo + hi + 1) // 2  # upper middle so the loop makes progress
         if mid * (mid + 1) // 2 <= n:
             lo = mid  # mid rows are affordable: try more
         else:
             hi = mid - 1
+
     return lo
 """,
     ),
@@ -112,15 +114,19 @@ def max_profit_assignment(difficulty, profit, worker):
 def max_profit_assignment(difficulty, profit, worker):
     jobs = sorted(zip(difficulty, profit))
     levels, best_so_far, running = [], [], 0
+
     for d, p in jobs:
         running = max(running, p)
         levels.append(d)
         best_so_far.append(running)  # best profit among jobs with difficulty <= d
+
     total = 0
+
     for ability in worker:
         i = bisect.bisect_right(levels, ability)
         if i:
             total += best_so_far[i - 1]
+
     return total
 """,
     ),
@@ -217,12 +223,14 @@ def minimum_size(nums, max_operations):
 # Idea: Binary search on the answer with a feasibility check
 def minimum_size(nums, max_operations):
     lo, hi = 1, max(nums)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if sum((x - 1) // mid for x in nums) <= max_operations:
             hi = mid  # penalty mid works: look for a smaller one
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -264,12 +272,15 @@ def minimum_size(nums, max_operations):
 # BRUTE FORCE: O(V * n) time - try speeds 1, 2, 3, ...
 def min_speed_on_time(dist, hour):
     n = len(dist)
+
     if hour <= n - 1:
         return -1  # the first n - 1 trains take at least one hour each
+
     for speed in range(1, 100 * max(dist) + 2):
         time = sum(-(-d // speed) for d in dist[:-1]) + dist[-1] / speed
         if time <= hour:
             return speed
+
     return -1
 """,
         solution=r"""
@@ -277,6 +288,7 @@ def min_speed_on_time(dist, hour):
 # Idea: Binary search on the answer (rounding up per leg)
 def min_speed_on_time(dist, hour):
     n = len(dist)
+
     if hour <= n - 1:
         return -1
 
@@ -287,14 +299,17 @@ def min_speed_on_time(dist, hour):
         return time <= hour
 
     lo, hi = 1, 10**7
+
     if not fits(hi):
         return -1
+
     while lo < hi:
         mid = (lo + hi) // 2
         if fits(mid):
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -341,12 +356,14 @@ def minimum_time(time, total_trips):
 # Idea: Binary search on the answer (time)
 def minimum_time(time, total_trips):
     lo, hi = 1, min(time) * total_trips  # the fastest bus alone always suffices
+
     while lo < hi:
         mid = (lo + hi) // 2
         if sum(mid // x for x in time) >= total_trips:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -394,12 +411,14 @@ def maximum_candies(candies, k):
 # Idea: Binary search on the answer (maximise a feasible value)
 def maximum_candies(candies, k):
     lo, hi = 0, max(candies)  # lo is always feasible (0 trivially)
+
     while lo < hi:
         mid = (lo + hi + 1) // 2  # upper middle, because we maximise
         if sum(c // mid for c in candies) >= k:
             lo = mid
         else:
             hi = mid - 1
+
     return lo
 """,
     ),
@@ -514,12 +533,14 @@ def max_distance(position, m):
         return placed >= m
 
     lo, hi = 1, (position[-1] - position[0]) // (m - 1)
+
     while lo < hi:
         mid = (lo + hi + 1) // 2
         if can_place(mid):
             lo = mid
         else:
             hi = mid - 1
+
     return lo
 """,
     ),
@@ -577,12 +598,14 @@ def smallest_distance_pair(nums, k):
         return count
 
     lo, hi = 0, nums[-1] - nums[0]
+
     while lo < hi:
         mid = (lo + hi) // 2
         if pairs_within(mid) >= k:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -631,12 +654,14 @@ def find_kth_number(m, n, k):
         return sum(min(x // i, n) for i in range(1, m + 1))
 
     lo, hi = 1, m * n
+
     while lo < hi:
         mid = (lo + hi) // 2
         if count_at_most(mid) >= k:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -683,12 +708,14 @@ def repair_cars(ranks, cars):
 # Idea: Binary search on the answer (time)
 def repair_cars(ranks, cars):
     lo, hi = 1, min(ranks) * cars * cars  # the best mechanic alone is enough
+
     while lo < hi:
         mid = (lo + hi) // 2
         if sum(math.isqrt(mid // r) for r in ranks) >= cars:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),

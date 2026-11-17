@@ -54,6 +54,7 @@ PROBLEMS = [
 def max_turbulence_size(arr):
     n = len(arr)
     best = 1
+
     for i in range(n):
         for j in range(i + 1, n):
             ok = all(arr[k] != arr[k + 1] for k in range(i, j))
@@ -62,6 +63,7 @@ def max_turbulence_size(arr):
             )
             if ok:
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -71,6 +73,7 @@ def max_turbulence_size(arr):
     n = len(arr)
     best = 1
     left = 0
+
     for i in range(1, n):
         cmp = (arr[i - 1] > arr[i]) - (arr[i - 1] < arr[i])
         if cmp == 0:
@@ -78,6 +81,7 @@ def max_turbulence_size(arr):
         elif i == n - 1 or cmp * ((arr[i] > arr[i + 1]) - (arr[i] < arr[i + 1])) != -1:
             best = max(best, i - left + 1)
             left = i
+
     return best
 """,
     ),
@@ -131,11 +135,13 @@ def max_rep_opt1(text):
         return best
 
     best = longest(text)
+
     for i in range(len(text)):
         for j in range(i + 1, len(text)):
             chars = list(text)
             chars[i], chars[j] = chars[j], chars[i]
             best = max(best, longest(chars))
+
     return best
 """,
         solution=r"""
@@ -143,17 +149,21 @@ def max_rep_opt1(text):
 # Idea: Run-length groups + cap by total letter count
 def max_rep_opt1(text):
     runs = []
+
     for ch in text:
         if runs and runs[-1][0] == ch:
             runs[-1][1] += 1
         else:
             runs.append([ch, 1])
+
     total = Counter(text)
     best = 0
+
     for i, (ch, length) in enumerate(runs):
         best = max(best, min(length + 1, total[ch]))
         if i + 2 < len(runs) and runs[i + 1][1] == 1 and runs[i + 2][0] == ch:
             best = max(best, min(length + runs[i + 2][1] + 1, total[ch]))
+
     return best
 """,
     ),
@@ -217,16 +227,20 @@ def balanced_string(s):
     n = len(s)
     need = n // 4
     count = Counter(s)
+
     if all(count[c] <= need for c in "QWER"):
         return 0
+
     best = n
     left = 0
+
     for right, ch in enumerate(s):
         count[ch] -= 1
         while left <= right and all(count[c] <= need for c in "QWER"):
             best = min(best, right - left + 1)
             count[s[left]] += 1
             left += 1
+
     return best
 """,
     ),
@@ -282,15 +296,19 @@ def max_freq(s, max_letters, min_size, max_size):
 def max_freq(s, max_letters, min_size, max_size):
     count = Counter()
     window = Counter()
+
     for i, ch in enumerate(s):
         window[ch] += 1
+
         if i >= min_size:
             old = s[i - min_size]
             window[old] -= 1
             if window[old] == 0:
                 del window[old]
+
         if i >= min_size - 1 and len(window) <= max_letters:
             count[s[i - min_size + 1 : i + 1]] += 1
+
     return max(count.values(), default=0)
 """,
     ),
@@ -339,16 +357,20 @@ def max_freq(s, max_letters, min_size, max_size):
 # BRUTE FORCE: O(n^2 log n) time - for every target, add the cheapest elements one by one
 def max_frequency(nums, k):
     best = 1
+
     for target in set(nums):
         costs = sorted(target - x for x in nums if x <= target)
         spent = 0
         used = 0
+
         for cost in costs:
             if spent + cost > k:
                 break
             spent += cost
             used += 1
+
         best = max(best, used)
+
     return best
 """,
         solution=r"""
@@ -359,12 +381,14 @@ def max_frequency(nums, k):
     left = 0
     total = 0
     best = 1
+
     for right, x in enumerate(nums):
         total += x
         while x * (right - left + 1) - total > k:
             total -= nums[left]
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -409,11 +433,13 @@ def max_frequency(nums, k):
 def longest_beautiful_substring(word):
     best = 0
     n = len(word)
+
     for i in range(n):
         for j in range(i + 1, n + 1):
             piece = word[i:j]
             if len(set(piece)) == 5 and list(piece) == sorted(piece):
                 best = max(best, j - i)
+
     return best
 """,
         solution=r"""
@@ -423,6 +449,7 @@ def longest_beautiful_substring(word):
     best = 0
     start = 0
     distinct = 1
+
     for i in range(1, len(word) + 1):
         if i == len(word) or word[i] < word[i - 1]:
             if distinct == 5:
@@ -431,6 +458,7 @@ def longest_beautiful_substring(word):
             distinct = 1
         elif word[i] > word[i - 1]:
             distinct += 1
+
     return best
 """,
     ),
@@ -475,15 +503,19 @@ def count_good_substrings(s):
 def count_good_substrings(s):
     window = Counter()
     good = 0
+
     for i, ch in enumerate(s):
         window[ch] += 1
+
         if i >= 3:
             old = s[i - 3]
             window[old] -= 1
             if window[old] == 0:
                 del window[old]
+
         if i >= 2 and len(window) == 3:
             good += 1
+
     return good
 """,
     ),
@@ -528,12 +560,16 @@ def count_good_substrings(s):
 def min_swaps(nums):
     n = len(nums)
     k = sum(nums)
+
     if k == 0:
         return 0
+
     best = k
+
     for start in range(n):
         zeros = sum(1 for t in range(k) if nums[(start + t) % n] == 0)
         best = min(best, zeros)
+
     return best
 """,
         solution=r"""
@@ -542,13 +578,17 @@ def min_swaps(nums):
 def min_swaps(nums):
     n = len(nums)
     k = sum(nums)
+
     if k in (0, n):
         return 0
+
     ones = sum(nums[:k])
     best = ones
+
     for i in range(1, n):
         ones += nums[(i + k - 1) % n] - nums[i - 1]
         best = max(best, ones)
+
     return k - best
 """,
     ),
@@ -591,6 +631,7 @@ def min_swaps(nums):
 def longest_nice_subarray(nums):
     best = 0
     n = len(nums)
+
     for i in range(n):
         for j in range(i, n):
             window = nums[i : j + 1]
@@ -599,8 +640,10 @@ def longest_nice_subarray(nums):
                 for a in range(len(window))
                 for b in range(a + 1, len(window))
             )
+
             if nice:
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -610,12 +653,14 @@ def longest_nice_subarray(nums):
     mask = 0
     left = 0
     best = 0
+
     for right, x in enumerate(nums):
         while mask & x:
             mask ^= nums[left]
             left += 1
         mask |= x
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -660,12 +705,14 @@ def longest_nice_subarray(nums):
 def take_characters(s, k):
     n = len(s)
     best = None
+
     for left in range(n + 1):
         for right in range(n - left + 1):
             taken = Counter(s[:left]) + Counter(s[n - right :])
             if all(taken[c] >= k for c in "abc"):
                 if best is None or left + right < best:
                     best = left + right
+
     return -1 if best is None else best
 """,
         solution=r"""
@@ -673,16 +720,20 @@ def take_characters(s, k):
 # Idea: Maximise a window while the complement satisfies a constraint
 def take_characters(s, k):
     count = Counter(s)
+
     if any(count[c] < k for c in "abc"):
         return -1
+
     left = 0
     keep = 0
+
     for right, ch in enumerate(s):
         count[ch] -= 1
         while count[ch] < k:
             count[s[left]] += 1
             left += 1
         keep = max(keep, right - left + 1)
+
     return len(s) - keep
 """,
     ),
@@ -723,12 +774,14 @@ def take_characters(s, k):
 def longest_semi_repetitive_substring(s):
     n = len(s)
     best = 1
+
     for i in range(n):
         for j in range(i + 1, n + 1):
             piece = s[i:j]
             pairs = sum(1 for k in range(len(piece) - 1) if piece[k] == piece[k + 1])
             if pairs <= 1:
                 best = max(best, j - i)
+
     return best
 """,
         solution=r"""
@@ -738,6 +791,7 @@ def longest_semi_repetitive_substring(s):
     best = 1
     left = 0
     pairs = 0
+
     for right in range(1, len(s)):
         if s[right] == s[right - 1]:
             pairs += 1
@@ -746,6 +800,7 @@ def longest_semi_repetitive_substring(s):
                 pairs -= 1
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -790,6 +845,7 @@ def longest_semi_repetitive_substring(s):
 # BRUTE FORCE: O(n^2) time - extend every start while tracking max and min
 def continuous_subarrays(nums):
     count = 0
+
     for i in range(len(nums)):
         hi = lo = nums[i]
         for j in range(i, len(nums)):
@@ -798,6 +854,7 @@ def continuous_subarrays(nums):
             if hi - lo > 2:
                 break
             count += 1
+
     return count
 """,
         solution=r"""
@@ -808,20 +865,27 @@ def continuous_subarrays(nums):
     low = deque()
     left = 0
     total = 0
+
     for right, x in enumerate(nums):
         while high and nums[high[-1]] <= x:
             high.pop()
+
         high.append(right)
+
         while low and nums[low[-1]] >= x:
             low.pop()
+
         low.append(right)
+
         while nums[high[0]] - nums[low[0]] > 2:
             left += 1
             if high[0] < left:
                 high.popleft()
             if low[0] < left:
                 low.popleft()
+
         total += right - left + 1
+
     return total
 """,
     ),
@@ -864,12 +928,14 @@ def continuous_subarrays(nums):
 def count_complete_subarrays(nums):
     total_distinct = len(set(nums))
     count = 0
+
     for i in range(len(nums)):
         seen = set()
         for j in range(i, len(nums)):
             seen.add(nums[j])
             if len(seen) == total_distinct:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -880,6 +946,7 @@ def count_complete_subarrays(nums):
     window = Counter()
     left = 0
     count = 0
+
     for right, x in enumerate(nums):
         window[x] += 1
         while len(window) == total_distinct:
@@ -888,6 +955,7 @@ def count_complete_subarrays(nums):
             if window[nums[left]] == 0:
                 del window[nums[left]]
             left += 1
+
     return count
 """,
     ),
@@ -938,17 +1006,21 @@ def max_sum(nums, m, k):
     window = Counter()
     total = 0
     best = 0
+
     for i, x in enumerate(nums):
         window[x] += 1
         total += x
+
         if i >= k:
             old = nums[i - k]
             window[old] -= 1
             total -= old
             if window[old] == 0:
                 del window[old]
+
         if i >= k - 1 and len(window) >= m:
             best = max(best, total)
+
     return best
 """,
     ),
@@ -992,6 +1064,7 @@ def max_sum(nums, m, k):
 def count_subarrays(nums, k):
     top = max(nums)
     total = 0
+
     for i in range(len(nums)):
         seen = 0
         for j in range(i, len(nums)):
@@ -999,6 +1072,7 @@ def count_subarrays(nums, k):
                 seen += 1
             if seen >= k:
                 total += 1
+
     return total
 """,
         solution=r"""
@@ -1009,6 +1083,7 @@ def count_subarrays(nums, k):
     seen = 0
     left = 0
     total = 0
+
     for x in nums:
         if x == top:
             seen += 1
@@ -1017,6 +1092,7 @@ def count_subarrays(nums, k):
                 seen -= 1
             left += 1
         total += left
+
     return total
 """,
     ),
@@ -1064,12 +1140,14 @@ def maximum_length_substring(s):
     count = Counter()
     left = 0
     best = 0
+
     for right, ch in enumerate(s):
         count[ch] += 1
         while count[ch] > 2:
             count[s[left]] -= 1
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -1109,12 +1187,14 @@ def maximum_length_substring(s):
 # BRUTE FORCE: O(n * k) time - check every window
 def results_array(nums, k):
     result = []
+
     for i in range(len(nums) - k + 1):
         window = nums[i : i + k]
         if all(window[t + 1] == window[t] + 1 for t in range(k - 1)):
             result.append(window[-1])
         else:
             result.append(-1)
+
     return result
 """,
         solution=r"""

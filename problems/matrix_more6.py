@@ -112,6 +112,7 @@ def max_count(m, n, ops):
 def image_smoother(img):
     m, n = len(img), len(img[0])
     out = [[0] * n for _ in range(m)]
+
     for i in range(m):
         for j in range(n):
             total = count = 0
@@ -121,6 +122,7 @@ def image_smoother(img):
                         total += img[x][y]
                         count += 1
             out[i][j] = total // count
+
     return out
 """,
         solution=r"""
@@ -129,16 +131,20 @@ def image_smoother(img):
 def image_smoother(img):
     m, n = len(img), len(img[0])
     pre = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(m):
         for j in range(n):
             pre[i + 1][j + 1] = img[i][j] + pre[i][j + 1] + pre[i + 1][j] - pre[i][j]
+
     out = [[0] * n for _ in range(m)]
+
     for i in range(m):
         for j in range(n):
             r1, r2 = max(0, i - 1), min(m, i + 2)
             c1, c2 = max(0, j - 1), min(n, j + 2)
             total = pre[r2][c2] - pre[r1][c2] - pre[r2][c1] + pre[r1][c1]
             out[i][j] = total // ((r2 - r1) * (c2 - c1))
+
     return out
 """,
     ),
@@ -180,11 +186,13 @@ def image_smoother(img):
 def max_increase_keeping_skyline(grid):
     m, n = len(grid), len(grid[0])
     total = 0
+
     for i in range(m):
         for j in range(n):
             row_max = max(grid[i])
             col_max = max(grid[k][j] for k in range(m))
             total += min(row_max, col_max) - grid[i][j]
+
     return total
 """,
         solution=r"""
@@ -243,17 +251,22 @@ def max_increase_keeping_skyline(grid):
 def num_magic_squares_inside(grid):
     m, n = len(grid), len(grid[0])
     count = 0
+
     for i in range(m - 2):
         for j in range(n - 2):
             cells = [grid[i + a][j + b] for a in range(3) for b in range(3)]
+
             if sorted(cells) != list(range(1, 10)):
                 continue
+
             rows = [sum(grid[i + a][j : j + 3]) for a in range(3)]
             cols = [sum(grid[i + a][j + b] for a in range(3)) for b in range(3)]
             d1 = sum(grid[i + a][j + a] for a in range(3))
             d2 = sum(grid[i + a][j + 2 - a] for a in range(3))
+
             if set(rows + cols + [d1, d2]) == {15}:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -264,10 +277,12 @@ def num_magic_squares_inside(grid):
     cyc = "4381672943816729"
     rev = cyc[::-1]
     count = 0
+
     for i in range(m - 2):
         for j in range(n - 2):
             if grid[i + 1][j + 1] != 5 or grid[i][j] % 2 != 0:
                 continue
+
             ring = [
                 grid[i][j],
                 grid[i][j + 1],
@@ -279,8 +294,10 @@ def num_magic_squares_inside(grid):
                 grid[i + 1][j],
             ]
             s = "".join(map(str, ring))
+
             if len(s) == 8 and (s in cyc or s in rev):
                 count += 1
+
     return count
 """,
     ),
@@ -366,8 +383,10 @@ def spiral_matrix_iii(rows, cols, row_start, col_start):
     out = [[r, c]]
     c += 1
     seen.add((r, c))
+
     if 0 <= r < rows and 0 <= c < cols:
         out.append([r, c])
+
     while len(out) < rows * cols:
         nd = (d + 1) % 4
         if (r + dirs[nd][0], c + dirs[nd][1]) not in seen:
@@ -376,6 +395,7 @@ def spiral_matrix_iii(rows, cols, row_start, col_start):
         seen.add((r, c))
         if 0 <= r < rows and 0 <= c < cols:
             out.append([r, c])
+
     return out
 """,
         solution=r"""
@@ -386,6 +406,7 @@ def spiral_matrix_iii(rows, cols, row_start, col_start):
     r, c = row_start, col_start
     dirs = [(0, 1), (1, 0), (0, -1), (-1, 0)]
     step, d = 1, 0
+
     while len(out) < rows * cols:
         for _ in range(2):
             dr, dc = dirs[d]
@@ -395,7 +416,9 @@ def spiral_matrix_iii(rows, cols, row_start, col_start):
                 if 0 <= r < rows and 0 <= c < cols:
                     out.append([r, c])
             d = (d + 1) % 4
+
         step += 1
+
     return out
 """,
     ),
@@ -538,8 +561,10 @@ def cherry_pickup(grid):
     NEG = float("-inf")
     dp = [[NEG] * cols for _ in range(cols)]
     dp[0][cols - 1] = grid[0][0] + (grid[0][cols - 1] if cols > 1 else 0)
+
     for r in range(1, rows):
         nxt = [[NEG] * cols for _ in range(cols)]
+
         for a in range(cols):
             for b in range(cols):
                 best = NEG
@@ -549,7 +574,9 @@ def cherry_pickup(grid):
                             best = dp[pa][pb]
                 if best != NEG:
                     nxt[a][b] = best + grid[r][a] + (grid[r][b] if a != b else 0)
+
         dp = nxt
+
     return max(max(row) for row in dp)
 """,
     ),
@@ -595,17 +622,20 @@ def cherry_pickup(grid):
 def rotate_grid(grid, k):
     m, n = len(grid), len(grid[0])
     out = [row[:] for row in grid]
+
     for layer in range(min(m, n) // 2):
         top, left, bottom, right = layer, layer, m - 1 - layer, n - 1 - layer
         cells = [(top, c) for c in range(left, right + 1)]
         cells += [(r, right) for r in range(top + 1, bottom + 1)]
         cells += [(bottom, c) for c in range(right - 1, left - 1, -1)]
         cells += [(r, left) for r in range(bottom - 1, top, -1)]
+
         for _ in range(k):
             values = [out[r][c] for r, c in cells]
             values = values[1:] + values[:1]
             for (r, c), v in zip(cells, values):
                 out[r][c] = v
+
     return out
 """,
         solution=r"""
@@ -614,6 +644,7 @@ def rotate_grid(grid, k):
 def rotate_grid(grid, k):
     m, n = len(grid), len(grid[0])
     out = [row[:] for row in grid]
+
     for layer in range(min(m, n) // 2):
         top, left, bottom, right = layer, layer, m - 1 - layer, n - 1 - layer
         cells = [(top, c) for c in range(left, right + 1)]
@@ -623,8 +654,10 @@ def rotate_grid(grid, k):
         values = [grid[r][c] for r, c in cells]
         shift = k % len(values)
         values = values[shift:] + values[:shift]
+
         for (r, c), v in zip(cells, values):
             out[r][c] = v
+
     return out
 """,
     ),
@@ -727,12 +760,16 @@ def min_cost(start_pos, home_pos, row_costs, col_costs):
     home = (home_pos[0], home_pos[1])
     dist = {start: 0}
     heap = [(0, start[0], start[1])]
+
     while heap:
         d, r, c = heapq.heappop(heap)
+
         if (r, c) == home:
             return d
+
         if d > dist[(r, c)]:
             continue
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < rows and 0 <= nc < cols:
@@ -740,6 +777,7 @@ def min_cost(start_pos, home_pos, row_costs, col_costs):
                 if nd < dist.get((nr, nc), float("inf")):
                     dist[(nr, nc)] = nd
                     heapq.heappush(heap, (nd, nr, nc))
+
     return 0
 """,
         solution=r"""
@@ -750,11 +788,15 @@ def min_cost(start_pos, home_pos, row_costs, col_costs):
     r1, c1 = home_pos
     total = 0
     step = 1 if r1 > r0 else -1
+
     for r in range(r0 + step, r1 + step, step):
         total += row_costs[r]
+
     step = 1 if c1 > c0 else -1
+
     for c in range(c0 + step, c1 + step, step):
         total += col_costs[c]
+
     return total
 """,
     ),
@@ -799,12 +841,16 @@ def min_cost(start_pos, home_pos, row_costs, col_costs):
 # BRUTE FORCE: O(n^2 + len(dig) + total artifact area) time and O(n^2) space - build the whole n x n board
 def dig_artifacts(n, artifacts, dig):
     board = [[False] * n for _ in range(n)]
+
     for r, c in dig:
         board[r][c] = True
+
     count = 0
+
     for r1, c1, r2, c2 in artifacts:
         if all(board[r][c] for r in range(r1, r2 + 1) for c in range(c1, c2 + 1)):
             count += 1
+
     return count
 """,
         solution=r"""
@@ -857,6 +903,7 @@ def dig_artifacts(n, artifacts, dig):
 def delete_greatest_value(grid):
     rows = [row[:] for row in grid]
     total = 0
+
     for _ in range(len(rows[0])):
         biggest = 0
         for row in rows:
@@ -864,6 +911,7 @@ def delete_greatest_value(grid):
             row.remove(top)
             biggest = max(biggest, top)
         total += biggest
+
     return total
 """,
         solution=r"""
@@ -920,6 +968,7 @@ def delete_greatest_value(grid):
 # BRUTE FORCE: O(n^4) time - search the whole board for step k and step k + 1 every time
 def check_valid_grid(grid):
     n = len(grid)
+
     if grid[0][0] != 0:
         return False
 
@@ -936,6 +985,7 @@ def check_valid_grid(grid):
             return False
         if sorted((abs(a[0] - b[0]), abs(a[1] - b[1]))) != [1, 2]:
             return False
+
     return True
 """,
         solution=r"""
@@ -943,17 +993,22 @@ def check_valid_grid(grid):
 # Idea: Invert the grid into step -> position, then validate neighbours in the sequence
 def check_valid_grid(grid):
     n = len(grid)
+
     if grid[0][0] != 0:
         return False
+
     pos = [None] * (n * n)
+
     for r in range(n):
         for c in range(n):
             pos[grid[r][c]] = (r, c)
+
     for k in range(n * n - 1):
         dr = abs(pos[k][0] - pos[k + 1][0])
         dc = abs(pos[k][1] - pos[k + 1][1])
         if sorted((dr, dc)) != [1, 2]:
             return False
+
     return True
 """,
     ),
@@ -999,20 +1054,26 @@ def check_valid_grid(grid):
 def difference_of_distinct_values(grid):
     m, n = len(grid), len(grid[0])
     out = [[0] * n for _ in range(m)]
+
     for r in range(m):
         for c in range(n):
             before, after = set(), set()
             x, y = r - 1, c - 1
+
             while x >= 0 and y >= 0:
                 before.add(grid[x][y])
                 x -= 1
                 y -= 1
+
             x, y = r + 1, c + 1
+
             while x < m and y < n:
                 after.add(grid[x][y])
                 x += 1
                 y += 1
+
             out[r][c] = abs(len(before) - len(after))
+
     return out
 """,
         solution=r"""
@@ -1022,24 +1083,31 @@ def difference_of_distinct_values(grid):
     m, n = len(grid), len(grid[0])
     out = [[0] * n for _ in range(m)]
     starts = [(0, c) for c in range(n)] + [(r, 0) for r in range(1, m)]
+
     for r0, c0 in starts:
         cells = []
         r, c = r0, c0
+
         while r < m and c < n:
             cells.append((r, c))
             r += 1
             c += 1
+
         size = len(cells)
         before = [0] * size
         seen = set()
+
         for k in range(size):
             before[k] = len(seen)
             seen.add(grid[cells[k][0]][cells[k][1]])
+
         seen = set()
+
         for k in range(size - 1, -1, -1):
             after = len(seen)
             out[cells[k][0]][cells[k][1]] = abs(before[k] - after)
             seen.add(grid[cells[k][0]][cells[k][1]])
+
     return out
 """,
     ),
@@ -1084,12 +1152,14 @@ def construct_product_matrix(grid):
     n, m = len(grid), len(grid[0])
     flat = [v for row in grid for v in row]
     out_flat = []
+
     for i in range(len(flat)):
         p = 1
         for j in range(len(flat)):
             if j != i:
                 p = p * flat[j] % mod
         out_flat.append(p)
+
     return [out_flat[i * m : (i + 1) * m] for i in range(n)]
 """,
         solution=r"""
@@ -1101,13 +1171,17 @@ def construct_product_matrix(grid):
     flat = [v for row in grid for v in row]
     total = len(flat)
     prefix = [1] * (total + 1)
+
     for i, v in enumerate(flat):
         prefix[i + 1] = prefix[i] * v % mod
+
     out_flat = [0] * total
     suffix = 1
+
     for i in range(total - 1, -1, -1):
         out_flat[i] = prefix[i] * suffix % mod
         suffix = suffix * flat[i] % mod
+
     return [out_flat[i * m : (i + 1) * m] for i in range(n)]
 """,
     ),
@@ -1148,12 +1222,14 @@ def construct_product_matrix(grid):
 def satisfies_conditions(grid):
     m, n = len(grid), len(grid[0])
     cells = [(i, j) for i in range(m) for j in range(n)]
+
     for a, b in cells:
         for c, d in cells:
             if b == d and c == a + 1 and grid[a][b] != grid[c][d]:
                 return False
             if a == c and d == b + 1 and grid[a][b] == grid[c][d]:
                 return False
+
     return True
 """,
         solution=r"""
@@ -1161,12 +1237,14 @@ def satisfies_conditions(grid):
 # Idea: Collapse a local rule into a global invariant (constant columns)
 def satisfies_conditions(grid):
     m, n = len(grid), len(grid[0])
+
     for j in range(n):
         for i in range(1, m):
             if grid[i][j] != grid[0][j]:
                 return False
         if j + 1 < n and grid[0][j] == grid[0][j + 1]:
             return False
+
     return True
 """,
     ),
@@ -1215,12 +1293,14 @@ def satisfies_conditions(grid):
 def max_score(grid):
     m, n = len(grid), len(grid[0])
     best = float("-inf")
+
     for i in range(m):
         for j in range(n):
             for x in range(i, m):
                 for y in range(j, n):
                     if (x, y) != (i, j):
                         best = max(best, grid[x][y] - grid[i][j])
+
     return best
 """,
         solution=r"""
@@ -1231,8 +1311,10 @@ def max_score(grid):
     inf = float("inf")
     best = float("-inf")
     prev = [inf] * n
+
     for i in range(m):
         cur = [inf] * n
+
         for j in range(n):
             above = prev[j]
             left = cur[j - 1] if j > 0 else inf
@@ -1240,7 +1322,9 @@ def max_score(grid):
             if smallest != inf:
                 best = max(best, grid[i][j] - smallest)
             cur[j] = min(grid[i][j], smallest)
+
         prev = cur
+
     return best
 """,
     ),
@@ -1282,6 +1366,7 @@ def minimum_area(grid):
     m, n = len(grid), len(grid[0])
     ones = sum(map(sum, grid))
     best = m * n
+
     for r1 in range(m):
         for r2 in range(r1, m):
             for c1 in range(n):
@@ -1289,6 +1374,7 @@ def minimum_area(grid):
                     inside = sum(grid[r][c] for r in range(r1, r2 + 1) for c in range(c1, c2 + 1))
                     if inside == ones:
                         best = min(best, (r2 - r1 + 1) * (c2 - c1 + 1))
+
     return best
 """,
         solution=r"""
@@ -1341,17 +1427,21 @@ def minimum_area(grid):
 def number_of_submatrices(grid):
     m, n = len(grid), len(grid[0])
     count = 0
+
     for i in range(m):
         for j in range(n):
             x = y = 0
+
             for r in range(i + 1):
                 for c in range(j + 1):
                     if grid[r][c] == "X":
                         x += 1
                     elif grid[r][c] == "Y":
                         y += 1
+
             if x == y and x > 0:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -1362,12 +1452,14 @@ def number_of_submatrices(grid):
     cx = [[0] * (n + 1) for _ in range(m + 1)]
     cy = [[0] * (n + 1) for _ in range(m + 1)]
     count = 0
+
     for i in range(m):
         for j in range(n):
             cx[i + 1][j + 1] = cx[i][j + 1] + cx[i + 1][j] - cx[i][j] + (grid[i][j] == "X")
             cy[i + 1][j + 1] = cy[i][j + 1] + cy[i + 1][j] - cy[i][j] + (grid[i][j] == "Y")
             if cx[i + 1][j + 1] == cy[i + 1][j + 1] and cx[i + 1][j + 1] > 0:
                 count += 1
+
     return count
 """,
     ),
@@ -1408,6 +1500,7 @@ def number_of_submatrices(grid):
 def final_position_of_snake(n, commands):
     grid = [[i * n + j for j in range(n)] for i in range(n)]
     r = c = 0
+
     for cmd in commands:
         if cmd == "UP":
             r -= 1
@@ -1417,6 +1510,7 @@ def final_position_of_snake(n, commands):
             c -= 1
         else:
             c += 1
+
     return grid[r][c]
 """,
         solution=r"""
@@ -1424,6 +1518,7 @@ def final_position_of_snake(n, commands):
 # Idea: Simulate with coordinates; map back with row * n + col
 def final_position_of_snake(n, commands):
     r = c = 0
+
     for cmd in commands:
         if cmd == "UP":
             r -= 1
@@ -1433,6 +1528,7 @@ def final_position_of_snake(n, commands):
             c -= 1
         else:
             c += 1
+
     return r * n + c
 """,
     ),

@@ -60,15 +60,20 @@ def word_break(s, word_dict):
     words = set(word_dict)
     n = len(s)
     out = []
+
     for mask in range(1 << (n - 1)):
         pieces, start = [], 0
+
         for i in range(n - 1):
             if mask >> i & 1:
                 pieces.append(s[start : i + 1])
                 start = i + 1
+
         pieces.append(s[start:])
+
         if all(piece in words for piece in pieces):
             out.append(" ".join(pieces))
+
     return out
 """,
         solution=r"""
@@ -81,12 +86,15 @@ def word_break(s, word_dict):
     def build(start):
         if start == len(s):
             return [""]
+
         sentences = []
+
         for end in range(start + 1, len(s) + 1):
             word = s[start:end]
             if word in words:
                 for rest in build(end):
                     sentences.append(word + (" " + rest if rest else ""))
+
         return sentences
 
     return list(build(0))
@@ -137,17 +145,21 @@ def word_break(s, word_dict):
 def add_operators(num, target):
     def value_of(numbers, ops):
         terms, signs = [numbers[0]], [1]
+
         for op, x in zip(ops, numbers[1:]):
             if op == "*":
                 terms[-1] *= x
             else:
                 terms.append(x)
                 signs.append(1 if op == "+" else -1)
+
         return sum(sign * term for sign, term in zip(signs, terms))
 
     out = []
+
     for choice in itertools.product("+-*.", repeat=len(num) - 1):
         numbers, ops, current = [], [], num[0]
+
         for gap, digit in zip(choice, num[1:]):
             if gap == ".":
                 current += digit
@@ -155,14 +167,18 @@ def add_operators(num, target):
                 numbers.append(current)
                 ops.append(gap)
                 current = digit
+
         numbers.append(current)
+
         if any(len(x) > 1 and x[0] == "0" for x in numbers):
             continue
+
         if value_of([int(x) for x in numbers], ops) == target:
             expr = numbers[0]
             for op, x in zip(ops, numbers[1:]):
                 expr += op + x
             out.append(expr)
+
     return out
 """,
         solution=r"""
@@ -176,11 +192,14 @@ def add_operators(num, target):
             if value == target:
                 out.append(expr)
             return
+
         for j in range(i + 1, len(num) + 1):
             if j > i + 1 and num[i] == "0":
                 break
+
             text = num[i:j]
             cur = int(text)
+
             if i == 0:
                 go(j, text, cur, cur)
             else:
@@ -189,6 +208,7 @@ def add_operators(num, target):
                 go(j, expr + "*" + text, value - last + last * cur, last * cur)
 
     go(0, "", 0, 0)
+
     return out
 """,
     ),
@@ -239,6 +259,7 @@ def add_operators(num, target):
 def remove_invalid_parentheses(s):
     def valid(text):
         balance = 0
+
         for ch in text:
             if ch == "(":
                 balance += 1
@@ -246,16 +267,19 @@ def remove_invalid_parentheses(s):
                 balance -= 1
                 if balance < 0:
                     return False
+
         return balance == 0
 
     n = len(s)
     best, found = -1, set()
+
     for mask in range(1 << n):
         text = "".join(s[i] for i in range(n) if mask >> i & 1)
         if len(text) >= best and valid(text):
             if len(text) > best:
                 best, found = len(text), set()
             found.add(text)
+
     return list(found)
 """,
         solution=r"""
@@ -263,6 +287,7 @@ def remove_invalid_parentheses(s):
 # Idea: Backtracking with a precomputed removal budget and pruning
 def remove_invalid_parentheses(s):
     left = right = 0
+
     for ch in s:
         if ch == "(":
             left += 1
@@ -280,12 +305,16 @@ def remove_invalid_parentheses(s):
             if left_left == 0 and right_left == 0 and balance == 0:
                 out.add("".join(path))
             return
+
         ch = s[i]
+
         if ch == "(" and left_left > 0:
             go(i + 1, left_left - 1, right_left, balance)
         elif ch == ")" and right_left > 0:
             go(i + 1, left_left, right_left - 1, balance)
+
         path.append(ch)
+
         if ch == "(":
             go(i + 1, left_left, right_left, balance + 1)
         elif ch == ")":
@@ -293,9 +322,11 @@ def remove_invalid_parentheses(s):
                 go(i + 1, left_left, right_left, balance - 1)
         else:
             go(i + 1, left_left, right_left, balance)
+
         path.pop()
 
     go(0, left, right, 0)
+
     return list(out)
 """,
     ),
@@ -352,18 +383,24 @@ def makesquare(matchsticks):
 # Idea: Backtracking: assign each item to a bucket with pruning
 def makesquare(matchsticks):
     total = sum(matchsticks)
+
     if len(matchsticks) < 4 or total % 4:
         return False
+
     side = total // 4
     sticks = sorted(matchsticks, reverse=True)
+
     if sticks[0] > side:
         return False
+
     sides = [0, 0, 0, 0]
 
     def place(i):
         if i == len(sticks):
             return True
+
         tried = set()
+
         for k in range(4):
             if sides[k] + sticks[i] <= side and sides[k] not in tried:
                 tried.add(sides[k])
@@ -371,6 +408,7 @@ def makesquare(matchsticks):
                 if place(i + 1):
                     return True
                 sides[k] -= sticks[i]
+
         return False
 
     return place(0)
@@ -441,6 +479,7 @@ def nums_same_consec_diff(n, k):
 
     for first in range(1, 10):
         build(first, n - 1)
+
     return out
 """,
     ),
@@ -501,6 +540,7 @@ def get_maximum_gold(grid):
         for c in range(cols):
             if grid[r][c] != 0:
                 walk(r, c, [(r, c)], grid[r][c])
+
     return best
 """,
         solution=r"""
@@ -513,11 +553,14 @@ def get_maximum_gold(grid):
         gold = grid[r][c]
         grid[r][c] = 0
         best = 0
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] > 0:
                 best = max(best, dfs(nr, nc))
+
         grid[r][c] = gold
+
         return gold + best
 
     return max((dfs(r, c) for r in range(rows) for c in range(cols) if grid[r][c] > 0), default=0)
@@ -574,6 +617,7 @@ def get_happy_string(n, k):
                 build(prefix + ch)
 
     build("")
+
     return found[k - 1] if k <= len(found) else ""
 """,
         solution=r"""
@@ -581,17 +625,21 @@ def get_happy_string(n, k):
 # Idea: Counting subtrees to skip branches (backtracking without enumerating)
 def get_happy_string(n, k):
     total = 3 * 2 ** (n - 1)
+
     if k > total:
         return ""
+
     k -= 1
     block = 2 ** (n - 1)
     out = ["abc"[k // block]]
     k %= block
+
     for _ in range(1, n):
         block //= 2
         choices = [ch for ch in "abc" if ch != out[-1]]
         out.append(choices[k // block])
         k %= block
+
     return "".join(out)
 """,
     ),
@@ -647,21 +695,26 @@ def max_length(arr):
 def max_length(arr):
     masks = {0}
     best = 0
+
     for word in arr:
         word_mask = 0
+
         for ch in word:
             bit = 1 << (ord(ch) - 97)
             if word_mask & bit:
                 word_mask = -1
                 break
             word_mask |= bit
+
         if word_mask < 0:
             continue
+
         for existing in list(masks):
             if existing & word_mask == 0:
                 merged = existing | word_mask
                 masks.add(merged)
                 best = max(best, bin(merged).count("1"))
+
     return best
 """,
     ),
@@ -706,16 +759,19 @@ def unique_paths_iii(grid):
 
     def walk(r, c, path):
         nonlocal count
+
         if grid[r][c] == 2:
             if len(path) == walkable:
                 count += 1
             return
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != -1 and (nr, nc) not in path:
                 walk(nr, nc, path + [(nr, nc)])
 
     walk(start[0], start[1], [start])
+
     return count
 """,
         solution=r"""
@@ -724,6 +780,7 @@ def unique_paths_iii(grid):
 def unique_paths_iii(grid):
     rows, cols = len(grid), len(grid[0])
     remaining = 1
+
     for r in range(rows):
         for c in range(cols):
             if grid[r][c] == 1:
@@ -734,13 +791,17 @@ def unique_paths_iii(grid):
     def dfs(r, c, left):
         if grid[r][c] == 2:
             return 1 if left == 0 else 0
+
         saved, grid[r][c] = grid[r][c], -1
         total = 0
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != -1:
                 total += dfs(nr, nc, left - 1)
+
         grid[r][c] = saved
+
         return total
 
     return dfs(start[0], start[1], remaining)
@@ -783,15 +844,20 @@ def unique_paths_iii(grid):
 def max_unique_split(s):
     n = len(s)
     best = 1
+
     for mask in range(1 << (n - 1)):
         pieces, start = [], 0
+
         for i in range(n - 1):
             if mask >> i & 1:
                 pieces.append(s[start : i + 1])
                 start = i + 1
+
         pieces.append(s[start:])
+
         if len(set(pieces)) == len(pieces):
             best = max(best, len(pieces))
+
     return best
 """,
         solution=r"""
@@ -803,11 +869,14 @@ def max_unique_split(s):
 
     def go(start, count):
         nonlocal best
+
         if count + (len(s) - start) <= best:
             return
+
         if start == len(s):
             best = count
             return
+
         for end in range(start + 1, len(s) + 1):
             piece = s[start:end]
             if piece not in used:
@@ -816,6 +885,7 @@ def max_unique_split(s):
                 used.remove(piece)
 
     go(0, 0)
+
     return best
 """,
     ),

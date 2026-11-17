@@ -161,6 +161,7 @@ def jump(nums):
 def find_content_children(g, s):
     used = [False] * len(s)
     count = 0
+
     for need in sorted(g):
         best = -1
         for j, size in enumerate(s):
@@ -169,6 +170,7 @@ def find_content_children(g, s):
         if best != -1:
             used[best] = True
             count += 1
+
     return count
 """,
         solution=r"""
@@ -216,13 +218,16 @@ def find_content_children(g, s):
 def is_n_straight_hand(hand, group_size):
     if len(hand) % group_size:
         return False
+
     cards = sorted(hand)
+
     while cards:
         start = cards[0]
         for v in range(start, start + group_size):
             if v not in cards:
                 return False
             cards.remove(v)
+
     return True
 """,
         solution=r"""
@@ -231,7 +236,9 @@ def is_n_straight_hand(hand, group_size):
 def is_n_straight_hand(hand, group_size):
     if len(hand) % group_size:
         return False
+
     cnt = Counter(hand)
+
     for x in sorted(cnt):
         c = cnt[x]
         if c:
@@ -239,6 +246,7 @@ def is_n_straight_hand(hand, group_size):
                 if cnt[v] < c:
                     return False
                 cnt[v] -= c
+
     return True
 """,
     ),
@@ -286,13 +294,18 @@ def check_valid_string(s):
     def go(i, open_):
         if open_ < 0:
             return False
+
         if i == len(s):
             return open_ == 0
+
         c = s[i]
+
         if c == "(":
             return go(i + 1, open_ + 1)
+
         if c == ")":
             return go(i + 1, open_ - 1)
+
         return go(i + 1, open_ + 1) or go(i + 1, open_ - 1) or go(i + 1, open_)
 
     return go(0, 0)
@@ -302,6 +315,7 @@ def check_valid_string(s):
 # Idea: Greedy with a range of possible states
 def check_valid_string(s):
     lo = hi = 0
+
     for c in s:
         if c == "(":
             lo, hi = lo + 1, hi + 1
@@ -309,9 +323,12 @@ def check_valid_string(s):
             lo, hi = lo - 1, hi - 1
         else:
             lo, hi = lo - 1, hi + 1
+
         if hi < 0:
             return False
+
         lo = max(lo, 0)
+
     return lo == 0
 """,
     ),
@@ -353,8 +370,10 @@ def candy(ratings):
     n = len(ratings)
     c = [1] * n
     changed = True
+
     while changed:
         changed = False
+
         for i in range(n):
             if i and ratings[i] > ratings[i - 1] and c[i] <= c[i - 1]:
                 c[i] = c[i - 1] + 1
@@ -362,6 +381,7 @@ def candy(ratings):
             if i < n - 1 and ratings[i] > ratings[i + 1] and c[i] <= c[i + 1]:
                 c[i] = c[i + 1] + 1
                 changed = True
+
     return sum(c)
 """,
         solution=r"""
@@ -370,12 +390,15 @@ def candy(ratings):
 def candy(ratings):
     n = len(ratings)
     c = [1] * n
+
     for i in range(1, n):
         if ratings[i] > ratings[i - 1]:
             c[i] = c[i - 1] + 1
+
     for i in range(n - 2, -1, -1):
         if ratings[i] > ratings[i + 1]:
             c[i] = max(c[i], c[i + 1] + 1)
+
     return sum(c)
 """,
     ),

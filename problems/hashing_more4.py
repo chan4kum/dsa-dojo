@@ -231,6 +231,7 @@ def num_equiv_domino_pairs(dominoes):
 def max_number_of_balloons(text):
     letters = list(text)
     words = 0
+
     while True:
         for ch in "balloon":
             if ch in letters:
@@ -327,27 +328,36 @@ def check_if_exist(arr):
 def close_strings(word1, word2):
     if len(word1) != len(word2):
         return False
+
     seen, queue = {word1}, deque([word1])
+
     while queue:
         cur = queue.popleft()
+
         if cur == word2:
             return True
+
         nxt = []
+
         for i in range(len(cur)):  # operation 1: swap two positions
             for j in range(i + 1, len(cur)):
                 chars = list(cur)
                 chars[i], chars[j] = chars[j], chars[i]
                 nxt.append("".join(chars))
+
         letters = sorted(set(cur))
+
         for a in range(len(letters)):  # operation 2: swap two existing letters everywhere
             for b in range(a + 1, len(letters)):
                 nxt.append(
                     cur.translate({ord(letters[a]): letters[b], ord(letters[b]): letters[a]})
                 )
+
         for s in nxt:
             if s not in seen:
                 seen.add(s)
                 queue.append(s)
+
     return False
 """,
         solution=r"""
@@ -390,8 +400,10 @@ def max_operations(nums, k):
     nums = list(nums)
     ops = 0
     found = True
+
     while found:
         found = False
+
         for i in range(len(nums)):
             for j in range(i + 1, len(nums)):
                 if nums[i] + nums[j] == k:
@@ -399,8 +411,10 @@ def max_operations(nums, k):
                     ops += 1
                     found = True
                     break
+
             if found:
                 break
+
     return ops
 """,
         solution=r"""
@@ -409,12 +423,14 @@ def max_operations(nums, k):
 def max_operations(nums, k):
     counts = Counter(nums)
     ops = 0
+
     for x, c in counts.items():
         y = k - x
         if x < y:
             ops += min(c, counts.get(y, 0))
         elif x == y:
             ops += c // 2
+
     return ops
 """,
     ),
@@ -452,12 +468,14 @@ def max_operations(nums, k):
 def find_winners(matches):
     players = {p for match in matches for p in match}
     never, once = [], []
+
     for p in sorted(players):
         losses = sum(1 for _, loser in matches if loser == p)
         if losses == 0:
             never.append(p)
         elif losses == 1:
             once.append(p)
+
     return [never, once]
 """,
         solution=r"""
@@ -466,10 +484,12 @@ def find_winners(matches):
 def find_winners(matches):
     players = set()
     losses = Counter()
+
     for winner, loser in matches:
         players.add(winner)
         players.add(loser)
         losses[loser] += 1
+
     return [
         sorted(p for p in players if losses[p] == 0),
         sorted(p for p in players if losses[p] == 1),
@@ -516,10 +536,12 @@ def maximum_sum(nums):
         return sum(int(d) for d in str(x))
 
     best = -1
+
     for i in range(len(nums)):
         for j in range(i + 1, len(nums)):
             if digit_sum(nums[i]) == digit_sum(nums[j]):
                 best = max(best, nums[i] + nums[j])
+
     return best
 """,
         solution=r"""
@@ -528,11 +550,13 @@ def maximum_sum(nums):
 def maximum_sum(nums):
     best_by_sum = {}
     answer = -1
+
     for x in nums:
         s = sum(int(d) for d in str(x))
         if s in best_by_sum:
             answer = max(answer, best_by_sum[s] + x)
         best_by_sum[s] = max(best_by_sum.get(s, 0), x)
+
     return answer
 """,
     ),

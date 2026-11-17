@@ -102,8 +102,10 @@ def gray_code(n):
     def dfs():
         if len(path) == size:
             return bin(path[-1]).count("1") == 1 or size == 1
+
         for bit in range(n):
             nxt = path[-1] ^ (1 << bit)
+
             if nxt not in used:
                 used.add(nxt)
                 path.append(nxt)
@@ -111,9 +113,11 @@ def gray_code(n):
                     return True
                 path.pop()
                 used.remove(nxt)
+
         return False
 
     dfs()
+
     return path
 """,
         solution=r"""
@@ -168,16 +172,22 @@ def gray_code(n):
 # BRUTE FORCE: O(2^n * n) time - try every set of cut positions
 def is_additive_number(num):
     n = len(num)
+
     for mask in range(1 << (n - 1)):
         cuts = [0] + [i + 1 for i in range(n - 1) if (mask >> i) & 1] + [n]
         pieces = [num[cuts[k] : cuts[k + 1]] for k in range(len(cuts) - 1)]
+
         if len(pieces) < 3:
             continue
+
         if any(len(p) > 1 and p[0] == "0" for p in pieces):
             continue
+
         values = [int(p) for p in pieces]
+
         if all(values[i] == values[i - 1] + values[i - 2] for i in range(2, len(values))):
             return True
+
     return False
 """,
         solution=r"""
@@ -185,13 +195,17 @@ def is_additive_number(num):
 # Idea: Choose the seed (first two parts), then verify deterministically
 def is_additive_number(num):
     n = len(num)
+
     for i in range(1, n):
         for j in range(i + 1, n):
             first, second = num[:i], num[i:j]
+
             if (len(first) > 1 and first[0] == "0") or (len(second) > 1 and second[0] == "0"):
                 continue
+
             x, y = int(first), int(second)
             pos = j
+
             while pos < n:
                 z = str(x + y)
                 if not num.startswith(z, pos):
@@ -200,6 +214,7 @@ def is_additive_number(num):
                 x, y = y, x + y
             else:
                 return True
+
     return False
 """,
     ),
@@ -259,6 +274,7 @@ def find_itinerary(tickets):
     def dfs():
         if len(path) == total + 1:
             return True
+
         for i, (origin, target) in enumerate(tickets):
             if not used[i] and origin == path[-1]:
                 used[i] = True
@@ -267,9 +283,11 @@ def find_itinerary(tickets):
                     return True
                 path.pop()
                 used[i] = False
+
         return False
 
     dfs()
+
     return path
 """,
         solution=r"""
@@ -277,8 +295,10 @@ def find_itinerary(tickets):
 # Idea: Eulerian path (Hierholzer) / backtracking over tickets
 def find_itinerary(tickets):
     graph = defaultdict(list)
+
     for origin, target in sorted(tickets, reverse=True):
         graph[origin].append(target)
+
     route = []
 
     def visit(airport):
@@ -287,6 +307,7 @@ def find_itinerary(tickets):
         route.append(airport)
 
     visit("JFK")
+
     return route[::-1]
 """,
     ),
@@ -344,15 +365,19 @@ def read_binary_watch(turned_on):
 # Idea: Choose k of n positions (combinations), then validate
 def read_binary_watch(turned_on):
     times = []
+
     for leds in itertools.combinations(range(10), turned_on):
         hour = minute = 0
+
         for led in leds:
             if led < 4:
                 hour += 1 << led
             else:
                 minute += 1 << (led - 4)
+
         if hour < 12 and minute < 60:
             times.append(f"{hour}:{minute:02d}")
+
     return times
 """,
     ),
@@ -413,6 +438,7 @@ def judge_point24(cards):
         lambda a, b, c, d, f, g, h: h(a, g(f(b, c), d)),
         lambda a, b, c, d, f, g, h: h(a, g(b, f(c, d))),
     ]
+
     for a, b, c, d in itertools.permutations(cards):
         for f in ops:
             for g in ops:
@@ -424,6 +450,7 @@ def judge_point24(cards):
                             continue
                         if abs(value - 24) < 1e-6:
                             return True
+
     return False
 """,
         solution=r"""
@@ -433,17 +460,22 @@ def judge_point24(cards):
     def solve(nums):
         if len(nums) == 1:
             return abs(nums[0] - 24) < 1e-6
+
         for i in range(len(nums)):
             for j in range(i + 1, len(nums)):
                 rest = [nums[k] for k in range(len(nums)) if k != i and k != j]
                 a, b = nums[i], nums[j]
                 options = [a + b, a - b, b - a, a * b]
+
                 if abs(b) > 1e-9:
                     options.append(a / b)
+
                 if abs(a) > 1e-9:
                     options.append(b / a)
+
                 if any(solve(rest + [value]) for value in options):
                     return True
+
         return False
 
     return solve([float(c) for c in cards])
@@ -487,19 +519,26 @@ def judge_point24(cards):
 # BRUTE FORCE: exponential - expand level by level without early exit
 def pyramid_transition(bottom, allowed):
     options = {}
+
     for triple in allowed:
         options.setdefault(triple[:2], []).append(triple[2])
+
     level = {bottom}
+
     for _ in range(len(bottom) - 1):
         following = set()
+
         for row in level:
             choices = [options.get(row[i : i + 2], []) for i in range(len(row) - 1)]
             if all(choices):
                 for combo in itertools.product(*choices):
                     following.add("".join(combo))
+
         level = following
+
         if not level:
             return False
+
     return True
 """,
         solution=r"""
@@ -507,10 +546,12 @@ def pyramid_transition(bottom, allowed):
 # Idea: Backtracking row by row (with memoisation)
 def pyramid_transition(bottom, allowed):
     tops = defaultdict(list)
+
     for a, b, c in allowed:
         tops[(a, b)].append(c)
 
     @lru_cache(None)
+
     def can_build(row):
         if len(row) == 1:
             return True
@@ -566,18 +607,25 @@ def pyramid_transition(bottom, allowed):
 def split_into_fibonacci(num):
     n = len(num)
     limit = 2**31 - 1
+
     for mask in range(1 << (n - 1)):
         cuts = [0] + [i + 1 for i in range(n - 1) if (mask >> i) & 1] + [n]
         pieces = [num[cuts[k] : cuts[k + 1]] for k in range(len(cuts) - 1)]
+
         if len(pieces) < 3:
             continue
+
         if any(len(p) > 1 and p[0] == "0" for p in pieces):
             continue
+
         values = [int(p) for p in pieces]
+
         if any(v > limit for v in values):
             continue
+
         if all(values[i] + values[i + 1] == values[i + 2] for i in range(len(values) - 2)):
             return values
+
     return []
 """,
         solution=r"""
@@ -591,22 +639,30 @@ def split_into_fibonacci(num):
     def dfs(pos):
         if pos == n:
             return len(result) >= 3
+
         for end in range(pos + 1, n + 1):
             if num[pos] == "0" and end > pos + 1:
                 break
+
             value = int(num[pos:end])
+
             if value > limit:
                 break
+
             if len(result) >= 2:
                 target = result[-1] + result[-2]
                 if value < target:
                     continue
                 if value > target:
                     break
+
             result.append(value)
+
             if dfs(end):
                 return True
+
             result.pop()
+
         return False
 
     return result if dfs(0) else []
@@ -660,9 +716,11 @@ def num_squareful_perms(nums):
         return root * root == value
 
     count = 0
+
     for perm in set(itertools.permutations(nums)):
         if all(is_square(perm[i] + perm[i + 1]) for i in range(len(perm) - 1)):
             count += 1
+
     return count
 """,
         solution=r"""
@@ -679,7 +737,9 @@ def num_squareful_perms(nums):
     def dfs(previous, remaining):
         if remaining == 0:
             return 1
+
         ways = 0
+
         for x in values:
             if count[x] == 0:
                 continue
@@ -688,6 +748,7 @@ def num_squareful_perms(nums):
             count[x] -= 1
             ways += dfs(x, remaining - 1)
             count[x] += 1
+
         return ways
 
     return dfs(None, len(nums))
@@ -752,6 +813,7 @@ def num_squareful_perms(nums):
 def max_score_words(words, letters, score):
     have = Counter(letters)
     best = 0
+
     for mask in range(1 << len(words)):
         need = Counter()
         for i, word in enumerate(words):
@@ -759,6 +821,7 @@ def max_score_words(words, letters, score):
                 need.update(word)
         if all(have[c] >= v for c, v in need.items()):
             best = max(best, sum(score[ord(c) - 97] * v for c, v in need.items()))
+
     return best
 """,
         solution=r"""
@@ -770,15 +833,18 @@ def max_score_words(words, letters, score):
     def dfs(i):
         if i == len(words):
             return 0
+
         best = dfs(i + 1)
         word = words[i]
         need = Counter(word)
+
         if all(have[c] >= v for c, v in need.items()):
             for c, v in need.items():
                 have[c] -= v
             best = max(best, sum(score[ord(c) - 97] for c in word) + dfs(i + 1))
             for c, v in need.items():
                 have[c] += v
+
         return best
 
     return dfs(0)
@@ -846,12 +912,14 @@ def split_string(s):
     def dfs(pos, previous):
         if pos == n:
             return True
+
         for end in range(pos + 1, n + 1):
             value = int(s[pos:end])
             if value == previous - 1 and dfs(end, value):
                 return True
             if value >= previous:
                 break
+
         return False
 
     return any(dfs(end, int(s[:end])) for end in range(1, n))
@@ -949,12 +1017,14 @@ def find_different_binary_string(nums):
 def count_max_or_subsets(nums):
     n = len(nums)
     values = []
+
     for mask in range(1, 1 << n):
         total = 0
         for i in range(n):
             if (mask >> i) & 1:
                 total |= nums[i]
         values.append(total)
+
     return values.count(max(values))
 """,
         solution=r"""
@@ -962,6 +1032,7 @@ def count_max_or_subsets(nums):
 # Idea: Include / exclude backtracking carrying a running aggregate
 def count_max_or_subsets(nums):
     target = 0
+
     for x in nums:
         target |= x
 
@@ -1026,6 +1097,7 @@ def next_beautiful_number(n):
 # Idea: Enumerate all candidates (subset of digits + permutations), then binary search
 def next_beautiful_number(n):
     candidates = []
+
     for mask in range(1, 1 << 7):
         digits = [d for d in range(1, 8) if (mask >> (d - 1)) & 1]
         if sum(digits) > 7:
@@ -1033,7 +1105,9 @@ def next_beautiful_number(n):
         multiset = [d for d in digits for _ in range(d)]
         for perm in set(itertools.permutations(multiset)):
             candidates.append(int("".join(map(str, perm))))
+
     candidates.sort()
+
     return candidates[bisect.bisect_right(candidates, n)]
 """,
     ),
@@ -1078,8 +1152,10 @@ def next_beautiful_number(n):
 def maximum_good(statements):
     n = len(statements)
     best = 0
+
     for mask in range(1 << n):
         consistent = True
+
         for i in range(n):
             if not (mask >> i) & 1:
                 continue
@@ -1087,8 +1163,10 @@ def maximum_good(statements):
                 said = statements[i][j]
                 if said != 2 and said != (mask >> j) & 1:
                     consistent = False
+
         if consistent:
             best = max(best, bin(mask).count("1"))
+
     return best
 """,
         solution=r"""
@@ -1102,26 +1180,32 @@ def maximum_good(statements):
     def consistent(i):
         if role[i] == 1 and statements[i][i] not in (2, 1):
             return False
+
         for j in range(i):
             if role[i] == 1 and statements[i][j] != 2 and statements[i][j] != role[j]:
                 return False
             if role[j] == 1 and statements[j][i] != 2 and statements[j][i] != role[i]:
                 return False
+
         return True
 
     def dfs(i, good):
         nonlocal best
+
         if i == n:
             best = max(best, good)
             return
+
         if good + (n - i) <= best:
             return
+
         for r in (1, 0):
             role[i] = r
             if consistent(i):
                 dfs(i + 1, good + r)
 
     dfs(0, 0)
+
     return best
 """,
     ),
@@ -1182,10 +1266,13 @@ def distribute_cookies(cookies, k):
 
     def dfs(i):
         nonlocal best
+
         if i == len(bags):
             best = min(best, max(loads))
             return
+
         tried = set()
+
         for child in range(k):
             if loads[child] in tried or loads[child] + bags[i] >= best:
                 continue
@@ -1195,6 +1282,7 @@ def distribute_cookies(cookies, k):
             loads[child] -= bags[i]
 
     dfs(0)
+
     return best
 """,
     ),
@@ -1252,10 +1340,12 @@ def maximum_rows(matrix, num_select):
     n = len(matrix[0])
     rows = [sum(v << j for j, v in enumerate(row)) for row in matrix]
     best = 0
+
     for mask in range(1 << n):
         if bin(mask).count("1") != num_select:
             continue
         best = max(best, sum(1 for row in rows if (row & ~mask) == 0))
+
     return best
 """,
     ),
@@ -1312,6 +1402,7 @@ def valid_strings(n):
             build(current + "0")
 
     build("")
+
     return result
 """,
     ),

@@ -59,6 +59,7 @@ def remove_outer_parentheses(s):
 # Idea: Depth counter instead of a stack
 def remove_outer_parentheses(s):
     out, depth = [], 0
+
     for ch in s:
         if ch == "(":
             if depth > 0:
@@ -68,6 +69,7 @@ def remove_outer_parentheses(s):
             depth -= 1
             if depth > 0:
                 out.append(ch)  # not an outermost closer
+
     return "".join(out)
 """,
     ),
@@ -116,6 +118,7 @@ def min_add_to_make_valid(s):
 # Idea: Balance counter (stack reduced to two integers)
 def min_add_to_make_valid(s):
     open_count = unmatched_close = 0
+
     for ch in s:
         if ch == "(":
             open_count += 1
@@ -123,6 +126,7 @@ def min_add_to_make_valid(s):
             open_count -= 1  # matches an earlier '('
         else:
             unmatched_close += 1  # nothing to match: needs an inserted '('
+
     return open_count + unmatched_close
 """,
     ),
@@ -175,16 +179,20 @@ def sum_subarray_mins(arr):
     left = [0] * n  # distance to the previous element strictly smaller
     right = [0] * n  # distance to the next element smaller or equal
     stack = []
+
     for i in range(n):
         while stack and arr[stack[-1]] > arr[i]:
             j = stack.pop()
             right[j] = i - j  # i is the next smaller-or-equal for j... (strictly smaller pops here)
         left[i] = i - stack[-1] if stack else i + 1
         stack.append(i)
+
     for j in stack:
         right[j] = n - j  # nothing smaller on the right
+
     for i in range(n):
         total += arr[i] * left[i] * right[i]
+
     return total % (10**9 + 7)
 """,
     ),
@@ -235,12 +243,15 @@ def maximal_rectangle(matrix):
     rows, cols = len(matrix), len(matrix[0])
     # prefix[r][c] = number of '1' in the rectangle from (0, 0) to (r - 1, c - 1)
     prefix = [[0] * (cols + 1) for _ in range(rows + 1)]
+
     for r in range(rows):
         for c in range(cols):
             prefix[r + 1][c + 1] = (
                 prefix[r][c + 1] + prefix[r + 1][c] - prefix[r][c] + (matrix[r][c] == "1")
             )
+
     best = 0
+
     for r1 in range(rows):
         for r2 in range(r1, rows):
             for c1 in range(cols):
@@ -252,8 +263,10 @@ def maximal_rectangle(matrix):
                         - prefix[r2 + 1][c1]
                         + prefix[r1][c1]
                     )
+
                     if ones == area:  # all ones
                         best = max(best, area)
+
     return best
 """,
         solution=r"""
@@ -262,12 +275,15 @@ def maximal_rectangle(matrix):
 def maximal_rectangle(matrix):
     cols = len(matrix[0])
     heights, best = [0] * cols, 0
+
     for row in matrix:
         for c in range(cols):
             heights[c] = (
                 heights[c] + 1 if row[c] == "1" else 0
             )  # consecutive ones ending at this row
+
         stack = []  # indices of bars with increasing heights
+
         for i in range(cols + 1):
             h = heights[i] if i < cols else 0  # a sentinel bar of height 0 flushes the stack
             while stack and heights[stack[-1]] >= h:
@@ -275,6 +291,7 @@ def maximal_rectangle(matrix):
                 width = i if not stack else i - stack[-1] - 1
                 best = max(best, height * width)
             stack.append(i)
+
     return best
 """,
     ),
@@ -318,26 +335,33 @@ def calculate(s):
     def expression():  # expression = term (('+' | '-') term)*
         nonlocal pos
         total = term()
+
         while pos < len(text) and text[pos] in "+-":
             op = text[pos]
             pos += 1
             value = term()
             total = total + value if op == "+" else total - value
+
         return total
 
     def term():  # term = number | '(' expression ')' | '-' term
         nonlocal pos
+
         if text[pos] == "-":
             pos += 1
             return -term()
+
         if text[pos] == "(":
             pos += 1
             value = expression()
             pos += 1  # skip ')'
             return value
+
         start = pos
+
         while pos < len(text) and text[pos].isdigit():
             pos += 1
+
         return int(text[start:pos])
 
     return expression()
@@ -347,6 +371,7 @@ def calculate(s):
 # Idea: Stack of (result, sign) saved at each '('
 def calculate(s):
     result, sign, number, stack = 0, 1, 0, []
+
     for ch in s:
         if ch.isdigit():
             number = number * 10 + int(ch)
@@ -363,6 +388,7 @@ def calculate(s):
             number = 0
             result *= stack.pop()  # the sign in front of the parenthesis
             result += stack.pop()  # the result before the parenthesis
+
     return result + sign * number
 """,
     ),
@@ -400,6 +426,7 @@ def calculate(s):
 # BRUTE FORCE: O(n^2) time - repeatedly rescan and delete the first bad pair
 def make_good(s):
     changed = True
+
     while changed:
         changed = False
         for i in range(len(s) - 1):
@@ -407,6 +434,7 @@ def make_good(s):
                 s = s[:i] + s[i + 2 :]  # delete the bad pair and rescan
                 changed = True
                 break
+
     return s
 """,
         solution=r"""

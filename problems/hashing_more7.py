@@ -107,6 +107,7 @@ def distribute_candies(candy_type):
 # BRUTE FORCE: O(n * m) time - compare every pair of strings
 def find_restaurant(list1, list2):
     best, out = None, []
+
     for i, a in enumerate(list1):
         for j, b in enumerate(list2):
             if a == b:
@@ -114,6 +115,7 @@ def find_restaurant(list1, list2):
                     best, out = i + j, [a]
                 elif i + j == best:
                     out.append(a)
+
     return out
 """,
         solution=r"""
@@ -122,6 +124,7 @@ def find_restaurant(list1, list2):
 def find_restaurant(list1, list2):
     index = {s: i for i, s in enumerate(list1)}
     best, out = None, []
+
     for j, s in enumerate(list2):
         if s in index:
             total = index[s] + j
@@ -129,6 +132,7 @@ def find_restaurant(list1, list2):
                 best, out = total, [s]
             elif total == best:
                 out.append(s)
+
     return out
 """,
     ),
@@ -510,6 +514,7 @@ def merge_arrays(nums1, nums2):
 def merge_arrays(nums1, nums2):
     out = []
     i = j = 0
+
     while i < len(nums1) and j < len(nums2):
         if nums1[i][0] < nums2[j][0]:
             out.append(list(nums1[i]))
@@ -521,8 +526,10 @@ def merge_arrays(nums1, nums2):
             out.append([nums1[i][0], nums1[i][1] + nums2[j][1]])
             i += 1
             j += 1
+
     out.extend(list(p) for p in nums1[i:])
     out.extend(list(p) for p in nums2[j:])
+
     return out
 """,
     ),
@@ -572,14 +579,18 @@ def distinct_difference_array(nums):
     n = len(nums)
     suffix = [0] * (n + 1)
     seen = set()
+
     for i in range(n - 1, -1, -1):
         seen.add(nums[i])
         suffix[i] = len(seen)
+
     out = []
     seen = set()
+
     for i in range(n):
         seen.add(nums[i])
         out.append(len(seen) - suffix[i + 1])
+
     return out
 """,
     ),

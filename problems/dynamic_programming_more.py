@@ -107,6 +107,7 @@ def min_cost_climbing_stairs(cost):
 # BRUTE FORCE: O(2^n) time - try take/skip for each house with the circular constraint
 def rob(nums):
     n = len(nums)
+
     if n == 1:
         return nums[0]
 
@@ -132,6 +133,7 @@ def rob(nums):
 
     if len(nums) == 1:
         return nums[0]
+
     return max(line(nums[:-1]), line(nums[1:]))
 """,
     ),
@@ -226,11 +228,15 @@ def min_path_sum(grid):
     def go(r, c):
         if r == R - 1 and c == C - 1:
             return grid[r][c]
+
         best = float("inf")
+
         if r + 1 < R:
             best = min(best, go(r + 1, c))
+
         if c + 1 < C:
             best = min(best, go(r, c + 1))
+
         return grid[r][c] + best
 
     return go(0, 0)
@@ -242,10 +248,12 @@ def min_path_sum(grid):
     R, C = len(grid), len(grid[0])
     dp = [float("inf")] * C
     dp[0] = 0
+
     for r in range(R):
         for c in range(C):
             best_prev = dp[c] if c == 0 else min(dp[c], dp[c - 1])
             dp[c] = grid[r][c] + best_prev
+
     return dp[-1]
 """,
     ),
@@ -305,6 +313,7 @@ def longest_palindrome(s):
         for cand in (expand(i, i), expand(i, i + 1)):
             if len(cand) > len(best):
                 best = cand
+
     return best
 """,
     ),
@@ -390,11 +399,15 @@ def num_decodings(s):
     def go(i):
         if i == len(s):
             return 1
+
         if s[i] == "0":
             return 0
+
         total = go(i + 1)
+
         if i + 1 < len(s) and 10 <= int(s[i : i + 2]) <= 26:
             total += go(i + 2)
+
         return total
 
     return go(0)
@@ -405,7 +418,9 @@ def num_decodings(s):
 def num_decodings(s):
     if not s:
         return 0
+
     a, b = 1, (1 if s[0] != "0" else 0)  # a = dp[i-2] (dp[0] = 1), b = dp[i-1] (dp[1])
+
     for i in range(2, len(s) + 1):
         cur = 0
         if s[i - 1] != "0":
@@ -413,6 +428,7 @@ def num_decodings(s):
         if 10 <= int(s[i - 2 : i]) <= 26:
             cur += a
         a, b = b, cur
+
     return b
 """,
     ),
@@ -565,13 +581,17 @@ def find_target_sum_ways(nums, target):
 # Idea: Reduce to 'count subsets with sum S' (0/1 knapsack)
 def find_target_sum_ways(nums, target):
     total = sum(nums)
+
     if abs(target) > total or (total + target) % 2:
         return 0
+
     s = (total + target) // 2
     dp = [1] + [0] * s
+
     for x in nums:
         for c in range(s, x - 1, -1):
             dp[c] += dp[c - x]
+
     return dp[s]
 """,
     ),
@@ -737,6 +757,7 @@ def longest_palindrome_subseq(s):
 def longest_palindrome_subseq(s):
     n = len(s)
     dp = [[0] * n for _ in range(n)]
+
     for i in range(n - 1, -1, -1):
         dp[i][i] = 1
         for j in range(i + 1, n):
@@ -744,6 +765,7 @@ def longest_palindrome_subseq(s):
                 dp[i][j] = dp[i + 1][j - 1] + 2
             else:
                 dp[i][j] = max(dp[i + 1][j], dp[i][j - 1])
+
     return dp[0][n - 1] if n else 0
 """,
     ),

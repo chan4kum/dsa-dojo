@@ -48,12 +48,14 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2) time - scan every interval for every interval
 def find_right_interval(intervals):
     result = []
+
     for _, end in intervals:
         best = -1
         for j, (start, _) in enumerate(intervals):
             if start >= end and (best == -1 or start < intervals[best][0]):
                 best = j  # smaller qualifying start wins
         result.append(best)
+
     return result
 """,
         solution=r"""
@@ -167,14 +169,18 @@ def car_pooling(trips, capacity):
 # Idea: Difference array / sweep line
 def car_pooling(trips, capacity):
     change = [0] * (max(t[2] for t in trips) + 1)
+
     for passengers, start, end in trips:
         change[start] += passengers
         change[end] -= passengers  # they leave before anyone boards at `end`
+
     load = 0
+
     for delta in change:
         load += delta
         if load > capacity:
             return False
+
     return True
 """,
     ),
@@ -219,13 +225,17 @@ def corp_flight_bookings(bookings, n):
 # Idea: Difference array
 def corp_flight_bookings(bookings, n):
     diff = [0] * (n + 1)
+
     for first, last, count in bookings:
         diff[first - 1] += count
         diff[last] -= count  # just past the last booked flight
+
     result, running = [], 0
+
     for i in range(n):
         running += diff[i]
         result.append(running)
+
     return result
 """,
     ),
@@ -280,15 +290,19 @@ def min_available_duration(slots1, slots2, duration):
 def min_available_duration(slots1, slots2, duration):
     slots1, slots2 = sorted(slots1), sorted(slots2)
     i = j = 0
+
     while i < len(slots1) and j < len(slots2):
         start = max(slots1[i][0], slots2[j][0])
         end = min(slots1[i][1], slots2[j][1])
+
         if end - start >= duration:
             return [start, start + duration]
+
         if slots1[i][1] < slots2[j][1]:  # the slot that finishes first is exhausted
             i += 1
         else:
             j += 1
+
     return []
 """,
     ),
@@ -330,8 +344,10 @@ def min_available_duration(slots1, slots2, duration):
 def remove_interval(intervals, to_be_removed):
     a, b = to_be_removed
     result = []
+
     for left, right in intervals:
         run = None
+
         for x in range(left, right):  # unit cell [x, x + 1)
             if a <= x < b:
                 run = None  # this cell is deleted
@@ -340,6 +356,7 @@ def remove_interval(intervals, to_be_removed):
                 result.append(run)
             else:
                 run[1] = x + 1
+
     return result
 """,
         solution=r"""
@@ -348,6 +365,7 @@ def remove_interval(intervals, to_be_removed):
 def remove_interval(intervals, to_be_removed):
     a, b = to_be_removed
     result = []
+
     for left, right in intervals:
         if right <= a or left >= b:  # no overlap
             result.append([left, right])
@@ -356,6 +374,7 @@ def remove_interval(intervals, to_be_removed):
             result.append([left, a])  # left remainder
         if right > b:
             result.append([b, right])  # right remainder
+
     return result
 """,
     ),
@@ -399,16 +418,20 @@ def remove_interval(intervals, to_be_removed):
 def most_booked(n, meetings):
     free_at = [0] * n
     held = [0] * n
+
     for start, end in sorted(meetings):
         duration = end - start
         free = [r for r in range(n) if free_at[r] <= start]
+
         if free:
             room = free[0]  # lowest-numbered free room
             free_at[room] = end
         else:
             room = min(range(n), key=lambda r: (free_at[r], r))  # earliest to free up
             free_at[room] += duration
+
         held[room] += 1
+
     return held.index(max(held))
 """,
         solution=r"""
@@ -418,16 +441,20 @@ def most_booked(n, meetings):
     free_rooms = list(range(n))  # already a valid min-heap
     busy = []  # (time the room frees, room number)
     held = [0] * n
+
     for start, end in sorted(meetings):
         while busy and busy[0][0] <= start:  # release rooms that are done by now
             heapq.heappush(free_rooms, heapq.heappop(busy)[1])
+
         if free_rooms:
             room = heapq.heappop(free_rooms)
             heapq.heappush(busy, (end, room))
         else:
             free_time, room = heapq.heappop(busy)  # wait for the earliest room
             heapq.heappush(busy, (free_time + end - start, room))
+
         held[room] += 1
+
     return held.index(max(held))
 """,
     ),

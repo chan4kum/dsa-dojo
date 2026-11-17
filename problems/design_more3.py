@@ -122,11 +122,13 @@ class RandomizedSet:
     def remove(self, val):
         if val not in self.index:
             return False
+
         pos, last = self.index[val], self.items[-1]
         self.items[pos] = last  # overwrite the victim with the last value
         self.index[last] = pos
         self.items.pop()  # O(1) removal from the end
         del self.index[val]
+
         return True
 
     def getRandom(self):
@@ -807,13 +809,16 @@ class LFUCache:
     def put(self, key, value):
         if self.capacity == 0:
             return
+
         if key in self.data:
             self.data[key][0] = value
             self._touch(key)
             return
+
         if len(self.data) == self.capacity:
             victim = min(self.data, key=lambda k: (self.data[k][1], self.data[k][2]))
             del self.data[victim]
+
         self.clock += 1
         self.data[key] = [value, 1, self.clock]
 """,
@@ -831,10 +836,12 @@ class LFUCache:
     def _use(self, key):
         f = self.freq[key]
         del self.buckets[f][key]
+
         if not self.buckets[f]:
             del self.buckets[f]
             if self.min_freq == f:
                 self.min_freq += 1  # the smallest bucket just emptied
+
         self.freq[key] = f + 1
         self.buckets[f + 1][key] = None
 
@@ -847,10 +854,12 @@ class LFUCache:
     def put(self, key, value):
         if self.capacity == 0:
             return
+
         if key in self.values:
             self.values[key] = value
             self._use(key)
             return
+
         if len(self.values) == self.capacity:
             victim, _ = self.buckets[self.min_freq].popitem(
                 last=False
@@ -858,6 +867,7 @@ class LFUCache:
             if not self.buckets[self.min_freq]:
                 del self.buckets[self.min_freq]
             del self.values[victim], self.freq[victim]
+
         self.values[key] = value
         self.freq[key] = 1
         self.buckets[1][key] = None

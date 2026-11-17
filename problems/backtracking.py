@@ -66,6 +66,7 @@ def subsets(nums):
         go(i + 1)  # skip nums[i]
 
     go(0)
+
     return res
 """,
     ),
@@ -114,6 +115,7 @@ def permute(nums):
         if len(path) == len(nums):
             res.append(path[:])
             return
+
         for i, x in enumerate(nums):
             if used[i]:
                 continue
@@ -124,6 +126,7 @@ def permute(nums):
             used[i] = False
 
     go()
+
     return res
 """,
     ),
@@ -171,13 +174,17 @@ def combination_sum(candidates, target):
         if remain == 0:
             res.append(path[:])
             return
+
         if i == len(candidates) or remain < 0:
             return
+
         c = candidates[i]
+
         for count in range(remain // c + 1):  # use candidate i exactly `count` times
             go(i + 1, remain - c * count, path + [c] * count)
 
     go(0, target, [])
+
     return res
 """,
         solution=r"""
@@ -191,6 +198,7 @@ def combination_sum(candidates, target):
         if remain == 0:
             res.append(path[:])
             return
+
         for i in range(start, len(candidates)):
             if candidates[i] > remain:
                 break  # sorted: nothing later can fit
@@ -199,6 +207,7 @@ def combination_sum(candidates, target):
             path.pop()
 
     go(0, target)
+
     return res
 """,
     ),
@@ -264,6 +273,7 @@ def generate_parenthesis(n):
             go(s + ")", opened, closed + 1)
 
     go("", 0, 0)
+
     return res
 """,
     ),
@@ -305,12 +315,14 @@ def solve_n_queens(n):
     import itertools
 
     res = []
+
     for cols in itertools.permutations(range(n)):
         if (
             len({r + c for r, c in enumerate(cols)}) == n
             and len({r - c for r, c in enumerate(cols)}) == n
         ):
             res.append(["." * c + "Q" + "." * (n - c - 1) for c in cols])
+
     return res
 """,
         solution=r"""
@@ -324,9 +336,11 @@ def solve_n_queens(n):
         if r == n:
             res.append(["." * c + "Q" + "." * (n - c - 1) for c in placed])
             return
+
         for c in range(n):
             if c in cols or (r - c) in d1 or (r + c) in d2:
                 continue
+
             cols.add(c)
             d1.add(r - c)
             d2.add(r + c)
@@ -338,6 +352,7 @@ def solve_n_queens(n):
             d2.remove(r + c)
 
     go(0)
+
     return res
 """,
     ),

@@ -51,11 +51,13 @@ def find_longest_word(s, dictionary):
         return i == len(word)
 
     best = ""
+
     for word in dictionary:
         if is_subsequence(word) and (
             len(word) > len(best) or (len(word) == len(best) and word < best)
         ):
             best = word
+
     return best
 """,
         solution=r"""
@@ -111,6 +113,7 @@ def judge_square_sum(c):
 # Idea: Two pointers on a sorted sequence of squares
 def judge_square_sum(c):
     lo, hi = 0, math.isqrt(c)
+
     while lo <= hi:
         total = lo * lo + hi * hi
         if total == c:
@@ -119,6 +122,7 @@ def judge_square_sum(c):
             lo += 1
         else:
             hi -= 1
+
     return False
 """,
     ),
@@ -172,6 +176,7 @@ def triangle_number(nums):
 def triangle_number(nums):
     nums = sorted(nums)
     count = 0
+
     for k in range(len(nums) - 1, 1, -1):  # nums[k] is the largest side
         i, j = 0, k - 1
         while i < j:
@@ -180,6 +185,7 @@ def triangle_number(nums):
                 j -= 1
             else:
                 i += 1
+
     return count
 """,
     ),
@@ -227,11 +233,13 @@ def find_radius(houses, heaters):
 def find_radius(houses, heaters):
     heaters = sorted(heaters)
     radius = 0
+
     for h in houses:
         i = bisect.bisect_left(heaters, h)
         left = h - heaters[i - 1] if i > 0 else float("inf")
         right = heaters[i] - h if i < len(heaters) else float("inf")
         radius = max(radius, min(left, right))
+
     return radius
 """,
     ),
@@ -326,6 +334,7 @@ def find_pairs(nums, k):
 # BRUTE FORCE: O(n^2) time - expand around every peak without skipping
 def longest_mountain(arr):
     best = 0
+
     for i in range(1, len(arr) - 1):
         if arr[i - 1] < arr[i] > arr[i + 1]:
             left = i - 1
@@ -335,6 +344,7 @@ def longest_mountain(arr):
             while right < len(arr) - 1 and arr[right] > arr[right + 1]:
                 right += 1
             best = max(best, right - left + 1)
+
     return best
 """,
         solution=r"""
@@ -342,18 +352,24 @@ def longest_mountain(arr):
 # Idea: Expand from peaks; skip what is already processed
 def longest_mountain(arr):
     n, best, i = len(arr), 0, 1
+
     while i < n - 1:
         if arr[i - 1] < arr[i] > arr[i + 1]:  # a peak
             left = i - 1
+
             while left > 0 and arr[left - 1] < arr[left]:
                 left -= 1
+
             right = i + 1
+
             while right < n - 1 and arr[right] > arr[right + 1]:
                 right += 1
+
             best = max(best, right - left + 1)
             i = right  # nothing new can start before the end of this descent
         else:
             i += 1
+
     return best
 """,
     ),
@@ -400,6 +416,7 @@ def bag_of_tokens_score(tokens, power):
     def dfs(used, power, score):
         nonlocal best
         best = max(best, score)
+
         for i, t in enumerate(tokens):
             if not used >> i & 1:
                 if power >= t:
@@ -408,6 +425,7 @@ def bag_of_tokens_score(tokens, power):
                     dfs(used | 1 << i, power + t, score - 1)  # face down
 
     dfs(0, power, 0)
+
     return best
 """,
         solution=r"""
@@ -416,6 +434,7 @@ def bag_of_tokens_score(tokens, power):
 def bag_of_tokens_score(tokens, power):
     tokens = sorted(tokens)
     left, right, score, best = 0, len(tokens) - 1, 0, 0
+
     while left <= right:
         if power >= tokens[left]:
             power -= tokens[left]  # buy a point with the cheapest token
@@ -428,6 +447,7 @@ def bag_of_tokens_score(tokens, power):
             score -= 1
         else:
             break
+
     return best
 """,
     ),
@@ -485,19 +505,26 @@ def find_length_of_shortest_subarray(arr):
 def find_length_of_shortest_subarray(arr):
     n = len(arr)
     left = 0
+
     while left + 1 < n and arr[left] <= arr[left + 1]:
         left += 1
+
     if left == n - 1:
         return 0  # already sorted
+
     right = n - 1
+
     while right > 0 and arr[right - 1] <= arr[right]:
         right -= 1
+
     best = min(n - left - 1, right)  # keep only the prefix, or only the suffix
     j = right
+
     for i in range(left + 1):
         while j < n and arr[j] < arr[i]:
             j += 1
         best = min(best, j - i - 1)  # keep arr[:i + 1] and arr[j:]
+
     return best
 """,
     ),
@@ -542,8 +569,10 @@ def minimum_length(s):
     @lru_cache(None)
     def best(left, r):  # the remaining string is s[l:r]
         result = r - left
+
         if r - left >= 2 and s[left] == s[r - 1]:
             c, p = s[left], 1
+
             while left + p <= r and s[left + p - 1] == c:  # prefix s[l:l+p] is all c
                 q = 1
                 while (
@@ -552,6 +581,7 @@ def minimum_length(s):
                     result = min(result, best(left + p, r - q))
                     q += 1
                 p += 1
+
         return result
 
     return best(0, len(s))
@@ -561,12 +591,14 @@ def minimum_length(s):
 # Idea: Two pointers closing in from both ends (greedy maximal strips)
 def minimum_length(s):
     left, r = 0, len(s) - 1
+
     while left < r and s[left] == s[r]:
         c = s[left]
         while left <= r and s[left] == c:
             left += 1
         while left <= r and s[r] == c:
             r -= 1
+
     return r - left + 1
 """,
     ),
@@ -613,6 +645,7 @@ def first_palindrome(words):
             j -= 1
         if i >= j:  # all mirrored pairs matched
             return word
+
     return ""
 """,
     ),
@@ -654,12 +687,14 @@ def count_pairs(nums, target):
 def count_pairs(nums, target):
     nums = sorted(nums)
     lo, hi, count = 0, len(nums) - 1, 0
+
     while lo < hi:
         if nums[lo] + nums[hi] < target:
             count += hi - lo  # nums[lo] works with every index in (lo, hi]
             lo += 1
         else:
             hi -= 1
+
     return count
 """,
     ),
@@ -711,6 +746,7 @@ def max_distance(nums1, nums2):
 # Idea: Two pointers on two sorted arrays
 def max_distance(nums1, nums2):
     i = j = best = 0
+
     while i < len(nums1) and j < len(nums2):
         if nums1[i] <= nums2[j]:
             best = max(best, j - i)
@@ -719,6 +755,7 @@ def max_distance(nums1, nums2):
             i += 1  # nums1[i] is too big for nums2[j]
             if j < i:
                 j = i
+
     return best
 """,
     ),
@@ -777,9 +814,12 @@ def num_subseq(nums, target):
     nums = sorted(nums)
     n = len(nums)
     pow2 = [1] * n
+
     for i in range(1, n):
         pow2[i] = pow2[i - 1] * 2 % mod
+
     left, right, total = 0, n - 1, 0
+
     while left <= right:
         if nums[left] + nums[right] <= target:
             total = (
@@ -788,6 +828,7 @@ def num_subseq(nums, target):
             left += 1
         else:
             right -= 1
+
     return total
 """,
     ),

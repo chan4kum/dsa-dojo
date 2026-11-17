@@ -46,11 +46,13 @@ Answer: `[1, 1, 4, 2, 1, 1, 0, 0]` (days left on the stack never see a warmer da
 def daily_temperatures(temperatures):
     ans = [0] * len(temperatures)
     stack = []  # indices, temperatures decreasing
+
     for i, t in enumerate(temperatures):
         while stack and temperatures[stack[-1]] < t:
             j = stack.pop()
             ans[j] = i - j
         stack.append(i)
+
     return ans
 ```
 

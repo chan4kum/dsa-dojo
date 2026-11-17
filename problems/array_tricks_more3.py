@@ -53,14 +53,18 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^3 log n) time - try every subarray, sort it, test the whole array
 def find_unsorted_subarray(nums):
     n = len(nums)
+
     if nums == sorted(nums):
         return 0
+
     best = n
+
     for i in range(n):
         for j in range(i, n):
             trial = nums[:i] + sorted(nums[i : j + 1]) + nums[j + 1 :]
             if trial == sorted(nums):
                 best = min(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -70,6 +74,7 @@ def find_unsorted_subarray(nums):
     n = len(nums)
     biggest, smallest = nums[0], nums[-1]
     start = end = -1
+
     for i in range(n):
         biggest = max(biggest, nums[i])
         if nums[i] < biggest:
@@ -78,6 +83,7 @@ def find_unsorted_subarray(nums):
         smallest = min(smallest, nums[j])
         if nums[j] > smallest:
             start = j
+
     return end - start + 1 if end != -1 else 0
 """,
     ),
@@ -182,12 +188,16 @@ def valid_mountain_array(arr):
 def valid_mountain_array(arr):
     n = len(arr)
     i = 0
+
     while i + 1 < n and arr[i] < arr[i + 1]:
         i += 1
+
     if i == 0 or i == n - 1:
         return False
+
     while i + 1 < n and arr[i] > arr[i + 1]:
         i += 1
+
     return i == n - 1
 """,
     ),
@@ -388,6 +398,7 @@ def min_moves2(nums):
 # BRUTE FORCE: O(n^2) time - walk the chain from every start without remembering visited elements
 def array_nesting(nums):
     best = 0
+
     for start in range(len(nums)):
         seen = set()
         i = start
@@ -395,6 +406,7 @@ def array_nesting(nums):
             seen.add(nums[i])
             i = nums[i]
         best = max(best, len(seen))
+
     return best
 """,
         solution=r"""
@@ -403,6 +415,7 @@ def array_nesting(nums):
 def array_nesting(nums):
     visited = [False] * len(nums)
     best = 0
+
     for start in range(len(nums)):
         length, i = 0, start
         while not visited[i]:
@@ -410,6 +423,7 @@ def array_nesting(nums):
             i = nums[i]
             length += 1
         best = max(best, length)
+
     return best
 """,
     ),
@@ -456,18 +470,24 @@ def max_chunks_to_sorted_ii(arr):
     n = len(arr)
     target = sorted(arr)
     best = 1
+
     for mask in range(1 << (n - 1)):
         pieces, start = [], 0
+
         for i in range(n - 1):
             if mask >> i & 1:
                 pieces.append(arr[start : i + 1])
                 start = i + 1
+
         pieces.append(arr[start:])
         merged = []
+
         for piece in pieces:
             merged += sorted(piece)
+
         if merged == target:
             best = max(best, len(pieces))
+
     return best
 """,
         solution=r"""
@@ -476,13 +496,17 @@ def max_chunks_to_sorted_ii(arr):
 def max_chunks_to_sorted_ii(arr):
     n = len(arr)
     suffix_min = [float("inf")] * (n + 1)
+
     for i in range(n - 1, -1, -1):
         suffix_min[i] = min(arr[i], suffix_min[i + 1])
+
     chunks, prefix_max = 0, float("-inf")
+
     for i in range(n):
         prefix_max = max(prefix_max, arr[i])
         if prefix_max <= suffix_min[i + 1]:
             chunks += 1
+
     return chunks
 """,
     ),
@@ -535,11 +559,13 @@ def partition_disjoint(nums):
 def partition_disjoint(nums):
     left_max = overall_max = nums[0]
     boundary = 1
+
     for i in range(1, len(nums)):
         overall_max = max(overall_max, nums[i])
         if nums[i] < left_max:
             left_max = overall_max
             boundary = i + 1
+
     return boundary
 """,
     ),
@@ -644,10 +670,12 @@ def is_one_bit_character(bits):
     n = len(bits)
     valid = [False] * n
     valid[0] = True
+
     for i in range(1, n):
         one = bits[i - 1] == 0 and valid[i - 1]
         two = i >= 2 and bits[i - 2] == 1 and valid[i - 2]
         valid[i] = one or two
+
     return valid[n - 1]
 """,
         solution=r"""
@@ -696,6 +724,7 @@ def is_one_bit_character(bits):
 def large_group_positions(s):
     n = len(s)
     out = []
+
     for i in range(n):
         for j in range(i + 2, n):
             same = all(s[k] == s[i] for k in range(i, j + 1))
@@ -703,6 +732,7 @@ def large_group_positions(s):
             right_ok = j == n - 1 or s[j + 1] != s[j]
             if same and left_ok and right_ok:
                 out.append([i, j])
+
     return out
 """,
         solution=r"""
@@ -711,11 +741,13 @@ def large_group_positions(s):
 def large_group_positions(s):
     out = []
     start = 0
+
     for i in range(1, len(s) + 1):
         if i == len(s) or s[i] != s[start]:
             if i - start >= 3:
                 out.append([start, i - 1])
             start = i
+
     return out
 """,
     ),

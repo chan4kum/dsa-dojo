@@ -72,6 +72,7 @@ def inorder_traversal(root):
 # Idea: Tree traversal with an explicit stack (simulate recursion)
 def inorder_traversal(root):
     out, stack, node = [], [], root
+
     while node or stack:
         while node:  # go as far left as possible, remembering the path
             stack.append(node)
@@ -79,6 +80,7 @@ def inorder_traversal(root):
         node = stack.pop()  # nothing left of this node is unvisited
         out.append(node.val)  # visit
         node = node.right  # then explore its right subtree
+
     return out
 """,
     ),
@@ -126,6 +128,7 @@ def postorder_traversal(root):
 # Idea: Postorder = reverse of (node, right, left) preorder
 def postorder_traversal(root):
     out, stack = [], [root] if root else []
+
     while stack:
         node = stack.pop()
         out.append(node.val)  # visits in the order: node, right, left
@@ -133,6 +136,7 @@ def postorder_traversal(root):
             stack.append(node.left)
         if node.right:
             stack.append(node.right)  # pushed last, so popped (visited) first
+
     return out[::-1]  # reversed: left, right, node
 """,
     ),
@@ -183,6 +187,7 @@ def zigzag_level_order(root):
         dfs(node.right, depth + 1)
 
     dfs(root, 0)
+
     return [lvl[::-1] if d % 2 else lvl for d, lvl in enumerate(levels)]  # reverse every odd level
 """,
         solution=r"""
@@ -190,6 +195,7 @@ def zigzag_level_order(root):
 # Idea: BFS level by level + reverse alternate levels
 def zigzag_level_order(root):
     result, level, left_to_right = [], [root] if root else [], True
+
     while level:
         values = [n.val for n in level]
         result.append(values if left_to_right else values[::-1])
@@ -197,6 +203,7 @@ def zigzag_level_order(root):
         level = [
             child for n in level for child in (n.left, n.right) if child
         ]  # next level, left to right
+
     return result
 """,
     ),
@@ -253,15 +260,19 @@ def binary_tree_paths(root):
     def dfs(node):
         if not node:
             return
+
         path.append(str(node.val))  # step down
+
         if not node.left and not node.right:
             result.append("->".join(path))  # a leaf: record the whole path
         else:
             dfs(node.left)
             dfs(node.right)
+
         path.pop()  # step back up (undo)
 
     dfs(root)
+
     return result
 """,
     ),
@@ -324,9 +335,12 @@ def count_nodes(root):
 
     if not root:
         return 0
+
     left_h, right_h = height(root.left), height(root.right)
+
     if left_h == right_h:  # left subtree is perfect: 2^left_h - 1 nodes, plus the root = 2^left_h
         return (1 << left_h) + count_nodes(root.right)
+
     return (1 << right_h) + count_nodes(
         root.left
     )  # right subtree is perfect: 2^right_h - 1, plus the root
@@ -372,6 +386,7 @@ def count_nodes(root):
 def build_tree(inorder, postorder):
     if not postorder:
         return None
+
     root_val = postorder[-1]  # last of postorder is the root
     i = inorder.index(root_val)  # O(n) search; slices copy O(n) too
     root = TreeNode(root_val)
@@ -379,6 +394,7 @@ def build_tree(inorder, postorder):
         inorder[:i], postorder[:i]
     )  # the first i postorder values are the left subtree
     root.right = build_tree(inorder[i + 1 :], postorder[i:-1])
+
     return root
 """,
         solution=r"""
@@ -391,12 +407,14 @@ def build_tree(inorder, postorder):
     def build(lo, hi):  # build the subtree for inorder[lo..hi]
         if lo > hi:
             return None
+
         val = postorder[next_root[0]]
         next_root[0] -= 1
         root = TreeNode(val)
         mid = position[val]
         root.right = build(mid + 1, hi)  # right first: it sits just before the root in postorder
         root.left = build(lo, mid - 1)
+
         return root
 
     return build(0, len(inorder) - 1)
@@ -501,8 +519,10 @@ def convert_bst(root):
 
     collect(root)
     originals = [n.val for n in nodes]  # remember the ORIGINAL values
+
     for node, old in zip(nodes, originals):
         node.val = old + sum(v for v in originals if v > old)  # add everything larger
+
     return root
 """,
         solution=r"""
@@ -521,6 +541,7 @@ def convert_bst(root):
         visit(node.left)
 
     visit(root)
+
     return root
 """,
     ),
@@ -569,6 +590,7 @@ def path_sum(root, target_sum):
         walk(node.right, path)
 
     walk(root, [])
+
     return [p for p in all_paths if sum(p) == target_sum]  # keep the ones that add up
 """,
         solution=r"""
@@ -580,15 +602,19 @@ def path_sum(root, target_sum):
     def dfs(node, remaining):
         if not node:
             return
+
         path.append(node.val)
         remaining -= node.val
+
         if not node.left and not node.right and remaining == 0:
             result.append(list(path))  # copy: `path` keeps changing
+
         dfs(node.left, remaining)
         dfs(node.right, remaining)
         path.pop()  # backtrack
 
     dfs(root, target_sum)
+
     return result
 """,
     ),
@@ -636,6 +662,7 @@ def sum_of_left_leaves(root):
             collect(node.right, False)
 
     collect(root, False)
+
     return sum(n.val for n, is_left in pairs if is_left and not n.left and not n.right)
 """,
         solution=r"""
@@ -644,11 +671,14 @@ def sum_of_left_leaves(root):
 def sum_of_left_leaves(root):
     if not root:
         return 0
+
     total = 0
+
     if root.left and not root.left.left and not root.left.right:
         total += root.left.val  # the left child is a leaf
     else:
         total += sum_of_left_leaves(root.left)
+
     return total + sum_of_left_leaves(root.right)
 """,
     ),
@@ -714,11 +744,14 @@ def merge_trees(root1, root2):
 def merge_trees(root1, root2):
     if not root1:
         return root2  # nothing to add: reuse the other subtree as it is
+
     if not root2:
         return root1
+
     root1.val += root2.val  # overlap: add the values
     root1.left = merge_trees(root1.left, root2.left)
     root1.right = merge_trees(root1.right, root2.right)
+
     return root1
 """,
     ),
@@ -765,6 +798,7 @@ def average_of_levels(root):
         dfs(node.right, depth + 1)
 
     dfs(root, 0)
+
     return [sum(values) / len(values) for values in by_depth]
 """,
         solution=r"""
@@ -772,9 +806,11 @@ def average_of_levels(root):
 # Idea: BFS level by level
 def average_of_levels(root):
     result, queue = [], deque([root] if root else [])
+
     while queue:
         size = len(queue)  # exactly the nodes of the current level
         total = 0
+
         for _ in range(size):
             node = queue.popleft()
             total += node.val
@@ -782,7 +818,9 @@ def average_of_levels(root):
                 queue.append(node.left)
             if node.right:
                 queue.append(node.right)
+
         result.append(total / size)
+
     return result
 """,
     ),
@@ -823,16 +861,20 @@ def average_of_levels(root):
 def width_of_binary_tree(root):
     best = 0
     level = [root]  # includes explicit None placeholders for empty positions
+
     while any(level):
         first = next(i for i, node in enumerate(level) if node)  # trim leading and trailing empties
         last = len(level) - 1 - next(i for i, node in enumerate(reversed(level)) if node)
         best = max(best, last - first + 1)
         nxt = []
+
         for node in level[first : last + 1]:
             nxt += (
                 [node.left, node.right] if node else [None, None]
             )  # placeholders keep positions aligned
+
         level = nxt
+
     return best
 """,
         solution=r"""
@@ -841,20 +883,25 @@ def width_of_binary_tree(root):
 def width_of_binary_tree(root):
     if not root:
         return 0
+
     best, level = 0, [(root, 0)]  # (node, position index like a heap)
+
     while level:
         best = max(
             best, level[-1][1] - level[0][1] + 1
         )  # span from first to last occupied position
         base = level[0][1]  # re-base indices so they stay small
         nxt = []
+
         for node, idx in level:
             idx -= base
             if node.left:
                 nxt.append((node.left, 2 * idx))
             if node.right:
                 nxt.append((node.right, 2 * idx + 1))
+
         level = nxt
+
     return best
 """,
     ),
@@ -916,6 +963,7 @@ def longest_univalue_path(root):
         visit(node.right)
 
     visit(root)
+
     return best
 """,
         solution=r"""
@@ -926,17 +974,21 @@ def longest_univalue_path(root):
 
     def arm(node):  # longest same-value downward path (in edges) starting at node
         nonlocal best
+
         if not node:
             return 0
+
         left, right = arm(node.left), arm(node.right)
         left = (
             left + 1 if node.left and node.left.val == node.val else 0
         )  # extend only through equal values
         right = right + 1 if node.right and node.right.val == node.val else 0
         best = max(best, left + right)  # a path may use both arms
+
         return max(left, right)  # but only one arm can be passed up
 
     arm(root)
+
     return best
 """,
     ),
@@ -990,9 +1042,11 @@ def min_camera_cover(root):
             walk(node.right, node)
 
     walk(root, None)
+
     for size in range(len(nodes) + 1):  # try 0 cameras, then 1, then 2, ...
         for chosen in itertools.combinations(nodes, size):
             watched = set()
+
             for n in chosen:
                 watched |= {
                     n,
@@ -1000,8 +1054,10 @@ def min_camera_cover(root):
                     n.right,
                     parent[n],
                 }  # a camera watches itself, children and parent
+
             if all(n in watched for n in nodes):
                 return size
+
     return 0
 """,
         solution=r"""
@@ -1012,18 +1068,24 @@ def min_camera_cover(root):
 
     def state(node):  # 0 = not watched, 1 = watched without camera, 2 = has a camera
         nonlocal cameras
+
         if not node:
             return 1  # an empty child needs nothing
+
         left, right = state(node.left), state(node.right)
+
         if left == 0 or right == 0:
             cameras += 1  # a child is unwatched: this node needs a camera
             return 2
+
         if left == 2 or right == 2:
             return 1  # a child has a camera, so we are watched
+
         return 0  # both children are watched but cannot see us
 
     if state(root) == 0:
         cameras += 1  # the root itself is unwatched
+
     return cameras
 """,
     ),
@@ -1082,11 +1144,13 @@ def del_nodes(root, to_delete):
 
     walk(root, None)
     roots = [n for n in nodes if n.val not in gone and (parent[n] is None or parent[n].val in gone)]
+
     for n in nodes:  # pass 2: cut every link that points at a deleted node
         if n.left and n.left.val in gone:
             n.left = None
         if n.right and n.right.val in gone:
             n.right = None
+
     return roots
 """,
         solution=r"""
@@ -1099,14 +1163,19 @@ def del_nodes(root, to_delete):
     def dfs(node, is_root):  # returns the node to keep as this child (None if deleted)
         if not node:
             return None
+
         deleted = node.val in gone
+
         if is_root and not deleted:
             forest.append(node)  # a surviving node with no surviving parent starts a new tree
+
         node.left = dfs(node.left, deleted)  # children of a deleted node become roots
         node.right = dfs(node.right, deleted)
+
         return None if deleted else node
 
     dfs(root, True)
+
     return forest
 """,
     ),
@@ -1147,6 +1216,7 @@ def del_nodes(root, to_delete):
 def lca_deepest_leaves(root):
     if not root:
         return None
+
     depth = {}
 
     def measure(node, d):
@@ -1164,6 +1234,7 @@ def lca_deepest_leaves(root):
     candidates = [
         n for n in depth if deepest <= inside(n)
     ]  # nodes whose subtree holds every deepest node
+
     return max(candidates, key=lambda n: depth[n])  # the lowest one
 """,
         solution=r"""
@@ -1175,12 +1246,16 @@ def lca_deepest_leaves(root):
     ):  # returns (depth of the deepest leaf below, lowest node containing all those leaves)
         if not node:
             return 0, None
+
         left_depth, left_node = go(node.left)
         right_depth, right_node = go(node.right)
+
         if left_depth > right_depth:
             return left_depth + 1, left_node  # all deepest leaves are on the left
+
         if right_depth > left_depth:
             return right_depth + 1, right_node  # all deepest leaves are on the right
+
         return left_depth + 1, node  # they split here (or this is a leaf)
 
     return go(root)[1]

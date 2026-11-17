@@ -72,6 +72,7 @@ def check_subarray_sum(nums, k):
 def check_subarray_sum(nums, k):
     first_seen = {0: -1}
     total = 0
+
     for i, x in enumerate(nums):
         total = (total + x) % k
         if total in first_seen:
@@ -79,6 +80,7 @@ def check_subarray_sum(nums, k):
                 return True
         else:
             first_seen[total] = i
+
     return False
 """,
     ),
@@ -122,6 +124,7 @@ def check_subarray_sum(nums, k):
 def min_subarray(nums, p):
     n, total = len(nums), sum(nums)
     best = None
+
     for i in range(n):
         for j in range(i, n):
             length = j - i + 1
@@ -129,8 +132,10 @@ def min_subarray(nums, p):
                 continue
             if (total - sum(nums[i : j + 1])) % p == 0:
                 best = length if best is None else min(best, length)
+
     if total % p == 0:
         return 0
+
     return -1 if best is None else best
 """,
         solution=r"""
@@ -138,17 +143,21 @@ def min_subarray(nums, p):
 # Idea: Prefix remainders with a last-seen index map
 def min_subarray(nums, p):
     need = sum(nums) % p
+
     if need == 0:
         return 0
+
     last = {0: -1}
     cur = 0
     best = len(nums)
+
     for i, x in enumerate(nums):
         cur = (cur + x) % p
         want = (cur - need) % p
         if want in last:
             best = min(best, i - last[want])
         last[cur] = i
+
     return -1 if best == len(nums) else best
 """,
     ),
@@ -190,17 +199,23 @@ def min_subarray(nums, p):
 def count_triplets(arr):
     n = len(arr)
     total = 0
+
     for i in range(n):
         for j in range(i + 1, n):
             for k in range(j, n):
                 a = 0
+
                 for x in arr[i:j]:
                     a ^= x
+
                 b = 0
+
                 for x in arr[j : k + 1]:
                     b ^= x
+
                 if a == b:
                     total += 1
+
     return total
 """,
         solution=r"""
@@ -211,11 +226,13 @@ def count_triplets(arr):
     seen[0] = [1, 0]
     prefix = 0
     total = 0
+
     for b, x in enumerate(arr, 1):
         prefix ^= x
         count, index_sum = seen[prefix]
         total += count * (b - 1) - index_sum
         seen[prefix] = [count + 1, index_sum + b]
+
     return total
 """,
     ),
@@ -306,18 +323,22 @@ def xor_queries(arr, queries):
 # BRUTE FORCE: O(n^2) time (plus the pair scan) - list every valid subarray and test pairs
 def min_sum_of_lengths(arr, target):
     spans = []
+
     for i in range(len(arr)):
         total = 0
         for j in range(i, len(arr)):
             total += arr[j]
             if total == target:
                 spans.append((i, j))
+
     best = None
+
     for a_start, a_end in spans:
         for b_start, b_end in spans:
             if a_end < b_start:
                 cost = (a_end - a_start + 1) + (b_end - b_start + 1)
                 best = cost if best is None else min(best, cost)
+
     return -1 if best is None else best
 """,
         solution=r"""
@@ -330,17 +351,22 @@ def min_sum_of_lengths(arr, target):
     shortest = inf
     result = inf
     left = window = 0
+
     for right in range(n):
         window += arr[right]
+
         while window > target:
             window -= arr[left]
             left += 1
+
         if window == target:
             length = right - left + 1
             if left > 0:
                 result = min(result, length + best_end[left - 1])
             shortest = min(shortest, length)
+
         best_end[right] = shortest
+
     return -1 if result == inf else result
 """,
     ),
@@ -380,12 +406,14 @@ def min_sum_of_lengths(arr, target):
 # BRUTE FORCE: O(n^2) time - test every subarray sum
 def num_of_subarrays(arr):
     count = 0
+
     for i in range(len(arr)):
         total = 0
         for j in range(i, len(arr)):
             total += arr[j]
             if total % 2 == 1:
                 count += 1
+
     return count % (10**9 + 7)
 """,
         solution=r"""
@@ -395,6 +423,7 @@ def num_of_subarrays(arr):
     even, odd = 1, 0
     parity = 0
     total = 0
+
     for x in arr:
         parity ^= x & 1
         if parity:
@@ -403,6 +432,7 @@ def num_of_subarrays(arr):
         else:
             total += odd
             even += 1
+
     return total % (10**9 + 7)
 """,
     ),
@@ -490,11 +520,13 @@ def product_queries(n, queries):
     mod = 10**9 + 7
     powers = [1 << i for i in range(n.bit_length()) if n >> i & 1]
     out = []
+
     for left, right in queries:
         value = 1
         for x in powers[left : right + 1]:
             value = value * x % mod
         out.append(value)
+
     return out
 """,
         solution=r"""
@@ -707,11 +739,13 @@ def max_absolute_sum(nums):
 def count_palindromic_subsequence(s):
     found = set()
     n = len(s)
+
     for i in range(n):
         for j in range(i + 1, n):
             for k in range(j + 1, n):
                 if s[i] == s[k]:
                     found.add(s[i] + s[j] + s[k])
+
     return len(found)
 """,
         solution=r"""
@@ -762,11 +796,13 @@ def count_palindromic_subsequence(s):
 def get_averages(nums, k):
     n = len(nums)
     out = []
+
     for i in range(n):
         if i - k < 0 or i + k >= n:
             out.append(-1)
         else:
             out.append(sum(nums[i - k : i + k + 1]) // (2 * k + 1))
+
     return out
 """,
         solution=r"""
@@ -775,11 +811,15 @@ def get_averages(nums, k):
 def get_averages(nums, k):
     n = len(nums)
     prefix = [0]
+
     for x in nums:
         prefix.append(prefix[-1] + x)
+
     out = [-1] * n
+
     for i in range(k, n - k):
         out[i] = (prefix[i + k + 1] - prefix[i - k]) // (2 * k + 1)
+
     return out
 """,
     ),
@@ -826,10 +866,12 @@ def get_sum_absolute_differences(nums):
     n, total = len(nums), sum(nums)
     left = 0
     out = []
+
     for i, x in enumerate(nums):
         right = total - left - x
         out.append(x * i - left + right - x * (n - 1 - i))
         left += x
+
     return out
 """,
     ),
@@ -874,6 +916,7 @@ def get_sum_absolute_differences(nums):
 # BRUTE FORCE: O(n^2) time - count the qualifying elements of every subarray
 def count_interesting_subarrays(nums, modulo, k):
     total = 0
+
     for i in range(len(nums)):
         cnt = 0
         for j in range(i, len(nums)):
@@ -881,6 +924,7 @@ def count_interesting_subarrays(nums, modulo, k):
                 cnt += 1
             if cnt % modulo == k:
                 total += 1
+
     return total
 """,
         solution=r"""
@@ -890,11 +934,13 @@ def count_interesting_subarrays(nums, modulo, k):
     seen = Counter({0: 1})
     cnt = 0
     total = 0
+
     for x in nums:
         if x % modulo == k:
             cnt += 1
         total += seen[(cnt - k) % modulo]
         seen[cnt % modulo] += 1
+
     return total
 """,
     ),
@@ -939,6 +985,7 @@ def count_interesting_subarrays(nums, modulo, k):
 # BRUTE FORCE: O(n^2 * 20) time - for every subarray check that every bit appears an even number of times
 def beautiful_subarrays(nums):
     total = 0
+
     for i in range(len(nums)):
         counts = [0] * 21
         for j in range(i, len(nums)):
@@ -946,6 +993,7 @@ def beautiful_subarrays(nums):
                 counts[bit] += nums[j] >> bit & 1
             if all(c % 2 == 0 for c in counts):
                 total += 1
+
     return total
 """,
         solution=r"""
@@ -955,10 +1003,12 @@ def beautiful_subarrays(nums):
     seen = Counter({0: 1})
     prefix = 0
     total = 0
+
     for x in nums:
         prefix ^= x
         total += seen[prefix]
         seen[prefix] += 1
+
     return total
 """,
     ),
@@ -1008,17 +1058,23 @@ def sum_of_floored_pairs(nums):
 def sum_of_floored_pairs(nums):
     top = max(nums)
     cnt = [0] * (top + 1)
+
     for x in nums:
         cnt[x] += 1
+
     pre = [0] * (top + 1)
+
     for v in range(1, top + 1):
         pre[v] = pre[v - 1] + cnt[v]
+
     total = 0
+
     for v in range(1, top + 1):
         if cnt[v]:
             for start in range(v, top + 1, v):
                 hi = min(top, start + v - 1)
                 total += cnt[v] * (start // v) * (pre[hi] - pre[start - 1])
+
     return total % (10**9 + 7)
 """,
     ),

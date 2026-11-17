@@ -87,12 +87,14 @@ def max_vowels(s, k):
 # BRUTE FORCE: O(n * minutes) time - try every window start
 def max_satisfied(customers, grumpy, minutes):
     best = 0
+
     for start in range(len(customers) - minutes + 1):  # try the calm window at every position
         total = 0
         for i, (c, g) in enumerate(zip(customers, grumpy)):
             if g == 0 or start <= i < start + minutes:
                 total += c
         best = max(best, total)
+
     return best
 """,
         solution=r"""
@@ -101,11 +103,13 @@ def max_satisfied(customers, grumpy, minutes):
 def max_satisfied(customers, grumpy, minutes):
     base = sum(c for c, g in zip(customers, grumpy) if g == 0)  # always satisfied
     extra = best_extra = sum(c * g for c, g in zip(customers[:minutes], grumpy[:minutes]))
+
     for i in range(minutes, len(customers)):
         extra += (
             customers[i] * grumpy[i] - customers[i - minutes] * grumpy[i - minutes]
         )  # slide the window
         best_extra = max(best_extra, extra)
+
     return base + best_extra
 """,
     ),
@@ -143,12 +147,14 @@ def max_satisfied(customers, grumpy, minutes):
 # BRUTE FORCE: O(n^2) time - every start with a running sum
 def num_subarrays_with_sum(nums, goal):
     count = 0
+
     for i in range(len(nums)):
         total = 0
         for j in range(i, len(nums)):
             total += nums[j]
             if total == goal:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -158,12 +164,14 @@ def num_subarrays_with_sum(nums, goal):
     seen = defaultdict(int)
     seen[0] = 1  # the empty prefix
     prefix = count = 0
+
     for x in nums:
         prefix += x
         count += seen[
             prefix - goal
         ]  # earlier prefixes that leave exactly `goal` between them and here
         seen[prefix] += 1
+
     return count
 """,
     ),
@@ -201,6 +209,7 @@ def num_subarrays_with_sum(nums, goal):
 # BRUTE FORCE: O(n^2) time - extend every start and track distinct values
 def subarrays_with_k_distinct(nums, k):
     count = 0
+
     for i in range(len(nums)):
         seen = set()
         for j in range(i, len(nums)):
@@ -209,6 +218,7 @@ def subarrays_with_k_distinct(nums, k):
                 count += 1
             elif len(seen) > k:
                 break
+
     return count
 """,
         solution=r"""
@@ -217,6 +227,7 @@ def subarrays_with_k_distinct(nums, k):
 def subarrays_with_k_distinct(nums, k):
     def at_most(limit):  # subarrays with at most `limit` distinct values
         counts, left, total = defaultdict(int), 0, 0
+
         for right, x in enumerate(nums):
             counts[x] += 1
             while len(counts) > limit:  # shrink until valid again
@@ -225,6 +236,7 @@ def subarrays_with_k_distinct(nums, k):
                     del counts[nums[left]]
                 left += 1
             total += right - left + 1  # every start in [left, right] works
+
         return total
 
     return at_most(k) - at_most(k - 1)

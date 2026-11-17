@@ -80,6 +80,7 @@ def has_path_sum(root, target):
         go(n.right, path)
 
     go(root, [])
+
     return any(sum(p) == target for p in paths)
 """,
         solution=r"""
@@ -137,7 +138,9 @@ def min_depth(root):
 def min_depth(root):
     if not root:
         return 0
+
     q, d = deque([root]), 1
+
     while q:
         for _ in range(len(q)):
             n = q.popleft()
@@ -147,6 +150,7 @@ def min_depth(root):
                 q.append(n.left)
             if n.right:
                 q.append(n.right)
+
         d += 1
 """,
     ),
@@ -196,6 +200,7 @@ def sum_numbers(root):
         go(n.right, s)
 
     go(root, "")
+
     return sum(int(p) for p in paths)
 """,
         solution=r"""
@@ -255,6 +260,7 @@ def largest_values(root):
         go(n.right, d + 1)
 
     go(root, 0)
+
     return [best[d] for d in sorted(best)]
 """,
         solution=r"""
@@ -263,9 +269,12 @@ def largest_values(root):
 def largest_values(root):
     if not root:
         return []
+
     out, q = [], deque([root])
+
     while q:
         m = None
+
         for _ in range(len(q)):
             n = q.popleft()
             m = n.val if m is None else max(m, n.val)
@@ -273,7 +282,9 @@ def largest_values(root):
                 q.append(n.left)
             if n.right:
                 q.append(n.right)
+
         out.append(m)
+
     return out
 """,
     ),

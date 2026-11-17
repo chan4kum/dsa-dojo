@@ -70,11 +70,15 @@ def integer_break(n):
 def integer_break(n):
     if n <= 3:
         return n - 1  # 2 -> 1*1, 3 -> 1*2
+
     threes, rest = divmod(n, 3)
+
     if rest == 0:
         return 3**threes
+
     if rest == 1:
         return 3 ** (threes - 1) * 4  # replace 3 + 1 by 2 + 2
+
     return 3**threes * 2
 """,
     ),
@@ -125,12 +129,14 @@ def number_of_arithmetic_slices(nums):
 # Idea: Count subarrays by the number ending at each index (1-D DP)
 def number_of_arithmetic_slices(nums):
     total = ending_here = 0
+
     for i in range(2, len(nums)):
         if nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]:
             ending_here += 1  # extend every slice ending at i-1, plus one new 3-slice
             total += ending_here
         else:
             ending_here = 0
+
     return total
 """,
     ),
@@ -181,12 +187,15 @@ def predict_the_winner(nums):
 def predict_the_winner(nums):
     n = len(nums)
     dp = [[0] * n for _ in range(n)]
+
     for i in range(n):
         dp[i][i] = nums[i]
+
     for length in range(2, n + 1):  # shorter intervals first
         for i in range(n - length + 1):
             j = i + length - 1
             dp[i][j] = max(nums[i] - dp[i + 1][j], nums[j] - dp[i][j - 1])
+
     return dp[0][n - 1] >= 0
 """,
     ),
@@ -241,6 +250,7 @@ def min_distance(word1, word2):
 def min_distance(word1, word2):
     n = len(word2)
     prev = [0] * (n + 1)  # LCS lengths for the previous row
+
     for ch in word1:
         cur = [0] * (n + 1)
         for j in range(1, n + 1):
@@ -249,6 +259,7 @@ def min_distance(word1, word2):
             else:
                 cur[j] = max(prev[j], cur[j - 1])
         prev = cur
+
     return len(word1) + len(word2) - 2 * prev[n]
 """,
     ),
@@ -283,12 +294,14 @@ def min_distance(word1, word2):
 # BRUTE FORCE: O(m*n*min(m, n)) time - extend every pair of start positions
 def find_length(nums1, nums2):
     best = 0
+
     for i in range(len(nums1)):
         for j in range(len(nums2)):
             k = 0
             while i + k < len(nums1) and j + k < len(nums2) and nums1[i + k] == nums2[j + k]:
                 k += 1  # extend the match as far as it goes
             best = max(best, k)
+
     return best
 """,
         solution=r"""
@@ -297,6 +310,7 @@ def find_length(nums1, nums2):
 def find_length(nums1, nums2):
     best, n = 0, len(nums2)
     prev = [0] * (n + 1)
+
     for a in nums1:
         cur = [0] * (n + 1)
         for j in range(1, n + 1):
@@ -304,6 +318,7 @@ def find_length(nums1, nums2):
                 cur[j] = prev[j - 1] + 1  # extend the run on the diagonal
                 best = max(best, cur[j])
         prev = cur
+
     return best
 """,
     ),
@@ -348,12 +363,15 @@ def find_length(nums1, nums2):
 def stone_game(piles):
     n = len(piles)
     dp = [[0] * n for _ in range(n)]  # dp[i][j] = best (mover - opponent) from piles[i..j]
+
     for i in range(n):
         dp[i][i] = piles[i]
+
     for length in range(2, n + 1):
         for i in range(n - length + 1):
             j = i + length - 1
             dp[i][j] = max(piles[i] - dp[i + 1][j], piles[j] - dp[i][j - 1])
+
     return dp[0][n - 1] > 0
 """,
         solution=r"""
@@ -469,6 +487,7 @@ def max_uncrossed_lines(nums1, nums2):
 def max_uncrossed_lines(nums1, nums2):
     n = len(nums2)
     prev = [0] * (n + 1)
+
     for a in nums1:
         cur = [0] * (n + 1)
         for j in range(1, n + 1):
@@ -477,6 +496,7 @@ def max_uncrossed_lines(nums1, nums2):
             else:
                 cur[j] = max(prev[j], cur[j - 1])
         prev = cur
+
     return prev[n]
 """,
     ),
@@ -530,6 +550,7 @@ def min_insertions(s):
 def min_insertions(s):
     t, n = s[::-1], len(s)
     prev = [0] * (n + 1)
+
     for ch in s:  # LCS(s, reverse(s)) = longest palindromic subsequence
         cur = [0] * (n + 1)
         for j in range(1, n + 1):
@@ -538,6 +559,7 @@ def min_insertions(s):
             else:
                 cur[j] = max(prev[j], cur[j - 1])
         prev = cur
+
     return n - prev[n]
 """,
     ),
@@ -593,6 +615,7 @@ def num_rolls_to_target(n, k, target):
     mod = 10**9 + 7
     ways = [0] * (target + 1)  # ways[s] = number of ways to reach sum s with the dice so far
     ways[0] = 1
+
     for _ in range(n):
         nxt = [0] * (target + 1)
         for s in range(target + 1):
@@ -601,6 +624,7 @@ def num_rolls_to_target(n, k, target):
                     if s + face <= target:
                         nxt[s + face] = (nxt[s + face] + ways[s]) % mod
         ways = nxt
+
     return ways[target]
 """,
     ),
@@ -648,15 +672,19 @@ def calculate_minimum_hp(dungeon):
         nonlocal best
         total += dungeon[r][c]
         lowest = min(lowest, total)
+
         if r == rows - 1 and c == cols - 1:
             best = min(best, max(1, 1 - lowest))  # start so that the lowest point is still 1
             return
+
         if r + 1 < rows:
             walk(r + 1, c, total, lowest)
+
         if c + 1 < cols:
             walk(r, c + 1, total, lowest)
 
     walk(0, 0, 0, 0)
+
     return best
 """,
         solution=r"""
@@ -668,11 +696,13 @@ def calculate_minimum_hp(dungeon):
         cols + 1
     )  # need[c] = health needed to enter the cell in column c of this row
     need[cols - 1] = 1  # standing past the exit we need 1
+
     for r in range(rows - 1, -1, -1):
         for c in range(cols - 1, -1, -1):
             cheapest_next = min(need[c], need[c + 1])  # go down (need[c]) or right (need[c + 1])
             need[c] = max(1, cheapest_next - dungeon[r][c])
         need[cols] = float("inf")
+
     return need[0]
 """,
     ),
@@ -722,10 +752,12 @@ def longest_valid_parentheses(s):
         return depth == 0
 
     best = 0
+
     for i in range(len(s)):
         for j in range(i + 2, len(s) + 1, 2):  # valid strings have even length
             if valid(s[i:j]):
                 best = max(best, j - i)
+
     return best
 """,
         solution=r"""
@@ -733,6 +765,7 @@ def longest_valid_parentheses(s):
 # Idea: Stack of indices as 'last unmatched position' markers
 def longest_valid_parentheses(s):
     stack, best = [-1], 0  # -1 is the base: the index before the first character
+
     for i, ch in enumerate(s):
         if ch == "(":
             stack.append(i)
@@ -742,6 +775,7 @@ def longest_valid_parentheses(s):
                 stack.append(i)  # unmatched ')': it becomes the new base
             else:
                 best = max(best, i - stack[-1])
+
     return best
 """,
     ),
@@ -786,11 +820,14 @@ def is_match(s, p):
     def solve(i, j):
         if j == len(p):
             return i == len(s)
+
         if p[j] == "*":
             # the star matches nothing, or it swallows s[i] and stays active
             return solve(i, j + 1) or (i < len(s) and solve(i + 1, j))
+
         if i < len(s) and (p[j] == "?" or p[j] == s[i]):
             return solve(i + 1, j + 1)
+
         return False
 
     return solve(0, 0)
@@ -804,8 +841,10 @@ def is_match(s, p):
         n + 1
     )  # dp row for i = 0: only patterns of leading stars match the empty string
     prev[0] = True
+
     for j in range(1, n + 1):
         prev[j] = prev[j - 1] and p[j - 1] == "*"
+
     for i in range(1, m + 1):
         cur = [False] * (n + 1)
         for j in range(1, n + 1):
@@ -814,6 +853,7 @@ def is_match(s, p):
             elif p[j - 1] == "?" or p[j - 1] == s[i - 1]:
                 cur[j] = prev[j - 1]
         prev = cur
+
     return prev[n]
 """,
     ),
@@ -863,6 +903,7 @@ def max_profit_two(prices):
         return best
 
     n = len(prices)
+
     return max(one_trade(prices[:i]) + one_trade(prices[i:]) for i in range(n + 1))
 """,
         solution=r"""
@@ -871,11 +912,13 @@ def max_profit_two(prices):
 def max_profit_two(prices):
     buy1 = buy2 = float("-inf")  # best balance while holding a share (after buying)
     sell1 = sell2 = 0  # best balance after selling
+
     for p in prices:
         buy1 = max(buy1, -p)  # first purchase
         sell1 = max(sell1, buy1 + p)  # first sale
         buy2 = max(buy2, sell1 - p)  # second purchase uses the profit of the first trade
         sell2 = max(sell2, buy2 + p)  # second sale
+
     return sell2
 """,
     ),

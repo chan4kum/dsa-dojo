@@ -59,6 +59,7 @@ def search(nums, target):
 # Idea: Binary search on a sorted index range
 def search(nums, target):
     lo, hi = 0, len(nums) - 1
+
     while lo <= hi:
         mid = (lo + hi) // 2
         if nums[mid] == target:
@@ -67,6 +68,7 @@ def search(nums, target):
             lo = mid + 1
         else:
             hi = mid - 1
+
     return -1
 """,
     ),
@@ -116,10 +118,13 @@ def search_rotated(nums, target):
 # Idea: Binary search with 'which half is sorted?' reasoning
 def search_rotated(nums, target):
     lo, hi = 0, len(nums) - 1
+
     while lo <= hi:
         mid = (lo + hi) // 2
+
         if nums[mid] == target:
             return mid
+
         if nums[lo] <= nums[mid]:  # left half sorted
             if nums[lo] <= target < nums[mid]:
                 hi = mid - 1
@@ -130,6 +135,7 @@ def search_rotated(nums, target):
                 lo = mid + 1
             else:
                 hi = mid - 1
+
     return -1
 """,
     ),
@@ -182,12 +188,14 @@ def min_eating_speed(piles, h):
         return sum(-(-p // k) for p in piles) <= h  # ceil(p / k) without floats
 
     lo, hi = 1, max(piles)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if feasible(mid):
             hi = mid  # mid works: try smaller (keep mid)
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -237,8 +245,10 @@ def split_array(nums, k):
         return c
 
     cap = max(nums)
+
     while parts(cap) > k:
         cap += 1
+
     return cap
 """,
         solution=r"""
@@ -247,21 +257,25 @@ def split_array(nums, k):
 def split_array(nums, k):
     def parts_needed(cap):
         parts, cur = 1, 0
+
         for x in nums:
             if cur + x > cap:
                 parts += 1
                 cur = x
             else:
                 cur += x
+
         return parts
 
     lo, hi = max(nums), sum(nums)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if parts_needed(mid) <= k:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -309,9 +323,11 @@ def find_median(a, b):
 def find_median(a, b):
     if len(a) > len(b):
         a, b = b, a
+
     m, n = len(a), len(b)
     half = (m + n + 1) // 2
     lo, hi = 0, m
+
     while lo <= hi:
         i = (lo + hi) // 2  # elements taken from a
         j = half - i  # elements taken from b
@@ -319,10 +335,12 @@ def find_median(a, b):
         aR = a[i] if i < m else float("inf")
         bL = b[j - 1] if j > 0 else float("-inf")
         bR = b[j] if j < n else float("inf")
+
         if aL <= bR and bL <= aR:
             if (m + n) % 2:
                 return float(max(aL, bL))
             return (max(aL, bL) + min(aR, bR)) / 2
+
         if aL > bR:
             hi = i - 1
         else:

@@ -52,10 +52,13 @@ def search_rotated(nums, target):
 # Idea: Binary search on a rotated array (one half is always sorted)
 def search_rotated(nums, target):
     lo, hi = 0, len(nums) - 1
+
     while lo <= hi:
         mid = (lo + hi) // 2
+
         if nums[mid] == target:
             return True
+
         if nums[lo] == nums[mid] == nums[hi]:
             lo, hi = lo + 1, hi - 1  # cannot tell which half is sorted: shrink
         elif nums[lo] <= nums[mid]:  # the left half is sorted
@@ -68,6 +71,7 @@ def search_rotated(nums, target):
                 lo = mid + 1
             else:
                 hi = mid - 1
+
     return False
 """,
     ),
@@ -115,6 +119,7 @@ def find_min(nums):
 # Idea: Binary search against the right end, with a safe shrink on ties
 def find_min(nums):
     lo, hi = 0, len(nums) - 1
+
     while lo < hi:
         mid = (lo + hi) // 2
         if nums[mid] > nums[hi]:
@@ -123,6 +128,7 @@ def find_min(nums):
             hi = mid  # mid could be the minimum
         else:
             hi -= 1  # a tie: dropping one copy of the value is safe
+
     return nums[lo]
 """,
     ),
@@ -174,6 +180,7 @@ def min_days(bloom_day, m, k):
     for day in sorted(set(bloom_day)):  # try the days in increasing order
         if bouquets(day) >= m:
             return day
+
     return -1
 """,
         solution=r"""
@@ -193,12 +200,14 @@ def min_days(bloom_day, m, k):
         return count >= m
 
     lo, hi = min(bloom_day), max(bloom_day)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if enough(mid):
             hi = mid  # mid works: look for something earlier
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -242,12 +251,14 @@ def peak_index_in_mountain_array(arr):
 # Idea: Binary search on a slope (rising vs falling)
 def peak_index_in_mountain_array(arr):
     lo, hi = 0, len(arr) - 1
+
     while lo < hi:
         mid = (lo + hi) // 2
         if arr[mid] < arr[mid + 1]:
             lo = mid + 1  # still climbing: the peak is to the right
         else:
             hi = mid  # descending: mid may be the peak
+
     return lo
 """,
     ),
@@ -297,12 +308,14 @@ def smallest_divisor(nums, threshold):
 # Idea: Binary search on the answer (monotone predicate)
 def smallest_divisor(nums, threshold):
     lo, hi = 1, max(nums)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if sum((x + mid - 1) // mid for x in nums) <= threshold:
             hi = mid  # mid is good enough; try smaller
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -352,12 +365,14 @@ def find_kth_positive(arr, k):
 # Idea: Binary search on 'how many are missing so far'
 def find_kth_positive(arr, k):
     lo, hi = 0, len(arr)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if arr[mid] - (mid + 1) < k:  # fewer than k numbers missing before arr[mid]
             lo = mid + 1
         else:
             hi = mid
+
     return lo + k  # lo elements precede the k-th gap
 """,
     ),

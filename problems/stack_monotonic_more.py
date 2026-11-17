@@ -52,12 +52,14 @@ PROBLEMS = [
 def eval_rpn(tokens):
     t = list(tokens)
     ops = {"+", "-", "*", "/"}
+
     while len(t) > 1:
         i = next(k for k, v in enumerate(t) if v in ops)
         a, b = int(t[i - 2]), int(t[i - 1])
         op = t[i]
         r = a + b if op == "+" else a - b if op == "-" else a * b if op == "*" else int(a / b)
         t[i - 2 : i + 1] = [str(r)]
+
     return int(t[0])
 """,
         solution=r"""
@@ -65,9 +67,11 @@ def eval_rpn(tokens):
 # Idea: Stack evaluation (operands wait for their operator)
 def eval_rpn(tokens):
     st = []
+
     for tok in tokens:
         if tok in "+-*/" and len(tok) == 1:
             b, a = st.pop(), st.pop()
+
             if tok == "+":
                 st.append(a + b)
             elif tok == "-":
@@ -78,6 +82,7 @@ def eval_rpn(tokens):
                 st.append(int(a / b))
         else:
             st.append(int(tok))
+
     return st[0]
 """,
     ),
@@ -119,6 +124,7 @@ def decode_string(s):
     import re
 
     pat = re.compile(r"(\d+)\[([a-z]*)\]")
+
     while True:
         m = pat.search(s)
         if not m:
@@ -130,6 +136,7 @@ def decode_string(s):
 # Idea: Stack of contexts for nested structures
 def decode_string(s):
     stack, cur, k = [], "", 0
+
     for ch in s:
         if ch.isdigit():
             k = k * 10 + int(ch)
@@ -141,6 +148,7 @@ def decode_string(s):
             cur = prev + cur * times
         else:
             cur += ch
+
     return cur
 """,
     ),
@@ -183,11 +191,13 @@ def decode_string(s):
 def car_fleet(target, position, speed):
     cars = [(p, (target - p) / s) for p, s in zip(position, speed)]
     fleets = 0
+
     for p, t in cars:
         if all(
             t > t2 for p2, t2 in cars if p2 > p
         ):  # nobody ahead is slower-or-equal -> leads its own fleet
             fleets += 1
+
     return fleets
 """,
         solution=r"""
@@ -244,8 +254,10 @@ def car_fleet(target, position, speed):
 def asteroid_collision(asteroids):
     a = list(asteroids)
     changed = True
+
     while changed:
         changed = False
+
         for i in range(len(a) - 1):
             if a[i] > 0 > a[i + 1]:
                 if abs(a[i]) > abs(a[i + 1]):
@@ -254,8 +266,10 @@ def asteroid_collision(asteroids):
                     del a[i]
                 else:
                     del a[i : i + 2]
+
                 changed = True
                 break
+
     return a
 """,
         solution=r"""
@@ -263,8 +277,10 @@ def asteroid_collision(asteroids):
 # Idea: Stack simulation (chain reactions)
 def asteroid_collision(asteroids):
     st = []
+
     for x in asteroids:
         alive = True
+
         while alive and x < 0 and st and st[-1] > 0:
             if st[-1] < -x:
                 st.pop()
@@ -273,8 +289,10 @@ def asteroid_collision(asteroids):
                 alive = False
             else:
                 alive = False
+
         if alive:
             st.append(x)
+
     return st
 """,
     ),
@@ -334,13 +352,16 @@ def remove_k_digits(num, k):
 # Idea: Monotonic (increasing) stack - greedy removal
 def remove_k_digits(num, k):
     st = []
+
     for d in num:
         while k and st and st[-1] > d:
             st.pop()
             k -= 1
         st.append(d)
+
     if k:
         st = st[:-k]
+
     return "".join(st).lstrip("0") or "0"
 """,
     ),
@@ -383,6 +404,7 @@ def remove_k_digits(num, k):
 def next_greater_elements(nums):
     n = len(nums)
     out = []
+
     for i in range(n):
         ans = -1
         for step in range(1, n):
@@ -390,6 +412,7 @@ def next_greater_elements(nums):
                 ans = nums[(i + step) % n]
                 break
         out.append(ans)
+
     return out
 """,
         solution=r"""
@@ -399,12 +422,14 @@ def next_greater_elements(nums):
     n = len(nums)
     res = [-1] * n
     st = []
+
     for i in range(2 * n):
         x = nums[i % n]
         while st and nums[st[-1]] < x:
             res[st.pop()] = x
         if i < n:
             st.append(i)
+
     return res
 """,
     ),

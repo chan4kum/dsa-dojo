@@ -42,18 +42,25 @@
 def str_str(haystack, needle):
     if not needle:
         return 0
+
     m = len(needle)
     s = needle + "#" + haystack
     pi = [0] * len(s)
+
     for i in range(1, len(s)):
         k = pi[i - 1]
+
         while k and s[i] != s[k]:
             k = pi[k - 1]  # fall back, do not restart
+
         if s[i] == s[k]:
             k += 1
+
         pi[i] = k
+
         if k == m:
             return i - 2 * m  # match ends at i in s; start inside haystack
+
     return -1
 ```
 

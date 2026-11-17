@@ -234,12 +234,15 @@ def four_sum_count(a, b, c, d):
 # BRUTE FORCE: O(n^2) time - compare every pair of positions
 def word_pattern(pattern, s):
     w = s.split()
+
     if len(w) != len(pattern):
         return False
+
     for i in range(len(w)):
         for j in range(i + 1, len(w)):
             if (pattern[i] == pattern[j]) != (w[i] == w[j]):
                 return False
+
     return True
 """,
         solution=r"""
@@ -247,12 +250,16 @@ def word_pattern(pattern, s):
 # Idea: Bijection check with two maps
 def word_pattern(pattern, s):
     w = s.split()
+
     if len(w) != len(pattern):
         return False
+
     fwd, back = {}, {}
+
     for ch, word in zip(pattern, w):
         if fwd.setdefault(ch, word) != word or back.setdefault(word, ch) != ch:
             return False
+
     return True
 """,
     ),

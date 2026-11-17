@@ -50,13 +50,18 @@ def lemonade_change(bills):
     def go(i, fives, tens):
         if i == len(bills):
             return True
+
         b = bills[i]
+
         if b == 5:
             return go(i + 1, fives + 1, tens)
+
         if b == 10:
             return fives >= 1 and go(i + 1, fives - 1, tens + 1)
+
         if tens >= 1 and fives >= 1 and go(i + 1, fives - 1, tens - 1):
             return True
+
         return fives >= 3 and go(i + 1, fives - 3, tens)
 
     return go(0, 0, 0)
@@ -66,6 +71,7 @@ def lemonade_change(bills):
 # Idea: Greedy: spend the least flexible bill first
 def lemonade_change(bills):
     fives = tens = 0
+
     for b in bills:
         if b == 5:
             fives += 1
@@ -82,6 +88,7 @@ def lemonade_change(bills):
                 fives -= 3
             else:
                 return False
+
     return True
 """,
     ),
@@ -126,6 +133,7 @@ def reconstruct_queue(people):
                 break
         if ok:
             return [list(p) for p in perm]
+
     return []
 """,
         solution=r"""
@@ -174,16 +182,20 @@ def reconstruct_queue(people):
 # BRUTE FORCE: O(n^2) time - DP over (last index, last direction)
 def wiggle_max_length(nums):
     n = len(nums)
+
     if n == 0:
         return 0
+
     up = [1] * n
     down = [1] * n
+
     for i in range(n):
         for j in range(i):
             if nums[i] > nums[j]:
                 up[i] = max(up[i], down[j] + 1)
             elif nums[i] < nums[j]:
                 down[i] = max(down[i], up[j] + 1)
+
     return max(max(up), max(down))
 """,
         solution=r"""
@@ -192,12 +204,15 @@ def wiggle_max_length(nums):
 def wiggle_max_length(nums):
     if not nums:
         return 0
+
     length, prev = 1, 0
+
     for a, b in zip(nums, nums[1:]):
         d = b - a
         if d and (prev == 0 or (d > 0) != (prev > 0)):
             length += 1
             prev = d
+
     return length
 """,
     ),

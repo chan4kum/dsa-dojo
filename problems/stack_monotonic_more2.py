@@ -47,6 +47,7 @@ PROBLEMS = [
 # BRUTE FORCE: O(n*m) time
 def next_greater_element(nums1, nums2):
     out = []
+
     for x in nums1:
         i = nums2.index(x)
         nxt = -1
@@ -55,6 +56,7 @@ def next_greater_element(nums1, nums2):
                 nxt = y
                 break
         out.append(nxt)
+
     return out
 """,
         solution=r"""
@@ -99,6 +101,7 @@ def next_greater_element(nums1, nums2):
 # BRUTE FORCE: O(n^2) time (rescan after each removal)
 def remove_duplicates(s):
     changed = True
+
     while changed:
         changed = False
         for i in range(len(s) - 1):
@@ -106,6 +109,7 @@ def remove_duplicates(s):
                 s = s[:i] + s[i + 2 :]
                 changed = True
                 break
+
     return s
 """,
         solution=r"""
@@ -155,6 +159,7 @@ def remove_duplicates(s):
 # BRUTE FORCE: O(n^2) time (try the next pop from the list of remaining stack items)
 def validate_stack_sequences(pushed, popped):
     st, i = [], 0
+
     for want in popped:
         while (not st or st[-1] != want) and i < len(pushed):
             st.append(pushed[i])
@@ -162,6 +167,7 @@ def validate_stack_sequences(pushed, popped):
         if not st or st[-1] != want:
             return False
         st.pop()
+
     return True
 """,
         solution=r"""
@@ -214,6 +220,7 @@ def validate_stack_sequences(pushed, popped):
 def simplify_path(path):
     parts = [p for p in path.split("/") if p not in ("", ".")]
     i = 0
+
     while i < len(parts):
         if parts[i] == "..":
             if i > 0:
@@ -223,6 +230,7 @@ def simplify_path(path):
                 del parts[i]
         else:
             i += 1
+
     return "/" + "/".join(parts)
 """,
         solution=r"""
@@ -230,12 +238,14 @@ def simplify_path(path):
 # Idea: Stack of path components
 def simplify_path(path):
     st = []
+
     for tok in path.split("/"):
         if tok == "..":
             if st:
                 st.pop()
         elif tok and tok != ".":
             st.append(tok)
+
     return "/" + "/".join(st)
 """,
     ),
@@ -281,13 +291,17 @@ def calculate(s):
     import re
 
     toks = re.findall(r"\d+|[-+*/]", s.replace(" ", ""))
+
     while "*" in toks or "/" in toks:
         i = next(k for k, t in enumerate(toks) if t in "*/")
         a, b = int(toks[i - 1]), int(toks[i + 1])
         toks[i - 1 : i + 2] = [str(a * b if toks[i] == "*" else int(a / b))]
+
     res = int(toks[0])
+
     for i in range(1, len(toks), 2):
         res += int(toks[i + 1]) if toks[i] == "+" else -int(toks[i + 1])
+
     return res
 """,
         solution=r"""
@@ -295,6 +309,7 @@ def calculate(s):
 # Idea: Stack of terms (resolve * and / immediately, sum the rest)
 def calculate(s):
     st, num, op = [], 0, "+"
+
     for ch in s + "+":
         if ch.isdigit():
             num = num * 10 + int(ch)
@@ -307,7 +322,9 @@ def calculate(s):
                 st.append(st.pop() * num)
             else:
                 st.append(int(st.pop() / num))
+
             op, num = ch, 0
+
     return sum(st)
 """,
     ),
@@ -356,12 +373,14 @@ def find132pattern(nums):
 # Idea: Right-to-left monotonic stack keeping the best '2'
 def find132pattern(nums):
     st, two = [], float("-inf")
+
     for x in reversed(nums):
         if x < two:
             return True
         while st and st[-1] < x:
             two = st.pop()
         st.append(x)
+
     return False
 """,
     ),
@@ -402,11 +421,13 @@ def remove_duplicate_letters(s):
     need = set(s)
     best = None
     n = len(s)
+
     for mask in range(1 << n):
         sub = "".join(s[i] for i in range(n) if mask >> i & 1)
         if len(sub) == len(need) and set(sub) == need:
             if best is None or sub < best:
                 best = sub
+
     return best if best is not None else ""
 """,
         solution=r"""
@@ -415,6 +436,7 @@ def remove_duplicate_letters(s):
 def remove_duplicate_letters(s):
     last = {c: i for i, c in enumerate(s)}
     st, seen = [], set()
+
     for i, c in enumerate(s):
         if c in seen:
             continue
@@ -422,6 +444,7 @@ def remove_duplicate_letters(s):
             seen.discard(st.pop())
         st.append(c)
         seen.add(c)
+
     return "".join(st)
 """,
     ),

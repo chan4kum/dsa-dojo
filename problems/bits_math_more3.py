@@ -92,13 +92,17 @@ def is_power_of_four(n):
 def to_hex(num):
     if num == 0:
         return "0"
+
     if num < 0:
         num += 2**32  # two's complement
+
     digits = "0123456789abcdef"
     out = ""
+
     while num > 0:
         num, rem = divmod(num, 16)
         out = digits[rem] + out
+
     return out
 """,
         solution=r"""
@@ -107,11 +111,14 @@ def to_hex(num):
 def to_hex(num):
     if num == 0:
         return "0"
+
     num &= 0xFFFFFFFF  # same bits as a 32-bit unsigned number
     digits, out = "0123456789abcdef", []
+
     while num:
         out.append(digits[num & 15])  # lowest 4 bits
         num >>= 4
+
     return "".join(reversed(out))
 """,
     ),
@@ -289,6 +296,7 @@ def binary_gap(n):
 # Idea: Single bit scan remembering the previous set bit
 def binary_gap(n):
     best, last, pos = 0, -1, 0
+
     while n:
         if n & 1:
             if last != -1:
@@ -296,6 +304,7 @@ def binary_gap(n):
             last = pos
         n >>= 1
         pos += 1
+
     return best
 """,
     ),
@@ -391,12 +400,14 @@ def add_to_array_form(num, k):
 def add_to_array_form(num, k):
     out = []
     i = len(num) - 1
+
     while i >= 0 or k:
         if i >= 0:
             k += num[i]  # k now holds digit + carry + remaining digits of k
             i -= 1
         k, digit = divmod(k, 10)
         out.append(digit)
+
     return out[::-1]
 """,
     ),
@@ -431,15 +442,20 @@ def add_to_array_form(num, k):
 def convert_to_base7(num):
     if num == 0:
         return "0"
+
     sign, n = ("-" if num < 0 else ""), abs(num)
     power = 1
+
     while power * 7 <= n:
         power *= 7  # largest power of 7 that fits
+
     digits = ""
+
     while power:
         digits += str(n // power)  # how many times this power fits
         n %= power
         power //= 7
+
     return sign + digits
 """,
         solution=r"""
@@ -595,11 +611,14 @@ def divide(dividend, divisor):
 def divide(dividend, divisor):
     negative = (dividend < 0) != (divisor < 0)
     a, b, quotient = abs(dividend), abs(divisor), 0
+
     for shift in range(31, -1, -1):  # try the biggest multiples first
         if (b << shift) <= a:
             a -= b << shift
             quotient += 1 << shift
+
     result = -quotient if negative else quotient
+
     return max(-(2**31), min(2**31 - 1, result))
 """,
     ),

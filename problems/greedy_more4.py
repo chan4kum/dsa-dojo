@@ -60,8 +60,10 @@ def monotone_increasing_digits(n):
         return all(s[i] <= s[i + 1] for i in range(len(s) - 1))
 
     x = n
+
     while not ok(x):
         x -= 1
+
     return x
 """,
         solution=r"""
@@ -70,12 +72,15 @@ def monotone_increasing_digits(n):
 def monotone_increasing_digits(n):
     digits = list(str(n))
     mark = len(digits)
+
     for i in range(len(digits) - 1, 0, -1):
         if digits[i - 1] > digits[i]:
             digits[i - 1] = str(int(digits[i - 1]) - 1)
             mark = i
+
     for i in range(mark, len(digits)):
         digits[i] = "9"
+
     return int("".join(digits))
 """,
     ),
@@ -118,18 +123,24 @@ def max_chunks_to_sorted(arr):
     n = len(arr)
     target = sorted(arr)
     best = 1
+
     for mask in range(1 << (n - 1)):
         pieces, start = [], 0
+
         for i in range(n - 1):
             if mask >> i & 1:
                 pieces.append(arr[start : i + 1])
                 start = i + 1
+
         pieces.append(arr[start:])
         merged = []
+
         for piece in pieces:
             merged += sorted(piece)
+
         if merged == target:
             best = max(best, len(pieces))
+
     return best
 """,
         solution=r"""
@@ -188,11 +199,14 @@ def min_deletions(s):
     def go(i, used):
         if i == len(freqs):
             return 0
+
         best = float("inf")
+
         for keep in range(freqs[i] + 1):
             if keep == 0 or keep not in used:
                 nxt = used | {keep} if keep else used
                 best = min(best, freqs[i] - keep + go(i + 1, nxt))
+
         return best
 
     return go(0, frozenset())
@@ -261,12 +275,14 @@ def maximum_units(box_types, truck_size):
 # Idea: Greedy: fill the scarce resource with the best value per slot first
 def maximum_units(box_types, truck_size):
     total = 0
+
     for count, units in sorted(box_types, key=lambda box: -box[1]):
         take = min(count, truck_size)
         total += take * units
         truck_size -= take
         if truck_size == 0:
             break
+
     return total
 """,
     ),
@@ -325,12 +341,14 @@ def min_operations(nums):
 # Idea: Greedy: raise each element by the minimum necessary, left to right
 def min_operations(nums):
     ops, prev = 0, float("-inf")
+
     for value in nums:
         if value <= prev:
             ops += prev + 1 - value
             prev += 1
         else:
             prev = value
+
     return ops
 """,
     ),
@@ -428,6 +446,7 @@ def broken_calc(start_value, target):
     limit = 2 * max(start_value, target)
     seen = {start_value}
     queue = deque([(start_value, 0)])
+
     while queue:
         value, steps = queue.popleft()
         if value == target:
@@ -436,6 +455,7 @@ def broken_calc(start_value, target):
             if 0 < nxt <= limit and nxt not in seen:
                 seen.add(nxt)
                 queue.append((nxt, steps + 1))
+
     return -1
 """,
         solution=r"""
@@ -486,13 +506,16 @@ def max_coins(piles):
     def go(rest):
         if not rest:
             return 0
+
         first, others = rest[0], rest[1:]
         best = 0
+
         for i in range(len(others)):
             for j in range(i + 1, len(others)):
                 triple = sorted([first, others[i], others[j]])
                 remaining = [x for k, x in enumerate(others) if k not in (i, j)]
                 best = max(best, triple[1] + go(remaining))
+
         return best
 
     return go(list(piles))
@@ -543,12 +566,14 @@ def max_coins(piles):
 def min_subsequence(nums):
     total = sum(nums)
     best = None
+
     for mask in range(1, 1 << len(nums)):
         chosen = [nums[i] for i in range(len(nums)) if mask >> i & 1]
         if 2 * sum(chosen) > total:
             key = (len(chosen), -sum(chosen))
             if best is None or key < best[0]:
                 best = (key, sorted(chosen, reverse=True))
+
     return best[1]
 """,
         solution=r"""
@@ -603,14 +628,17 @@ def minimum_cost(cost):
     def go(rest):
         if not rest:
             return 0
+
         best = rest[0] + go(rest[1:])
         n = len(rest)
+
         for i in range(n):
             for j in range(i + 1, n):
                 for k in range(n):
                     if k != i and k != j and rest[k] <= min(rest[i], rest[j]):
                         left = [x for t, x in enumerate(rest) if t not in (i, j, k)]
                         best = min(best, rest[i] + rest[j] + go(left))
+
         return best
 
     return go(list(cost))

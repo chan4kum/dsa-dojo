@@ -49,16 +49,21 @@ def add_binary(a, b):
 def add_binary(a, b):
     out, carry = [], 0
     i, j = len(a) - 1, len(b) - 1
+
     while i >= 0 or j >= 0 or carry:
         total = carry
+
         if i >= 0:
             total += int(a[i])
             i -= 1
+
         if j >= 0:
             total += int(b[j])
             j -= 1
+
         out.append(str(total % 2))
         carry = total // 2
+
     return "".join(reversed(out))
 """,
     ),
@@ -105,6 +110,7 @@ def license_key_formatting(s, k):
 # Idea: Build from the right so the short group lands in front
 def license_key_formatting(s, k):
     out, count = [], 0
+
     for ch in reversed(s):
         if ch == "-":
             continue
@@ -113,6 +119,7 @@ def license_key_formatting(s, k):
             count = 0
         out.append(ch.upper())
         count += 1
+
     return "".join(reversed(out))
 """,
     ),
@@ -203,6 +210,7 @@ def check_record(s):
 # Idea: Single pass with counters
 def check_record(s):
     absences = streak = 0
+
     for ch in s:
         if ch == "A":
             absences += 1
@@ -211,6 +219,7 @@ def check_record(s):
         streak = streak + 1 if ch == "L" else 0
         if streak == 3:
             return False
+
     return True
 """,
     ),
@@ -300,11 +309,13 @@ def gcd_of_strings(str1, str2):
 def min_steps(s, t):
     remaining = list(t)
     unmatched = 0
+
     for ch in s:
         if ch in remaining:
             remaining.remove(ch)  # linear search and shift
         else:
             unmatched += 1
+
     return unmatched
 """,
         solution=r"""
@@ -355,6 +366,7 @@ def min_steps(s, t):
 def sort_string(s):
     remaining = sorted(s)
     out = []
+
     while remaining:
         for ch in sorted(set(remaining)):  # ascending pass: one copy of each distinct letter
             out.append(ch)
@@ -362,6 +374,7 @@ def sort_string(s):
         for ch in sorted(set(remaining), reverse=True):  # descending pass
             out.append(ch)
             remaining.remove(ch)
+
     return "".join(out)
 """,
         solution=r"""
@@ -369,18 +382,23 @@ def sort_string(s):
 # Idea: Counting sort with alternating sweeps
 def sort_string(s):
     counts = [0] * 26
+
     for ch in s:
         counts[ord(ch) - 97] += 1
+
     out = []
+
     while len(out) < len(s):
         for i in range(26):  # ascending sweep
             if counts[i]:
                 out.append(chr(97 + i))
                 counts[i] -= 1
+
         for i in range(25, -1, -1):  # descending sweep
             if counts[i]:
                 out.append(chr(97 + i))
                 counts[i] -= 1
+
     return "".join(out)
 """,
     ),
@@ -675,6 +693,7 @@ def find_lus_length(a, b):
 
     sa, sb = subsequences(a), subsequences(b)
     uncommon = sa ^ sb  # in exactly one of them
+
     return max((len(x) for x in uncommon), default=-1)
 """,
         solution=r"""
@@ -718,11 +737,13 @@ def find_lus_length(a, b):
 def common_chars(words):
     others = [list(w) for w in words[1:]]
     result = []
+
     for ch in words[0]:
         if all(ch in w for w in others):
             for w in others:
                 w.remove(ch)  # consume one copy from every other word
             result.append(ch)
+
     return result
 """,
         solution=r"""

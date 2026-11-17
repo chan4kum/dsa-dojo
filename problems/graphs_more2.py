@@ -49,6 +49,7 @@ PROBLEMS = [
 # BRUTE FORCE: O(R*C*4) - check all four neighbours of every land cell
 def island_perimeter(grid):
     R, C, p = len(grid), len(grid[0]), 0
+
     for r in range(R):
         for c in range(C):
             if grid[r][c]:
@@ -56,6 +57,7 @@ def island_perimeter(grid):
                     nr, nc = r + dr, c + dc
                     if not (0 <= nr < R and 0 <= nc < C) or not grid[nr][nc]:
                         p += 1
+
     return p
 """,
         solution=r"""
@@ -63,6 +65,7 @@ def island_perimeter(grid):
 # Idea: Local counting on a grid (4 - 2*shared edges)
 def island_perimeter(grid):
     p = 0
+
     for r, row in enumerate(grid):
         for c, v in enumerate(row):
             if v:
@@ -71,6 +74,7 @@ def island_perimeter(grid):
                     p -= 2
                 if c and row[c - 1]:
                     p -= 2
+
     return p
 """,
     ),
@@ -113,11 +117,14 @@ def flood_fill(image, sr, sc, color):
     img = [row[:] for row in image]
     old = img[sr][sc]
     seen, q = {(sr, sc)}, deque([(sr, sc)])
+
     while q:
         r, c = q.popleft()
         img[r][c] = color
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
+
             if (
                 0 <= nr < len(img)
                 and 0 <= nc < len(img[0])
@@ -126,6 +133,7 @@ def flood_fill(image, sr, sc, color):
             ):
                 seen.add((nr, nc))
                 q.append((nr, nc))
+
     return img
 """,
         solution=r"""
@@ -133,6 +141,7 @@ def flood_fill(image, sr, sc, color):
 # Idea: Grid DFS/BFS (connected region), mutate-as-visited
 def flood_fill(image, sr, sc, color):
     old = image[sr][sc]
+
     if old == color:
         return image
 
@@ -145,6 +154,7 @@ def flood_fill(image, sr, sc, color):
             dfs(r, c - 1)
 
     dfs(sr, sc)
+
     return image
 """,
     ),
@@ -182,21 +192,27 @@ def flood_fill(image, sr, sc, color):
 # BRUTE FORCE: exponential - DFS over all simple paths
 def shortest_path_binary_matrix(grid):
     n = len(grid)
+
     if grid[0][0] or grid[n - 1][n - 1]:
         return -1
+
     best = [float("inf")]
     seen = [[False] * n for _ in range(n)]
 
     def go(r, c, d):
         if d >= best[0]:
             return
+
         if (r, c) == (n - 1, n - 1):
             best[0] = d
             return
+
         seen[r][c] = True
+
         for dr in (-1, 0, 1):
             for dc in (-1, 0, 1):
                 nr, nc = r + dr, c + dc
+
                 if (
                     (dr or dc)
                     and 0 <= nr < n
@@ -205,9 +221,11 @@ def shortest_path_binary_matrix(grid):
                     and not seen[nr][nc]
                 ):
                     go(nr, nc, d + 1)
+
         seen[r][c] = False
 
     go(0, 0, 1)
+
     return -1 if best[0] == float("inf") else best[0]
 """,
         solution=r"""
@@ -215,19 +233,25 @@ def shortest_path_binary_matrix(grid):
 # Idea: BFS on a grid (unweighted shortest path)
 def shortest_path_binary_matrix(grid):
     n = len(grid)
+
     if grid[0][0] or grid[n - 1][n - 1]:
         return -1
+
     q, seen = deque([(0, 0, 1)]), {(0, 0)}
+
     while q:
         r, c, d = q.popleft()
+
         if (r, c) == (n - 1, n - 1):
             return d
+
         for dr in (-1, 0, 1):
             for dc in (-1, 0, 1):
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < n and 0 <= nc < n and not grid[nr][nc] and (nr, nc) not in seen:
                     seen.add((nr, nc))
                     q.append((nr, nc, d + 1))
+
     return -1
 """,
     ),
@@ -277,12 +301,15 @@ def find_judge(n, trust):
 # Idea: Degree counting on a directed graph
 def find_judge(n, trust):
     score = [0] * (n + 1)
+
     for a, b in trust:
         score[a] -= 1
         score[b] += 1
+
     for p in range(1, n + 1):
         if score[p] == n - 1:
             return p
+
     return -1
 """,
     ),
@@ -329,6 +356,7 @@ def min_cost_connect_points(points):
     used = [False] * n
     dist[0] = 0
     total = 0
+
     for _ in range(n):
         u = min((i for i in range(n) if not used[i]), key=lambda i: dist[i])
         used[u] = True
@@ -337,6 +365,7 @@ def min_cost_connect_points(points):
             if not used[v]:
                 d = abs(points[u][0] - points[v][0]) + abs(points[u][1] - points[v][1])
                 dist[v] = min(dist[v], d)
+
     return total
 """,
         solution=r"""
@@ -358,6 +387,7 @@ def min_cost_connect_points(points):
         return x
 
     total = used = 0
+
     for w, a, b in edges:
         ra, rb = find(a), find(b)
         if ra != rb:
@@ -366,6 +396,7 @@ def min_cost_connect_points(points):
             used += 1
             if used == n - 1:
                 break
+
     return total
 """,
     ),
@@ -411,6 +442,7 @@ def eventual_safe_nodes(graph):
     def reaches_cycle(start):
         # a node is unsafe if some node reachable from it (including itself) lies on a cycle
         seen, stack = set(), [start]
+
         while stack:
             u = stack.pop()
             for v in graph[u]:
@@ -419,9 +451,12 @@ def eventual_safe_nodes(graph):
                 if v not in seen:
                     seen.add(v)
                     stack.append(v)
+
         reach = seen
+
         for u in reach | {start}:
             q, s2 = list(graph[u]), set()
+
             while q:
                 x = q.pop()
                 if x == u:
@@ -429,6 +464,7 @@ def eventual_safe_nodes(graph):
                 if x not in s2:
                     s2.add(x)
                     q.extend(graph[x])
+
         return False
 
     return [i for i in range(n) if not reaches_cycle(i)]
@@ -443,11 +479,15 @@ def eventual_safe_nodes(graph):
     def safe(u):
         if color[u]:
             return color[u] == 2
+
         color[u] = 1
+
         for v in graph[u]:
             if not safe(v):
                 return False
+
         color[u] = 2
+
         return True
 
     return [i for i in range(n) if safe(i)]

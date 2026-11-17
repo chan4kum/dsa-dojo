@@ -69,13 +69,16 @@ def count_smaller(nums):
     def merge_sort(lo, hi):  # sorts order[lo:hi] by nums value, filling counts as it merges
         if hi - lo <= 1:
             return
+
         mid = (lo + hi) // 2
         merge_sort(lo, mid)
         merge_sort(mid, hi)
         merged = []
         i, j = lo, mid  # i walks the left half, j walks the right half
+
         while i < mid or j < hi:
             take_right = j < hi and (i == mid or nums[order[j]] < nums[order[i]])
+
             if take_right:
                 merged.append(
                     order[j]
@@ -87,9 +90,11 @@ def count_smaller(nums):
                 )  # right elements already placed are all smaller than this one
                 merged.append(order[i])
                 i += 1
+
         order[lo:hi] = merged
 
     merge_sort(0, n)
+
     return counts
 """,
     ),

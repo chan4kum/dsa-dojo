@@ -42,16 +42,20 @@ def reverse_pairs(nums):
     def sort(a):
         if len(a) <= 1:
             return a, 0
+
         mid = len(a) // 2
         left, x = sort(a[:mid])
         right, y = sort(a[mid:])
         count = x + y
         j = 0
+
         for v in left:  # cross pairs: v > 2 * right[j]
             while j < len(right) and v > 2 * right[j]:
                 j += 1
             count += j
+
         merged, i, j = [], 0, 0
+
         while i < len(left) and j < len(right):
             if left[i] <= right[j]:
                 merged.append(left[i])
@@ -59,7 +63,9 @@ def reverse_pairs(nums):
             else:
                 merged.append(right[j])
                 j += 1
+
         merged += left[i:] + right[j:]
+
         return merged, count
 
     return sort(list(nums))[1]

@@ -57,6 +57,7 @@ def max_path_sum(root):
         return node.val + max(left, right)  # chain a parent may extend
 
     gain(root)
+
     return best
 ```
 

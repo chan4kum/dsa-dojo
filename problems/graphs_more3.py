@@ -53,10 +53,13 @@ PROBLEMS = [
 # BRUTE FORCE: O(n + E) time per query - DFS from the source
 def valid_path(n, edges, source, destination):
     adj = [[] for _ in range(n)]
+
     for u, v in edges:
         adj[u].append(v)
         adj[v].append(u)
+
     seen, stack = {source}, [source]
+
     while stack:  # explore everything reachable from the source
         node = stack.pop()
         if node == destination:
@@ -65,6 +68,7 @@ def valid_path(n, edges, source, destination):
             if nxt not in seen:
                 seen.add(nxt)
                 stack.append(nxt)
+
     return False
 """,
         solution=r"""
@@ -81,6 +85,7 @@ def valid_path(n, edges, source, destination):
 
     for u, v in edges:
         parent[find(u)] = find(v)  # merge the two components
+
     return find(source) == find(destination)
 """,
     ),
@@ -120,6 +125,7 @@ def valid_path(n, edges, source, destination):
 def all_paths_source_target(graph):
     target = len(graph) - 1
     done, queue = [], deque([[0]])  # a queue of partial paths
+
     while queue:
         path = queue.popleft()
         if path[-1] == target:
@@ -127,6 +133,7 @@ def all_paths_source_target(graph):
             continue
         for nxt in graph[path[-1]]:
             queue.append(path + [nxt])  # a brand-new list for each extension
+
     return done
 """,
         solution=r"""
@@ -145,6 +152,7 @@ def all_paths_source_target(graph):
             path.pop()  # backtrack
 
     dfs(0)
+
     return result
 """,
     ),
@@ -196,11 +204,14 @@ def is_bipartite(graph):
 # Idea: Graph 2-colouring with BFS (an odd cycle makes it impossible)
 def is_bipartite(graph):
     colour = {}
+
     for start in range(len(graph)):  # the graph may be disconnected
         if start in colour:
             continue
+
         colour[start] = 0
         queue = deque([start])
+
         while queue:
             node = queue.popleft()
             for nxt in graph[node]:
@@ -209,6 +220,7 @@ def is_bipartite(graph):
                     queue.append(nxt)
                 elif colour[nxt] == colour[node]:
                     return False  # an edge inside one group
+
     return True
 """,
     ),
@@ -262,6 +274,7 @@ def is_bipartite(graph):
 # BRUTE FORCE: O(Q * (V + E)) time - one DFS per query
 def calc_equation(equations, values, queries):
     graph = defaultdict(dict)
+
     for (a, b), v in zip(equations, values):
         graph[a][b] = v
         graph[b][a] = 1 / v
@@ -269,7 +282,9 @@ def calc_equation(equations, values, queries):
     def search(src, dst):
         if src not in graph or dst not in graph:
             return -1.0
+
         seen, stack = {src}, [(src, 1.0)]
+
         while stack:  # DFS, carrying the product of weights so far
             node, product = stack.pop()
             if node == dst:
@@ -278,6 +293,7 @@ def calc_equation(equations, values, queries):
                 if nxt not in seen:
                     seen.add(nxt)
                     stack.append((nxt, product * w))
+
         return -1.0
 
     return [search(c, d) for c, d in queries]
@@ -305,11 +321,13 @@ def calc_equation(equations, values, queries):
             ratio[ra] = v * ratio[b] / ratio[a]
 
     result = []
+
     for c, d in queries:
         if c in parent and d in parent and find(c) == find(d):
             result.append(ratio[c] / ratio[d])  # (c / root) / (d / root)
         else:
             result.append(-1.0)
+
     return result
 """,
     ),
@@ -350,18 +368,22 @@ def calc_equation(equations, values, queries):
 # BRUTE FORCE: O(n^2) time - link stones that share a line and DFS over the stones
 def remove_stones(stones):
     n, seen, groups = len(stones), set(), 0
+
     for i in range(n):
         if i in seen:
             continue
+
         groups += 1  # a new connected group of stones
         seen.add(i)
         stack = [i]
+
         while stack:
             a = stack.pop()
             for b in range(n):  # compare with EVERY stone (O(n^2) overall)
                 if b not in seen and (stones[a][0] == stones[b][0] or stones[a][1] == stones[b][1]):
                     seen.add(b)
                     stack.append(b)
+
     return n - groups
 """,
         solution=r"""
@@ -380,7 +402,9 @@ def remove_stones(stones):
     for row, col in stones:
         # a column node is tagged ("c", col) so it never collides with a row number
         parent[find(row)] = find(("c", col))
+
     components = len({find(row) for row, _ in stones})
+
     return len(stones) - components
 """,
     ),
@@ -420,22 +444,27 @@ def remove_stones(stones):
 # BRUTE FORCE: O(n * (V + E)) time - a graph search for every '!=' equation
 def equations_possible(equations):
     same = defaultdict(set)  # graph of '==' links
+
     for eq in equations:
         if eq[1] == "=":
             same[eq[0]].add(eq[3])
             same[eq[3]].add(eq[0])
+
     for eq in equations:
         if eq[1] == "!":
             a, b = eq[0], eq[3]
             seen, stack = {a}, [a]
+
             while stack:  # can we get from a to b using only '==' links?
                 x = stack.pop()
                 for y in same[x]:
                     if y not in seen:
                         seen.add(y)
                         stack.append(y)
+
             if b in seen:  # a and b must be equal but the equation says they differ
                 return False
+
     return True
 """,
         solution=r"""
@@ -453,6 +482,7 @@ def equations_possible(equations):
     for eq in equations:
         if eq[1] == "=":
             parent[find(eq[0])] = find(eq[3])  # equal variables share a root
+
     return all(find(eq[0]) != find(eq[3]) for eq in equations if eq[1] == "!")
 """,
     ),
@@ -492,27 +522,35 @@ def equations_possible(equations):
 # BRUTE FORCE: O(R*C * K) time - for each candidate effort K (in increasing order) run a BFS limited to that step size
 def minimum_effort_path(heights):
     rows, cols = len(heights), len(heights[0])
+
     if rows == cols == 1:
         return 0
+
     steps = set()  # every distinct neighbour difference is a candidate answer
+
     for r in range(rows):
         for c in range(cols):
             if r + 1 < rows:
                 steps.add(abs(heights[r][c] - heights[r + 1][c]))
             if c + 1 < cols:
                 steps.add(abs(heights[r][c] - heights[r][c + 1]))
+
     for limit in sorted(steps):  # smallest allowed step first
         seen, queue = {(0, 0)}, deque([(0, 0)])
+
         while queue:
             r, c = queue.popleft()
+
             if (r, c) == (rows - 1, cols - 1):
                 return limit
+
             for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < rows and 0 <= nc < cols and (nr, nc) not in seen:
                     if abs(heights[nr][nc] - heights[r][c]) <= limit:
                         seen.add((nr, nc))
                         queue.append((nr, nc))
+
     return 0
 """,
         solution=r"""
@@ -523,12 +561,16 @@ def minimum_effort_path(heights):
     best = [[float("inf")] * cols for _ in range(rows)]
     best[0][0] = 0
     heap = [(0, 0, 0)]  # (worst step so far, row, col)
+
     while heap:
         effort, r, c = heapq.heappop(heap)
+
         if (r, c) == (rows - 1, cols - 1):
             return effort
+
         if effort > best[r][c]:
             continue  # a stale heap entry
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < rows and 0 <= nc < cols:
@@ -536,6 +578,7 @@ def minimum_effort_path(heights):
                 if new_effort < best[nr][nc]:
                     best[nr][nc] = new_effort
                     heapq.heappush(heap, (new_effort, nr, nc))
+
     return 0
 """,
     ),
@@ -579,18 +622,23 @@ def minimum_effort_path(heights):
 # BRUTE FORCE: O(n * n * E) time - Bellman-Ford from every city
 def find_the_city(n, edges, distance_threshold):
     best_city, best_count = -1, n + 1
+
     for src in range(n):
         dist = [float("inf")] * n
         dist[src] = 0
+
         for _ in range(n - 1):  # Bellman-Ford: relax every edge n - 1 times
             for u, v, w in edges:
                 if dist[u] + w < dist[v]:
                     dist[v] = dist[u] + w
                 if dist[v] + w < dist[u]:
                     dist[u] = dist[v] + w
+
         count = sum(1 for city in range(n) if city != src and dist[city] <= distance_threshold)
+
         if count <= best_count:  # <= so that a later index wins ties
             best_city, best_count = src, count
+
     return best_city
 """,
         solution=r"""
@@ -599,18 +647,23 @@ def find_the_city(n, edges, distance_threshold):
 def find_the_city(n, edges, distance_threshold):
     inf = float("inf")
     dist = [[0 if i == j else inf for j in range(n)] for i in range(n)]
+
     for u, v, w in edges:
         dist[u][v] = dist[v][u] = min(dist[u][v], w)
+
     for k in range(n):  # allow city k as an intermediate stop
         for i in range(n):
             for j in range(n):
                 if dist[i][k] + dist[k][j] < dist[i][j]:
                     dist[i][j] = dist[i][k] + dist[k][j]
+
     best_city, best_count = -1, n + 1
+
     for i in range(n):
         count = sum(1 for j in range(n) if i != j and dist[i][j] <= distance_threshold)
         if count <= best_count:
             best_city, best_count = i, count
+
     return best_city
 """,
     ),
@@ -655,9 +708,11 @@ def find_the_city(n, edges, distance_threshold):
 # BRUTE FORCE: O(V!) time - DFS over every simple path
 def max_probability(n, edges, succ_prob, start, end):
     adj = [[] for _ in range(n)]
+
     for (u, v), p in zip(edges, succ_prob):
         adj[u].append((v, p))
         adj[v].append((u, p))
+
     best = 0.0
 
     def dfs(node, prob, seen):  # try every simple path
@@ -670,6 +725,7 @@ def max_probability(n, edges, succ_prob, start, end):
                 dfs(nxt, prob * p, seen | {nxt})
 
     dfs(start, 1.0, {start})
+
     return best
 """,
         solution=r"""
@@ -677,23 +733,30 @@ def max_probability(n, edges, succ_prob, start, end):
 # Idea: Dijkstra with a max-heap on products
 def max_probability(n, edges, succ_prob, start, end):
     adj = [[] for _ in range(n)]
+
     for (u, v), p in zip(edges, succ_prob):
         adj[u].append((v, p))
         adj[v].append((u, p))
+
     best = [0.0] * n
     best[start] = 1.0
     heap = [(-1.0, start)]  # negated: heapq is a min-heap
+
     while heap:
         neg_prob, node = heapq.heappop(heap)
+
         if node == end:
             return -neg_prob
+
         if -neg_prob < best[node]:
             continue  # stale entry
+
         for nxt, p in adj[node]:
             cand = -neg_prob * p
             if cand > best[nxt]:
                 best[nxt] = cand
                 heapq.heappush(heap, (-cand, nxt))
+
     return 0.0
 """,
     ),
@@ -732,21 +795,25 @@ def max_probability(n, edges, succ_prob, start, end):
 # BRUTE FORCE: O(n^2) time - BFS from every node to measure its height
 def find_min_height_trees(n, edges):
     adj = [[] for _ in range(n)]
+
     for u, v in edges:
         adj[u].append(v)
         adj[v].append(u)
 
     def height(root):  # BFS depth when `root` is the root
         seen, level, h = {root}, [root], 0
+
         while level:
             nxt = [y for x in level for y in adj[x] if y not in seen]
             seen.update(nxt)
             if nxt:
                 h += 1
             level = nxt
+
         return h
 
     heights = [height(r) for r in range(n)]
+
     return [r for r in range(n) if heights[r] == min(heights)]
 """,
         solution=r"""
@@ -755,21 +822,28 @@ def find_min_height_trees(n, edges):
 def find_min_height_trees(n, edges):
     if n <= 2:
         return list(range(n))
+
     adj = [set() for _ in range(n)]
+
     for u, v in edges:
         adj[u].add(v)
         adj[v].add(u)
+
     leaves = [i for i in range(n) if len(adj[i]) == 1]
     remaining = n
+
     while remaining > 2:
         remaining -= len(leaves)  # strip off the current outer layer
         next_leaves = []
+
         for leaf in leaves:
             (neighbour,) = adj[leaf]  # a leaf has exactly one neighbour
             adj[neighbour].remove(leaf)
             if len(adj[neighbour]) == 1:  # it just became a leaf
                 next_leaves.append(neighbour)
+
         leaves = next_leaves
+
     return leaves
 """,
     ),

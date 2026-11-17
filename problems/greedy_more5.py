@@ -83,18 +83,23 @@ PROBLEMS = [
 def predict_party_victory(senate):
     n = len(senate)
     alive = [True] * n
+
     while True:
         for i in range(n):
             if not alive[i]:
                 continue
+
             target = None
+
             for step in range(1, n):
                 j = (i + step) % n
                 if alive[j] and senate[j] != senate[i]:
                     target = j
                     break
+
             if target is None:
                 return "Radiant" if senate[i] == "R" else "Dire"
+
             alive[target] = False
 """,
         solution=r"""
@@ -104,12 +109,14 @@ def predict_party_victory(senate):
     n = len(senate)
     radiant = deque(i for i, c in enumerate(senate) if c == "R")
     dire = deque(i for i, c in enumerate(senate) if c == "D")
+
     while radiant and dire:
         r, d = radiant.popleft(), dire.popleft()
         if r < d:
             radiant.append(r + n)
         else:
             dire.append(d + n)
+
     return "Radiant" if radiant else "Dire"
 """,
     ),
@@ -171,15 +178,18 @@ def advantage_count(nums1, nums2):
     answer = [None] * len(nums1)
     leftovers = []
     j = 0
+
     for x in ordered:
         if x > nums2[targets[j]]:
             answer[targets[j]] = x
             j += 1
         else:
             leftovers.append(x)
+
     for i in range(len(answer)):
         if answer[i] is None:
             answer[i] = leftovers.pop()
+
     return answer
 """,
     ),
@@ -284,6 +294,7 @@ def min_deletion_size(strs):
 # BRUTE FORCE: O(C(a+b, a) * (a+b)) time - try every placement of the 'a' letters
 def str_without_3a3b(a, b):
     n = a + b
+
     for spots in itertools.combinations(range(n), a):
         chars = ["b"] * n
         for i in spots:
@@ -297,16 +308,20 @@ def str_without_3a3b(a, b):
 # Idea: Greedy: spend the majority letter, obey the run limit
 def str_without_3a3b(a, b):
     out = []
+
     while a or b:
         if len(out) >= 2 and out[-1] == out[-2]:
             letter = "b" if out[-1] == "a" else "a"
         else:
             letter = "a" if a >= b else "b"
+
         if letter == "a":
             a -= 1
         else:
             b -= 1
+
         out.append(letter)
+
     return "".join(out)
 """,
     ),
@@ -357,12 +372,14 @@ def str_without_3a3b(a, b):
 def prev_perm_opt1(arr):
     n = len(arr)
     best = None
+
     for i in range(n):
         for j in range(i + 1, n):
             cand = list(arr)
             cand[i], cand[j] = cand[j], cand[i]
             if cand < arr and (best is None or cand > best):
                 best = cand
+
     return best if best is not None else list(arr)
 """,
         solution=r"""
@@ -371,6 +388,7 @@ def prev_perm_opt1(arr):
 def prev_perm_opt1(arr):
     arr = list(arr)
     n = len(arr)
+
     for i in range(n - 2, -1, -1):
         if arr[i] > arr[i + 1]:
             best = i + 1
@@ -379,6 +397,7 @@ def prev_perm_opt1(arr):
                     best = j
             arr[i], arr[best] = arr[best], arr[i]
             break
+
     return arr
 """,
     ),
@@ -426,6 +445,7 @@ def prev_perm_opt1(arr):
 # BRUTE FORCE: O(26 * n^2) time - try every replacement and test it
 def break_palindrome(palindrome):
     best = None
+
     for i in range(len(palindrome)):
         for letter in "abcdefghijklmnopqrstuvwxyz":
             if letter == palindrome[i]:
@@ -433,6 +453,7 @@ def break_palindrome(palindrome):
             cand = palindrome[:i] + letter + palindrome[i + 1 :]
             if cand != cand[::-1] and (best is None or cand < best):
                 best = cand
+
     return best if best is not None else ""
 """,
         solution=r"""
@@ -489,11 +510,13 @@ def break_palindrome(palindrome):
 def max_diff(num):
     s = str(num)
     values = []
+
     for x in "0123456789":
         for y in "0123456789":
             t = s.replace(x, y)
             if t[0] != "0" and int(t) != 0:
                 values.append(int(t))
+
     return max(values) - min(values)
 """,
         solution=r"""
@@ -502,11 +525,14 @@ def max_diff(num):
 def max_diff(num):
     s = str(num)
     high = s
+
     for ch in s:
         if ch != "9":
             high = s.replace(ch, "9")
             break
+
     low = s
+
     if s[0] != "1":
         low = s.replace(s[0], "1")
     else:
@@ -514,6 +540,7 @@ def max_diff(num):
             if ch not in "01":
                 low = s.replace(ch, "0")
                 break
+
     return int(high) - int(low)
 """,
     ),
@@ -572,12 +599,14 @@ def find_least_num_of_unique_ints(arr, k):
 def find_least_num_of_unique_ints(arr, k):
     counts = sorted(Counter(arr).values())
     unique = len(counts)
+
     for c in counts:
         if k >= c:
             k -= c
             unique -= 1
         else:
             break
+
     return unique
 """,
     ),
@@ -625,14 +654,18 @@ def find_least_num_of_unique_ints(arr, k):
 def get_smallest_string(n, k):
     def build(pos, remaining):
         left = n - pos
+
         if remaining < left or remaining > 26 * left:
             return None
+
         if left == 0:
             return ""
+
         for value in range(1, 27):
             rest = build(pos + 1, remaining - value)
             if rest is not None:
                 return chr(96 + value) + rest
+
         return None
 
     return build(0, k)
@@ -644,11 +677,13 @@ def get_smallest_string(n, k):
     letters = ["a"] * n
     k -= n
     i = n - 1
+
     while k > 0:
         add = min(25, k)
         letters[i] = chr(97 + add)
         k -= add
         i -= 1
+
     return "".join(letters)
 """,
     ),
@@ -749,9 +784,11 @@ def min_partitions(n):
 # BRUTE FORCE: O(n^2) time - test every candidate maximum
 def maximum_element_after_decrementing_and_rearranging(arr):
     ordered = sorted(arr)
+
     for m in range(len(ordered), 0, -1):
         pos = 0
         ok = True
+
         for need in range(1, m + 1):
             while pos < len(ordered) and ordered[pos] < need:
                 pos += 1
@@ -759,6 +796,7 @@ def maximum_element_after_decrementing_and_rearranging(arr):
                 ok = False
                 break
             pos += 1
+
         if ok:
             return m
 """,
@@ -945,12 +983,16 @@ def min_swaps(s):
     seen = {s}
     frontier = [s]
     steps = 0
+
     while frontier:
         if any(balanced(t) for t in frontier):
             return steps
+
         nxt = []
+
         for t in frontier:
             chars = list(t)
+
             for i in range(len(chars)):
                 for j in range(i + 1, len(chars)):
                     if chars[i] != chars[j]:
@@ -960,6 +1002,7 @@ def min_swaps(s):
                         if u not in seen:
                             seen.add(u)
                             nxt.append(u)
+
         frontier = nxt
         steps += 1
 """,
@@ -969,6 +1012,7 @@ def min_swaps(s):
 def min_swaps(s):
     open_count = 0
     stray = 0
+
     for ch in s:
         if ch == "[":
             open_count += 1
@@ -976,6 +1020,7 @@ def min_swaps(s):
             open_count -= 1
         else:
             stray += 1
+
     return (stray + 1) // 2
 """,
     ),
@@ -1033,11 +1078,13 @@ def number_of_weak_characters(properties):
     ordered = sorted(properties, key=lambda p: (-p[0], p[1]))
     best_defense = 0
     weak = 0
+
     for _, defense in ordered:
         if defense < best_defense:
             weak += 1
         else:
             best_defense = defense
+
     return weak
 """,
     ),
@@ -1103,12 +1150,14 @@ def winner_of_game(colors):
 # Idea: Independent move counts decide a game
 def winner_of_game(colors):
     alice = bob = 0
+
     for i in range(1, len(colors) - 1):
         if colors[i - 1] == colors[i] == colors[i + 1]:
             if colors[i] == "A":
                 alice += 1
             else:
                 bob += 1
+
     return alice > bob
 """,
     ),
@@ -1158,6 +1207,7 @@ def asteroids_destroyed(mass, asteroids):
             current += rock
         else:
             return True
+
     return False
 """,
         solution=r"""
@@ -1219,11 +1269,13 @@ def maximum_bags(capacity, rocks, additional_rocks):
 def maximum_bags(capacity, rocks, additional_rocks):
     need = sorted(c - r for c, r in zip(capacity, rocks))
     full = 0
+
     for gap in need:
         if gap > additional_rocks:
             break
         additional_rocks -= gap
         full += 1
+
     return full
 """,
     ),
@@ -1275,21 +1327,26 @@ def partition_array(nums, k):
     def place(i):
         if len(groups) >= best[0]:
             return
+
         if i == len(nums):
             best[0] = len(groups)
             return
+
         x = nums[i]
+
         for g in groups:
             lo, hi = g
             if max(hi, x) - min(lo, x) <= k:
                 g[0], g[1] = min(lo, x), max(hi, x)
                 place(i + 1)
                 g[0], g[1] = lo, hi
+
         groups.append([x, x])
         place(i + 1)
         groups.pop()
 
     place(0)
+
     return best[0]
 """,
         solution=r"""
@@ -1299,10 +1356,12 @@ def partition_array(nums, k):
     ordered = sorted(nums)
     groups = 1
     start = ordered[0]
+
     for x in ordered:
         if x - start > k:
             groups += 1
             start = x
+
     return groups
 """,
     ),
@@ -1346,11 +1405,13 @@ def partition_array(nums, k):
 def partition_string(s):
     n = len(s)
     best = [0] + [n] * n
+
     for end in range(1, n + 1):
         for start in range(end):
             piece = s[start:end]
             if len(set(piece)) == len(piece):
                 best[end] = min(best[end], best[start] + 1)
+
     return best[n]
 """,
         solution=r"""
@@ -1359,11 +1420,13 @@ def partition_string(s):
 def partition_string(s):
     count = 1
     seen = set()
+
     for ch in s:
         if ch in seen:
             count += 1
             seen = set()
         seen.add(ch)
+
     return count
 """,
     ),

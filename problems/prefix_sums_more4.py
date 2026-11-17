@@ -62,9 +62,12 @@ def max_sum_two_no_overlap(nums, first_len, second_len):
 # Idea: Prefix sums + best-so-far on one side
 def max_sum_two_no_overlap(nums, first_len, second_len):
     prefix = [0]
+
     for x in nums:
         prefix.append(prefix[-1] + x)
+
     best_a = best_b = result = 0
+
     for i in range(first_len + second_len, len(prefix)):
         best_a = max(
             best_a, prefix[i - second_len] - prefix[i - second_len - first_len]
@@ -75,6 +78,7 @@ def max_sum_two_no_overlap(nums, first_len, second_len):
         window_b = prefix[i] - prefix[i - second_len]
         window_a = prefix[i] - prefix[i - first_len]
         result = max(result, best_a + window_b, best_b + window_a)
+
     return result
 """,
     ),
@@ -128,12 +132,16 @@ def can_make_pali_queries(s, queries):
 # Idea: Prefix parity bitmask (XOR)
 def can_make_pali_queries(s, queries):
     prefix = [0]
+
     for ch in s:
         prefix.append(prefix[-1] ^ (1 << (ord(ch) - 97)))  # flip this letter's parity bit
+
     answer = []
+
     for left, right, k in queries:
         odd = bin(prefix[right + 1] ^ prefix[left]).count("1")
         answer.append(odd // 2 <= k)
+
     return answer
 """,
     ),
@@ -173,6 +181,7 @@ def can_make_pali_queries(s, queries):
 # BRUTE FORCE: O(m * n * k^2) time - add up each block cell by cell
 def matrix_block_sum(mat, k):
     m, n = len(mat), len(mat[0])
+
     return [
         [
             sum(
@@ -191,15 +200,19 @@ def matrix_block_sum(mat, k):
 def matrix_block_sum(mat, k):
     m, n = len(mat), len(mat[0])
     prefix = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(m):
         for j in range(n):
             prefix[i + 1][j + 1] = mat[i][j] + prefix[i][j + 1] + prefix[i + 1][j] - prefix[i][j]
+
     result = [[0] * n for _ in range(m)]
+
     for i in range(m):
         for j in range(n):
             r1, c1 = max(0, i - k), max(0, j - k)
             r2, c2 = min(m, i + k + 1), min(n, j + k + 1)
             result[i][j] = prefix[r2][c2] - prefix[r1][c2] - prefix[r2][c1] + prefix[r1][c1]
+
     return result
 """,
     ),
@@ -243,6 +256,7 @@ def matrix_block_sum(mat, k):
 # BRUTE FORCE: O(n^2) time - count vowels in every substring
 def find_the_longest_substring(s):
     best = 0
+
     for i in range(len(s)):
         counts = dict.fromkeys("aeiou", 0)
         for j in range(i, len(s)):
@@ -250,6 +264,7 @@ def find_the_longest_substring(s):
                 counts[s[j]] += 1
             if all(c % 2 == 0 for c in counts.values()):
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -259,12 +274,14 @@ def find_the_longest_substring(s):
     bit = {"a": 1, "e": 2, "i": 4, "o": 8, "u": 16}
     first = {0: -1}  # mask -> earliest index where it was seen (-1 = before the string)
     mask = best = 0
+
     for i, ch in enumerate(s):
         mask ^= bit.get(ch, 0)
         if mask in first:
             best = max(best, i - first[mask])
         else:
             first[mask] = i
+
     return best
 """,
     ),
@@ -303,6 +320,7 @@ def find_the_longest_substring(s):
 def max_non_overlapping(nums, target):
     n = len(nums)
     best = [0] * (n + 1)  # best[i]: answer using only the first i numbers
+
     for i in range(1, n + 1):
         best[i] = best[i - 1]
         total = 0
@@ -310,6 +328,7 @@ def max_non_overlapping(nums, target):
             total += nums[j - 1]
             if total == target:
                 best[i] = max(best[i], best[j - 1] + 1)
+
     return best[n]
 """,
         solution=r"""
@@ -317,6 +336,7 @@ def max_non_overlapping(nums, target):
 # Idea: Greedy + prefix-sum set with reset
 def max_non_overlapping(nums, target):
     seen, prefix, count = {0}, 0, 0
+
     for x in nums:
         prefix += x
         if prefix - target in seen:  # a subarray ending here sums to target
@@ -325,6 +345,7 @@ def max_non_overlapping(nums, target):
             prefix = 0
         else:
             seen.add(prefix)
+
     return count
 """,
     ),
@@ -364,6 +385,7 @@ def max_non_overlapping(nums, target):
 # BRUTE FORCE: O(q * n) time - slice and count for every query
 def plates_between_candles(s, queries):
     answer = []
+
     for left, right in queries:
         part = s[left : right + 1]
         if part.count("|") < 2:
@@ -371,6 +393,7 @@ def plates_between_candles(s, queries):
         else:
             inner = part[part.index("|") : part.rindex("|") + 1]
             answer.append(inner.count("*"))
+
     return answer
 """,
         solution=r"""
@@ -379,23 +402,31 @@ def plates_between_candles(s, queries):
 def plates_between_candles(s, queries):
     n = len(s)
     plates = [0] * (n + 1)
+
     for i, ch in enumerate(s):
         plates[i + 1] = plates[i] + (ch == "*")
+
     next_candle, prev_candle = [n] * n, [-1] * n
     last = -1
+
     for i in range(n):
         if s[i] == "|":
             last = i
         prev_candle[i] = last
+
     nxt = n
+
     for i in range(n - 1, -1, -1):
         if s[i] == "|":
             nxt = i
         next_candle[i] = nxt
+
     answer = []
+
     for left, right in queries:
         a, b = next_candle[left], prev_candle[right]  # snap inwards to real candles
         answer.append(plates[b] - plates[a + 1] if a < b else 0)
+
     return answer
 """,
     ),
@@ -480,6 +511,7 @@ def ways_to_split_array(nums):
 def answer_queries(nums, queries):
     ordered = sorted(nums)
     answer = []
+
     for q in queries:
         total = count = 0
         for x in ordered:
@@ -488,6 +520,7 @@ def answer_queries(nums, queries):
             total += x
             count += 1
         answer.append(count)
+
     return answer
 """,
         solution=r"""
@@ -628,14 +661,18 @@ def is_covered(ranges, left, right):
 def is_covered(ranges, left, right):
     size = max(right, max(b for _, b in ranges)) + 2
     diff = [0] * size
+
     for a, b in ranges:
         diff[a] += 1
         diff[b + 1] -= 1
+
     cover = 0
+
     for x in range(right + 1):
         cover += diff[x]
         if x >= left and cover == 0:
             return False
+
     return True
 """,
     ),
@@ -677,10 +714,13 @@ def is_covered(ranges, left, right):
 def num_submatrix_sum_target(matrix, target):
     m, n = len(matrix), len(matrix[0])
     prefix = [[0] * (n + 1) for _ in range(m + 1)]
+
     for i in range(m):
         for j in range(n):
             prefix[i + 1][j + 1] = matrix[i][j] + prefix[i][j + 1] + prefix[i + 1][j] - prefix[i][j]
+
     count = 0
+
     for r1 in range(m):
         for r2 in range(r1, m):
             for c1 in range(n):
@@ -692,6 +732,7 @@ def num_submatrix_sum_target(matrix, target):
                         + prefix[r1][c1]
                     )
                     count += total == target
+
     return count
 """,
         solution=r"""
@@ -700,17 +741,22 @@ def num_submatrix_sum_target(matrix, target):
 def num_submatrix_sum_target(matrix, target):
     m, n = len(matrix), len(matrix[0])
     count = 0
+
     for top in range(m):
         column_sums = [0] * n
+
         for bottom in range(top, m):
             for c in range(n):
                 column_sums[c] += matrix[bottom][c]  # rows top..bottom squashed into one array
+
             seen = {0: 1}
             running = 0
+
             for value in column_sums:
                 running += value
                 count += seen.get(running - target, 0)
                 seen[running] = seen.get(running, 0) + 1
+
     return count
 """,
     ),

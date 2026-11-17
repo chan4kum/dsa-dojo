@@ -47,15 +47,20 @@ PROBLEMS = [
 # BRUTE FORCE: O(k * n) time - rescan all projects every round
 def find_maximized_capital(k, w, profits, capital):
     done = set()
+
     for _ in range(k):
         best = -1
+
         for i in range(len(profits)):
             if i not in done and capital[i] <= w and (best == -1 or profits[i] > profits[best]):
                 best = i  # the most profitable project we can afford right now
+
         if best == -1:
             break
+
         done.add(best)
         w += profits[best]
+
     return w
 """,
         solution=r"""
@@ -64,6 +69,7 @@ def find_maximized_capital(k, w, profits, capital):
 def find_maximized_capital(k, w, profits, capital):
     projects = sorted(zip(capital, profits))  # cheapest to start first
     heap, i = [], 0
+
     for _ in range(k):
         while i < len(projects) and projects[i][0] <= w:
             heapq.heappush(heap, -projects[i][1])  # negated: heapq is a min-heap
@@ -71,6 +77,7 @@ def find_maximized_capital(k, w, profits, capital):
         if not heap:
             break
         w -= heapq.heappop(heap)  # take the best affordable profit
+
     return w
 """,
     ),

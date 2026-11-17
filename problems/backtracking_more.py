@@ -71,6 +71,7 @@ def combine(n, k):
             path.pop()
 
     dfs(1)
+
     return res
 """,
     ),
@@ -131,6 +132,7 @@ def combination_sum2(candidates, target):
         if remain == 0:
             res.append(path[:])
             return
+
         for i in range(start, len(cand)):
             if cand[i] > remain:
                 break
@@ -141,6 +143,7 @@ def combination_sum2(candidates, target):
             path.pop()
 
     dfs(0, target)
+
     return res
 """,
     ),
@@ -188,6 +191,7 @@ def permute_unique(nums):
         if len(path) == len(nums):
             res.append(path[:])
             return
+
         for v in list(cnt):
             if cnt[v]:
                 cnt[v] -= 1
@@ -197,6 +201,7 @@ def permute_unique(nums):
                 cnt[v] += 1
 
     dfs()
+
     return res
 """,
     ),
@@ -255,6 +260,7 @@ def subsets_with_dup(nums):
             path.pop()
 
     dfs(0)
+
     return res
 """,
     ),
@@ -299,6 +305,7 @@ def subsets_with_dup(nums):
 def letter_combinations(digits):
     if not digits:
         return []
+
     m = {
         "2": "abc",
         "3": "def",
@@ -310,8 +317,10 @@ def letter_combinations(digits):
         "9": "wxyz",
     }
     out = [""]
+
     for d in digits:
         out = [p + ch for p in out for ch in m[d]]
+
     return out
 """,
         solution=r"""
@@ -320,6 +329,7 @@ def letter_combinations(digits):
 def letter_combinations(digits):
     if not digits:
         return []
+
     m = {
         "2": "abc",
         "3": "def",
@@ -342,6 +352,7 @@ def letter_combinations(digits):
             path.pop()
 
     dfs(0, [])
+
     return res
 """,
     ),
@@ -388,13 +399,17 @@ def exist(board, word):
     def go(r, c, i, path):
         if board[r][c] != word[i]:
             return False
+
         if i == len(word) - 1:
             return True
+
         path = path | {(r, c)}
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < R and 0 <= nc < C and (nr, nc) not in path and go(nr, nc, i + 1, path):
                 return True
+
         return False
 
     return any(go(r, c, 0, frozenset()) for r in range(R) for c in range(C))
@@ -408,11 +423,14 @@ def exist(board, word):
     def dfs(r, c, i):
         if i == len(word):
             return True
+
         if not (0 <= r < R and 0 <= c < C) or board[r][c] != word[i]:
             return False
+
         saved, board[r][c] = board[r][c], "#"  # mark visited
         found = any(dfs(r + dr, c + dc, i + 1) for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)))
         board[r][c] = saved  # un-choose
+
         return found
 
     return any(dfs(r, c, 0) for r in range(R) for c in range(C))
@@ -450,15 +468,20 @@ def exist(board, word):
 # BRUTE FORCE: O(n * 2^n) time - every cut mask, filter partitions where all parts are palindromes
 def partition(s):
     n, res = len(s), []
+
     for mask in range(1 << max(n - 1, 0)):
         parts, last = [], 0
+
         for i in range(n - 1):
             if mask >> i & 1:
                 parts.append(s[last : i + 1])
                 last = i + 1
+
         parts.append(s[last:])
+
         if all(p == p[::-1] for p in parts):
             res.append(parts)
+
     return res
 """,
         solution=r"""
@@ -471,6 +494,7 @@ def partition(s):
         if start == len(s):
             res.append(path[:])
             return
+
         for end in range(start + 1, len(s) + 1):
             piece = s[start:end]
             if piece == piece[::-1]:
@@ -479,6 +503,7 @@ def partition(s):
                 path.pop()
 
     dfs(0)
+
     return res
 """,
     ),
@@ -524,12 +549,14 @@ def restore_ip_addresses(s):
         return p != "" and (len(p) == 1 or p[0] != "0") and int(p) <= 255
 
     n, res = len(s), []
+
     for i in range(1, 4):
         for j in range(i + 1, i + 4):
             for k in range(j + 1, j + 4):
                 parts = [s[:i], s[i:j], s[j:k], s[k:]]
                 if k < n and all(ok(p) for p in parts):
                     res.append(".".join(parts))
+
     return res
 """,
         solution=r"""
@@ -541,11 +568,14 @@ def restore_ip_addresses(s):
     def dfs(start):
         left = 4 - len(parts)
         remaining = len(s) - start
+
         if remaining < left or remaining > 3 * left:
             return
+
         if left == 0:
             res.append(".".join(parts))
             return
+
         for ln in range(1, 4):
             p = s[start : start + ln]
             if len(p) == ln and int(p) <= 255 and (ln == 1 or p[0] != "0"):
@@ -554,6 +584,7 @@ def restore_ip_addresses(s):
                 parts.pop()
 
     dfs(0)
+
     return res
 """,
     ),

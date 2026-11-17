@@ -100,6 +100,7 @@ def longest_diverse_string(a, b, c):
     @lru_cache(None)
     def best(counts, last, run):
         result = ""
+
         for i, ch in enumerate("abc"):
             if counts[i] == 0 or (i == last and run == 2):
                 continue
@@ -108,6 +109,7 @@ def longest_diverse_string(a, b, c):
             candidate = ch + best(tuple(nxt), i, run + 1 if i == last else 1)
             if len(candidate) > len(result):
                 result = candidate
+
         return result
 
     return best((a, b, c), -1, 0)
@@ -119,8 +121,10 @@ def longest_diverse_string(a, b, c):
     heap = [(-count, ch) for count, ch in ((a, "a"), (b, "b"), (c, "c")) if count > 0]
     heapq.heapify(heap)
     out = []
+
     while heap:
         count, ch = heapq.heappop(heap)
+
         if len(out) >= 2 and out[-1] == out[-2] == ch:
             if not heap:
                 break
@@ -133,6 +137,7 @@ def longest_diverse_string(a, b, c):
             out.append(ch)
             if count + 1 < 0:
                 heapq.heappush(heap, (count + 1, ch))
+
     return "".join(out)
 """,
     ),
@@ -187,11 +192,13 @@ def max_result(nums, k):
 def max_result(nums, k):
     heap = [(-nums[0], 0)]
     score = nums[0]
+
     for i in range(1, len(nums)):
         while heap[0][1] < i - k:
             heapq.heappop(heap)
         score = nums[i] - heap[0][0]
         heapq.heappush(heap, (-score, i))
+
     return score
 """,
     ),
@@ -254,10 +261,12 @@ def max_average_ratio(classes, extraStudents):
 
     heap = [(-gain(p, t), p, t) for p, t in classes]
     heapq.heapify(heap)
+
     for _ in range(extraStudents):
         _, p, t = heapq.heappop(heap)
         p, t = p + 1, t + 1
         heapq.heappush(heap, (-gain(p, t), p, t))
+
     return sum(p / t for _, p, t in heap) / len(classes)
 """,
     ),
@@ -311,11 +320,15 @@ def maximum_product(nums, k):
 def maximum_product(nums, k):
     heap = list(nums)
     heapq.heapify(heap)
+
     for _ in range(k):
         heapq.heappush(heap, heapq.heappop(heap) + 1)
+
     product = 1
+
     for x in heap:
         product = product * x % (10**9 + 7)
+
     return product
 """,
     ),
@@ -362,11 +375,13 @@ def maximum_product(nums, k):
 def total_cost(costs, k, candidates):
     workers = list(costs)
     total = 0
+
     for _ in range(k):
         n = len(workers)
         eligible = set(range(min(candidates, n))) | set(range(max(0, n - candidates), n))
         pick = min(eligible, key=lambda i: (workers[i], i))
         total += workers.pop(pick)
+
     return total
 """,
         solution=r"""
@@ -380,6 +395,7 @@ def total_cost(costs, k, candidates):
     heapq.heapify(right)
     i, j = candidates, max(candidates, n - candidates) - 1
     total = 0
+
     for _ in range(k):
         if not right or (left and left[0] <= right[0]):
             total += heapq.heappop(left)
@@ -391,6 +407,7 @@ def total_cost(costs, k, candidates):
             if i <= j:
                 heapq.heappush(right, costs[j])
                 j -= 1
+
     return total
 """,
     ),
@@ -446,6 +463,7 @@ def max_score(nums1, nums2, k):
 def max_score(nums1, nums2, k):
     heap = []
     total = best = 0
+
     for b, a in sorted(zip(nums2, nums1), reverse=True):
         heapq.heappush(heap, a)
         total += a
@@ -453,6 +471,7 @@ def max_score(nums1, nums2, k):
             total -= heapq.heappop(heap)
         if len(heap) == k:
             best = max(best, total * b)
+
     return best
 """,
     ),
@@ -510,12 +529,14 @@ def max_performance(n, speed, efficiency, k):
 def max_performance(n, speed, efficiency, k):
     heap = []
     total = best = 0
+
     for eff, spd in sorted(zip(efficiency, speed), reverse=True):
         heapq.heappush(heap, spd)
         total += spd
         if len(heap) > k:
             total -= heapq.heappop(heap)
         best = max(best, total * eff)
+
     return best % (10**9 + 7)
 """,
     ),
@@ -607,6 +628,7 @@ def max_subsequence(nums, k):
 # BRUTE FORCE: O(answer * m) time - test every integer by dividing out the allowed primes
 def nth_super_ugly_number(n, primes):
     count, x = 0, 0
+
     while count < n:
         x += 1
         rest = x
@@ -615,6 +637,7 @@ def nth_super_ugly_number(n, primes):
                 rest //= p
         if rest == 1:
             count += 1
+
     return x
 """,
         solution=r"""
@@ -624,12 +647,14 @@ def nth_super_ugly_number(n, primes):
     heap = [1]
     seen = {1}
     value = 1
+
     for _ in range(n):
         value = heapq.heappop(heap)
         for p in primes:
             if value * p not in seen:
                 seen.add(value * p)
                 heapq.heappush(heap, value * p)
+
     return value
 """,
     ),
@@ -673,12 +698,15 @@ def nth_super_ugly_number(n, primes):
 # BRUTE FORCE: O(n^2 log n) time and O(n^2) space - compute and sort every subarray sum
 def range_sum(nums, n, left, right):
     sums = []
+
     for i in range(n):
         total = 0
         for j in range(i, n):
             total += nums[j]
             sums.append(total)
+
     sums.sort()
+
     return sum(sums[left - 1 : right]) % (10**9 + 7)
 """,
         solution=r"""
@@ -688,12 +716,14 @@ def range_sum(nums, n, left, right):
     heap = [(x, i) for i, x in enumerate(nums)]
     heapq.heapify(heap)
     total = 0
+
     for k in range(1, right + 1):
         value, end = heapq.heappop(heap)
         if k >= left:
             total += value
         if end + 1 < n:
             heapq.heappush(heap, (value + nums[end + 1], end + 1))
+
     return total % (10**9 + 7)
 """,
     ),
@@ -741,6 +771,7 @@ def range_sum(nums, n, left, right):
 # BRUTE FORCE: O(n^2) time - scan every resting order for the best match each time
 def get_number_of_backlog_orders(orders):
     buys, sells = [], []
+
     for price, amount, kind in orders:
         if kind == 0:
             while amount:
@@ -751,6 +782,7 @@ def get_number_of_backlog_orders(orders):
                 take = min(amount, best[1])
                 amount -= take
                 best[1] -= take
+
             if amount:
                 buys.append([price, amount])
         else:
@@ -762,8 +794,10 @@ def get_number_of_backlog_orders(orders):
                 take = min(amount, best[1])
                 amount -= take
                 best[1] -= take
+
             if amount:
                 sells.append([price, amount])
+
     return sum(o[1] for o in buys + sells) % (10**9 + 7)
 """,
         solution=r"""
@@ -771,6 +805,7 @@ def get_number_of_backlog_orders(orders):
 # Idea: Order-book simulation with two priority queues
 def get_number_of_backlog_orders(orders):
     buys, sells = [], []
+
     for price, amount, kind in orders:
         if kind == 0:
             while amount and sells and sells[0][0] <= price:
@@ -779,6 +814,7 @@ def get_number_of_backlog_orders(orders):
                 sells[0][1] -= take
                 if sells[0][1] == 0:
                     heapq.heappop(sells)
+
             if amount:
                 heapq.heappush(buys, [-price, amount])
         else:
@@ -788,8 +824,10 @@ def get_number_of_backlog_orders(orders):
                 buys[0][1] -= take
                 if buys[0][1] == 0:
                     heapq.heappop(buys)
+
             if amount:
                 heapq.heappush(sells, [price, amount])
+
     return sum(o[1] for o in buys + sells) % (10**9 + 7)
 """,
     ),
@@ -842,8 +880,10 @@ def rearrange_barcodes(barcodes):
     heap = [(-count, value) for value, count in Counter(barcodes).items()]
     heapq.heapify(heap)
     out = []
+
     while heap:
         count, value = heapq.heappop(heap)
+
         if out and out[-1] == value:
             count2, value2 = heapq.heappop(heap)
             out.append(value2)
@@ -854,6 +894,7 @@ def rearrange_barcodes(barcodes):
             out.append(value)
             if count + 1 < 0:
                 heapq.heappush(heap, (count + 1, value))
+
     return out
 """,
     ),
@@ -914,6 +955,7 @@ def mincost_to_hire_workers(quality, wage, k):
     heap = []
     total = 0
     best = float("inf")
+
     for q, w in workers:
         heapq.heappush(heap, -q)
         total += q
@@ -921,6 +963,7 @@ def mincost_to_hire_workers(quality, wage, k):
             total += heapq.heappop(heap)
         if len(heap) == k:
             best = min(best, total * w / q)
+
     return best
 """,
     ),
@@ -970,6 +1013,7 @@ def mincost_to_hire_workers(quality, wage, k):
 # BRUTE FORCE: exponential in n - try every combination of reachable values, one per element
 def minimum_deviation(nums):
     options = []
+
     for x in nums:
         if x % 2:
             options.append([x, 2 * x])
@@ -979,9 +1023,12 @@ def minimum_deviation(nums):
                 x //= 2
                 values.append(x)
             options.append(values)
+
     best = float("inf")
+
     for choice in itertools.product(*options):
         best = min(best, max(choice) - min(choice))
+
     return best
 """,
         solution=r"""
@@ -992,6 +1039,7 @@ def minimum_deviation(nums):
     heapq.heapify(heap)
     low = -max(heap)
     best = float("inf")
+
     while True:
         top = -heap[0]
         best = min(best, top - low)
@@ -1000,6 +1048,7 @@ def minimum_deviation(nums):
         top //= 2
         low = min(low, top)
         heapq.heapreplace(heap, -top)
+
     return best
 """,
     ),
@@ -1045,14 +1094,17 @@ def is_possible(nums):
     def place(i, chains):
         if i == len(nums):
             return all(length >= 3 for _, length in chains)
+
         x = nums[i]
         tried = set()
+
         for idx, (end, length) in enumerate(chains):
             if end == x - 1 and (end, length) not in tried:
                 tried.add((end, length))
                 extended = chains[:idx] + [(x, length + 1)] + chains[idx + 1 :]
                 if place(i + 1, extended):
                     return True
+
         return place(i + 1, chains + [(x, 1)])
 
     return place(0, [])
@@ -1062,12 +1114,14 @@ def is_possible(nums):
 # Idea: Greedy chain extension with per-end min-heaps
 def is_possible(nums):
     ends = defaultdict(list)
+
     for x in nums:
         if ends[x - 1]:
             length = heapq.heappop(ends[x - 1])
             heapq.heappush(ends[x], length + 1)
         else:
             heapq.heappush(ends[x], 1)
+
     return all(length >= 3 for lengths in ends.values() for length in lengths)
 """,
     ),
@@ -1123,8 +1177,10 @@ def trap_rain_water(heightMap):
         for i in range(m)
     ]
     changed = True
+
     while changed:
         changed = False
+
         for i in range(1, m - 1):
             for j in range(1, n - 1):
                 lowest_neighbour = min(
@@ -1134,6 +1190,7 @@ def trap_rain_water(heightMap):
                 if new < level[i][j]:
                     level[i][j] = new
                     changed = True
+
     return sum(level[i][j] - heightMap[i][j] for i in range(1, m - 1) for j in range(1, n - 1))
 """,
         solution=r"""
@@ -1141,16 +1198,21 @@ def trap_rain_water(heightMap):
 # Idea: Dijkstra-style flood from the border with a min-heap
 def trap_rain_water(heightMap):
     m, n = len(heightMap), len(heightMap[0])
+
     if m < 3 or n < 3:
         return 0
+
     seen = [[False] * n for _ in range(m)]
     heap = []
+
     for i in range(m):
         for j in range(n):
             if i in (0, m - 1) or j in (0, n - 1):
                 heapq.heappush(heap, (heightMap[i][j], i, j))
                 seen[i][j] = True
+
     water = 0
+
     while heap:
         level, i, j = heapq.heappop(heap)
         for a, b in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
@@ -1158,6 +1220,7 @@ def trap_rain_water(heightMap):
                 seen[a][b] = True
                 water += max(0, level - heightMap[a][b])
                 heapq.heappush(heap, (max(level, heightMap[a][b]), a, b))
+
     return water
 """,
     ),

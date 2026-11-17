@@ -45,6 +45,7 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2) time
 def num_subarray_product_less_than_k(nums, k):
     c = 0
+
     for i in range(len(nums)):
         p = 1
         for j in range(i, len(nums)):
@@ -53,6 +54,7 @@ def num_subarray_product_less_than_k(nums, k):
                 c += 1
             else:
                 break
+
     return c
 """,
         solution=r"""
@@ -61,13 +63,16 @@ def num_subarray_product_less_than_k(nums, k):
 def num_subarray_product_less_than_k(nums, k):
     if k <= 1:
         return 0
+
     left, prod, ans = 0, 1, 0
+
     for right, x in enumerate(nums):
         prod *= x
         while prod >= k:
             prod //= nums[left]
             left += 1
         ans += right - left + 1
+
     return ans
 """,
     ),
@@ -107,6 +112,7 @@ def num_subarray_product_less_than_k(nums, k):
 # BRUTE FORCE: O(n^2) time
 def total_fruit(fruits):
     best = 0
+
     for i in range(len(fruits)):
         kinds = set()
         for j in range(i, len(fruits)):
@@ -114,6 +120,7 @@ def total_fruit(fruits):
             if len(kinds) > 2:
                 break
             best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -121,6 +128,7 @@ def total_fruit(fruits):
 # Idea: Variable window with a count map (at most K distinct)
 def total_fruit(fruits):
     cnt, left, best = {}, 0, 0
+
     for right, f in enumerate(fruits):
         cnt[f] = cnt.get(f, 0) + 1
         while len(cnt) > 2:
@@ -129,6 +137,7 @@ def total_fruit(fruits):
                 del cnt[fruits[left]]
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -168,8 +177,10 @@ def total_fruit(fruits):
 # BRUTE FORCE: O(n^2) time
 def longest_subarray(nums):
     n, best = len(nums), 0
+
     for d in range(n):
         run = 0
+
         for i in range(n):
             if i == d:
                 continue  # skipping d lets the runs on both sides join
@@ -178,6 +189,7 @@ def longest_subarray(nums):
                 best = max(best, run)
             else:
                 run = 0
+
     return best
 """,
         solution=r"""
@@ -185,12 +197,14 @@ def longest_subarray(nums):
 # Idea: Variable window with at most K = 1 violations
 def longest_subarray(nums):
     left = zeros = best = 0
+
     for right, x in enumerate(nums):
         zeros += x == 0
         while zeros > 1:
             zeros -= nums[left] == 0
             left += 1
         best = max(best, right - left)
+
     return best
 """,
     ),

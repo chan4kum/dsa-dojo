@@ -94,17 +94,21 @@ PROBLEMS = [
 def cal_points(operations):
     values = [0] * len(operations)
     alive = []
+
     for i, op in enumerate(operations):
         if op == "C":
             alive.pop()
             continue
+
         if op == "D":
             values[i] = 2 * values[alive[-1]]
         elif op == "+":
             values[i] = values[alive[-1]] + values[alive[-2]]
         else:
             values[i] = int(op)
+
         alive.append(i)
+
     return sum(values[i] for i in alive)
 """,
         solution=r"""
@@ -112,6 +116,7 @@ def cal_points(operations):
 # Idea: Stack of valid scores
 def cal_points(operations):
     scores = []
+
     for op in operations:
         if op == "C":
             scores.pop()
@@ -121,6 +126,7 @@ def cal_points(operations):
             scores.append(scores[-1] + scores[-2])
         else:
             scores.append(int(op))
+
     return sum(scores)
 """,
     ),
@@ -167,6 +173,7 @@ def cal_points(operations):
 # BRUTE FORCE: O(n^2) time - try every start with a running sum
 def shortest_subarray(nums, k):
     best = -1
+
     for i in range(len(nums)):
         total = 0
         for j in range(i, len(nums)):
@@ -175,6 +182,7 @@ def shortest_subarray(nums, k):
                 if best == -1 or j - i + 1 < best:
                     best = j - i + 1
                 break
+
     return best
 """,
         solution=r"""
@@ -182,16 +190,20 @@ def shortest_subarray(nums, k):
 # Idea: Prefix sums + monotonic deque
 def shortest_subarray(nums, k):
     prefix = [0]
+
     for x in nums:
         prefix.append(prefix[-1] + x)
+
     window = deque()
     best = float("inf")
+
     for j, value in enumerate(prefix):
         while window and value - prefix[window[0]] >= k:
             best = min(best, j - window.popleft())
         while window and prefix[window[-1]] >= value:
             window.pop()
         window.append(j)
+
     return -1 if best == float("inf") else best
 """,
     ),
@@ -243,16 +255,19 @@ def mct_from_leaf_values(arr):
     n = len(arr)
     best = [[0] * n for _ in range(n)]
     top = [[0] * n for _ in range(n)]
+
     for i in range(n):
         top[i][i] = arr[i]
         for j in range(i + 1, n):
             top[i][j] = max(top[i][j - 1], arr[j])
+
     for length in range(2, n + 1):
         for i in range(n - length + 1):
             j = i + length - 1
             best[i][j] = min(
                 best[i][k] + best[k + 1][j] + top[i][k] * top[k + 1][j] for k in range(i, j)
             )
+
     return best[0][n - 1]
 """,
         solution=r"""
@@ -261,13 +276,16 @@ def mct_from_leaf_values(arr):
 def mct_from_leaf_values(arr):
     stack = [float("inf")]
     total = 0
+
     for value in arr:
         while stack[-1] <= value:
             valley = stack.pop()
             total += valley * min(stack[-1], value)
         stack.append(value)
+
     while len(stack) > 2:
         total += stack.pop() * stack[-1]
+
     return total
 """,
     ),
@@ -315,6 +333,7 @@ def mct_from_leaf_values(arr):
 def min_remove_to_make_valid(s):
     def valid(text):
         balance = 0
+
         for c in text:
             if c == "(":
                 balance += 1
@@ -322,9 +341,11 @@ def min_remove_to_make_valid(s):
                 balance -= 1
                 if balance < 0:
                     return False
+
         return balance == 0
 
     brackets = [i for i, c in enumerate(s) if c in "()"]
+
     for count in range(len(brackets) + 1):
         for removed in itertools.combinations(brackets, count):
             gone = set(removed)
@@ -338,6 +359,7 @@ def min_remove_to_make_valid(s):
 def min_remove_to_make_valid(s):
     chars = list(s)
     stack = []
+
     for i, c in enumerate(chars):
         if c == "(":
             stack.append(i)
@@ -346,8 +368,10 @@ def min_remove_to_make_valid(s):
                 stack.pop()
             else:
                 chars[i] = ""
+
     for i in stack:
         chars[i] = ""
+
     return "".join(chars)
 """,
     ),
@@ -393,12 +417,14 @@ def min_remove_to_make_valid(s):
 # BRUTE FORCE: O(n^2) time - track max and min while extending every start
 def sub_array_ranges(nums):
     total = 0
+
     for i in range(len(nums)):
         high = low = nums[i]
         for j in range(i, len(nums)):
             high = max(high, nums[j])
             low = min(low, nums[j])
             total += high - low
+
     return total
 """,
         solution=r"""
@@ -410,17 +436,21 @@ def sub_array_ranges(nums):
         left = [0] * n
         right = [0] * n
         stack = []
+
         for i in range(n):
             while stack and arr[stack[-1]] < arr[i]:
                 stack.pop()
             left[i] = i - (stack[-1] if stack else -1)
             stack.append(i)
+
         stack = []
+
         for i in range(n - 1, -1, -1):
             while stack and arr[stack[-1]] <= arr[i]:
                 stack.pop()
             right[i] = (stack[-1] if stack else n) - i
             stack.append(i)
+
         return sum(arr[i] * left[i] * right[i] for i in range(n))
 
     return sum_of_maximums(nums) + sum_of_maximums([-x for x in nums])
@@ -467,6 +497,7 @@ def sub_array_ranges(nums):
 def replace_non_coprimes(nums):
     arr = list(nums)
     changed = True
+
     while changed:
         changed = False
         for i in range(len(arr) - 1):
@@ -475,6 +506,7 @@ def replace_non_coprimes(nums):
                 arr[i : i + 2] = [arr[i] // g * arr[i + 1]]
                 changed = True
                 break
+
     return arr
 """,
         solution=r"""
@@ -534,6 +566,7 @@ def replace_non_coprimes(nums):
 def total_steps(nums):
     arr = list(nums)
     steps = 0
+
     while True:
         keep = [arr[0]] + [arr[i] for i in range(1, len(arr)) if arr[i - 1] <= arr[i]]
         if len(keep) == len(arr):
@@ -547,6 +580,7 @@ def total_steps(nums):
 def total_steps(nums):
     stack = []
     best = 0
+
     for x in nums:
         steps = 0
         while stack and stack[-1][0] <= x:
@@ -554,6 +588,7 @@ def total_steps(nums):
         steps = steps + 1 if stack else 0
         best = max(best, steps)
         stack.append((x, steps))
+
     return best
 """,
     ),
@@ -614,15 +649,18 @@ def valid_subarray_size(nums, threshold):
     left = [-1] * n
     right = [n] * n
     stack = []
+
     for i, x in enumerate(nums):
         while stack and nums[stack[-1]] >= x:
             right[stack.pop()] = i
         left[i] = stack[-1] if stack else -1
         stack.append(i)
+
     for i, x in enumerate(nums):
         length = right[i] - left[i] - 1
         if x * length > threshold:
             return length
+
     return -1
 """,
     ),
@@ -673,20 +711,27 @@ def smallest_number(pattern):
     def dfs(i):
         if i == n + 1:
             return True
+
         for digit in range(1, 10):
             if used[digit]:
                 continue
+
             if i > 0 and ((pattern[i - 1] == "I") != (chosen[-1] < digit)):
                 continue
+
             used[digit] = True
             chosen.append(digit)
+
             if dfs(i + 1):
                 return True
+
             chosen.pop()
             used[digit] = False
+
         return False
 
     dfs(0)
+
     return "".join(map(str, chosen))
 """,
         solution=r"""
@@ -695,11 +740,13 @@ def smallest_number(pattern):
 def smallest_number(pattern):
     result = []
     stack = []
+
     for i in range(len(pattern) + 1):
         stack.append(str(i + 1))
         if i == len(pattern) or pattern[i] == "I":
             while stack:
                 result.append(stack.pop())
+
     return "".join(result)
 """,
     ),
@@ -747,16 +794,20 @@ def smallest_number(pattern):
 # BRUTE FORCE: O(n^2) time - for each element scan right for the second larger value
 def second_greater_element(nums):
     result = []
+
     for i, x in enumerate(nums):
         seen = 0
         answer = -1
+
         for j in range(i + 1, len(nums)):
             if nums[j] > x:
                 seen += 1
                 if seen == 2:
                     answer = nums[j]
                     break
+
         result.append(answer)
+
     return result
 """,
         solution=r"""
@@ -766,6 +817,7 @@ def second_greater_element(nums):
     result = [-1] * len(nums)
     first = []
     second = []
+
     for i, x in enumerate(nums):
         while second and nums[second[-1]] < x:
             result[second.pop()] = x
@@ -774,6 +826,7 @@ def second_greater_element(nums):
             moved.append(first.pop())
         second.extend(reversed(moved))
         first.append(i)
+
     return result
 """,
     ),
@@ -820,10 +873,13 @@ def survived_robots_healths(positions, healths, directions):
     order = sorted(range(len(positions)), key=lambda i: positions[i])
     alive = [[i, healths[i]] for i in order]
     changed = True
+
     while changed:
         changed = False
+
         for k in range(len(alive) - 1):
             a, b = alive[k], alive[k + 1]
+
             if directions[a[0]] == "R" and directions[b[0]] == "L":
                 if a[1] > b[1]:
                     a[1] -= 1
@@ -833,8 +889,10 @@ def survived_robots_healths(positions, healths, directions):
                     del alive[k]
                 else:
                     del alive[k : k + 2]
+
                 changed = True
                 break
+
     return [health for _, health in sorted(alive)]
 """,
         solution=r"""
@@ -843,12 +901,15 @@ def survived_robots_healths(positions, healths, directions):
 def survived_robots_healths(positions, healths, directions):
     health = list(healths)
     stack = []
+
     for i in sorted(range(len(positions)), key=lambda i: positions[i]):
         if directions[i] == "R":
             stack.append(i)
             continue
+
         while stack and health[i] > 0:
             j = stack[-1]
+
             if health[j] < health[i]:
                 health[j] = 0
                 stack.pop()
@@ -859,6 +920,7 @@ def survived_robots_healths(positions, healths, directions):
             else:
                 health[j] = health[i] = 0
                 stack.pop()
+
     return [h for h in health if h > 0]
 """,
     ),
@@ -907,17 +969,23 @@ def survived_robots_healths(positions, healths, directions):
 def maximum_sum_of_heights(max_heights):
     n = len(max_heights)
     best = 0
+
     for peak in range(n):
         total = max_heights[peak]
         low = max_heights[peak]
+
         for i in range(peak - 1, -1, -1):
             low = min(low, max_heights[i])
             total += low
+
         low = max_heights[peak]
+
         for i in range(peak + 1, n):
             low = min(low, max_heights[i])
             total += low
+
         best = max(best, total)
+
     return best
 """,
         solution=r"""
@@ -927,6 +995,7 @@ def maximum_sum_of_heights(max_heights):
     n = len(max_heights)
     left = [0] * n
     stack = []
+
     for i in range(n):
         while stack and max_heights[stack[-1]] > max_heights[i]:
             stack.pop()
@@ -935,8 +1004,10 @@ def maximum_sum_of_heights(max_heights):
         else:
             left[i] = max_heights[i] * (i + 1)
         stack.append(i)
+
     right = [0] * n
     stack = []
+
     for i in range(n - 1, -1, -1):
         while stack and max_heights[stack[-1]] > max_heights[i]:
             stack.pop()
@@ -945,6 +1016,7 @@ def maximum_sum_of_heights(max_heights):
         else:
             right[i] = max_heights[i] * (n - i)
         stack.append(i)
+
     return max(left[i] + right[i] - max_heights[i] for i in range(n))
 """,
     ),
@@ -990,12 +1062,14 @@ def maximum_sum_of_heights(max_heights):
 # BRUTE FORCE: O(n^2) time - extend every start while tracking the maximum
 def number_of_subarrays(nums):
     count = 0
+
     for i in range(len(nums)):
         top = nums[i]
         for j in range(i, len(nums)):
             top = max(top, nums[j])
             if nums[i] == top and nums[j] == top:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -1004,6 +1078,7 @@ def number_of_subarrays(nums):
 def number_of_subarrays(nums):
     stack = []
     total = 0
+
     for x in nums:
         while stack and stack[-1][0] < x:
             stack.pop()
@@ -1012,6 +1087,7 @@ def number_of_subarrays(nums):
         else:
             stack.append([x, 1])
         total += stack[-1][1]
+
     return total
 """,
     ),

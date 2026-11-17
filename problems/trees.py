@@ -122,9 +122,12 @@ def level_order(root):
 def level_order(root):
     if not root:
         return []
+
     out, q = [], deque([root])
+
     while q:
         level = []
+
         for _ in range(len(q)):  # exactly this level's nodes
             node = q.popleft()
             level.append(node.val)
@@ -132,7 +135,9 @@ def level_order(root):
                 q.append(node.left)
             if node.right:
                 q.append(node.right)
+
         out.append(level)
+
     return out
 """,
     ),
@@ -179,6 +184,7 @@ def is_valid_bst(root):
     def ok(n):
         if not n:
             return True
+
         return (
             all(v < n.val for v in values(n.left))
             and all(v > n.val for v in values(n.right))
@@ -245,19 +251,24 @@ def lowest_common_ancestor(root, p, q):
     def path(n, target):
         if not n:
             return None
+
         if n is target:
             return [n]
+
         for child in (n.left, n.right):
             r = path(child, target)
             if r:
                 return [n] + r
+
         return None
 
     a, b = path(root, p), path(root, q)
     lca = None
+
     for x, y in zip(a, b):
         if x is y:
             lca = x
+
     return lca
 """,
         solution=r"""
@@ -320,12 +331,14 @@ def max_path_sum(root):
 
     best = float("-inf")
     stack = [root]
+
     while stack:
         n = stack.pop()
         if not n:
             continue
         best = max(best, n.val + max(0, chain(n.left)) + max(0, chain(n.right)))
         stack += [n.left, n.right]
+
     return best
 """,
         solution=r"""
@@ -344,6 +357,7 @@ def max_path_sum(root):
         return node.val + max(left, right)  # chain a parent may extend
 
     gain(root)
+
     return best
 """,
     ),

@@ -59,6 +59,7 @@ PROBLEMS = [
 def smallest_range(nums):
     values = sorted({x for lst in nums for x in lst})
     best = None
+
     for lo in values:
         for hi in values:
             if hi < lo:
@@ -67,6 +68,7 @@ def smallest_range(nums):
                 cand = (hi - lo, lo)
                 if best is None or cand < best:
                     best = cand
+
     return [best[1], best[1] + best[0]]
 """,
         solution=r"""
@@ -77,12 +79,16 @@ def smallest_range(nums):
     heapq.heapify(heap)
     high = max(lst[0] for lst in nums)
     best = [heap[0][0], high]
+
     while True:
         low, i, j = heapq.heappop(heap)
+
         if high - low < best[1] - best[0]:
             best = [low, high]
+
         if j + 1 == len(nums[i]):
             return best
+
         nxt = nums[i][j + 1]
         high = max(high, nxt)
         heapq.heappush(heap, (nxt, i, j + 1))
@@ -137,19 +143,24 @@ def eaten_apples(apples, days):
     stock = {}
     eaten = 0
     day = 0
+
     while day < len(apples) or stock:
         if day < len(apples) and apples[day] > 0:
             expiry = day + days[day]
             stock[expiry] = stock.get(expiry, 0) + apples[day]
+
         for expiry in [e for e in stock if e <= day]:
             del stock[expiry]
+
         if stock:
             soonest = min(stock)
             stock[soonest] -= 1
             eaten += 1
             if stock[soonest] == 0:
                 del stock[soonest]
+
         day += 1
+
     return eaten
 """,
         solution=r"""
@@ -159,17 +170,22 @@ def eaten_apples(apples, days):
     heap = []
     eaten = 0
     day = 0
+
     while day < len(apples) or heap:
         if day < len(apples) and apples[day] > 0:
             heapq.heappush(heap, [day + days[day], apples[day]])
+
         while heap and heap[0][0] <= day:
             heapq.heappop(heap)
+
         if heap:
             heap[0][1] -= 1
             eaten += 1
             if heap[0][1] == 0:
                 heapq.heappop(heap)
+
         day += 1
+
     return eaten
 """,
     ),
@@ -214,6 +230,7 @@ def eaten_apples(apples, days):
 def maximum_score(a, b, c):
     piles = [a, b, c]
     score = 0
+
     while True:
         piles.sort(reverse=True)
         if piles[1] == 0:
@@ -278,15 +295,19 @@ def assign_tasks(servers, tasks):
     free_at = [0] * len(servers)
     clock = 0
     result = []
+
     for j, duration in enumerate(tasks):
         clock = max(clock, j)
         ready = [s for s in range(len(servers)) if free_at[s] <= clock]
+
         if not ready:
             clock = min(free_at)
             ready = [s for s in range(len(servers)) if free_at[s] <= clock]
+
         chosen = min(ready, key=lambda s: (servers[s], s))
         free_at[chosen] = clock + duration
         result.append(chosen)
+
     return result
 """,
         solution=r"""
@@ -298,16 +319,21 @@ def assign_tasks(servers, tasks):
     busy = []
     result = []
     clock = 0
+
     for j, duration in enumerate(tasks):
         clock = max(clock, j)
+
         if not free:
             clock = max(clock, busy[0][0])
+
         while busy and busy[0][0] <= clock:
             _, w, i = heapq.heappop(busy)
             heapq.heappush(free, (w, i))
+
         w, i = heapq.heappop(free)
         result.append(i)
         heapq.heappush(busy, (clock + duration, w, i))
+
     return result
 """,
     ),
@@ -357,8 +383,10 @@ def assign_tasks(servers, tasks):
 def smallest_chair(times, target_friend):
     order = sorted(range(len(times)), key=lambda i: times[i][0])
     free_time = []
+
     for friend in order:
         arrive, leave = times[friend]
+
         for chair in range(len(free_time)):
             if free_time[chair] <= arrive:
                 free_time[chair] = leave
@@ -366,6 +394,7 @@ def smallest_chair(times, target_friend):
         else:
             free_time.append(leave)
             chair = len(free_time) - 1
+
         if friend == target_friend:
             return chair
 """,
@@ -378,14 +407,19 @@ def smallest_chair(times, target_friend):
     free = list(range(n))
     heapq.heapify(free)
     busy = []
+
     for friend in order:
         arrive, leave = times[friend]
+
         while busy and busy[0][0] <= arrive:
             _, chair = heapq.heappop(busy)
             heapq.heappush(free, chair)
+
         chair = heapq.heappop(free)
+
         if friend == target_friend:
             return chair
+
         heapq.heappush(busy, (leave, chair))
 """,
     ),
@@ -445,14 +479,18 @@ def highest_ranked_k_items(grid, pricing, start, k):
     dist = [[inf] * cols for _ in range(rows)]
     dist[start[0]][start[1]] = 0
     changed = True
+
     while changed:
         changed = False
+
         for r in range(rows):
             for c in range(cols):
                 if grid[r][c] == 0 or dist[r][c] == inf:
                     continue
+
                 for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                     nr, nc = r + dr, c + dc
+
                     if (
                         0 <= nr < rows
                         and 0 <= nc < cols
@@ -461,12 +499,14 @@ def highest_ranked_k_items(grid, pricing, start, k):
                     ):
                         dist[nr][nc] = dist[r][c] + 1
                         changed = True
+
     items = sorted(
         (dist[r][c], grid[r][c], r, c)
         for r in range(rows)
         for c in range(cols)
         if dist[r][c] < inf and low <= grid[r][c] <= high
     )
+
     return [[r, c] for _, _, r, c in items[:k]]
 """,
         solution=r"""
@@ -478,15 +518,19 @@ def highest_ranked_k_items(grid, pricing, start, k):
     dist = {(start[0], start[1]): 0}
     queue = deque([(start[0], start[1])])
     found = []
+
     while queue:
         r, c = queue.popleft()
+
         if low <= grid[r][c] <= high:
             found.append((dist[(r, c)], grid[r][c], r, c))
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != 0 and (nr, nc) not in dist:
                 dist[(nr, nc)] = dist[(r, c)] + 1
                 queue.append((nr, nc))
+
     return [[r, c] for _, _, r, c in heapq.nsmallest(k, found)]
 """,
     ),
@@ -588,12 +632,14 @@ def maximum_importance(n, roads):
 def fill_cups(amount):
     cups = list(amount)
     seconds = 0
+
     while any(cups):
         cups.sort(reverse=True)
         cups[0] -= 1
         if cups[1] > 0:
             cups[1] -= 1
         seconds += 1
+
     return seconds
 """,
         solution=r"""
@@ -775,6 +821,7 @@ def find_maximum_elegance(items, k):
     duplicates = []
     total = 0
     best = 0
+
     for i, (profit, category) in enumerate(ordered):
         if i < k:
             total += profit
@@ -788,6 +835,7 @@ def find_maximum_elegance(items, k):
             total += profit - duplicates.pop()
             seen.add(category)
             best = max(best, total + len(seen) ** 2)
+
     return best
 """,
     ),
@@ -844,11 +892,13 @@ def min_operations(nums, k):
     heap = list(nums)
     heapq.heapify(heap)
     ops = 0
+
     while heap[0] < k:
         x = heapq.heappop(heap)
         y = heapq.heappop(heap)
         heapq.heappush(heap, 2 * x + y)
         ops += 1
+
     return ops
 """,
     ),
@@ -908,12 +958,14 @@ def most_frequent_ids(nums, freq):
     counts = defaultdict(int)
     heap = []
     result = []
+
     for x, f in zip(nums, freq):
         counts[x] += f
         heapq.heappush(heap, (-counts[x], x))
         while counts[heap[0][1]] != -heap[0][0]:
             heapq.heappop(heap)
         result.append(-heap[0][0])
+
     return result
 """,
     ),
@@ -972,12 +1024,16 @@ def get_final_state(nums, k, multiplier):
 def get_final_state(nums, k, multiplier):
     heap = [(v, i) for i, v in enumerate(nums)]
     heapq.heapify(heap)
+
     for _ in range(k):
         v, i = heapq.heappop(heap)
         heapq.heappush(heap, (v * multiplier, i))
+
     result = [0] * len(nums)
+
     for v, i in heap:
         result[i] = v
+
     return result
 """,
     ),
@@ -1033,11 +1089,13 @@ def results_array(queries, k):
 def results_array(queries, k):
     heap = []
     result = []
+
     for x, y in queries:
         heapq.heappush(heap, -(abs(x) + abs(y)))
         if len(heap) > k:
             heapq.heappop(heap)
         result.append(-heap[0] if len(heap) == k else -1)
+
     return result
 """,
     ),
@@ -1105,18 +1163,23 @@ def find_max_sum(nums1, nums2, k):
     heap = []
     total = 0
     i = 0
+
     while i < n:
         j = i
+
         while j < n and nums1[order[j]] == nums1[order[i]]:
             result[order[j]] = total
             j += 1
+
         for t in range(i, j):
             value = nums2[order[t]]
             heapq.heappush(heap, value)
             total += value
             if len(heap) > k:
                 total -= heapq.heappop(heap)
+
         i = j
+
     return result
 """,
     ),
@@ -1169,12 +1232,15 @@ def max_spending(values):
     def best(left, day):
         if day > total_days:
             return 0
+
         result = 0
+
         for s in range(shops):
             if left[s] > 0:
                 nxt = list(left)
                 nxt[s] -= 1
                 result = max(result, values[s][left[s] - 1] * day + best(tuple(nxt), day + 1))
+
         return result
 
     return best(tuple(len(row) for row in values), 1)
@@ -1234,15 +1300,20 @@ def repeat_limited_string(s, repeat_limit):
 
     def best(counts, last, run):
         result = ""
+
         for ch in letters:
             if counts[ch] == 0:
                 continue
+
             new_run = run + 1 if ch == last else 1
+
             if new_run > repeat_limit:
                 continue
+
             counts[ch] -= 1
             result = max(result, ch + best(counts, ch, new_run))
             counts[ch] += 1
+
         return result
 
     return best(Counter(s), "", 0)
@@ -1255,21 +1326,28 @@ def repeat_limited_string(s, repeat_limit):
     letters = sorted(counts, reverse=True)
     out = []
     i = 0
+
     while i < len(letters):
         c = letters[i]
         take = min(counts[c], repeat_limit)
         out.append(c * take)
         counts[c] -= take
+
         if counts[c] == 0:
             i += 1
             continue
+
         j = i + 1
+
         while j < len(letters) and counts[letters[j]] == 0:
             j += 1
+
         if j == len(letters):
             break
+
         out.append(letters[j])
         counts[letters[j]] -= 1
+
     return "".join(out)
 """,
     ),
@@ -1331,12 +1409,14 @@ def k_sum(nums, k):
     losses = sorted(abs(x) for x in nums)
     best = total
     heap = [(losses[0], 0)]
+
     for _ in range(k - 1):
         loss, i = heapq.heappop(heap)
         best = total - loss
         if i + 1 < len(losses):
             heapq.heappush(heap, (loss + losses[i + 1], i + 1))
             heapq.heappush(heap, (loss - losses[i] + losses[i + 1], i + 1))
+
     return best
 """,
     ),
@@ -1384,12 +1464,14 @@ def k_sum(nums, k):
 def unmarked_sum_array(nums, queries):
     marked = [False] * len(nums)
     result = []
+
     for index, k in queries:
         marked[index] = True
         order = sorted((v, i) for i, v in enumerate(nums) if not marked[i])
         for _, i in order[:k]:
             marked[i] = True
         result.append(sum(v for i, v in enumerate(nums) if not marked[i]))
+
     return result
 """,
         solution=r"""
@@ -1401,17 +1483,21 @@ def unmarked_sum_array(nums, queries):
     heapq.heapify(heap)
     remaining = sum(nums)
     result = []
+
     for index, k in queries:
         if not marked[index]:
             marked[index] = True
             remaining -= nums[index]
+
         while k > 0 and heap:
             v, i = heapq.heappop(heap)
             if not marked[i]:
                 marked[i] = True
                 remaining -= v
                 k -= 1
+
         result.append(remaining)
+
     return result
 """,
     ),

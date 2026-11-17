@@ -51,12 +51,14 @@ PROBLEMS = [
 # BRUTE FORCE: O(n log n) time - heap + seen set
 def nth_ugly_number(n):
     h, seen, x = [1], {1}, 1
+
     for _ in range(n):
         x = heapq.heappop(h)
         for f in (2, 3, 5):
             if x * f not in seen:
                 seen.add(x * f)
                 heapq.heappush(h, x * f)
+
     return x
 """,
         solution=r"""
@@ -65,15 +67,20 @@ def nth_ugly_number(n):
 def nth_ugly_number(n):
     u = [1]
     i2 = i3 = i5 = 0
+
     while len(u) < n:
         nxt = min(u[i2] * 2, u[i3] * 3, u[i5] * 5)
         u.append(nxt)
+
         if nxt == u[i2] * 2:
             i2 += 1
+
         if nxt == u[i3] * 3:
             i3 += 1
+
         if nxt == u[i5] * 5:
             i5 += 1
+
     return u[n - 1]
 """,
     ),
@@ -117,10 +124,12 @@ def kth_smallest(matrix, k):
     n = len(matrix)
     h = [(matrix[r][0], r, 0) for r in range(n)]
     heapq.heapify(h)
+
     for _ in range(k - 1):
         v, r, c = heapq.heappop(h)
         if c + 1 < len(matrix[r]):
             heapq.heappush(h, (matrix[r][c + 1], r, c + 1))
+
     return h[0][0]
 """,
     ),

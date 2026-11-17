@@ -106,6 +106,7 @@ def two_sum(nums, target):
 # BRUTE FORCE: O(n^2 * k log k) - compares each word with every existing group
 def group_anagrams(strs):
     groups = []
+
     for w in strs:
         for g in groups:
             if sorted(g[0]) == sorted(w):
@@ -113,6 +114,7 @@ def group_anagrams(strs):
                 break
         else:
             groups.append([w])
+
     return groups
 """,
         solution=r"""
@@ -174,12 +176,14 @@ def longest_consecutive(nums):
 def longest_consecutive(nums):
     s = set(nums)
     best = 0
+
     for x in s:
         if x - 1 not in s:  # x starts a run
             y = x
             while y + 1 in s:
                 y += 1
             best = max(best, y - x + 1)
+
     return best
 """,
     ),

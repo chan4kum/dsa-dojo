@@ -155,10 +155,13 @@ def num_tilings(n):
         total = 0
         # horizontal domino and vertical domino
         shapes = []
+
         if c + 1 < n:
             shapes.append([(r, c), (r, c + 1)])
+
         if r == 0:
             shapes.append([(0, c), (1, c)])
+
         # the four trominoes inside the 2x2 block starting at column c: block minus one cell
         if c + 1 < n:
             block = [(0, c), (1, c), (0, c + 1), (1, c + 1)]
@@ -166,6 +169,7 @@ def num_tilings(n):
                 cells = [x for x in block if x != gap]
                 if (r, c) in cells:
                     shapes.append(cells)
+
         for cells in shapes:
             if all(not filled[a][b] for a, b in cells):
                 for a, b in cells:
@@ -173,6 +177,7 @@ def num_tilings(n):
                 total += solve()
                 for a, b in cells:
                     filled[a][b] = False
+
         return total
 
     return solve() % (10**9 + 7)
@@ -241,11 +246,13 @@ def max_sum_after_partitioning(arr, k):
 def max_sum_after_partitioning(arr, k):
     n = len(arr)
     dp = [0] * (n + 1)  # dp[i] = best sum for arr[:i]
+
     for i in range(1, n + 1):
         biggest = 0
         for length in range(1, min(k, i) + 1):
             biggest = max(biggest, arr[i - length])  # the last block is arr[i-length:i]
             dp[i] = max(dp[i], dp[i - length] + biggest * length)
+
     return dp[n]
 """,
     ),
@@ -337,6 +344,7 @@ def longest_subsequence(arr, difference):
 # BRUTE FORCE: O(n^3) time - for each pair as the first two elements, extend greedily
 def longest_arith_seq_length(nums):
     n, best = len(nums), min(2, len(nums))
+
     for i in range(n):
         for j in range(i + 1, n):
             diff, last, length = nums[j] - nums[i], nums[j], 2
@@ -344,6 +352,7 @@ def longest_arith_seq_length(nums):
                 if nums[k] - last == diff:
                     last, length = nums[k], length + 1
             best = max(best, length)
+
     return best
 """,
         solution=r"""
@@ -354,11 +363,13 @@ def longest_arith_seq_length(nums):
         {} for _ in nums
     ]  # dp[j][d] = longest arithmetic subsequence ending at j with difference d
     best = min(2, len(nums))
+
     for j in range(len(nums)):
         for i in range(j):
             d = nums[j] - nums[i]
             dp[j][d] = dp[i].get(d, 1) + 1  # extend the chain that ended at i, or start a pair
             best = max(best, dp[j][d])
+
     return best
 """,
     ),
@@ -454,15 +465,18 @@ def count_numbers_with_unique_digits(n):
 def count_numbers_with_unique_digits(n):
     if n == 0:
         return 1
+
     total, ways = (
         10,
         9,
     )  # 10 one-digit numbers; `ways` = choices for the first digit of longer numbers
     available = 9  # digits left for the next position
+
     for _ in range(2, min(n, 10) + 1):
         ways *= available  # next position can use any digit not used yet
         total += ways
         available -= 1
+
     return total
 """,
     ),
@@ -520,8 +534,10 @@ def find_paths(m, n, max_move, start_row, start_col):
     ]  # ways[r][c] = paths that are at (r, c) after the moves so far
     ways[start_row][start_col] = 1
     out = 0
+
     for _ in range(max_move):
         nxt = [[0] * n for _ in range(m)]
+
         for r in range(m):
             for c in range(n):
                 if ways[r][c]:
@@ -531,7 +547,9 @@ def find_paths(m, n, max_move, start_row, start_col):
                             nxt[nr][nc] = (nxt[nr][nc] + ways[r][c]) % mod
                         else:
                             out = (out + ways[r][c]) % mod  # this move leaves the grid
+
         ways = nxt
+
     return out
 """,
     ),

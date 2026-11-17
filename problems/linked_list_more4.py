@@ -69,15 +69,19 @@ PROBLEMS = [
 def double_it(head):
     digits = []
     node = head
+
     while node:
         digits.append(str(node.val))
         node = node.next
+
     doubled = str(int("".join(digits)) * 2)
     dummy = ListNode(0)
     tail = dummy
+
     for ch in doubled:
         tail.next = ListNode(int(ch))
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -86,12 +90,15 @@ def double_it(head):
 def double_it(head):
     if head.val >= 5:
         head = ListNode(0, head)
+
     node = head
+
     while node:
         node.val = node.val * 2 % 10
         if node.next and node.next.val >= 5:
             node.val += 1
         node = node.next
+
     return head
 """,
     ),

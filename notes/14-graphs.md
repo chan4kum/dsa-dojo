@@ -94,10 +94,13 @@ Final distances: `{1: 0, 2: 1, 3: 3, 4: 6}`
 # Idea: Dijkstra's algorithm (single-source shortest paths, non-negative weights)
 def network_delay_time(times, n, k):
     adj = defaultdict(list)
+
     for u, v, w in times:
         adj[u].append((v, w))
+
     dist = {}
     heap = [(0, k)]
+
     while heap:
         d, u = heapq.heappop(heap)
         if u in dist:
@@ -106,6 +109,7 @@ def network_delay_time(times, n, k):
         for v, w in adj[u]:
             if v not in dist:
                 heapq.heappush(heap, (d + w, v))
+
     return max(dist.values()) if len(dist) == n else -1
 ```
 

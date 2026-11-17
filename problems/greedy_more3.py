@@ -99,15 +99,18 @@ def largest_sum_after_k_negations(nums, k):
 
     def go(arr, left):
         nonlocal best
+
         if left == 0:
             best = max(best, sum(arr))
             return
+
         for i in range(len(arr)):
             arr[i] = -arr[i]  # try negating index i ...
             go(arr, left - 1)
             arr[i] = -arr[i]  # ... then undo it
 
     go(list(nums), k)
+
     return best
 """,
         solution=r"""
@@ -265,14 +268,17 @@ def can_place_flowers(flowerbed, n):
     def most(i):  # the most flowers that can still be planted from position i onwards
         if i >= len(bed):
             return 0
+
         left_free = i == 0 or bed[i - 1] == 0
         right_free = i == len(bed) - 1 or bed[i + 1] == 0
         skip = most(i + 1)
+
         if bed[i] == 0 and left_free and right_free:
             bed[i] = 1  # try planting here
             planted = 1 + most(i + 1)
             bed[i] = 0
             return max(skip, planted)
+
         return skip
 
     return most(0) >= n
@@ -282,12 +288,14 @@ def can_place_flowers(flowerbed, n):
 # Idea: Greedy left-to-right placement
 def can_place_flowers(flowerbed, n):
     bed, planted = list(flowerbed), 0
+
     for i in range(len(bed)):
         left_free = i == 0 or bed[i - 1] == 0
         right_free = i == len(bed) - 1 or bed[i + 1] == 0
         if bed[i] == 0 and left_free and right_free:
             bed[i] = 1  # plant now: it can only help
             planted += 1
+
     return planted >= n
 """,
     ),
@@ -327,13 +335,16 @@ def num_rescue_boats(people, limit):
     def fewest(rest):  # fewest boats for the people in `rest`
         if not rest:
             return 0
+
         first, others = rest[0], rest[1:]
         best = 1 + fewest(others)  # the first person rides alone
+
         for i, other in enumerate(others):
             if first + other <= limit:
                 best = min(
                     best, 1 + fewest(others[:i] + others[i + 1 :])
                 )  # share a boat with one other person
+
         return best
 
     return fewest(list(people))
@@ -344,11 +355,13 @@ def num_rescue_boats(people, limit):
 def num_rescue_boats(people, limit):
     people = sorted(people)
     lo, hi, boats = 0, len(people) - 1, 0
+
     while lo <= hi:
         if people[lo] + people[hi] <= limit:
             lo += 1  # the lightest person shares the boat
         hi -= 1  # the heaviest person always leaves
         boats += 1
+
     return boats
 """,
     ),
@@ -388,11 +401,13 @@ def balanced_string_split(s):
     n = len(s)
     best = [-1] * (n + 1)  # best[i] = most pieces for s[:i] (-1 = impossible)
     best[0] = 0
+
     for i in range(1, n + 1):
         for j in range(i):
             piece = s[j:i]
             if best[j] >= 0 and piece.count("L") == piece.count("R"):
                 best[i] = max(best[i], best[j] + 1)
+
     return best[n]
 """,
         solution=r"""

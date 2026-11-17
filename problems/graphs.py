@@ -59,11 +59,13 @@ def num_islands(grid):
             sink(r, c - 1)
 
     n = 0
+
     for r in range(R):
         for c in range(C):
             if g[r][c] == "1":
                 n += 1
                 sink(r, c)
+
     return n
 """,
         solution=r"""
@@ -73,18 +75,21 @@ def num_islands(grid):
     R, C = len(grid), len(grid[0])
     seen = [[False] * C for _ in range(R)]
     count = 0
+
     for r in range(R):
         for c in range(C):
             if grid[r][c] == "1" and not seen[r][c]:
                 count += 1
                 seen[r][c] = True
                 stack = [(r, c)]
+
                 while stack:
                     x, y = stack.pop()
                     for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
                         if 0 <= nx < R and 0 <= ny < C and grid[nx][ny] == "1" and not seen[nx][ny]:
                             seen[nx][ny] = True
                             stack.append((nx, ny))
+
     return count
 """,
     ),
@@ -127,6 +132,7 @@ def oranges_rotting(grid):
     g = [row[:] for row in grid]
     R, C = len(g), len(g[0])
     minutes = 0
+
     while True:
         to_rot = [
             (r, c)
@@ -138,11 +144,15 @@ def oranges_rotting(grid):
                 for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1))
             )
         ]
+
         if not to_rot:
             break
+
         for r, c in to_rot:
             g[r][c] = 2
+
         minutes += 1
+
     return -1 if any(1 in row for row in g) else minutes
 """,
         solution=r"""
@@ -152,13 +162,16 @@ def oranges_rotting(grid):
     R, C = len(grid), len(grid[0])
     g = [row[:] for row in grid]
     q, fresh = deque(), 0
+
     for r in range(R):
         for c in range(C):
             if g[r][c] == 2:
                 q.append((r, c))
             elif g[r][c] == 1:
                 fresh += 1
+
     minutes = 0
+
     while q and fresh:
         for _ in range(len(q)):  # one minute
             x, y = q.popleft()
@@ -167,7 +180,9 @@ def oranges_rotting(grid):
                     g[nx][ny] = 2
                     fresh -= 1
                     q.append((nx, ny))
+
         minutes += 1
+
     return minutes if fresh == 0 else -1
 """,
     ),
@@ -211,11 +226,13 @@ def oranges_rotting(grid):
 # BRUTE FORCE: O(V * (V+E)) - search for a cycle from every node
 def can_finish(num_courses, prerequisites):
     adj = [[] for _ in range(num_courses)]
+
     for a, b in prerequisites:
         adj[b].append(a)
 
     def reaches_itself(start):
         stack, seen = list(adj[start]), set()
+
         while stack:
             u = stack.pop()
             if u == start:
@@ -223,6 +240,7 @@ def can_finish(num_courses, prerequisites):
             if u not in seen:
                 seen.add(u)
                 stack.extend(adj[u])
+
         return False
 
     return not any(reaches_itself(i) for i in range(num_courses))
@@ -233,11 +251,14 @@ def can_finish(num_courses, prerequisites):
 def can_finish(num_courses, prerequisites):
     adj = [[] for _ in range(num_courses)]
     indeg = [0] * num_courses
+
     for a, b in prerequisites:
         adj[b].append(a)
         indeg[a] += 1
+
     q = deque(i for i in range(num_courses) if indeg[i] == 0)
     done = 0
+
     while q:
         u = q.popleft()
         done += 1
@@ -245,6 +266,7 @@ def can_finish(num_courses, prerequisites):
             indeg[v] -= 1
             if indeg[v] == 0:
                 q.append(v)
+
     return done == num_courses
 """,
     ),
@@ -283,8 +305,10 @@ def can_finish(num_courses, prerequisites):
 # BRUTE FORCE: O(E * (V+E)) - one traversal per edge
 def find_redundant_connection(edges):
     adj = {}
+
     for u, v in edges:
         seen, stack = set(), [u]
+
         while stack:  # is v already reachable from u?
             x = stack.pop()
             if x == v:
@@ -292,8 +316,10 @@ def find_redundant_connection(edges):
             if x not in seen:
                 seen.add(x)
                 stack.extend(adj.get(x, []))
+
         adj.setdefault(u, []).append(v)
         adj.setdefault(v, []).append(u)
+
     return []
 """,
         solution=r"""
@@ -313,6 +339,7 @@ def find_redundant_connection(edges):
         if ru == rv:
             return [u, v]
         parent[ru] = rv
+
     return []
 """,
     ),
@@ -353,11 +380,14 @@ def find_redundant_connection(edges):
 def network_delay_time(times, n, k):
     dist = {i: float("inf") for i in range(1, n + 1)}
     dist[k] = 0
+
     for _ in range(n - 1):  # Bellman-Ford relaxation rounds
         for u, v, w in times:
             if dist[u] + w < dist[v]:
                 dist[v] = dist[u] + w
+
     m = max(dist.values())
+
     return -1 if m == float("inf") else m
 """,
         solution=r"""
@@ -365,10 +395,13 @@ def network_delay_time(times, n, k):
 # Idea: Dijkstra's algorithm (single-source shortest paths, non-negative weights)
 def network_delay_time(times, n, k):
     adj = defaultdict(list)
+
     for u, v, w in times:
         adj[u].append((v, w))
+
     dist = {}
     heap = [(0, k)]
+
     while heap:
         d, u = heapq.heappop(heap)
         if u in dist:
@@ -377,6 +410,7 @@ def network_delay_time(times, n, k):
         for v, w in adj[u]:
             if v not in dist:
                 heapq.heappush(heap, (d + w, v))
+
     return max(dist.values()) if len(dist) == n else -1
 """,
     ),
@@ -419,6 +453,7 @@ def network_delay_time(times, n, k):
 # BRUTE FORCE: O(N^2 * L) - tests every word pair instead of generating neighbours
 def ladder_length(begin_word, end_word, word_list):
     words = set(word_list)
+
     if end_word not in words:
         return 0
 
@@ -426,6 +461,7 @@ def ladder_length(begin_word, end_word, word_list):
         return sum(x != y for x, y in zip(a, b)) == 1
 
     q, seen = deque([(begin_word, 1)]), {begin_word}
+
     while q:
         w, d = q.popleft()
         if w == end_word:
@@ -434,6 +470,7 @@ def ladder_length(begin_word, end_word, word_list):
             if other not in seen and adjacent(w, other):
                 seen.add(other)
                 q.append((other, d + 1))
+
     return 0
 """,
         solution=r"""
@@ -441,20 +478,26 @@ def ladder_length(begin_word, end_word, word_list):
 # Idea: BFS on an implicit graph (shortest path, unweighted)
 def ladder_length(begin_word, end_word, word_list):
     words = set(word_list)
+
     if end_word not in words:
         return 0
+
     q = deque([(begin_word, 1)])
     seen = {begin_word}
+
     while q:
         w, d = q.popleft()
+
         if w == end_word:
             return d
+
         for i in range(len(w)):
             for ch in "abcdefghijklmnopqrstuvwxyz":
                 nw = w[:i] + ch + w[i + 1 :]
                 if nw in words and nw not in seen:
                     seen.add(nw)
                     q.append((nw, d + 1))
+
     return 0
 """,
     ),

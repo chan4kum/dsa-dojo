@@ -151,6 +151,60 @@ def ruff_format(code):
     return run.stdout if run.returncode == 0 else code
 
 
+COMPOUND = (ast.For, ast.While, ast.If, ast.With, ast.Try)
+MIN_SPAN = 8  # a block shorter than this many lines is left tight - blank lines would only add noise
+
+
+def group_blocks(code):
+    """Add blank lines so a long function reads as paragraphs: set-up, then each loop / branch, then the result.
+
+    A blank line goes in front of every compound statement (for / while / if / with / try), in front of whatever
+    follows one, and in front of a final `return`, but only inside a block that spans MIN_SPAN lines or more.
+    Blank lines never change what code does: the check at the end confirms the syntax tree is identical.
+    """
+    tree = ast.parse(code)
+    lines = code.split("\n")
+    want = set()  # 1-based line numbers that should be preceded by a blank line
+
+    def visit(stmts):
+        span = stmts[-1].end_lineno - stmts[0].lineno + 1
+        for i, st in enumerate(stmts):
+            after_block = i > 0 and isinstance(stmts[i - 1], COMPOUND)  # a new paragraph after a loop / branch
+            wants = (
+                isinstance(st, COMPOUND)
+                or after_block
+                or (isinstance(st, ast.Return) and i == len(stmts) - 1 and i > 0)
+            )
+            if i and span >= MIN_SPAN and wants:
+                top = st.lineno
+                while top > 1 and lines[top - 2].lstrip().startswith("#"):
+                    top -= 1  # keep a comment attached to the statement it describes
+                want.add(top)
+            for field in ("body", "orelse", "finalbody"):
+                inner = getattr(st, field, None)
+                if inner and isinstance(inner, list) and isinstance(inner[0], ast.stmt):
+                    visit(inner)
+            for handler in getattr(st, "handlers", []):
+                visit(handler.body)
+
+    for node in ast.walk(tree):
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            body = node.body
+            if body and isinstance(body[0], ast.Expr) and isinstance(getattr(body[0], "value", None), ast.Constant):
+                body = body[1:]  # skip a docstring
+            if body:
+                visit(body)
+    out = []
+    for no, line in enumerate(lines, 1):
+        if no in want and out and out[-1].strip() and not out[-1].rstrip().endswith(":"):
+            out.append("")
+        out.append(line)
+    result = "\n".join(out)
+    if ast.dump(ast.parse(result)) != ast.dump(tree):  # safety net: never ship a change in behaviour
+        return code
+    return result
+
+
 def annotate(code, label, cost, idea=None):
     """Put a header comment on top of a solution: what it is, what it costs and (optionally) the key idea."""
     body = code.lstrip("\n")
@@ -169,7 +223,7 @@ def code_value(src, node, label, cost, idea=None):
     if opening is None:
         return text
     code = ast.literal_eval(node)
-    code = ruff_format(rename_ambiguous(code).strip("\n") + "\n")
+    code = group_blocks(ruff_format(rename_ambiguous(code).strip("\n") + "\n"))
     return opening + annotate("\n" + code, label, cost, idea) + opening[1:]
 
 

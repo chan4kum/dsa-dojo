@@ -48,15 +48,18 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2 / k) time - rescan and delete until nothing changes
 def remove_duplicates(s, k):
     changed = True
+
     while changed:
         changed = False
         i = 0
+
         while i + k <= len(s):
             if len(set(s[i : i + k])) == 1:  # k equal characters in a row
                 s = s[:i] + s[i + k :]
                 changed = True
                 break
             i += 1
+
     return s
 """,
         solution=r"""
@@ -64,6 +67,7 @@ def remove_duplicates(s, k):
 # Idea: Stack of (value, count)
 def remove_duplicates(s, k):
     stack = []  # [character, run length]
+
     for ch in s:
         if stack and stack[-1][0] == ch:
             stack[-1][1] += 1
@@ -71,6 +75,7 @@ def remove_duplicates(s, k):
                 stack.pop()  # a full group disappears
         else:
             stack.append([ch, 1])
+
     return "".join(ch * count for ch, count in stack)
 """,
     ),
@@ -110,16 +115,20 @@ def remove_duplicates(s, k):
 def score_of_parentheses(s):
     def score(left, right):  # s[left:right] is balanced
         total, i = 0, left
+
         while i < right:
             depth, j = 0, i
+
             while True:  # find the matching ')' of s[i]
                 depth += 1 if s[j] == "(" else -1
                 if depth == 0:
                     break
                 j += 1
+
             inner = score(i + 1, j)
             total += 1 if j == i + 1 else 2 * inner
             i = j + 1
+
         return total
 
     return score(0, len(s))
@@ -129,6 +138,7 @@ def score_of_parentheses(s):
 # Idea: Depth counting instead of explicit recursion
 def score_of_parentheses(s):
     total = depth = 0
+
     for i, ch in enumerate(s):
         if ch == "(":
             depth += 1
@@ -136,6 +146,7 @@ def score_of_parentheses(s):
             depth -= 1
             if s[i - 1] == "(":  # an innermost '()'
                 total += 1 << depth
+
     return total
 """,
     ),
@@ -187,13 +198,16 @@ def reverse_parentheses(s):
 # Idea: Pair matching + 'teleport and reverse direction' walk
 def reverse_parentheses(s):
     partner, stack = {}, []
+
     for i, ch in enumerate(s):
         if ch == "(":
             stack.append(i)
         elif ch == ")":
             j = stack.pop()
             partner[i], partner[j] = j, i  # remember both directions
+
     out, i, step = [], 0, 1
+
     while 0 <= i < len(s):
         if s[i] in "()":
             i = partner[i]  # jump to the matching parenthesis
@@ -201,6 +215,7 @@ def reverse_parentheses(s):
         else:
             out.append(s[i])
         i += step
+
     return "".join(out)
 """,
     ),
@@ -293,19 +308,25 @@ def remove_stars(s):
 # BRUTE FORCE: O(T) time - simulate every single time unit
 def exclusive_time(n, logs):
     events = []
+
     for log in logs:
         fid, kind, ts = log.split(":")
         events.append((int(ts), kind, int(fid)))
+
     result, stack, i = [0] * n, [], 0
+
     for now in range(events[-1][0] + 1):  # one iteration per time unit
         while i < len(events) and events[i][0] == now and events[i][1] == "start":
             stack.append(events[i][2])
             i += 1
+
         if stack:
             result[stack[-1]] += 1  # the top function ran during this unit
+
         while i < len(events) and events[i][0] == now and events[i][1] == "end":
             stack.pop()
             i += 1
+
     return result
 """,
         solution=r"""
@@ -313,9 +334,11 @@ def exclusive_time(n, logs):
 # Idea: Call-stack simulation with timestamps
 def exclusive_time(n, logs):
     result, stack, prev = [0] * n, [], 0
+
     for log in logs:
         fid, kind, ts = log.split(":")
         fid, ts = int(fid), int(ts)
+
         if kind == "start":
             if stack:
                 result[stack[-1]] += ts - prev  # the caller ran until now
@@ -324,6 +347,7 @@ def exclusive_time(n, logs):
         else:
             result[stack.pop()] += ts - prev + 1  # end is inclusive
             prev = ts + 1
+
     return result
 """,
     ),
@@ -366,12 +390,14 @@ def exclusive_time(n, logs):
 # BRUTE FORCE: O(n^2) time - test every interval
 def longest_wpi(hours):
     best = 0
+
     for i in range(len(hours)):
         score = 0
         for j in range(i, len(hours)):
             score += 1 if hours[j] > 8 else -1
             if score > 0:
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -380,6 +406,7 @@ def longest_wpi(hours):
 def longest_wpi(hours):
     score = best = 0
     first = {}  # prefix score -> first index where it appeared
+
     for i, h in enumerate(hours):
         score += 1 if h > 8 else -1
         if score > 0:
@@ -388,6 +415,7 @@ def longest_wpi(hours):
             first.setdefault(score, i)
             if score - 1 in first:
                 best = max(best, i - first[score - 1])
+
     return best
 """,
     ),
@@ -443,15 +471,19 @@ def max_width_ramp(nums):
 # Idea: Monotonic stack of candidates + right-to-left scan
 def max_width_ramp(nums):
     stack = []  # indices of strictly decreasing prefix minima
+
     for i, x in enumerate(nums):
         if not stack or x < nums[stack[-1]]:
             stack.append(i)
+
     best = 0
+
     for j in range(len(nums) - 1, -1, -1):
         while stack and nums[stack[-1]] <= nums[j]:
             best = max(
                 best, j - stack.pop()
             )  # widest ramp ending at j (or further right) for this left end
+
     return best
 """,
     ),
@@ -547,15 +579,19 @@ def most_competitive(nums, k):
 # BRUTE FORCE: O(n^2) time - scan to the right and track the tallest person in between
 def can_see_persons_count(heights):
     result = []
+
     for i in range(len(heights)):
         seen, between_max = 0, 0
+
         for j in range(i + 1, len(heights)):
             if between_max < min(heights[i], heights[j]):
                 seen += 1  # nobody in between blocks the view
             between_max = max(between_max, heights[j])
             if between_max > heights[i]:
                 break
+
         result.append(seen)
+
     return result
 """,
         solution=r"""
@@ -563,15 +599,20 @@ def can_see_persons_count(heights):
 # Idea: Monotonic stack processed right to left
 def can_see_persons_count(heights):
     result, stack = [0] * len(heights), []  # stack: heights visible to the left, decreasing
+
     for i in range(len(heights) - 1, -1, -1):
         seen = 0
+
         while stack and stack[-1] < heights[i]:
             stack.pop()  # shorter people: seen, but hidden behind us from everyone on the left
             seen += 1
+
         if stack:
             seen += 1  # the first taller person is also visible
+
         result[i] = seen
         stack.append(heights[i])
+
     return result
 """,
     ),

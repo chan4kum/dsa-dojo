@@ -102,14 +102,18 @@ def top_k_frequent(nums, k):
 def top_k_frequent(nums, k):
     count = Counter(nums)
     buckets = [[] for _ in range(len(nums) + 1)]  # index = frequency
+
     for x, c in count.items():
         buckets[c].append(x)
+
     out = []
+
     for c in range(len(nums), 0, -1):
         for x in buckets[c]:
             out.append(x)
             if len(out) == k:
                 return out
+
     return out
 """,
     ),
@@ -154,15 +158,18 @@ def least_interval(tasks, n):
     remaining = Counter(tasks)
     cooldown = {}
     t = 0
+
     while remaining:
         t += 1
         ready = [c for c in remaining if cooldown.get(c, 0) < t]
+
         if ready:
             c = max(ready, key=lambda x: remaining[x])
             remaining[c] -= 1
             cooldown[c] = t + n
             if remaining[c] == 0:
                 del remaining[c]
+
     return t
 """,
         solution=r"""

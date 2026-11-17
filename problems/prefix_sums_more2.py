@@ -47,12 +47,14 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2) time
 def find_max_length(nums):
     best = 0
+
     for i in range(len(nums)):
         bal = 0
         for j in range(i, len(nums)):
             bal += 1 if nums[j] else -1
             if bal == 0:
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -61,12 +63,14 @@ def find_max_length(nums):
 def find_max_length(nums):
     first = {0: -1}
     s = best = 0
+
     for i, x in enumerate(nums):
         s += 1 if x else -1
         if s in first:
             best = max(best, i - first[s])
         else:
             first[s] = i
+
     return best
 """,
     ),
@@ -105,12 +109,14 @@ def find_max_length(nums):
 # BRUTE FORCE: O(n^2) time
 def subarrays_div_by_k(nums, k):
     c = 0
+
     for i in range(len(nums)):
         s = 0
         for j in range(i, len(nums)):
             s += nums[j]
             if s % k == 0:
                 c += 1
+
     return c
 """,
         solution=r"""

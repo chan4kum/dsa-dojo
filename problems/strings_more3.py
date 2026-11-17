@@ -50,12 +50,16 @@ def length_of_last_word(s):
 # Idea: Scan from the end
 def length_of_last_word(s):
     i = len(s) - 1
+
     while s[i] == " ":  # skip trailing spaces
         i -= 1
+
     length = 0
+
     while i >= 0 and s[i] != " ":
         length += 1
         i -= 1
+
     return length
 """,
     ),
@@ -98,8 +102,10 @@ def compare_version(version1, version2):
     size = max(len(a), len(b))
     a += [0] * (size - len(a))  # pad with zeros so the lists line up
     b += [0] * (size - len(b))
+
     if a < b:
         return -1
+
     return 1 if a > b else 0
 """,
         solution=r"""
@@ -107,18 +113,24 @@ def compare_version(version1, version2):
 # Idea: Parse and compare component by component
 def compare_version(version1, version2):
     i = j = 0
+
     while i < len(version1) or j < len(version2):
         num1 = num2 = 0
+
         while i < len(version1) and version1[i] != ".":  # read one component without splitting
             num1 = num1 * 10 + int(version1[i])
             i += 1
+
         while j < len(version2) and version2[j] != ".":
             num2 = num2 * 10 + int(version2[j])
             j += 1
+
         if num1 != num2:
             return -1 if num1 < num2 else 1
+
         i += 1  # skip the dot
         j += 1
+
     return 0
 """,
     ),
@@ -193,12 +205,14 @@ def count_segments(s):
 # BRUTE FORCE: O(n) time - swap characters one by one in a list
 def reverse_str(s, k):
     chars = list(s)
+
     for start in range(0, len(chars), 2 * k):
         i, j = start, min(start + k, len(chars)) - 1
         while i < j:  # two-pointer swap inside the first k characters of the block
             chars[i], chars[j] = chars[j], chars[i]
             i += 1
             j -= 1
+
     return "".join(chars)
 """,
         solution=r"""
@@ -252,6 +266,7 @@ def reverse_words(s):
 # Idea: Per-word two-pointer reversal
 def reverse_words(s):
     chars, start = list(s), 0
+
     for i in range(len(chars) + 1):
         if i == len(chars) or chars[i] == " ":  # the word chars[start..i-1] ends here
             lo, hi = start, i - 1
@@ -260,6 +275,7 @@ def reverse_words(s):
                 lo += 1
                 hi -= 1
             start = i + 1
+
     return "".join(chars)
 """,
     ),
@@ -363,6 +379,7 @@ def shortest_palindrome(s):
 def shortest_palindrome(s):
     t = s + "#" + s[::-1]
     fail = [0] * len(t)  # fail[i] = longest proper prefix of t[:i+1] that is also its suffix
+
     for i in range(1, len(t)):
         k = fail[i - 1]
         while k and t[i] != t[k]:
@@ -370,7 +387,9 @@ def shortest_palindrome(s):
         if t[i] == t[k]:
             k += 1
         fail[i] = k
+
     longest_pal_prefix = fail[-1]
+
     return s[longest_pal_prefix:][::-1] + s
 """,
     ),

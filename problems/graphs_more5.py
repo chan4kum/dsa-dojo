@@ -57,15 +57,20 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^4) time - a flood fill for every possible water level
 def swim_in_water(grid):
     n = len(grid)
+
     for t in range(n * n):
         if grid[0][0] > t:
             continue
+
         seen = {(0, 0)}
         stack = [(0, 0)]
+
         while stack:
             r, c = stack.pop()
+
             if (r, c) == (n - 1, n - 1):
                 return t
+
             for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in seen and grid[nr][nc] <= t:
@@ -79,10 +84,13 @@ def swim_in_water(grid):
     n = len(grid)
     heap = [(grid[0][0], 0, 0)]
     seen = {(0, 0)}
+
     while heap:
         t, r, c = heapq.heappop(heap)
+
         if (r, c) == (n - 1, n - 1):
             return t
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in seen:
@@ -135,6 +143,7 @@ def regions_by_slashes(grid):
     n = len(grid)
     size = 3 * n
     wall = [[False] * size for _ in range(size)]
+
     for i in range(n):
         for j in range(n):
             ch = grid[i][j]
@@ -143,15 +152,19 @@ def regions_by_slashes(grid):
                     wall[3 * i + k][3 * j + 2 - k] = True
                 elif ch == "\\":
                     wall[3 * i + k][3 * j + k] = True
+
     seen = [[False] * size for _ in range(size)]
     regions = 0
+
     for r in range(size):
         for c in range(size):
             if wall[r][c] or seen[r][c]:
                 continue
+
             regions += 1
             seen[r][c] = True
             stack = [(r, c)]
+
             while stack:
                 x, y = stack.pop()
                 for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
@@ -159,6 +172,7 @@ def regions_by_slashes(grid):
                     if 0 <= nx < size and 0 <= ny < size and not wall[nx][ny] and not seen[nx][ny]:
                         seen[nx][ny] = True
                         stack.append((nx, ny))
+
     return regions
 """,
         solution=r"""
@@ -181,6 +195,7 @@ def regions_by_slashes(grid):
         for j in range(n):
             base = 4 * (i * n + j)
             ch = grid[i][j]
+
             if ch == "/":
                 union(base, base + 3)
                 union(base + 1, base + 2)
@@ -191,10 +206,13 @@ def regions_by_slashes(grid):
                 union(base, base + 1)
                 union(base + 1, base + 2)
                 union(base + 2, base + 3)
+
             if i + 1 < n:
                 union(base + 2, 4 * ((i + 1) * n + j))
+
             if j + 1 < n:
                 union(base + 1, 4 * (i * n + j + 1) + 3)
+
     return len({find(x) for x in range(4 * n * n)})
 """,
     ),
@@ -246,16 +264,20 @@ def shortest_alternating_paths(n, red_edges, blue_edges):
     dist = [[inf, inf] for _ in range(n)]
     dist[0] = [0, 0]
     changed = True
+
     while changed:
         changed = False
+
         for u, v in red_edges:
             if dist[u][1] + 1 < dist[v][0]:
                 dist[v][0] = dist[u][1] + 1
                 changed = True
+
         for u, v in blue_edges:
             if dist[u][0] + 1 < dist[v][1]:
                 dist[v][1] = dist[u][0] + 1
                 changed = True
+
     return [min(d) if min(d) < inf else -1 for d in dist]
 """,
         solution=r"""
@@ -263,22 +285,30 @@ def shortest_alternating_paths(n, red_edges, blue_edges):
 # Idea: BFS on an expanded state graph (node, last colour)
 def shortest_alternating_paths(n, red_edges, blue_edges):
     graph = [defaultdict(list), defaultdict(list)]
+
     for u, v in red_edges:
         graph[0][u].append(v)
+
     for u, v in blue_edges:
         graph[1][u].append(v)
+
     answer = [-1] * n
     seen = {(0, 0), (0, 1)}
     queue = deque([(0, 0, 0), (0, 1, 0)])
+
     while queue:
         node, color, dist = queue.popleft()
+
         if answer[node] == -1:
             answer[node] = dist
+
         nxt = 1 - color
+
         for v in graph[nxt][node]:
             if (v, nxt) not in seen:
                 seen.add((v, nxt))
                 queue.append((v, nxt, dist + 1))
+
     return answer
 """,
     ),
@@ -322,12 +352,14 @@ def shortest_alternating_paths(n, red_edges, blue_edges):
 # BRUTE FORCE: O(n * (n + E)) time - a DFS from every node for every node
 def find_smallest_set_of_vertices(n, edges):
     graph = defaultdict(list)
+
     for u, v in edges:
         graph[u].append(v)
 
     def reaches(start, target):
         seen = {start}
         stack = [start]
+
         while stack:
             node = stack.pop()
             for nxt in graph[node]:
@@ -336,6 +368,7 @@ def find_smallest_set_of_vertices(n, edges):
                 if nxt not in seen:
                     seen.add(nxt)
                     stack.append(nxt)
+
         return False
 
     return [v for v in range(n) if not any(reaches(u, v) for u in range(n) if u != v)]
@@ -395,13 +428,17 @@ def find_smallest_set_of_vertices(n, edges):
 def count_restricted_paths(n, edges):
     inf = float("inf")
     d = [[inf] * (n + 1) for _ in range(n + 1)]
+
     for i in range(1, n + 1):
         d[i][i] = 0
+
     graph = defaultdict(list)
+
     for u, v, w in edges:
         d[u][v] = d[v][u] = min(d[u][v], w)
         graph[u].append(v)
         graph[v].append(u)
+
     for k in range(1, n + 1):
         for i in range(1, n + 1):
             for j in range(1, n + 1):
@@ -420,12 +457,15 @@ def count_restricted_paths(n, edges):
 # Idea: Dijkstra distances + DP in increasing distance order
 def count_restricted_paths(n, edges):
     graph = defaultdict(list)
+
     for u, v, w in edges:
         graph[u].append((v, w))
         graph[v].append((u, w))
+
     dist = [float("inf")] * (n + 1)
     dist[n] = 0
     heap = [(0, n)]
+
     while heap:
         d, u = heapq.heappop(heap)
         if d > dist[u]:
@@ -434,12 +474,15 @@ def count_restricted_paths(n, edges):
             if d + w < dist[v]:
                 dist[v] = d + w
                 heapq.heappush(heap, (dist[v], v))
+
     ways = [0] * (n + 1)
     ways[n] = 1
+
     for u in sorted(range(1, n + 1), key=lambda x: dist[x]):
         for v, _ in graph[u]:
             if dist[v] < dist[u]:
                 ways[u] += ways[v]
+
     return ways[1] % (10**9 + 7)
 """,
     ),
@@ -490,10 +533,13 @@ def count_restricted_paths(n, edges):
 def find_all_people(n, meetings, first_person):
     knows = {0, first_person}
     by_time = defaultdict(list)
+
     for x, y, t in meetings:
         by_time[t].append((x, y))
+
     for t in sorted(by_time):
         changed = True
+
         while changed:
             changed = False
             for x, y in by_time[t]:
@@ -501,6 +547,7 @@ def find_all_people(n, meetings, first_person):
                     knows.add(x)
                     knows.add(y)
                     changed = True
+
     return sorted(knows)
 """,
         solution=r"""
@@ -518,19 +565,26 @@ def find_all_people(n, meetings, first_person):
     parent[find(first_person)] = find(0)
     ordered = sorted(meetings, key=lambda m: m[2])
     i = 0
+
     while i < len(ordered):
         j = i
+
         while j < len(ordered) and ordered[j][2] == ordered[i][2]:
             j += 1
+
         group = ordered[i:j]
+
         for x, y, _ in group:
             parent[find(x)] = find(y)
+
         for x, y, _ in group:
             if find(x) != find(0):
                 parent[x] = x
             if find(y) != find(0):
                 parent[y] = y
+
         i = j
+
     return [p for p in range(n) if find(p) == find(0)]
 """,
     ),
@@ -578,11 +632,14 @@ def find_all_people(n, meetings, first_person):
 def maximum_detonation(bombs):
     n = len(bombs)
     best = 0
+
     for start in range(n):
         exploded = {start}
         changed = True
+
         while changed:
             changed = False
+
             for i in list(exploded):
                 xi, yi, ri = bombs[i]
                 for j in range(n):
@@ -591,7 +648,9 @@ def maximum_detonation(bombs):
                         if dx * dx + dy * dy <= ri * ri:
                             exploded.add(j)
                             changed = True
+
         best = max(best, len(exploded))
+
     return best
 """,
         solution=r"""
@@ -600,6 +659,7 @@ def maximum_detonation(bombs):
 def maximum_detonation(bombs):
     n = len(bombs)
     graph = [[] for _ in range(n)]
+
     for i in range(n):
         xi, yi, ri = bombs[i]
         for j in range(n):
@@ -607,17 +667,22 @@ def maximum_detonation(bombs):
                 dx, dy = xi - bombs[j][0], yi - bombs[j][1]
                 if dx * dx + dy * dy <= ri * ri:
                     graph[i].append(j)
+
     best = 0
+
     for start in range(n):
         seen = {start}
         stack = [start]
+
         while stack:
             u = stack.pop()
             for v in graph[u]:
                 if v not in seen:
                     seen.add(v)
                     stack.append(v)
+
         best = max(best, len(seen))
+
     return best
 """,
     ),
@@ -660,6 +725,7 @@ def maximum_detonation(bombs):
 # BRUTE FORCE: O(n^2 * (n + E)) time - a fresh DFS for every pair of nodes
 def count_pairs_unreachable(n, edges):
     graph = defaultdict(list)
+
     for u, v in edges:
         graph[u].append(v)
         graph[v].append(u)
@@ -667,6 +733,7 @@ def count_pairs_unreachable(n, edges):
     def connected(a, b):
         seen = {a}
         stack = [a]
+
         while stack:
             u = stack.pop()
             if u == b:
@@ -675,6 +742,7 @@ def count_pairs_unreachable(n, edges):
                 if v not in seen:
                     seen.add(v)
                     stack.append(v)
+
         return False
 
     return sum(1 for a in range(n) for b in range(a + 1, n) if not connected(a, b))
@@ -693,12 +761,15 @@ def count_pairs_unreachable(n, edges):
 
     for u, v in edges:
         parent[find(u)] = find(v)
+
     sizes = Counter(find(x) for x in range(n))
     remaining = n
     total = 0
+
     for size in sizes.values():
         remaining -= size
         total += size * remaining
+
     return total
 """,
     ),
@@ -750,20 +821,26 @@ def count_pairs_unreachable(n, edges):
 def number_of_good_paths(vals, edges):
     n = len(vals)
     graph = defaultdict(list)
+
     for u, v in edges:
         graph[u].append(v)
         graph[v].append(u)
+
     total = 0
+
     for start in range(n):
         seen = {start}
         stack = [start]
+
         while stack:
             u = stack.pop()
             for v in graph[u]:
                 if v not in seen and vals[v] <= vals[start]:
                     seen.add(v)
                     stack.append(v)
+
         total += 1 + sum(1 for u in seen if u > start and vals[u] == vals[start])
+
     return total
 """,
         solution=r"""
@@ -782,10 +859,13 @@ def number_of_good_paths(vals, edges):
         return x
 
     total = n
+
     for u, v in sorted(edges, key=lambda e: max(vals[e[0]], vals[e[1]])):
         ru, rv = find(u), find(v)
+
         if ru == rv:
             continue
+
         if top[ru] == top[rv]:
             total += count[ru] * count[rv]
             count[ru] += count[rv]
@@ -794,6 +874,7 @@ def number_of_good_paths(vals, edges):
             parent[ru] = rv
         else:
             parent[rv] = ru
+
     return total
 """,
     ),
@@ -838,6 +919,7 @@ def number_of_good_paths(vals, edges):
 def min_score(n, roads):
     reach = {1}
     changed = True
+
     while changed:
         changed = False
         for a, b, _ in roads:
@@ -845,6 +927,7 @@ def min_score(n, roads):
                 reach.add(a)
                 reach.add(b)
                 changed = True
+
     return min(d for a, b, d in roads if a in reach)
 """,
         solution=r"""
@@ -852,12 +935,15 @@ def min_score(n, roads):
 # Idea: Connected component + minimum edge
 def min_score(n, roads):
     graph = defaultdict(list)
+
     for a, b, d in roads:
         graph[a].append((b, d))
         graph[b].append((a, d))
+
     best = float("inf")
     seen = {1}
     stack = [1]
+
     while stack:
         u = stack.pop()
         for v, d in graph[u]:
@@ -865,6 +951,7 @@ def min_score(n, roads):
             if v not in seen:
                 seen.add(v)
                 stack.append(v)
+
     return best
 """,
     ),
@@ -913,27 +1000,35 @@ def min_score(n, roads):
 def minimum_fuel_cost(roads, seats):
     n = len(roads) + 1
     graph = defaultdict(list)
+
     for a, b in roads:
         graph[a].append(b)
         graph[b].append(a)
+
     parent = {0: None}
     order = [0]
+
     for u in order:
         for v in graph[u]:
             if v not in parent:
                 parent[v] = u
                 order.append(v)
+
     fuel = 0
+
     for node in range(1, n):
         size = 0
         stack = [node]
+
         while stack:
             u = stack.pop()
             size += 1
             for v in graph[u]:
                 if v != parent[u]:
                     stack.append(v)
+
         fuel += -(-size // seats)
+
     return fuel
 """,
         solution=r"""
@@ -942,21 +1037,27 @@ def minimum_fuel_cost(roads, seats):
 def minimum_fuel_cost(roads, seats):
     n = len(roads) + 1
     graph = defaultdict(list)
+
     for a, b in roads:
         graph[a].append(b)
         graph[b].append(a)
+
     parent = {0: None}
     order = [0]
+
     for u in order:
         for v in graph[u]:
             if v not in parent:
                 parent[v] = u
                 order.append(v)
+
     size = [1] * n
     fuel = 0
+
     for u in reversed(order[1:]):
         fuel += -(-size[u] // seats)
         size[parent[u]] += size[u]
+
     return fuel
 """,
     ),
@@ -999,16 +1100,20 @@ def minimum_fuel_cost(roads, seats):
 # BRUTE FORCE: exponential - every subset of at most k neighbours for every centre
 def max_star_sum(vals, edges, k):
     neighbours = [[] for _ in vals]
+
     for a, b in edges:
         neighbours[a].append(vals[b])
         neighbours[b].append(vals[a])
+
     best = None
+
     for centre, around in enumerate(neighbours):
         for size in range(min(k, len(around)) + 1):
             for chosen in itertools.combinations(around, size):
                 total = vals[centre] + sum(chosen)
                 if best is None or total > best:
                     best = total
+
     return best
 """,
         solution=r"""
@@ -1016,13 +1121,17 @@ def max_star_sum(vals, edges, k):
 # Idea: Per-node greedy: top-k positive neighbours
 def max_star_sum(vals, edges, k):
     neighbours = [[] for _ in vals]
+
     for a, b in edges:
         neighbours[a].append(vals[b])
         neighbours[b].append(vals[a])
+
     best = float("-inf")
+
     for centre, around in enumerate(neighbours):
         good = sorted((v for v in around if v > 0), reverse=True)[:k]
         best = max(best, vals[centre] + sum(good))
+
     return best
 """,
     ),
@@ -1065,8 +1174,10 @@ def reachable_nodes(n, edges, restricted):
     blocked = set(restricted)
     reached = {0}
     changed = True
+
     while changed:
         changed = False
+
         for a, b in edges:
             if a in reached and b not in reached and b not in blocked:
                 reached.add(b)
@@ -1074,6 +1185,7 @@ def reachable_nodes(n, edges, restricted):
             if b in reached and a not in reached and a not in blocked:
                 reached.add(a)
                 changed = True
+
     return len(reached)
 """,
         solution=r"""
@@ -1081,13 +1193,16 @@ def reachable_nodes(n, edges, restricted):
 # Idea: Graph traversal that avoids forbidden nodes
 def reachable_nodes(n, edges, restricted):
     graph = defaultdict(list)
+
     for a, b in edges:
         graph[a].append(b)
         graph[b].append(a)
+
     seen = set(restricted)
     seen.add(0)
     stack = [0]
     count = 0
+
     while stack:
         u = stack.pop()
         count += 1
@@ -1095,6 +1210,7 @@ def reachable_nodes(n, edges, restricted):
             if v not in seen:
                 seen.add(v)
                 stack.append(v)
+
     return count
 """,
     ),
@@ -1134,17 +1250,22 @@ def reachable_nodes(n, edges, restricted):
 # BRUTE FORCE: O(n^2) time - check every node pair of every component
 def count_complete_components(n, edges):
     adjacent = [set() for _ in range(n)]
+
     for a, b in edges:
         adjacent[a].add(b)
         adjacent[b].add(a)
+
     seen = set()
     total = 0
+
     for start in range(n):
         if start in seen:
             continue
+
         component = []
         stack = [start]
         seen.add(start)
+
         while stack:
             u = stack.pop()
             component.append(u)
@@ -1152,8 +1273,10 @@ def count_complete_components(n, edges):
                 if v not in seen:
                     seen.add(v)
                     stack.append(v)
+
         if all(b in adjacent[a] for a in component for b in component if a != b):
             total += 1
+
     return total
 """,
         solution=r"""
@@ -1170,8 +1293,10 @@ def count_complete_components(n, edges):
 
     for a, b in edges:
         parent[find(a)] = find(b)
+
     nodes = Counter(find(x) for x in range(n))
     links = Counter(find(a) for a, _ in edges)
+
     return sum(1 for root, v in nodes.items() if links[root] == v * (v - 1) // 2)
 """,
     ),
@@ -1218,11 +1343,13 @@ def minimum_time(n, edges, disappear):
     inf = float("inf")
     dist = [inf] * n
     dist[0] = 0
+
     for _ in range(n):
         for u, v, w in edges:
             for a, b in ((u, v), (v, u)):
                 if dist[a] < inf and dist[a] + w < disappear[b] and dist[a] + w < dist[b]:
                     dist[b] = dist[a] + w
+
     return [d if d < inf else -1 for d in dist]
 """,
         solution=r"""
@@ -1230,21 +1357,27 @@ def minimum_time(n, edges, disappear):
 # Idea: Dijkstra with a deadline per node
 def minimum_time(n, edges, disappear):
     graph = defaultdict(list)
+
     for u, v, w in edges:
         graph[u].append((v, w))
         graph[v].append((u, w))
+
     dist = [float("inf")] * n
     dist[0] = 0
     heap = [(0, 0)]
+
     while heap:
         d, u = heapq.heappop(heap)
+
         if d > dist[u]:
             continue
+
         for v, w in graph[u]:
             nd = d + w
             if nd < dist[v] and nd < disappear[v]:
                 dist[v] = nd
                 heapq.heappush(heap, (nd, v))
+
     return [d if d < float("inf") else -1 for d in dist]
 """,
     ),
@@ -1289,19 +1422,25 @@ def shortest_distance_after_queries(n, queries):
     inf = float("inf")
     roads = [(i, i + 1) for i in range(n - 1)]
     answer = []
+
     for u, v in queries:
         roads.append((u, v))
         d = [[inf] * n for _ in range(n)]
+
         for i in range(n):
             d[i][i] = 0
+
         for a, b in roads:
             d[a][b] = 1
+
         for k in range(n):
             for i in range(n):
                 for j in range(n):
                     if d[i][k] + d[k][j] < d[i][j]:
                         d[i][j] = d[i][k] + d[k][j]
+
         answer.append(d[0][n - 1])
+
     return answer
 """,
         solution=r"""
@@ -1310,18 +1449,22 @@ def shortest_distance_after_queries(n, queries):
 def shortest_distance_after_queries(n, queries):
     graph = [[i + 1] for i in range(n - 1)] + [[]]
     answer = []
+
     for u, v in queries:
         graph[u].append(v)
         dist = [-1] * n
         dist[0] = 0
         queue = deque([0])
+
         while queue:
             x = queue.popleft()
             for y in graph[x]:
                 if dist[y] == -1:
                     dist[y] = dist[x] + 1
                     queue.append(y)
+
         answer.append(dist[n - 1])
+
     return answer
 """,
     ),
@@ -1365,20 +1508,26 @@ def shortest_distance_after_queries(n, queries):
 # BRUTE FORCE: O(n^2) time - search the subtree below every node separately
 def min_time_collect_apples(n, edges, has_apple):
     graph = defaultdict(list)
+
     for a, b in edges:
         graph[a].append(b)
         graph[b].append(a)
+
     parent = {0: None}
     order = [0]
+
     for u in order:
         for v in graph[u]:
             if v not in parent:
                 parent[v] = u
                 order.append(v)
+
     seconds = 0
+
     for node in range(1, n):
         found = False
         stack = [node]
+
         while stack and not found:
             u = stack.pop()
             if has_apple[u]:
@@ -1386,8 +1535,10 @@ def min_time_collect_apples(n, edges, has_apple):
             for v in graph[u]:
                 if v != parent[u]:
                     stack.append(v)
+
         if found:
             seconds += 2
+
     return seconds
 """,
         solution=r"""
@@ -1395,22 +1546,28 @@ def min_time_collect_apples(n, edges, has_apple):
 # Idea: Tree DP: 'does my subtree contain a target?'
 def min_time_collect_apples(n, edges, has_apple):
     graph = defaultdict(list)
+
     for a, b in edges:
         graph[a].append(b)
         graph[b].append(a)
+
     parent = {0: None}
     order = [0]
+
     for u in order:
         for v in graph[u]:
             if v not in parent:
                 parent[v] = u
                 order.append(v)
+
     has = list(has_apple)
     seconds = 0
+
     for u in reversed(order[1:]):
         if has[u]:
             seconds += 2
             has[parent[u]] = True
+
     return seconds
 """,
     ),
@@ -1475,18 +1632,23 @@ def min_time_collect_apples(n, edges, has_apple):
 def count_paths(n, roads):
     inf = float("inf")
     d = [[inf] * n for _ in range(n)]
+
     for i in range(n):
         d[i][i] = 0
+
     graph = defaultdict(list)
+
     for u, v, w in roads:
         d[u][v] = d[v][u] = min(d[u][v], w)
         graph[u].append((v, w))
         graph[v].append((u, w))
+
     for k in range(n):
         for i in range(n):
             for j in range(n):
                 if d[i][k] + d[k][j] < d[i][j]:
                     d[i][j] = d[i][k] + d[k][j]
+
     target = n - 1
 
     def ways(u):
@@ -1505,17 +1667,22 @@ def count_paths(n, roads):
 # Idea: Dijkstra that also counts shortest paths
 def count_paths(n, roads):
     graph = defaultdict(list)
+
     for u, v, w in roads:
         graph[u].append((v, w))
         graph[v].append((u, w))
+
     dist = [float("inf")] * n
     ways = [0] * n
     dist[0], ways[0] = 0, 1
     heap = [(0, 0)]
+
     while heap:
         d, u = heapq.heappop(heap)
+
         if d > dist[u]:
             continue
+
         for v, w in graph[u]:
             if d + w < dist[v]:
                 dist[v] = d + w
@@ -1523,6 +1690,7 @@ def count_paths(n, roads):
                 heapq.heappush(heap, (dist[v], v))
             elif d + w == dist[v]:
                 ways[v] += ways[u]
+
     return ways[n - 1] % (10**9 + 7)
 """,
     ),
@@ -1577,15 +1745,20 @@ def maximum_safeness_factor(grid):
     dist = [
         [min(abs(r - tr) + abs(c - tc) for tr, tc in thieves) for c in range(n)] for r in range(n)
     ]
+
     for level in range(2 * n, -1, -1):
         if dist[0][0] < level:
             continue
+
         seen = {(0, 0)}
         stack = [(0, 0)]
+
         while stack:
             r, c = stack.pop()
+
             if (r, c) == (n - 1, n - 1):
                 return level
+
             for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in seen and dist[nr][nc] >= level:
@@ -1599,11 +1772,13 @@ def maximum_safeness_factor(grid):
     n = len(grid)
     dist = [[-1] * n for _ in range(n)]
     queue = deque()
+
     for r in range(n):
         for c in range(n):
             if grid[r][c] == 1:
                 dist[r][c] = 0
                 queue.append((r, c))
+
     while queue:
         r, c = queue.popleft()
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
@@ -1611,13 +1786,17 @@ def maximum_safeness_factor(grid):
             if 0 <= nr < n and 0 <= nc < n and dist[nr][nc] == -1:
                 dist[nr][nc] = dist[r][c] + 1
                 queue.append((nr, nc))
+
     heap = [(-dist[0][0], 0, 0)]
     seen = {(0, 0)}
+
     while heap:
         neg, r, c = heapq.heappop(heap)
         safe = -neg
+
         if (r, c) == (n - 1, n - 1):
             return safe
+
         for dr, dc in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             nr, nc = r + dr, c + dc
             if 0 <= nr < n and 0 <= nc < n and (nr, nc) not in seen:
@@ -1670,22 +1849,28 @@ def maximum_safeness_factor(grid):
 # BRUTE FORCE: O(E * (n + E)) time - remove each edge and run a BFS between its endpoints
 def find_shortest_cycle(n, edges):
     best = float("inf")
+
     for skip, (a, b) in enumerate(edges):
         graph = defaultdict(list)
+
         for i, (u, v) in enumerate(edges):
             if i != skip:
                 graph[u].append(v)
                 graph[v].append(u)
+
         dist = {a: 0}
         queue = deque([a])
+
         while queue:
             u = queue.popleft()
             for v in graph[u]:
                 if v not in dist:
                     dist[v] = dist[u] + 1
                     queue.append(v)
+
         if b in dist:
             best = min(best, dist[b] + 1)
+
     return -1 if best == float("inf") else best
 """,
         solution=r"""
@@ -1693,16 +1878,21 @@ def find_shortest_cycle(n, edges):
 # Idea: BFS from every vertex, detect non-tree edges
 def find_shortest_cycle(n, edges):
     graph = defaultdict(list)
+
     for u, v in edges:
         graph[u].append(v)
         graph[v].append(u)
+
     best = float("inf")
+
     for source in range(n):
         dist = {source: 0}
         parent = {source: -1}
         queue = deque([source])
+
         while queue:
             u = queue.popleft()
+
             for v in graph[u]:
                 if v not in dist:
                     dist[v] = dist[u] + 1
@@ -1710,6 +1900,7 @@ def find_shortest_cycle(n, edges):
                     queue.append(v)
                 elif parent[u] != v:
                     best = min(best, dist[u] + dist[v] + 1)
+
     return -1 if best == float("inf") else best
 """,
     ),

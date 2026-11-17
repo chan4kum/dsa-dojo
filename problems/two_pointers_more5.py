@@ -53,21 +53,27 @@ PROBLEMS = [
 def can_transform(start, end):
     seen = {start}
     stack = [start]
+
     while stack:
         current = stack.pop()
+
         if current == end:
             return True
+
         for i in range(len(current) - 1):
             pair = current[i : i + 2]
+
             if pair == "XL":
                 nxt = current[:i] + "LX" + current[i + 2 :]
             elif pair == "RX":
                 nxt = current[:i] + "XR" + current[i + 2 :]
             else:
                 continue
+
             if nxt not in seen:
                 seen.add(nxt)
                 stack.append(nxt)
+
     return False
 """,
         solution=r"""
@@ -76,20 +82,28 @@ def can_transform(start, end):
 def can_transform(start, end):
     n = len(start)
     j = 0
+
     for i in range(n):
         if start[i] == "X":
             continue
+
         while j < n and end[j] == "X":
             j += 1
+
         if j == n or start[i] != end[j]:
             return False
+
         if start[i] == "L" and i < j:
             return False
+
         if start[i] == "R" and i > j:
             return False
+
         j += 1
+
     while j < n and end[j] == "X":
         j += 1
+
     return j == n
 """,
     ),
@@ -136,6 +150,7 @@ def can_transform(start, end):
 # BRUTE FORCE: O(n^2) time - test every ordered pair
 def num_friend_requests(ages):
     total = 0
+
     for i, x in enumerate(ages):
         for j, y in enumerate(ages):
             if i == j:
@@ -143,6 +158,7 @@ def num_friend_requests(ages):
             if y <= 0.5 * x + 7 or y > x or (y > 100 and x < 100):
                 continue
             total += 1
+
     return total
 """,
         solution=r"""
@@ -153,6 +169,7 @@ def num_friend_requests(ages):
     n = len(ages)
     lo = hi = 0
     total = 0
+
     for x in ages:
         while lo < n and ages[lo] * 2 <= x + 14:
             lo += 1
@@ -160,6 +177,7 @@ def num_friend_requests(ages):
             hi += 1
         if hi > lo:
             total += hi - lo - 1
+
     return total
 """,
     ),
@@ -203,11 +221,13 @@ def num_friend_requests(ages):
 def three_sum_multi(arr, target):
     count = 0
     n = len(arr)
+
     for i in range(n):
         for j in range(i + 1, n):
             for k in range(j + 1, n):
                 if arr[i] + arr[j] + arr[k] == target:
                     count += 1
+
     return count % (10**9 + 7)
 """,
         solution=r"""
@@ -217,21 +237,27 @@ def three_sum_multi(arr, target):
     arr = sorted(arr)
     n = len(arr)
     total = 0
+
     for i in range(n - 2):
         need = target - arr[i]
         lo, hi = i + 1, n - 1
+
         while lo < hi:
             s = arr[lo] + arr[hi]
+
             if s < need:
                 lo += 1
             elif s > need:
                 hi -= 1
             elif arr[lo] != arr[hi]:
                 left = right = 1
+
                 while lo + left < hi and arr[lo + left] == arr[lo]:
                     left += 1
+
                 while hi - right > lo and arr[hi - right] == arr[hi]:
                     right += 1
+
                 total += left * right
                 lo += left
                 hi -= right
@@ -239,6 +265,7 @@ def three_sum_multi(arr, target):
                 block = hi - lo + 1
                 total += block * (block - 1) // 2
                 break
+
     return total % (10**9 + 7)
 """,
     ),
@@ -280,15 +307,20 @@ def three_sum_multi(arr, target):
 # BRUTE FORCE: O(n) time - build the reversed prefix by reading it backwards
 def reverse_prefix(word, ch):
     idx = -1
+
     for i, c in enumerate(word):
         if c == ch:
             idx = i
             break
+
     if idx == -1:
         return word
+
     out = ""
+
     for i in range(idx, -1, -1):
         out += word[i]
+
     return out + word[idx + 1 :]
 """,
         solution=r"""
@@ -296,14 +328,18 @@ def reverse_prefix(word, ch):
 # Idea: Two pointers swapping inwards (or a reversed slice)
 def reverse_prefix(word, ch):
     idx = word.find(ch)
+
     if idx == -1:
         return word
+
     chars = list(word)
     i, j = 0, idx
+
     while i < j:
         chars[i], chars[j] = chars[j], chars[i]
         i += 1
         j -= 1
+
     return "".join(chars)
 """,
     ),
@@ -354,19 +390,24 @@ def minimum_refill(plants, capacity_a, capacity_b):
     half = n // 2
     refills = 0
     water_a = capacity_a
+
     for i in range(half):
         if water_a < plants[i]:
             refills += 1
             water_a = capacity_a
         water_a -= plants[i]
+
     water_b = capacity_b
+
     for j in range(n - 1, n - 1 - half, -1):
         if water_b < plants[j]:
             refills += 1
             water_b = capacity_b
         water_b -= plants[j]
+
     if n % 2 and max(water_a, water_b) < plants[half]:
         refills += 1
+
     return refills
 """,
         solution=r"""
@@ -376,19 +417,25 @@ def minimum_refill(plants, capacity_a, capacity_b):
     water_a, water_b = capacity_a, capacity_b
     i, j = 0, len(plants) - 1
     refills = 0
+
     while i < j:
         if water_a < plants[i]:
             refills += 1
             water_a = capacity_a
+
         water_a -= plants[i]
         i += 1
+
         if water_b < plants[j]:
             refills += 1
             water_b = capacity_b
+
         water_b -= plants[j]
         j -= 1
+
     if i == j and max(water_a, water_b) < plants[i]:
         refills += 1
+
     return refills
 """,
     ),
@@ -445,12 +492,14 @@ def find_k_distant_indices(nums, key, k):
     n = len(nums)
     result = []
     nxt = 0
+
     for j, value in enumerate(nums):
         if value == key:
             last = min(n - 1, j + k)
             for i in range(max(nxt, j - k), last + 1):
                 result.append(i)
             nxt = last + 1
+
     return result
 """,
     ),
@@ -494,21 +543,27 @@ def find_k_distant_indices(nums, key, k):
 def can_change(start, target):
     seen = {start}
     stack = [start]
+
     while stack:
         current = stack.pop()
+
         if current == target:
             return True
+
         for i in range(len(current) - 1):
             pair = current[i : i + 2]
+
             if pair == "_L":
                 nxt = current[:i] + "L_" + current[i + 2 :]
             elif pair == "R_":
                 nxt = current[:i] + "_R" + current[i + 2 :]
             else:
                 continue
+
             if nxt not in seen:
                 seen.add(nxt)
                 stack.append(nxt)
+
     return False
 """,
         solution=r"""
@@ -517,19 +572,26 @@ def can_change(start, target):
 def can_change(start, target):
     n = len(start)
     i = j = 0
+
     while True:
         while i < n and start[i] == "_":
             i += 1
+
         while j < n and target[j] == "_":
             j += 1
+
         if i == n or j == n:
             return i == n and j == n
+
         if start[i] != target[j]:
             return False
+
         if start[i] == "L" and i < j:
             return False
+
         if start[i] == "R" and i > j:
             return False
+
         i += 1
         j += 1
 """,
@@ -648,12 +710,14 @@ def count_fair_pairs(nums, lower, upper):
     def at_most(limit):
         total = 0
         i, j = 0, len(arr) - 1
+
         while i < j:
             if arr[i] + arr[j] <= limit:
                 total += j - i
                 i += 1
             else:
                 j -= 1
+
         return total
 
     return at_most(upper) - at_most(lower - 1)
@@ -700,15 +764,20 @@ def count_fair_pairs(nums, lower, upper):
 # BRUTE FORCE: O(2^n * n) time - try every subset of indices to increment
 def can_make_subsequence(str1, str2):
     n = len(str1)
+
     for mask in range(1 << n):
         chars = []
+
         for i, ch in enumerate(str1):
             if (mask >> i) & 1:
                 ch = chr((ord(ch) - 97 + 1) % 26 + 97)
             chars.append(ch)
+
         it = iter(chars)
+
         if all(c in it for c in str2):
             return True
+
     return False
 """,
         solution=r"""
@@ -827,6 +896,7 @@ def get_strongest(arr, k):
     m = ordered[(len(ordered) - 1) // 2]
     left, right = 0, len(ordered) - 1
     result = []
+
     while len(result) < k:
         if abs(ordered[left] - m) > abs(ordered[right] - m):
             result.append(ordered[left])
@@ -834,6 +904,7 @@ def get_strongest(arr, k):
         else:
             result.append(ordered[right])
             right -= 1
+
     return result
 """,
     ),
@@ -888,11 +959,14 @@ def max_score(nums1, nums2):
     def best(which, i):
         if i == len(arrays[which]):
             return 0
+
         v = arrays[which][i]
         stay = v + best(which, i + 1)
         other = 1 - which
+
         if v in where[other]:
             return max(stay, v + best(other, where[other][v] + 1))
+
         return stay
 
     return max(best(0, 0), best(1, 0)) % (10**9 + 7)
@@ -903,6 +977,7 @@ def max_score(nums1, nums2):
 def max_score(nums1, nums2):
     i = j = 0
     sum1 = sum2 = 0
+
     while i < len(nums1) or j < len(nums2):
         if i < len(nums1) and (j == len(nums2) or nums1[i] < nums2[j]):
             sum1 += nums1[i]
@@ -914,6 +989,7 @@ def max_score(nums1, nums2):
             sum1 = sum2 = max(sum1, sum2) + nums1[i]
             i += 1
             j += 1
+
     return max(sum1, sum2) % (10**9 + 7)
 """,
     ),
@@ -971,6 +1047,7 @@ def maximum_score(nums, k):
     left = right = k
     smallest = nums[k]
     best = smallest
+
     while left > 0 or right < n - 1:
         if left == 0:
             right += 1
@@ -980,8 +1057,10 @@ def maximum_score(nums, k):
             left -= 1
         else:
             right += 1
+
         smallest = min(smallest, nums[left], nums[right])
         best = max(best, smallest * (right - left + 1))
+
     return best
 """,
     ),
@@ -1032,6 +1111,7 @@ def pivot_array(nums, pivot):
     n = len(nums)
     result = [pivot] * n
     low, high = 0, n - 1
+
     for i in range(n):
         j = n - 1 - i
         if nums[i] < pivot:
@@ -1040,6 +1120,7 @@ def pivot_array(nums, pivot):
         if nums[j] > pivot:
             result[high] = nums[j]
             high -= 1
+
     return result
 """,
     ),
@@ -1095,6 +1176,7 @@ def rearrange_array(nums):
 def rearrange_array(nums):
     result = [0] * len(nums)
     pos, neg = 0, 1
+
     for x in nums:
         if x > 0:
             result[pos] = x
@@ -1102,6 +1184,7 @@ def rearrange_array(nums):
         else:
             result[neg] = x
             neg += 2
+
     return result
 """,
     ),
@@ -1147,13 +1230,16 @@ def remove_palindrome_sub(s):
     def solve(text):
         if not text:
             return 0
+
         n = len(text)
         best = n
+
         for mask in range(1, 1 << n):
             chosen = "".join(text[i] for i in range(n) if (mask >> i) & 1)
             if chosen == chosen[::-1]:
                 rest = "".join(text[i] for i in range(n) if not (mask >> i) & 1)
                 best = min(best, 1 + solve(rest))
+
         return best
 
     return solve(s)
@@ -1164,12 +1250,15 @@ def remove_palindrome_sub(s):
 def remove_palindrome_sub(s):
     if not s:
         return 0
+
     i, j = 0, len(s) - 1
+
     while i < j:
         if s[i] != s[j]:
             return 2
         i += 1
         j -= 1
+
     return 1
 """,
     ),

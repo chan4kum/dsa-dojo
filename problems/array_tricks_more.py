@@ -208,12 +208,14 @@ def find_duplicates(nums):
 # Idea: Index-as-hash (sign marking) when values are in [1, n]
 def find_duplicates(nums):
     out = []
+
     for x in nums:
         i = abs(x) - 1
         if nums[i] < 0:
             out.append(abs(x))
         else:
             nums[i] = -nums[i]
+
     return out
 """,
     ),
@@ -268,13 +270,16 @@ def next_permutation(nums):
 # Idea: Find the pivot, swap, reverse the suffix
 def next_permutation(nums):
     i = len(nums) - 2
+
     while i >= 0 and nums[i] >= nums[i + 1]:
         i -= 1
+
     if i >= 0:
         j = len(nums) - 1
         while nums[j] <= nums[i]:
             j -= 1
         nums[i], nums[j] = nums[j], nums[i]
+
     nums[i + 1 :] = reversed(nums[i + 1 :])
 """,
     ),

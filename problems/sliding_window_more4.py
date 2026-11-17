@@ -45,6 +45,7 @@ PROBLEMS = [
 # BRUTE FORCE: O(n^2) time - sum every substring
 def equal_substring(s, t, max_cost):
     best = 0
+
     for i in range(len(s)):
         cost = 0
         for j in range(i, len(s)):
@@ -52,6 +53,7 @@ def equal_substring(s, t, max_cost):
             if cost > max_cost:
                 break
             best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -59,12 +61,14 @@ def equal_substring(s, t, max_cost):
 # Idea: Variable-size sliding window (non-negative values)
 def equal_substring(s, t, max_cost):
     left = cost = best = 0
+
     for right in range(len(s)):
         cost += abs(ord(s[right]) - ord(t[right]))
         while cost > max_cost:  # shrink until the budget holds again
             cost -= abs(ord(s[left]) - ord(t[left]))
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -103,12 +107,14 @@ def equal_substring(s, t, max_cost):
 # BRUTE FORCE: O(n^2) time - count odd numbers for every subarray
 def number_of_subarrays(nums, k):
     count = 0
+
     for i in range(len(nums)):
         odd = 0
         for j in range(i, len(nums)):
             odd += nums[j] % 2
             if odd == k:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -118,13 +124,16 @@ def number_of_subarrays(nums, k):
     def at_most(m):
         if m < 0:
             return 0
+
         left = odd = total = 0
+
         for right, x in enumerate(nums):
             odd += x & 1
             while odd > m:
                 odd -= nums[left] & 1
                 left += 1
             total += right - left + 1  # every start in [left, right] works
+
         return total
 
     return at_most(k) - at_most(k - 1)
@@ -177,11 +186,13 @@ def number_of_substrings(s):
 def number_of_substrings(s):
     last = {"a": -1, "b": -1, "c": -1}
     count = 0
+
     for i, ch in enumerate(s):
         last[ch] = i
         count += (
             min(last.values()) + 1
         )  # starts 0..min(last) contain all three (0 if one is unseen)
+
     return count
 """,
     ),
@@ -270,6 +281,7 @@ def max_score(card_points, k):
 # BRUTE FORCE: O(n^2) time - track min and max while extending each start
 def longest_subarray(nums, limit):
     best = 0
+
     for i in range(len(nums)):
         lo = hi = nums[i]
         for j in range(i, len(nums)):
@@ -277,6 +289,7 @@ def longest_subarray(nums, limit):
             if hi - lo > limit:
                 break
             best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -285,13 +298,18 @@ def longest_subarray(nums, limit):
 def longest_subarray(nums, limit):
     maxq, minq = deque(), deque()  # indices; values decreasing / increasing
     left = best = 0
+
     for right, x in enumerate(nums):
         while maxq and nums[maxq[-1]] <= x:
             maxq.pop()
+
         maxq.append(right)
+
         while minq and nums[minq[-1]] >= x:
             minq.pop()
+
         minq.append(right)
+
         while (
             nums[maxq[0]] - nums[minq[0]] > limit
         ):  # window too spread out: drop the oldest element
@@ -300,7 +318,9 @@ def longest_subarray(nums, limit):
                 maxq.popleft()
             if minq[0] < left:
                 minq.popleft()
+
         best = max(best, right - left + 1)
+
     return best
 """,
     ),
@@ -340,6 +360,7 @@ def longest_subarray(nums, limit):
 # BRUTE FORCE: O(n^2) time - extend each start until a duplicate appears
 def maximum_unique_subarray(nums):
     best = 0
+
     for i in range(len(nums)):
         seen, total = set(), 0
         for j in range(i, len(nums)):
@@ -348,6 +369,7 @@ def maximum_unique_subarray(nums):
             seen.add(nums[j])
             total += nums[j]
             best = max(best, total)
+
     return best
 """,
         solution=r"""
@@ -355,6 +377,7 @@ def maximum_unique_subarray(nums):
 # Idea: Sliding window with a set (unique elements)
 def maximum_unique_subarray(nums):
     seen, left, total, best = set(), 0, 0, 0
+
     for x in nums:
         while x in seen:  # shrink until x is no longer a duplicate
             seen.remove(nums[left])
@@ -363,6 +386,7 @@ def maximum_unique_subarray(nums):
         seen.add(x)
         total += x
         best = max(best, total)
+
     return best
 """,
     ),
@@ -412,12 +436,16 @@ def min_operations(nums, x):
 # Idea: Complement trick: longest middle subarray with a target sum
 def min_operations(nums, x):
     target = sum(nums) - x
+
     if target < 0:
         return -1
+
     if target == 0:
         return len(nums)  # take everything
+
     left = cur = 0
     longest = -1
+
     for right, v in enumerate(nums):
         cur += v
         while cur > target:
@@ -425,6 +453,7 @@ def min_operations(nums, x):
             left += 1
         if cur == target:
             longest = max(longest, right - left + 1)
+
     return -1 if longest == -1 else len(nums) - longest
 """,
     ),
@@ -462,6 +491,7 @@ def min_operations(nums, x):
 # BRUTE FORCE: O(n^2) time - expand from every start for both targets
 def max_consecutive_answers(answer_key, k):
     best = 0
+
     for target in "TF":
         for i in range(len(answer_key)):
             flips = 0
@@ -471,6 +501,7 @@ def max_consecutive_answers(answer_key, k):
                 if flips > k:
                     break
                 best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -479,6 +510,7 @@ def max_consecutive_answers(answer_key, k):
 def max_consecutive_answers(answer_key, k):
     def longest(target):
         left = flips = best = 0
+
         for right, ch in enumerate(answer_key):
             if ch != target:
                 flips += 1
@@ -487,6 +519,7 @@ def max_consecutive_answers(answer_key, k):
                     flips -= 1
                 left += 1
             best = max(best, right - left + 1)
+
         return best
 
     return max(longest("T"), longest("F"))
@@ -572,10 +605,12 @@ def num_of_subarrays(arr, k, threshold):
     need = k * threshold
     window = sum(arr[:k])
     count = 1 if window >= need else 0
+
     for i in range(k, len(arr)):
         window += arr[i] - arr[i - k]
         if window >= need:
             count += 1
+
     return count
 """,
     ),
@@ -626,17 +661,21 @@ def maximum_subarray_sum(nums, k):
 # Idea: Fixed window + frequency map
 def maximum_subarray_sum(nums, k):
     counts, total, best = Counter(), 0, 0
+
     for right, x in enumerate(nums):
         counts[x] += 1
         total += x
+
         if right >= k:  # the element k steps back leaves the window
             old = nums[right - k]
             counts[old] -= 1
             total -= old
             if counts[old] == 0:
                 del counts[old]
+
         if right >= k - 1 and len(counts) == k:
             best = max(best, total)
+
     return best
 """,
     ),
@@ -677,6 +716,7 @@ def maximum_subarray_sum(nums, k):
 # BRUTE FORCE: O(n^2) time - extend each start until some value exceeds k copies
 def max_subarray_length(nums, k):
     best = 0
+
     for i in range(len(nums)):
         counts = Counter()
         for j in range(i, len(nums)):
@@ -684,6 +724,7 @@ def max_subarray_length(nums, k):
             if counts[nums[j]] > k:
                 break
             best = max(best, j - i + 1)
+
     return best
 """,
         solution=r"""
@@ -691,12 +732,14 @@ def max_subarray_length(nums, k):
 # Idea: Variable window with a frequency cap
 def max_subarray_length(nums, k):
     counts, left, best = Counter(), 0, 0
+
     for right, x in enumerate(nums):
         counts[x] += 1
         while counts[x] > k:  # x is over the cap: drop elements from the left
             counts[nums[left]] -= 1
             left += 1
         best = max(best, right - left + 1)
+
     return best
 """,
     ),

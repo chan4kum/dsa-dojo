@@ -72,11 +72,13 @@ def can_cross(stones):
 def can_cross(stones):
     jumps = {s: set() for s in stones}
     jumps[stones[0]].add(0)
+
     for s in stones:
         for k in jumps[s]:
             for step in (k - 1, k, k + 1):
                 if step > 0 and s + step in jumps:
                     jumps[s + step].add(step)
+
     return bool(jumps[stones[-1]])
 """,
     ),
@@ -139,12 +141,14 @@ def find_substring_in_wrapround_string(s):
 def find_substring_in_wrapround_string(s):
     longest = defaultdict(int)
     run = 0
+
     for i, ch in enumerate(s):
         if i > 0 and (ord(ch) - ord(s[i - 1])) % 26 == 1:
             run += 1
         else:
             run = 1
         longest[ch] = max(longest[ch], run)
+
     return sum(longest.values())
 """,
     ),
@@ -204,19 +208,27 @@ def check_record(n):
     mod = 10**9 + 7
     dp = [[0] * 3 for _ in range(2)]
     dp[0][0] = 1
+
     for _ in range(n):
         new = [[0] * 3 for _ in range(2)]
+
         for a in range(2):
             for late in range(3):
                 v = dp[a][late]
+
                 if not v:
                     continue
+
                 new[a][0] += v
+
                 if late < 2:
                     new[a][late + 1] += v
+
                 if a == 0:
                     new[1][0] += v
+
         dp = [[x % mod for x in row] for row in new]
+
     return sum(sum(row) for row in dp) % mod
 """,
     ),
@@ -270,16 +282,20 @@ def find_integers(n):
     bits = bin(n)[2:]
     length = len(bits)
     f = [1, 2]
+
     for _ in range(length):
         f.append(f[-1] + f[-2])
+
     total = 0
     previous = "0"
+
     for i, bit in enumerate(bits):
         if bit == "1":
             total += f[length - i - 1]
             if previous == "1":
                 return total
         previous = bit
+
     return total + 1
 """,
     ),
@@ -338,15 +354,19 @@ def k_inverse_pairs(n, k):
 def k_inverse_pairs(n, k):
     mod = 10**9 + 7
     dp = [1] + [0] * k
+
     for i in range(2, n + 1):
         new = [0] * (k + 1)
         window = 0
+
         for j in range(k + 1):
             window += dp[j]
             if j >= i:
                 window -= dp[j - i]
             new[j] = window % mod
+
         dp = new
+
     return dp[k] % mod
 """,
     ),
@@ -391,22 +411,28 @@ def k_inverse_pairs(n, k):
 def min_steps(n):
     if n == 1:
         return 0
+
     seen = {(1, 0)}
     frontier = [(1, 0)]
     steps = 0
+
     while frontier:
         steps += 1
         nxt = []
+
         for length, clip in frontier:
             moves = [(length, length)]
+
             if clip:
                 moves.append((length + clip, clip))
+
             for state in moves:
                 if state[0] == n:
                     return steps
                 if state[0] < n and state not in seen:
                     seen.add(state)
                     nxt.append(state)
+
         frontier = nxt
 """,
         solution=r"""
@@ -415,11 +441,13 @@ def min_steps(n):
 def min_steps(n):
     total = 0
     d = 2
+
     while n > 1:
         while n % d == 0:
             total += d
             n //= d
         d += 1
+
     return total
 """,
     ),
@@ -468,10 +496,12 @@ def minimum_delete_sum(s1, s2):
 
     n = len(s1)
     best = 0
+
     for mask in range(1 << n):
         piece = "".join(s1[i] for i in range(n) if mask >> i & 1)
         if is_subsequence(piece, s2):
             best = max(best, sum(map(ord, piece)))
+
     return sum(map(ord, s1)) + sum(map(ord, s2)) - 2 * best
 """,
         solution=r"""
@@ -480,12 +510,14 @@ def minimum_delete_sum(s1, s2):
 def minimum_delete_sum(s1, s2):
     n, m = len(s1), len(s2)
     dp = [[0] * (m + 1) for _ in range(n + 1)]
+
     for i in range(n - 1, -1, -1):
         for j in range(m - 1, -1, -1):
             if s1[i] == s2[j]:
                 dp[i][j] = ord(s1[i]) + dp[i + 1][j + 1]
             else:
                 dp[i][j] = max(dp[i + 1][j], dp[i][j + 1])
+
     return sum(map(ord, s1)) + sum(map(ord, s2)) - 2 * dp[0][0]
 """,
     ),
@@ -549,6 +581,7 @@ def champagne_tower(poured, query_row, query_glass):
 # Idea: Row-by-row simulation (overflow DP)
 def champagne_tower(poured, query_row, query_glass):
     row = [float(poured)]
+
     for _ in range(query_row):
         nxt = [0.0] * (len(row) + 1)
         for i, amount in enumerate(row):
@@ -556,6 +589,7 @@ def champagne_tower(poured, query_row, query_glass):
             nxt[i] += extra
             nxt[i + 1] += extra
         row = nxt
+
     return min(1.0, row[query_glass])
 """,
     ),
@@ -604,12 +638,14 @@ def champagne_tower(poured, query_row, query_glass):
 def min_swap(nums1, nums2):
     n = len(nums1)
     best = None
+
     for choice in itertools.product((0, 1), repeat=n):
         a = [nums2[i] if choice[i] else nums1[i] for i in range(n)]
         b = [nums1[i] if choice[i] else nums2[i] for i in range(n)]
         if all(a[i] < a[i + 1] and b[i] < b[i + 1] for i in range(n - 1)):
             if best is None or sum(choice) < best:
                 best = sum(choice)
+
     return best
 """,
         solution=r"""
@@ -618,15 +654,20 @@ def min_swap(nums1, nums2):
 def min_swap(nums1, nums2):
     inf = float("inf")
     keep, swap = 0, 1
+
     for i in range(1, len(nums1)):
         new_keep = new_swap = inf
+
         if nums1[i] > nums1[i - 1] and nums2[i] > nums2[i - 1]:
             new_keep = keep
             new_swap = swap + 1
+
         if nums1[i] > nums2[i - 1] and nums2[i] > nums1[i - 1]:
             new_keep = min(new_keep, swap)
             new_swap = min(new_swap, keep + 1)
+
         keep, swap = new_keep, new_swap
+
     return min(keep, swap)
 """,
     ),
@@ -687,6 +728,7 @@ def soup_servings(n):
         return 0.25 * (f(a - 4, b) + f(a - 3, b - 1) + f(a - 2, b - 2) + f(a - 1, b - 3))
 
     units = (n + 24) // 25
+
     return f(units, units)
 """,
         solution=r"""
@@ -695,6 +737,7 @@ def soup_servings(n):
 def soup_servings(n):
     if n >= 4800:
         return 1.0
+
     units = (n + 24) // 25
 
     @lru_cache(None)
@@ -754,11 +797,13 @@ def soup_servings(n):
 def largest_sum_of_averages(nums, k):
     n = len(nums)
     best = 0.0
+
     for groups in range(1, min(k, n) + 1):
         for cuts in itertools.combinations(range(1, n), groups - 1):
             bounds = [0, *cuts, n]
             total = sum(sum(nums[a:b]) / (b - a) for a, b in zip(bounds, bounds[1:]))
             best = max(best, total)
+
     return best
 """,
         solution=r"""
@@ -767,6 +812,7 @@ def largest_sum_of_averages(nums, k):
 def largest_sum_of_averages(nums, k):
     n = len(nums)
     prefix = [0]
+
     for x in nums:
         prefix.append(prefix[-1] + x)
 
@@ -774,10 +820,12 @@ def largest_sum_of_averages(nums, k):
         return (prefix[j] - prefix[i]) / (j - i)
 
     dp = [average(i, n) for i in range(n)]
+
     for _ in range(k - 1):
         for i in range(n):
             for j in range(i + 1, n):
                 dp[i] = max(dp[i], average(i, j) + dp[j])
+
     return dp[0]
 """,
     ),
@@ -842,12 +890,14 @@ def num_factored_binary_trees(arr):
 def num_factored_binary_trees(arr):
     mod = 10**9 + 7
     ways = {}
+
     for v in sorted(arr):
         total = 1
         for a, ways_a in ways.items():
             if v % a == 0 and v // a in ways:
                 total += ways_a * ways[v // a]
         ways[v] = total % mod
+
     return sum(ways.values()) % mod
 """,
     ),
@@ -907,10 +957,12 @@ def new21_game(n, k, max_pts):
 def new21_game(n, k, max_pts):
     if k == 0 or n >= k + max_pts - 1:
         return 1.0
+
     dp = [0.0] * (n + 1)
     dp[0] = 1.0
     window = 1.0
     answer = 0.0
+
     for i in range(1, n + 1):
         dp[i] = window / max_pts
         if i < k:
@@ -919,6 +971,7 @@ def new21_game(n, k, max_pts):
             answer += dp[i]
         if i - max_pts >= 0:
             window -= dp[i - max_pts]
+
     return answer
 """,
     ),
@@ -973,11 +1026,13 @@ def min_flips_mono_incr(s):
 def min_flips_mono_incr(s):
     ones = 0
     flips = 0
+
     for ch in s:
         if ch == "1":
             ones += 1
         else:
             flips = min(flips + 1, ones)
+
     return flips
 """,
     ),
@@ -1064,12 +1119,14 @@ def knight_dialer(n):
         9: (2, 4),
     }
     ways = [1] * 10
+
     for _ in range(n - 1):
         new = [0] * 10
         for digit, count in enumerate(ways):
             for nxt in moves[digit]:
                 new[nxt] = (new[nxt] + count) % mod
         ways = new
+
     return sum(ways) % mod
 """,
     ),
@@ -1192,11 +1249,14 @@ def last_stone_weight_ii(stones):
     half = total // 2
     reachable = [False] * (half + 1)
     reachable[0] = True
+
     for w in stones:
         for t in range(half, w - 1, -1):
             if reachable[t - w]:
                 reachable[t] = True
+
     best = max(t for t in range(half + 1) if reachable[t])
+
     return total - 2 * best
 """,
     ),
@@ -1247,14 +1307,17 @@ def min_height_shelves(books, shelf_width):
     def best(i):
         if i == n:
             return 0
+
         result = float("inf")
         width = height = 0
+
         for j in range(i, n):
             width += books[j][0]
             if width > shelf_width:
                 break
             height = max(height, books[j][1])
             result = min(result, height + best(j + 1))
+
         return result
 
     return best(0)
@@ -1265,6 +1328,7 @@ def min_height_shelves(books, shelf_width):
 def min_height_shelves(books, shelf_width):
     n = len(books)
     dp = [0] + [float("inf")] * n
+
     for i in range(1, n + 1):
         width = height = 0
         for j in range(i, 0, -1):
@@ -1273,6 +1337,7 @@ def min_height_shelves(books, shelf_width):
                 break
             height = max(height, books[j - 1][1])
             dp[i] = min(dp[i], dp[j - 1] + height)
+
     return dp[n]
 """,
     ),

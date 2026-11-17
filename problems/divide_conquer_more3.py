@@ -68,12 +68,15 @@ PROBLEMS = [
 def diff_ways_to_compute(expression):
     if expression.isdigit():
         return [int(expression)]
+
     results = []
+
     for i, ch in enumerate(expression):
         if ch in "+-*":
             for a in diff_ways_to_compute(expression[:i]):
                 for b in diff_ways_to_compute(expression[i + 1 :]):
                     results.append(a + b if ch == "+" else a - b if ch == "-" else a * b)
+
     return results
 """,
         solution=r"""
@@ -84,12 +87,15 @@ def diff_ways_to_compute(expression):
     def ways(text):
         if text.isdigit():
             return (int(text),)
+
         results = []
+
         for i, ch in enumerate(text):
             if ch in "+-*":
                 for a in ways(text[:i]):
                     for b in ways(text[i + 1 :]):
                         results.append(a + b if ch == "+" else a - b if ch == "-" else a * b)
+
         return tuple(results)
 
     return list(ways(expression))
@@ -138,12 +144,14 @@ def diff_ways_to_compute(expression):
 # BRUTE FORCE: O(n^2) time - test every subarray
 def count_range_sum(nums, lower, upper):
     count = 0
+
     for i in range(len(nums)):
         total = 0
         for j in range(i, len(nums)):
             total += nums[j]
             if lower <= total <= upper:
                 count += 1
+
     return count
 """,
         solution=r"""
@@ -151,22 +159,27 @@ def count_range_sum(nums, lower, upper):
 # Idea: Merge sort on prefix sums, counting cross pairs
 def count_range_sum(nums, lower, upper):
     prefix = [0]
+
     for x in nums:
         prefix.append(prefix[-1] + x)
 
     def sort_and_count(lo, hi):
         if hi - lo <= 1:
             return 0
+
         mid = (lo + hi) // 2
         count = sort_and_count(lo, mid) + sort_and_count(mid, hi)
         start = end = mid
+
         for i in range(lo, mid):
             while start < hi and prefix[start] - prefix[i] < lower:
                 start += 1
             while end < hi and prefix[end] - prefix[i] <= upper:
                 end += 1
             count += end - start
+
         prefix[lo:hi] = sorted(prefix[lo:hi])
+
         return count
 
     return sort_and_count(0, len(prefix))
@@ -413,6 +426,7 @@ def get_skyline(buildings):
     )
     result = []
     heap = [(0, float("inf"))]
+
     for x, neg_h, right in events:
         while heap[0][1] <= x:
             heapq.heappop(heap)
@@ -421,6 +435,7 @@ def get_skyline(buildings):
         height = -heap[0][0]
         if not result or result[-1][1] != height:
             result.append([x, height])
+
     return result
 """,
     ),
@@ -480,15 +495,21 @@ def construct_maximum_binary_tree(nums):
 # Idea: Divide and conquer, optimised by a monotonic stack
 def construct_maximum_binary_tree(nums):
     stack = []
+
     for x in nums:
         node = TreeNode(x)
         last = None
+
         while stack and stack[-1].val < x:
             last = stack.pop()
+
         node.left = last
+
         if stack:
             stack[-1].right = node
+
         stack.append(node)
+
     return stack[0] if stack else None
 """,
     ),
@@ -541,16 +562,20 @@ def super_pow(a, b):
     def power(base, exp):
         base %= mod
         out = 1
+
         while exp:
             if exp & 1:
                 out = out * base % mod
             base = base * base % mod
             exp >>= 1
+
         return out
 
     result = 1
+
     for digit in b:
         result = power(result, 10) * power(a, digit) % mod
+
     return result
 """,
     ),
@@ -605,15 +630,18 @@ def number_of_pairs(nums1, nums2, diff):
     def sort_and_count(arr):
         if len(arr) <= 1:
             return arr, 0
+
         mid = len(arr) // 2
         left, x = sort_and_count(arr[:mid])
         right, y = sort_and_count(arr[mid:])
         count = x + y
         p = 0
+
         for value in right:
             while p < len(left) and left[p] <= value + diff:
                 p += 1
             count += p
+
         return sorted(left + right), count
 
     return sort_and_count(d)[1]
@@ -689,11 +717,13 @@ def create_sorted_array(instructions):
         return total
 
     cost = 0
+
     for done, x in enumerate(instructions):
         less = query(x - 1)
         greater = done - query(x)
         cost += min(less, greater)
         add(x)
+
     return cost % (10**9 + 7)
 """,
     ),
@@ -741,11 +771,14 @@ def create_sorted_array(instructions):
 def num_of_ways(nums):
     def shape(order):
         root = None
+
         for x in order:
             if root is None:
                 root = [x, None, None]
                 continue
+
             node = root
+
             while True:
                 side = 1 if x < node[0] else 2
                 if node[side] is None:
@@ -760,6 +793,7 @@ def num_of_ways(nums):
 
     target = shape(nums)
     same = sum(1 for perm in itertools.permutations(nums) if shape(perm) == target)
+
     return (same - 1) % (10**9 + 7)
 """,
         solution=r"""

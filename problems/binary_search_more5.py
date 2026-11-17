@@ -63,12 +63,14 @@ def h_index(citations):
 def h_index(citations):
     n = len(citations)
     lo, hi = 0, n
+
     while lo < hi:
         mid = (lo + hi) // 2
         if citations[mid] >= n - mid:
             hi = mid
         else:
             lo = mid + 1
+
     return n - lo
 """,
     ),
@@ -121,10 +123,12 @@ def preimage_size_fzf(k):
 
     count = 0
     x = 0
+
     while zeros(x) <= k:
         if zeros(x) == k:
             count += 1
         x += 1
+
     return count
 """,
         solution=r"""
@@ -140,12 +144,14 @@ def preimage_size_fzf(k):
 
     def first_at_least(target):
         lo, hi = 0, 5 * target + 5
+
         while lo < hi:
             mid = (lo + hi) // 2
             if zeros(mid) >= target:
                 hi = mid
             else:
                 lo = mid + 1
+
         return lo
 
     return first_at_least(k + 1) - first_at_least(k)
@@ -200,12 +206,14 @@ def nth_magical_number(n, a, b):
 def nth_magical_number(n, a, b):
     lcm = a * b // math.gcd(a, b)
     lo, hi = 1, n * min(a, b)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if mid // a + mid // b - mid // lcm >= n:
             hi = mid
         else:
             lo = mid + 1
+
     return lo % (10**9 + 7)
 """,
     ),
@@ -266,12 +274,14 @@ def nth_ugly_number(n, a, b, c):
         return x // a + x // b + x // c - x // ab - x // ac - x // bc + x // abc
 
     lo, hi = 1, n * min(a, b, c)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if count(mid) >= n:
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),
@@ -326,14 +336,17 @@ def find_best_value(arr, target):
         return sum(min(x, v) for x in arr)
 
     lo, hi = 0, max(arr)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if total(mid) >= target:
             hi = mid
         else:
             lo = mid + 1
+
     if lo > 0 and abs(total(lo - 1) - target) <= abs(total(lo) - target):
         return lo - 1
+
     return lo
 """,
     ),
@@ -391,12 +404,14 @@ def special_array(nums):
         return n - bisect.bisect_left(ordered, x)
 
     lo, hi = 0, n
+
     while lo < hi:
         mid = (lo + hi) // 2
         if count(mid) <= mid:
             hi = mid
         else:
             lo = mid + 1
+
     return lo if count(lo) == lo else -1
 """,
     ),
@@ -437,6 +452,7 @@ def special_array(nums):
 # BRUTE FORCE: O(n * max) time - test every cap m by pushing excess leftwards
 def minimize_array_value(nums):
     n = len(nums)
+
     for cap in range(max(nums) + 1):
         carry = 0
         for i in range(n - 1, 0, -1):
@@ -517,12 +533,14 @@ def maximum_tastiness(price, k):
         return taken >= k
 
     lo, hi = 0, ordered[-1] - ordered[0]
+
     while lo < hi:
         mid = (lo + hi + 1) // 2
         if can(mid):
             lo = mid
         else:
             hi = mid - 1
+
     return lo
 """,
     ),
@@ -566,12 +584,14 @@ def maximum_tastiness(price, k):
 # BRUTE FORCE: exponential - try every set of k non-adjacent houses
 def min_capability(nums, k):
     best = None
+
     for chosen in itertools.combinations(range(len(nums)), k):
         if any(b - a == 1 for a, b in zip(chosen, chosen[1:])):
             continue
         cap = max(nums[i] for i in chosen)
         if best is None or cap < best:
             best = cap
+
     return best
 """,
         solution=r"""
@@ -580,21 +600,25 @@ def min_capability(nums, k):
 def min_capability(nums, k):
     def can(cap):
         robbed, i = 0, 0
+
         while i < len(nums):
             if nums[i] <= cap:
                 robbed += 1
                 i += 2
             else:
                 i += 1
+
         return robbed >= k
 
     lo, hi = min(nums), max(nums)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if can(mid):
             hi = mid
         else:
             lo = mid + 1
+
     return lo
 """,
     ),

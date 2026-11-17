@@ -24,6 +24,7 @@ from dsa import DIFF, TOPICS, by_difficulty, load  # noqa: E402
 
 
 def ladder(topic):
+    """Markdown table of a topic's problems, easiest first, each linked to LeetCode."""
     rows = ["| id | difficulty | problem | LeetCode | pattern it trains |", "|---|---|---|---|---|"]
     for n, p in by_difficulty(load(topic)):
         rows.append(
@@ -35,6 +36,7 @@ def ladder(topic):
 
 
 def solution(pid):
+    """Markdown block with the reference solution of problem `pid` (topic/n)."""
     topic, n = pid.split("/")
     p = load(topic)[int(n) - 1]
     return (
@@ -45,6 +47,7 @@ def solution(pid):
 
 
 def index():
+    """Markdown table of contents row for every topic."""
     rows = []
     for i, t in enumerate(TOPICS, 1):
         n = len(load(t))
@@ -53,11 +56,13 @@ def index():
 
 
 def render(text, topic):
+    """Fill the {{index}}, {{ladder}}, {{solution:...}} and {{trace:...}} placeholders in a notes template."""
     text = text.replace("{{index}}", index())
     text = text.replace("{{ladder}}", ladder(topic) if topic else "")
     text = re.sub(r"\{\{solution:([a-z_]+/\d+)\}\}", lambda m: solution(m.group(1)), text)
 
     def tr(m):
+        """Replace one {{trace:name}} placeholder with its generated worked example."""
         if m.group(1) not in TRACES:
             sys.exit(f"unknown trace {m.group(1)}")
         return TRACES[m.group(1)]()
@@ -66,6 +71,7 @@ def render(text, topic):
 
 
 def main():
+    """Write notes/<same name> for every file in _src/, plus notes/B3-coverage.md."""
     (ROOT / "notes").mkdir(exist_ok=True)
     count = 0
     for src in sorted((ROOT / "_src").glob("*.md")):

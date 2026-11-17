@@ -50,13 +50,17 @@ PROBLEMS = [
 # BRUTE FORCE: O(n) time but O(n) extra space - copies values into a new list
 def reverse_list(head):
     vals = []
+
     while head:
         vals.append(head.val)
         head = head.next
+
     dummy = tail = ListNode()
+
     for v in reversed(vals):
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -165,13 +169,18 @@ def middle_node(head):
 # BRUTE FORCE: two passes - compute the length first
 def remove_nth_from_end(head, n):
     length, cur = 0, head
+
     while cur:
         length, cur = length + 1, cur.next
+
     dummy = ListNode(0, head)
     cur = dummy
+
     for _ in range(length - n):
         cur = cur.next
+
     cur.next = cur.next.next
+
     return dummy.next
 """,
         solution=r"""
@@ -180,12 +189,16 @@ def remove_nth_from_end(head, n):
 def remove_nth_from_end(head, n):
     dummy = ListNode(0, head)
     fast = slow = dummy
+
     for _ in range(n):
         fast = fast.next
+
     while fast.next:
         fast = fast.next
         slow = slow.next
+
     slow.next = slow.next.next  # unlink the target
+
     return dummy.next
 """,
     ),
@@ -237,15 +250,19 @@ def find_duplicate(nums):
 # Idea: Fast & slow pointers on an implicit linked list (Floyd cycle detection)
 def find_duplicate(nums):
     slow = fast = nums[0]
+
     while True:  # phase 1: meet inside the cycle
         slow = nums[slow]
         fast = nums[nums[fast]]
         if slow == fast:
             break
+
     slow = nums[0]  # phase 2: walk to the cycle entrance
+
     while slow != fast:
         slow = nums[slow]
         fast = nums[fast]
+
     return slow
 """,
     ),
@@ -293,15 +310,20 @@ def find_duplicate(nums):
 # BRUTE FORCE: O(n) time, O(n) extra space - rebuild from a Python list
 def reverse_k_group(head, k):
     vals = []
+
     while head:
         vals.append(head.val)
         head = head.next
+
     for i in range(0, len(vals) - k + 1, k):
         vals[i : i + k] = vals[i : i + k][::-1]
+
     dummy = tail = ListNode()
+
     for v in vals:
         tail.next = ListNode(v)
         tail = tail.next
+
     return dummy.next
 """,
         solution=r"""
@@ -310,18 +332,23 @@ def reverse_k_group(head, k):
 def reverse_k_group(head, k):
     dummy = ListNode(0, head)
     group_prev = dummy
+
     while True:
         kth = group_prev
+
         for _ in range(k):  # find the k-th node of this block
             kth = kth.next
             if not kth:
                 return dummy.next  # fewer than k left: done
+
         group_next = kth.next
         prev, cur = group_next, group_prev.next
+
         while cur is not group_next:  # reverse the block
             nxt = cur.next
             cur.next = prev
             prev, cur = cur, nxt
+
         old_first = group_prev.next  # becomes the tail of the reversed block
         group_prev.next = kth
         group_prev = old_first

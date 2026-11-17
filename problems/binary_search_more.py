@@ -58,12 +58,14 @@ def search_insert(nums, target):
 # Idea: Binary search for the lower bound (first index satisfying a monotone predicate)
 def search_insert(nums, target):
     lo, hi = 0, len(nums)
+
     while lo < hi:
         mid = (lo + hi) // 2
         if nums[mid] < target:
             lo = mid + 1
         else:
             hi = mid
+
     return lo
 """,
     ),
@@ -109,17 +111,21 @@ def search_range(nums, target):
 def search_range(nums, target):
     def lower(x):
         lo, hi = 0, len(nums)
+
         while lo < hi:
             mid = (lo + hi) // 2
             if nums[mid] < x:
                 lo = mid + 1
             else:
                 hi = mid
+
         return lo
 
     left = lower(target)
+
     if left == len(nums) or nums[left] != target:
         return [-1, -1]
+
     return [left, lower(target + 1) - 1]
 """,
     ),
@@ -161,12 +167,14 @@ def find_min(nums):
 # Idea: Binary search on a rotated array: compare mid with the right end
 def find_min(nums):
     lo, hi = 0, len(nums) - 1
+
     while lo < hi:
         mid = (lo + hi) // 2
         if nums[mid] > nums[hi]:
             lo = mid + 1
         else:
             hi = mid
+
     return nums[lo]
 """,
     ),
@@ -214,12 +222,14 @@ def my_sqrt(x):
 # Idea: Binary search on the ANSWER (monotone predicate over candidate values)
 def my_sqrt(x):
     lo, hi = 0, x
+
     while lo < hi:
         mid = (lo + hi + 1) // 2  # upper mid: we are looking for the LAST true
         if mid * mid <= x:
             lo = mid
         else:
             hi = mid - 1
+
     return lo
 """,
     ),
@@ -262,15 +272,19 @@ def search_matrix(matrix, target):
 def search_matrix(matrix, target):
     m, n = len(matrix), len(matrix[0])
     lo, hi = 0, m * n - 1
+
     while lo <= hi:
         mid = (lo + hi) // 2
         v = matrix[mid // n][mid % n]
+
         if v == target:
             return True
+
         if v < target:
             lo = mid + 1
         else:
             hi = mid - 1
+
     return False
 """,
     ),
@@ -325,12 +339,14 @@ def find_peak(nums):
 # Idea: Binary search on a 'slope' (guarantee exists on one side)
 def find_peak(nums):
     lo, hi = 0, len(nums) - 1
+
     while lo < hi:
         mid = (lo + hi) // 2
         if nums[mid] < nums[mid + 1]:
             lo = mid + 1
         else:
             hi = mid
+
     return lo
 """,
     ),

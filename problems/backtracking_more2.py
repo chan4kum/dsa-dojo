@@ -63,8 +63,10 @@ def combination_sum3(k, n):
         if left == 0 and len(path) == k:
             out.append(path[:])
             return
+
         if len(path) == k or left <= 0:
             return
+
         for x in range(start, 10):
             if x > left:
                 break
@@ -73,6 +75,7 @@ def combination_sum3(k, n):
             path.pop()
 
     go(1, n, [])
+
     return out
 """,
     ),
@@ -112,8 +115,10 @@ def combination_sum3(k, n):
 # BRUTE FORCE: O(n * 2^n) time - mask over ALL positions, skip masks that touch digits
 def letter_case_permutation(s):
     n, seen = len(s), set()
+
     for mask in range(1 << n):
         t = []
+
         for i, c in enumerate(s):
             if mask >> i & 1:
                 if not c.isalpha():
@@ -123,6 +128,7 @@ def letter_case_permutation(s):
                 t.append(c.lower())
         else:
             seen.add("".join(t))
+
     return list(seen)
 """,
         solution=r"""
@@ -187,12 +193,15 @@ def count_arrangement(n):
     def go(pos):
         if pos == 0:
             return 1
+
         total = 0
+
         for v in range(1, n + 1):
             if not used[v] and (v % pos == 0 or pos % v == 0):
                 used[v] = True
                 total += go(pos - 1)
                 used[v] = False
+
         return total
 
     return go(n)
@@ -234,19 +243,23 @@ def count_arrangement(n):
 # BRUTE FORCE: O(k^n) time - assign each number to any bucket
 def can_partition_k_subsets(nums, k):
     total = sum(nums)
+
     if total % k:
         return False
+
     t = total // k
     buckets = [0] * k
 
     def go(i):
         if i == len(nums):
             return all(b == t for b in buckets)
+
         for b in range(k):
             buckets[b] += nums[i]
             if buckets[b] <= t and go(i + 1):
                 return True
             buckets[b] -= nums[i]
+
         return False
 
     return go(0)
@@ -256,18 +269,24 @@ def can_partition_k_subsets(nums, k):
 # Idea: Backtracking on bucket assignment with symmetry pruning
 def can_partition_k_subsets(nums, k):
     total = sum(nums)
+
     if total % k:
         return False
+
     t = total // k
     nums = sorted(nums, reverse=True)
+
     if nums[0] > t:
         return False
+
     buckets = [0] * k
 
     def go(i):
         if i == len(nums):
             return True
+
         seen = set()
+
         for b in range(k):
             if buckets[b] + nums[i] <= t and buckets[b] not in seen:
                 seen.add(buckets[b])
@@ -275,6 +294,7 @@ def can_partition_k_subsets(nums, k):
                 if go(i + 1):
                     return True
                 buckets[b] -= nums[i]
+
         return False
 
     return go(0)

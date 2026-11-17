@@ -53,13 +53,17 @@ def single_number(nums):
 # Idea: XOR cancels pairs; split into two groups by a differing bit
 def single_number(nums):
     both = 0
+
     for x in nums:
         both ^= x  # pairs cancel, leaving a ^ b
+
     low_bit = both & -both  # lowest set bit of a ^ b: a bit where a and b differ
     a = 0
+
     for x in nums:
         if x & low_bit:  # only numbers having that bit: a (or b) plus cancelling pairs
             a ^= x
+
     return [a, both ^ a]
 """,
     ),
@@ -297,17 +301,22 @@ def is_palindrome(x):
 # BRUTE FORCE: O(n * L) time - count up from 'A' one title at a time
 def convert_to_title(column_number):
     title = "A"
+
     for _ in range(column_number - 1):  # step to the next column title column_number - 1 times
         letters = list(title)
         i = len(letters) - 1
+
         while i >= 0 and letters[i] == "Z":  # Z rolls over to A and carries left
             letters[i] = "A"
             i -= 1
+
         if i < 0:
             letters.insert(0, "A")  # AZZ -> AAAA style growth
         else:
             letters[i] = chr(ord(letters[i]) + 1)
+
         title = "".join(letters)
+
     return title
 """,
         solution=r"""
@@ -355,18 +364,23 @@ def convert_to_title(column_number):
 # BRUTE FORCE: O(answer * L) time - count titles upward until it matches
 def title_to_number(column_title):
     title, number = "A", 1
+
     while title != column_title:  # walk through A, B, ..., Z, AA, AB, ... until we reach the target
         letters = list(title)
         i = len(letters) - 1
+
         while i >= 0 and letters[i] == "Z":
             letters[i] = "A"
             i -= 1
+
         if i < 0:
             letters.insert(0, "A")
         else:
             letters[i] = chr(ord(letters[i]) + 1)
+
         title = "".join(letters)
         number += 1
+
     return number
 """,
         solution=r"""
@@ -465,14 +479,18 @@ def is_power_of_three(n):
 def is_ugly(n):
     if n < 1:
         return False
+
     factors, d = set(), 2
+
     while d * d <= n:  # trial division collects every prime factor
         while n % d == 0:
             factors.add(d)
             n //= d
         d += 1
+
     if n > 1:
         factors.add(n)  # what remains is itself a prime
+
     return factors <= {2, 3, 5}
 """,
         solution=r"""
@@ -528,6 +546,7 @@ def is_ugly(n):
 def int_to_roman(num):
     # step 1: the simple additive numeral using only I V X L C D M (so 4 is 'IIII')
     result = ""
+
     for value, symbol in (
         (1000, "M"),
         (500, "D"),
@@ -540,6 +559,7 @@ def int_to_roman(num):
         while num >= value:
             result += symbol
             num -= value
+
     # step 2: rewrite the long forms into the subtractive ones
     for long_form, short_form in (
         ("DCCCC", "CM"),
@@ -550,6 +570,7 @@ def int_to_roman(num):
         ("IIII", "IV"),
     ):
         result = result.replace(long_form, short_form)
+
     return result
 """,
         solution=r"""
@@ -572,10 +593,12 @@ def int_to_roman(num):
         (1, "I"),
     ]
     out = []
+
     for value, symbol in table:
         while num >= value:  # take the biggest value that still fits
             out.append(symbol)
             num -= value
+
     return "".join(out)
 """,
     ),

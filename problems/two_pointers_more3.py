@@ -63,6 +63,7 @@ def backspace_compare(s, t):
 def backspace_compare(s, t):
     def next_valid(text, i):  # index of the next surviving character at or before i (or -1)
         skip = 0
+
         while i >= 0:
             if text[i] == "#":
                 skip += 1
@@ -71,9 +72,11 @@ def backspace_compare(s, t):
             else:
                 return i
             i -= 1
+
         return -1
 
     i, j = len(s) - 1, len(t) - 1
+
     while True:
         i, j = next_valid(s, i), next_valid(t, j)
         if i < 0 or j < 0:
