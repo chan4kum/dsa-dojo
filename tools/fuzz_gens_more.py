@@ -2344,3 +2344,85 @@ GX35 = {
 }
 
 GX.update(GX35)
+
+
+def _special_tree():
+    """Every node has 0 or 2 children and holds the minimum of its children (LeetCode 671's guarantee)."""
+
+    def build(depth):
+        if depth == 0 or random.random() < 0.3:
+            return TreeNode(R(1, 5))
+        left, right = build(depth - 1), build(depth - 1)
+        return TreeNode(min(left.val, right.val), left, right)
+
+    return (tree_to_list(build(R(0, 3))),)
+
+
+def _all_nodes(root):
+    nodes, stack = [], [root]
+    while stack:
+        node = stack.pop()
+        nodes.append(node)
+        stack += [c for c in (node.left, node.right) if c]
+    return nodes
+
+
+def _nonempty_root(n_max=8):
+    root = None
+    while root is None:
+        root = rand_tree(n_max, 0, 0)
+    return root
+
+
+def _coins_tree():
+    root = _nonempty_root()
+    nodes = _all_nodes(root)
+    for _ in nodes:
+        random.choice(nodes).val += 1
+    return (tree_to_list(root),)
+
+
+def _tree_min2(lo=1, hi=9):
+    while True:
+        lst = tree_list(9, lo, hi)
+        if sum(v is not None for v in lst) >= 2:
+            return lst
+
+
+def _game_args():
+    root = _nonempty_root(9)
+    nodes = _all_nodes(root)
+    labels = list(range(1, len(nodes) + 1))
+    random.shuffle(labels)
+    for node, label in zip(nodes, labels):
+        node.val = label
+    return (tree_to_list(root), len(nodes), R(1, len(nodes)))
+
+
+GX36 = {
+    ("trees", "Second Minimum Node In a Binary Tree"): _special_tree,
+    ("trees", "Minimum Distance Between BST Nodes"): lambda: (_bst_min2(),),
+    ("trees", "Binary Tree Pruning"): lambda: (tree_list(9, 0, 1),),
+    ("trees", "Distribute Coins in Binary Tree"): _coins_tree,
+    ("trees", "Sum of Root To Leaf Binary Numbers"): lambda: (_nonempty_tree(9, 0, 1),),
+    ("trees", "Binary Search Tree to Greater Sum Tree"): lambda: (_bst_nonempty(),),
+    ("trees", "Delete Leaves With a Given Value"): lambda: (tree_list(9, 1, 3), R(1, 3)),
+    ("trees", "Maximum Product of Splitted Binary Tree"): lambda: (_tree_min2(1, 9),),
+    ("trees", "Longest ZigZag Path in a Binary Tree"): lambda: (_nonempty_tree(10, 1, 1),),
+    ("trees", "Pseudo-Palindromic Paths in a Binary Tree"): lambda: (_nonempty_tree(9, 1, 4),),
+    ("trees", "Number of Good Leaf Nodes Pairs"): lambda: (_nonempty_tree(9, 1, 1), R(1, 6)),
+    ("trees", "Even Odd Tree"): lambda: (_nonempty_tree(10, 1, 12),),
+    ("trees", "Kth Largest Sum in a Binary Tree"): lambda: (_nonempty_tree(10, 1, 9), R(1, 5)),
+    ("trees", "Reverse Odd Levels of Binary Tree"): lambda: ([R(0, 9) for _ in range(2 ** R(1, 4) - 1)],),
+    ("trees", "Cousins in Binary Tree II"): lambda: (_nonempty_tree(10, 1, 9),),
+    (
+        "trees",
+        "Minimum Number of Operations to Sort a Binary Tree by Level",
+    ): lambda: (_nonempty_tree(9, 1, 40, unique=True),),
+    ("trees", "Binary Tree Coloring Game"): _game_args,
+    ("trees", "Construct String from Binary Tree"): lambda: (_nonempty_tree(9, 0, 9),),
+    ("trees", "Maximum Sum BST in Binary Tree"): lambda: (_nonempty_tree(9, -4, 9),),
+    ("trees", "Vertical Order Traversal of a Binary Tree"): lambda: (_nonempty_tree(10, 0, 9),),
+}
+
+GX.update(GX36)
