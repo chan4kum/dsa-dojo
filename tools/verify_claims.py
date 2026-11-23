@@ -792,6 +792,16 @@ def _():
     assert trial_division(97, bounded=True) == (True, 8)
 
 
+@claim("00-d02", "all four D02 array labs detect the changed input and restore the normal control")
+def _():
+    from d02_labs import LABS, verify
+
+    for lab in LABS:
+        normal = verify(lab, False)
+        assert verify(lab, True) != normal
+        assert verify(lab, False) == normal
+
+
 def main():
     failed = 0
     for note, text, fn in CHECKS:
