@@ -33,6 +33,7 @@ python dsa.py review                  # what to redo from a blank file
 - `notes/00-foundations.md` - cost model, constraints -> complexity, invariants, the paper method.
 - [D01 mastery walkthrough](notes/00-d01.md) maps the 20 complexity, math, and recursion problems to Dojo IDs where available, with local labs and independent project checks.
 - [D02 arrays walkthrough](notes/00-d02.md) covers array invariants, the 20 canonical practice problems, four controlled labs, and an independent project checker.
+- [D03 hashing walkthrough](notes/00-d03.md) covers hash tables, collisions, frequency maps, and caches with 20 trainer mappings and four labs.
 - `notes/00-pattern-finder.md` - **how to recognise which pattern a problem wants** (constraints, input shape, wording, flowchart, confusable pairs, drill).
 - Then topics `01 ... 20` in order. Each only needs ideas from the ones before it; each ends with **"Make it stay"** (picture, rule, why, teach-back, mistakes, when NOT to use).
 - `notes/B2-interview-playbook-and-job-search.md` - how to run the interview, get unstuck, behavioural stories, the job-search pipeline, AI-engineer track.

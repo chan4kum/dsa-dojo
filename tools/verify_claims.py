@@ -802,6 +802,16 @@ def _():
         assert verify(lab, False) == normal
 
 
+@claim("00-d03", "all four D03 hashing labs detect the changed input and restore the normal control")
+def _():
+    from d03_labs import LABS, verify
+
+    for lab in LABS:
+        normal = verify(lab, False)
+        assert verify(lab, True) != normal
+        assert verify(lab, False) == normal
+
+
 def main():
     failed = 0
     for note, text, fn in CHECKS:
