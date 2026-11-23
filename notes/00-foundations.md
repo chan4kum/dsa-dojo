@@ -30,7 +30,7 @@ Count the basic steps as a function of the input size `n`; ignore constants and 
 - Space counts too: recursion depth = stack space; a DP table = memory.
 
 ## 3. Read the constraints: n -> allowed complexity
-A rough rule: a judge running compiled code (C++/Java) does about 10^8 simple operations per second; **pure Python manages only about 10^6-10^7** (`python3 tools/verify_claims.py` measures it on your machine). So in Python, aim one size class lower than the table suggests, and prefer built-ins (`sorted`, `sum`, `bisect`, `heapq`, `Counter`), which run in C.
+The table is a starting point. Actual runtime depends on the interpreter, hardware, input, and operations in the loop. Count the dominant work, then benchmark a representative worst-case input near the stated limit. Run `python3 tools/verify_claims.py` for a local loop measurement and treat its result as specific to that loop and environment.
 
 | n (input size) | Aim for | Typical techniques |
 |---|---|---|

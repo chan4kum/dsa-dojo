@@ -756,15 +756,40 @@ def _():
         assert slow == tail
 
 
-@claim("00-foundations", "judge speed: pure Python executes only ~10^7 simple operations per second (not 10^8)")
+@claim("00-foundations", "count and measure the same loop on the local interpreter")
 def _():
     n = 3 * 10**6
     t = time.perf_counter()
     total = 0
     for i in range(n):
         total += i & 3
-    rate = n / (time.perf_counter() - t)
-    assert 5 * 10**5 < rate < 6 * 10**7, rate  # an order of magnitude below the C++ rule of thumb
+    elapsed = time.perf_counter() - t
+    assert total == (n // 4) * (0 + 1 + 2 + 3)
+    assert elapsed > 0
+    print(f"      local sample: {n / elapsed:,.0f} loop iterations/s ({sys.version.split()[0]})")
+
+
+@claim("00-d01", "all four D01 labs detect the fault and restore the normal control")
+def _():
+    from d01_labs import LABS, verify
+
+    for lab in LABS:
+        normal = verify(lab, False)
+        assert verify(lab, True) != normal
+        assert verify(lab, False) == normal
+
+
+@claim("00-d01", "bounded trial division includes perfect squares and reduces divisor checks")
+def _():
+    from d01_labs import trial_division
+
+    for value, expected in [(-3, False), (0, False), (1, False), (2, True), (49, False), (97, True)]:
+        baseline = trial_division(value, bounded=False)
+        bounded = trial_division(value, bounded=True)
+        assert baseline[0] is bounded[0] is expected
+        assert bounded[1] <= baseline[1]
+    assert trial_division(49, bounded=True) == (False, 6)
+    assert trial_division(97, bounded=True) == (True, 8)
 
 
 def main():
